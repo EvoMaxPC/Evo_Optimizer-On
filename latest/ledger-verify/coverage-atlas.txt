@@ -1,0 +1,23 @@
+ficheros extract      : 1081
+en el ledger          : 1081
+con hechos de contenido: 1072
+sin hechos (binarios) : 9
+sin motivo declarado  : 0
+entradas de registro  : 327
+
+sin hechos (path -> motivo):
+  - package/Executables/AtlasDesktop/3. General Configuration/Timer Resolution/! MeasureSleep.exe: binario compilado de terceros (herramienta de medida): no hay fuente en el repo; solo tamano y sha256
+  - package/Executables/AtlasDesktop/4. Interface Tweaks/Visual Effects (Animations)/Visual Effect Settings.lnk: acceso directo de Windows: puntero a un panel de Configuracion; sin comportamiento propio
+  - package/Executables/AtlasDesktop/5. Windows Settings/Desktop Icons.lnk: acceso directo de Windows: puntero a un panel de Configuracion; sin comportamiento propio
+  - package/Executables/AtlasDesktop/5. Windows Settings/Region.lnk: acceso directo de Windows: puntero a un panel de Configuracion; sin comportamiento propio
+  - package/Executables/AtlasDesktop/7. Security/Mitigations/Fault Tolerant Heap/Reset FTH entries.lnk: acceso directo de Windows: puntero a un panel de Configuracion; sin comportamiento propio
+  - package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35amd645.0.0.0.cab: paquete CAB de Windows Update: solo indice de miembros (nombres y tamanos), sin contenido de Atlas; no se descomprime (GPL-3.0)
+  - package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35arm645.0.0.0.cab: paquete CAB de Windows Update: solo indice de miembros (nombres y tamanos), sin contenido de Atlas; no se descomprime (GPL-3.0)
+  - package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35amd645.0.0.0.cab: paquete CAB de Windows Update: solo indice de miembros (nombres y tamanos), sin contenido de Atlas; no se descomprime (GPL-3.0)
+  - package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35arm645.0.0.0.cab: paquete CAB de Windows Update: solo indice de miembros (nombres y tamanos), sin contenido de Atlas; no se descomprime (GPL-3.0)
+
+extract que no llegan al ledger: ninguno
+
+SEMANTICA (que hace cada script, que toggles expone la app):
+  DEUDA declarada para el Paso 4b; no se ha extraido nada.
+coverage_atlas_exit=0
