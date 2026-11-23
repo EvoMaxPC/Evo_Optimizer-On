@@ -13,7 +13,6 @@ permissions:
 jobs:
   probe:
     runs-on: windows-latest
-    continue-on-error: true
     env:
       REPORT_DIR: ci-report
       REPORT_FILE: ci-report/probe.txt
@@ -26,82 +25,65 @@ jobs:
         shell: pwsh
         continue-on-error: true
         run: |
-          $ErrorActionPreference = 'Continue'
-          "=== dotnet --list-sdks ==="
-          dotnet --list-sdks 2>&1 | Out-String
-          "=== dotnet --list-runtimes ==="
-          dotnet --list-runtimes 2>&1 | Out-String
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== dotnet SDKs y runtimes ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { dotnet --list-sdks; dotnet --list-runtimes } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: PowerShell version
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== PSVersionTable.PSVersion ==="
-          $PSVersionTable.PSVersion | Out-String
-          $PSVersionTable | Out-String
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== PowerShell version ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { $PSVersionTable.PSVersion.ToString() } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: Windows build info (registro)
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== HKLM CurrentVersion ==="
-          (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion') |
-            Select-Object CurrentBuildNumber, UBR, EditionID, DisplayVersion |
-            Format-List | Out-String
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== Windows build info (registro) ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion') | Select-Object CurrentBuildNumber,UBR,EditionID,DisplayVersion | Format-List * } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: reg.exe funciona
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== reg query HKCU\\Software /s /f nada ==="
-          reg query "HKCU\Software" /s /f nada 2>&1 | Out-String
-          "EXITCODE=$LASTEXITCODE"
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== reg.exe funciona ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { reg query "HKCU\Software" /s /f nada; "EXITCODE=$LASTEXITCODE" } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: whoami y admin
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== whoami /groups ==="
-          whoami /groups 2>&1 | Out-String
-          "=== whoami /user ==="
-          whoami /user 2>&1 | Out-String
-          "=== admin? ==="
-          $id = [Security.Principal.WindowsIdentity]::GetCurrent()
-          $p  = New-Object Security.Principal.WindowsPrincipal($id)
-          "IsAdmin=" + $p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-          "User=" + $id.Name
-          "IntegrityLevel=" + ($id.Groups | Where-Object { $_.Value -match '^S-1-16-' } | ForEach-Object { $_.Value })
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== whoami y admin ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { whoami /groups; whoami /user; $i=[Security.Principal.WindowsIdentity]::GetCurrent(); $p=New-Object Security.Principal.WindowsPrincipal($i); "IsAdmin="+$p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator); "User="+$i.Name; "IL="+($i.Groups|?{$_.Value -match "^S-1-16-"}|%{$_.Value}) } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: winget y choco
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== winget --version ==="
-          try { winget --version 2>&1 | Out-String } catch { "winget NO DISPONIBLE: $_" }
-          "EXITCODE=$LASTEXITCODE"
-          "=== choco --version ==="
-          try { choco --version 2>&1 | Out-String } catch { "choco NO DISPONIBLE: $_" }
-          "EXITCODE=$LASTEXITCODE"
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== winget y choco ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { try{winget --version}catch{"winget NO: $_"}; "winget_exit=$LASTEXITCODE"; try{choco --version}catch{"choco NO: $_"}; "choco_exit=$LASTEXITCODE" } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: git y python
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== git --version ==="
-          git --version 2>&1 | Out-String
-          "=== python --version ==="
-          try { python --version 2>&1 | Out-String } catch { "python NO DISPONIBLE: $_" }
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== git y python ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { git --version; python --version; "python_exit=$LASTEXITCODE" } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: arquitectura
         shell: pwsh
         continue-on-error: true
         run: |
-          "=== PROCESSOR_ARCHITECTURE ==="
-          "PROCESSOR_ARCHITECTURE=" + $env:PROCESSOR_ARCHITECTURE
-          "PROCESSOR_ARCHITEW6432=" + $env:PROCESSOR_ARCHITEW6432
-          "OS=" + [Environment]::OSVersion.VersionString
-          "RunnerName=" + $env:RUNNER_NAME
-          "RunnerOS=" + $env:RUNNER_OS
+          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
+          "=== arquitectura ===" | Tee-Object -FilePath ci-report/probe.txt -Append
+          & { "PROCESSOR_ARCHITECTURE="+$env:PROCESSOR_ARCHITECTURE; [Environment]::OSVersion.VersionString; "RunnerOS="+$env:RUNNER_OS } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
 
       - name: Publicar ci-report en rama huérfana
         shell: pwsh
@@ -118,7 +100,7 @@ jobs:
             "ref=$env:GITHUB_REF"
             "generated_utc=" + (Get-Date).ToUniversalTime().ToString('s') + "Z"
           ) -join "`n"
-          Set-Content -Path $env:REPORT_FILE -Value $meta -Encoding utf8
+          Add-Content -Path $env:REPORT_FILE -Value $meta -Encoding utf8
           "=== contenido de $env:REPORT_FILE ==="
           Get-Content $env:REPORT_FILE | Out-String
 
@@ -137,4 +119,3 @@ jobs:
         continue-on-error: true
         run: |
           "JOB_STATUS=$env:JOB_STATUS"
-          "GITHUB_SHA=$env:GITHUB_SHA"
