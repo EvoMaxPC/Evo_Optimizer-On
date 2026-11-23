@@ -40,3 +40,20 @@
 7. Formato de informe: resumen; archivos; comandos con salida real; resultados
    de tests; criterios CUMPLIDO/NO CUMPLIDO/NO VERIFICADO con evidencia;
    desviaciones; datos asumidos; riesgos; preguntas abiertas; commit.
+
+## Erratas
+
+### ERRATA-EVO-003: hallazgos sobre la matriz de runners
+
+Medido en el run `45267030334`, commit `49bfc3f`. Evidencia literal en
+`inventory/raw/ci-reports/`.
+
+- `windows-11-arm` = Windows 11 Enterprise 25H2, build 26200,
+  `InstallationType=Client`, ARM64, explorer corriendo, Store presente
+  (`22609.1401.13.0`). **Único runner cliente real.**
+- `windows-latest` = `windows-2025` = Windows Server 2025 Datacenter, build 26100
+  (misma imagen `win25-vs2026`). `ServerDatacenter` **no** es un cliente
+  Windows 11.
+- `ProductName` no es un detector fiable (reporta `Windows 10 Enterprise` para un
+  kernel build 26200). La detección exige `CurrentBuildNumber` +
+  `InstallationType=Client`.
