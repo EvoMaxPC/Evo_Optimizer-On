@@ -44,7 +44,7 @@ _Ninguno._
 
 | top_dir | extract | reference | exclude | total |
 |---|---:|---:|---:|---:|
-| `package` | 794 | 48 | 0 | 842 |
+| `package` | 802 | 40 | 0 | 842 |
 | `app` | 152 | 299 | 0 | 451 |
 | `tests` | 124 | 0 | 0 | 124 |
 | `tools` | 0 | 33 | 0 | 33 |
@@ -54,29 +54,28 @@ _Ninguno._
 | `.` | 3 | 6 | 3 | 12 |
 | `.vscode` | 0 | 3 | 0 | 3 |
 | `.zed` | 0 | 2 | 0 | 2 |
-| **TOTAL** | **1073** | **474** | **3** | **1550** |
+| **TOTAL** | **1081** | **466** | **3** | **1550** |
 
 ## atlas — comportamiento en `reference`
 
-Ficheros con extensión de comportamiento en `reference`: **243**
+Ficheros con extensión de comportamiento en `reference`: **236**
 
 | directorio de 1er nivel | ficheros |
 |---|---:|
 | `app` | 194 |
 | `tools` | 19 |
 | `services` | 14 |
-| `package` | 8 |
 | `.vscode` | 3 |
 | `.github` | 2 |
 | `.zed` | 2 |
 | `.` | 1 |
+| `package` | 1 |
 
 | directorio de 2º nivel | ficheros |
 |---|---:|
 | `app/vendor` | 189 |
 | `services/reports` | 8 |
 | `tools/dev` | 8 |
-| `package/Executables` | 7 |
 | `services/reports-mcp` | 6 |
 | `tools/build` | 5 |
 | `tools/timer` | 3 |
@@ -88,8 +87,9 @@ Ficheros con extensión de comportamiento en `reference`: **243**
 | `.zed/settings.json` | 1 |
 | `.zed/tasks.json` | 1 |
 | `app/build.rs` | 1 |
+| `app/examples` | 1 |
 
-**A REVISAR** (comportamiento en reference fuera de `tests/`, `.github/`, `docs/`, `tools/`, `services/`): **208**
+**A REVISAR** (comportamiento en reference fuera de `tests/`, `.github/`, `docs/`, `tools/`, `services/`): **201**
 
 | ruta | ext | bytes |
 |---|---|---:|
@@ -293,13 +293,6 @@ Ficheros con extensión de comportamiento en `reference`: **243**
 | `app/vendor/gpui-pre/src/window/prompts.rs` | rs | 6719 |
 | `app/vendor/gpui-pre/tests/action_macros.rs` | rs | 1285 |
 | `lychee.toml` | toml | 1215 |
-| `package/Executables/AtlasModules/Other/StartLayout.json` | json | 685 |
-| `package/Executables/AtlasModules/Packages/Atlas-CbsHashes.psd1` | psd1 | 1078 |
-| `package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35amd645.0.0.0.cab` | cab | 43743 |
-| `package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35arm645.0.0.0.cab` | cab | 52230 |
-| `package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35amd645.0.0.0.cab` | cab | 27817 |
-| `package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35arm645.0.0.0.cab` | cab | 29376 |
-| `package/Executables/AtlasModules/Toggles/catalog.json` | json | 115595 |
 | `package/atlas.json` | json | 5343 |
 
 ## atlas — `tools/` y `services/` por subdirectorio
@@ -346,3 +339,27 @@ Ficheros con extensión de comportamiento en `reference`: **243**
 | `public/` | 3 | reference=3 | 74803 |
 | `src/` | 197 | reference=197 | 2771634 |
 
+
+
+## Corrección del paso 3 (T0a)
+
+El informe original decía **208** A REVISAR pero su desglose sumaba **209**
+(189+8+8+2+1+1). Recuento real, recalculado con
+`tools/ledger_extract/partition_review.py` sobre el `atlas.tsv` vigente en el
+paso 2b (antes de T0c):
+
+| grupo | ficheros |
+|---|---:|
+| `app/vendor/**` (Rust de terceros) | 189 |
+| `package/Executables` | 7 |
+| `app/licenses` | 2 |
+| `.vscode/` | 3 |
+| `.zed/` | 2 |
+| `app/build.rs`, `app/examples/…`, `app/rustfmt.toml`, `lychee.toml`, `package/atlas.json` | 5 |
+| **total** | **208** |
+
+El error estaba en el desglose del informe, no en el recuento: `package/Executables`
+son **7** (no 8) y `.vscode` son **3** (no 2).
+
+Tras T0c (reclasificación de `package/Executables` a `extract`), el valor vigente
+es **201** (189 vendor + 2 licenses + 3 `.vscode` + 2 `.zed` + 5 sueltos).

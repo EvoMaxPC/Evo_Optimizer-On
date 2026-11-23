@@ -20,8 +20,8 @@ rules:
   # Atlas-CbsHashes.psd1 es un manifiesto de hashes (no un módulo ejecutable):
   # se referencia por hash en lugar de extraerse.
   - glob: "package/Executables/AtlasModules/Packages/*.psd1"
-    treatment: reference
-    reason: "Manifiesto de hashes CBS: dato de verificación, no comportamiento."
+    treatment: extract
+    reason: "Manifiesto de hashes CBS (Atlas-CbsHashes.psd1): contrato de verificación de componentes."
   - glob: "package/**/*.psd1"
     treatment: extract
     reason: "Manifiestos de módulo del paquete (295): contrato de comportamiento."
@@ -66,11 +66,20 @@ rules:
 
   # --- referencia: artefactos binarios y YAML de servicio ------------------
   - glob: "package/**/*.cab"
-    treatment: reference
-    reason: "Paquete CAB de servicio: artefacto binario firmado; se referencia por hash."
+    treatment: extract
+    reason: "[paso 3] Artefacto de servicio (NoDefender/NoTelemetry). Se extrae nombre/tamaño/sha256 y lista de miembros si hay herramienta; NUNCA se copia ni descomprime contenido (GPL-3.0)."
   - glob: "tools/**/*.yaml"
     treatment: reference
     reason: "Herramientas SxSC: YAML declarativo de servicio."
+
+  # [paso 3] JSON de configuración dentro de package/Executables: son datos
+  # operativos del producto (layout de menu, catalogo de toggles), no activos.
+  - glob: "package/Executables/**/*.json"
+    treatment: extract
+    reason: "JSON operativo del paquete (StartLayout.json, Toggles/catalog.json): datos de configuración aplicados."
+  - glob: "package/Executables/**/*.xml"
+    treatment: extract
+    reason: "XML de configuración aplicado (Force Timer Resolution.xml): datos de configuración."
 
   # --- referencia: paraguas y contexto ------------------------------------
   - glob: "package/**"

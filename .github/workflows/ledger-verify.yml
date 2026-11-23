@@ -69,6 +69,41 @@ jobs:
           done
           exit $rc
 
+      - name: Extractor de WinUtil (determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/extract_winutil_config.py
+          python3 tools/ledger_extract/extract_winutil_functions.py
+          cp inventory/ledger/winutil-items.tsv ci-out/winutil-items.tsv
+          cp inventory/ledger/winutil-apps.tsv ci-out/winutil-apps.tsv
+          cp inventory/ledger/winutil-functions.tsv ci-out/winutil-functions.tsv
+          sha256sum inventory/ledger/*.tsv | tee ci-out/ledger-sha-run1.txt
+          # segunda ejecución: debe producir bytes idénticos
+          python3 tools/ledger_extract/extract_winutil_config.py
+          python3 tools/ledger_extract/extract_winutil_functions.py
+          sha256sum inventory/ledger/*.tsv | tee ci-out/ledger-sha-run2.txt
+          if ! diff -u ci-out/ledger-sha-run1.txt ci-out/ledger-sha-run2.txt; then
+            echo "DETERMINISMO ROTO: las dos ejecuciones difieren" | tee ci-out/determinism.txt
+            exit 1
+          fi
+          echo "determinismo: OK (mismos sha256 en dos ejecuciones)" | tee ci-out/determinism.txt
+
+      - name: Cobertura de extract (winutil)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/coverage_check.py 2>&1 | tee ci-out/coverage.txt
+          echo "coverage_exit=${PIPESTATUS[0]}" | tee -a ci-out/coverage.txt
+
+      - name: Esquema de config
+        if: always()
+        shell: bash
+        run: |
+          python3 tools/ledger_extract/config_schema.py 2>&1 | tee ci-out/config-schema.txt
+
       - name: Recon (regenera y compara)
         if: always()
         shell: bash
