@@ -226,3 +226,66 @@ def test_particiones_reales_limpias(repo_name):
     assert rep["dead_rules"] == []
     assert rep["exclude_violations"] == []
     assert rep["ok"]
+
+
+# --- sonda de palabras clave con patrones (paso 2b) -------------------------
+
+kp = load("keyword_probe")
+
+
+def _synthetic_repos(tmp_path):
+    """Dos repos mínimos: el término vive SOLO en el primero."""
+    a = tmp_path / "winutil"
+    b = tmp_path / "atlas"
+    (a / "sub").mkdir(parents=True)
+    b.mkdir(parents=True)
+    (a / "sub" / "tweak.ps1").write_text("Set-Item ... TimerResolution 5000\n", encoding="utf-8")
+    (a / "readme.md").write_text("nada relevante\n", encoding="utf-8")
+    (b / "script.ps1").write_text("Write-Host 'hola'\n", encoding="utf-8")
+    return a, b
+
+
+def test_orientacion_sonda_no_se_invierte(tmp_path):
+    """Término presente solo en el repo A debe dar (n,0), nunca (0,n)."""
+    a, b = _synthetic_repos(tmp_path)
+    pats = kp.compile_all([r"timer.?resolution|TimerResolution"])
+    hits_a = kp.scan(a, pats)
+    hits_b = kp.scan(b, pats)
+    assert (len(hits_a[0]), len(hits_b[0])) == (1, 0), (hits_a, hits_b)
+
+
+def test_orientacion_con_varias_columnas(tmp_path):
+    """Con 3 patrones, cada columna conserva su repo."""
+    a, b = _synthetic_repos(tmp_path)
+    pats = kp.compile_all([r"TimerResolution", r"nada relevante", r"Write-Host"])
+    ha, hb = kp.scan(a, pats), kp.scan(b, pats)
+    assert [len(x) for x in ha] == [1, 1, 0]
+    assert [len(x) for x in hb] == [0, 0, 1]
+
+
+def test_patrones_incluyen_variantes_sin_espacio():
+    """Win32 Priority debe casar 'Win32PrioritySeparation' (sin espacio)."""
+    entry = dict(kp.KEYWORD_PATTERNS)
+    rx = __import__("re").compile(entry["Win32 Priority"], __import__("re").IGNORECASE)
+    assert rx.search("Win32PrioritySeparation")
+    assert rx.search("Win32 Priority")
+    rx_hags = __import__("re").compile(entry["HAGS"], __import__("re").IGNORECASE)
+    assert rx_hags.search('HwSchMode')
+
+
+def test_catalogo_patrones_completo_y_compilable():
+    assert len(kp.KEYWORD_PATTERNS) >= 88
+    for term, pat in kp.KEYWORD_PATTERNS:
+        assert term and pat
+        __import__("re").compile(pat, __import__("re").IGNORECASE)
+    # sin términos duplicados
+    terms = [t for t, _ in kp.KEYWORD_PATTERNS]
+    assert len(terms) == len(set(terms))
+
+
+def test_section_probes_tienen_fuente_y_marcas_dudosas():
+    fuentes = {f for _i, f, _p, _d in kp.SECTION_PROBES}
+    assert fuentes == {"sec16:Atlas", "sec16:WinUtil", "sec17"}
+    assert any(d for *_x, d in kp.SECTION_PROBES)   # hay "patron dudoso"
+    for item, fuente, pat, dudoso in kp.SECTION_PROBES:
+        assert item and pat and isinstance(dudoso, bool)

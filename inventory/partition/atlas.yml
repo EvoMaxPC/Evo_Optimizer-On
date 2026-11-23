@@ -76,6 +76,19 @@ rules:
   - glob: "package/**"
     treatment: reference
     reason: "Resto del paquete (PNG/ICO/URL/LNK/EXE/ZIP/temas/JSON de datos): activos y metadatos, sin lógica propia."
+  # [paso 2b] ERROR EVIDENTE corregido: los .ps1 bajo app/resources/ y app/tools/
+  # son comportamiento (ISO creation, Write-Usb, captura) y estaban cayendo en
+  # `app/**` -> reference. Regla añadida ANTES de las de directorio de app/.
+  - glob: "app/**/*.ps1"
+    treatment: extract
+    reason: "Scripts PowerShell de la app (resources/iso, resources/prepare, tools): comportamiento de creación de ISO y USB."
+
+  # [paso 2b] Declarado explícitamente: código de terceros vendorizado.
+  # No es comportamiento de Atlas ni de EVO; se referencia para trazabilidad.
+  - glob: "app/vendor/**"
+    treatment: reference
+    reason: "Dependencias Rust vendorizadas (gpui, accesskit): código de terceros, no de Atlas. Se referencia."
+
   - glob: "app/i18n/**"
     treatment: reference
     reason: "Traducciones de la app (18 idiomas): datos de texto, no comportamiento."
