@@ -1,0 +1,33 @@
+ficheros extract      : 206
+con al menos un item  : 180
+extract sin items     : 26
+sin motivo declarado  : 0
+
+extract sin items (path -> motivo):
+  - Compile.ps1: implementation-detail (ADR-0001): empaquetado; mapeado a la capacidad de build reproducible
+  - lint/PSScriptAnalyser.ps1: configuración de linter: no define funciones; cubre una capacidad de proceso (lint)
+  - pester/activity-history.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/app-entry-width.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/assets.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/devdocs-generator.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/edge-removal.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/environment-report-logs.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/environment-report.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/fixtures/legacy-config.json: fixture de test Pester (datos de entrada), no comportamiento de producto
+  - pester/functions.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/generated-controls.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/impex-command.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/impex-paths.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/job-routing.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/logging.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/search-filter-wpf.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/slider.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/toggle-status.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/tooltip-key.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/triage-tools.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/variables.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - pester/window-insets.Tests.ps1: test Pester (it/describe sin `function`): cubre comportamiento existente, no define API
+  - sign.bat: firma de artefactos del pipeline de release: paso de build, sin items propios (implementation-detail)
+  - windev.ps1: lanzador de desarrollo: ejecuta Compile.ps1 y abre la app; sin función propia
+  - xaml/inputXML.xaml: UI declarativa: se consume vía items de tweak/feature; no genera items propios
+coverage_exit=0
