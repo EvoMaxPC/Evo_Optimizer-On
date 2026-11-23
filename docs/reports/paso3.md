@@ -79,10 +79,10 @@ Los **7** ficheros con extensión de comportamiento en `reference` pasan a
 | `package/Executables/AtlasModules/Other/StartLayout.json` | 685 |
 | `package/Executables/AtlasModules/Packages/Atlas-CbsHashes.psd1` | 1.078 |
 | `package/Executables/AtlasModules/Toggles/catalog.json` | 115.595 |
-| `…/Packages/Z-Atlas-NoDefender-…amd64….cab` | 43.743 |
-| `…/Packages/Z-Atlas-NoDefender-…arm64….cab` | 52.230 |
-| `…/Packages/Z-Atlas-NoTelemetry-…amd64….cab` | 27.817 |
-| `…/Packages/Z-Atlas-NoTelemetry-…arm64….cab` | 29.376 |
+| `package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35amd645.0.0.0.cab` | 43.743 |
+| `package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35arm645.0.0.0.cab` | 52.230 |
+| `package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35amd645.0.0.0.cab` | 27.817 |
+| `package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35arm645.0.0.0.cab` | 29.376 |
 
 Los `.cab` se registran **solo** por nombre, tamaño y sha256:
 
