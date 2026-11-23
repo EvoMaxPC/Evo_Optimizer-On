@@ -57,3 +57,16 @@ Medido en el run `45267030334`, commit `49bfc3f`. Evidencia literal en
 - `ProductName` no es un detector fiable (reporta `Windows 10 Enterprise` para un
   kernel build 26200). La detección exige `CurrentBuildNumber` +
   `InstallationType=Client`.
+
+### ERRATA-EVO-004: formato real del inventario y regla de conteo
+
+- El inventario del responsable usa encabezados `- TÍTULO EN MAYÚSCULAS`
+  (**17 secciones**), no `1. Título`. El regex `^[0-9]{1,2}\.\s+[A-ZÁÉÍÓÚÑ]`
+  casa **0** líneas de ese texto. `count_inventory.py` acepta
+  `--heading-style bullet` (por defecto, formato real) y `numeric` (regex pedido).
+- Convención de conteo: una sub-cabecera `WinUtil`/`AtlasOS`/`EVO CLEAN…`
+  **cuenta como línea no vacía de su propio cubo** y las líneas siguientes
+  heredan ese cubo hasta la próxima sub-cabecera o el próximo encabezado de
+  sección (que reinicia a `general`).
+- Verificado también que una viñeta **sangrada** (`  - X`) no debe abrir sección;
+  se corrigió el bug de `strip()` que la aceptaba.

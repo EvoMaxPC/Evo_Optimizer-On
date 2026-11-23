@@ -209,3 +209,16 @@ b4d4cd1 feat: paso 1 - contrato, licencias, lock upstream, canal ci-report y mat
 ```
 
 Rama: `arena/ab2d6de7-evo-optimizer-on` (sin merge a `main`).
+
+
+## Cierre de B1 (inventario importado)
+
+- `docs/requirements/INVENTARIO_USUARIO.md`: 607 líneas, 15.921 bytes,
+  sha256 `0b6aeaef0aa2142bce342f0cbed6bcd2c19030555ff3a38c3699c8d1dad2f709`.
+  Cabecera + línea en blanco + 605 líneas literales; `cmp` de `tail -n +3`
+  contra el texto recibido: idénticos (exit 0). Sin `<<<PEGA`.
+- 17 secciones `- TÍTULO` (el regex numérico da 0: ver ERRATA-EVO-004).
+- Conteo (`docs/reports/inventario-usuario-conteo.tsv`, 7 columnas):
+  no_vacias=588, winutil=212, atlas=351, evo=23, general=2. Invariante OK en 17/17.
+- Sección 17: 49 no vacías, 2 generales (4,1 %).
+- `tools/ledger_extract/tests/test_count_inventory.py`: 9 passed.
