@@ -8,6 +8,7 @@ on:
       - 'inventory/**'
       - 'docs/inventory-recon/**'
       - 'docs/reports/**'
+      - '.github/workflows/**'
     branches-ignore:
       - ci-report
 
