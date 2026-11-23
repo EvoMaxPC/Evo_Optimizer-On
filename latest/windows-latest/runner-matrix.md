@@ -1,4 +1,4 @@
-# Runner: ***REDACTED***
+# Runner: windows-latest
 
 | Campo | Valor |
 |---|---|
@@ -13,11 +13,11 @@
 | BuildNumber(OS) | 26100 |
 | PROCESSOR_ARCHITECTURE | AMD64 |
 | PROCESSOR_ARCHITEW6432 |  |
-| RUNNER_NAME | ***REDACTED*** |
+| RUNNER_NAME | GitHub Actions 1000000796 |
 | RUNNER_OS | Windows |
 | RUNNER_ARCH | X64 |
-| ImageOS | ***REDACTED*** |
-| ImageVersion | ***REDACTED*** |
+| ImageOS | win25-vs2026 |
+| ImageVersion | 20261116.315.1 |
 
 **Clasificacion: SERVER (no objetivo EVO)**
 
@@ -26,29 +26,29 @@
 
 ## Herramientas
 
-- pwsh: EXISTE (***REDACTED***\PowerShell\7\pwsh.exe)
+- pwsh: EXISTE (C:\Program Files\PowerShell\7\pwsh.exe)
 - powershell (este shell): 5.1.26100.33822
 - dotnet --list-sdks:
-  - `8.0.134 [***REDACTED***\dotnet\sdk]`
-  - `8.0.206 [***REDACTED***\dotnet\sdk]`
-  - `8.0.319 [***REDACTED***\dotnet\sdk]`
-  - `8.0.428 [***REDACTED***\dotnet\sdk]`
-  - `9.0.124 [***REDACTED***\dotnet\sdk]`
-  - `9.0.205 [***REDACTED***\dotnet\sdk]`
-  - `9.0.321 [***REDACTED***\dotnet\sdk]`
-  - `10.0.115 [***REDACTED***\dotnet\sdk]`
-  - `10.0.204 [***REDACTED***\dotnet\sdk]`
-  - `10.0.303 [***REDACTED***\dotnet\sdk]`
-  - `10.0.404 [***REDACTED***\dotnet\sdk]`
-  - `11.0.100 [***REDACTED***\dotnet\sdk]`
+  - `8.0.134 [C:\Program Files\dotnet\sdk]`
+  - `8.0.206 [C:\Program Files\dotnet\sdk]`
+  - `8.0.319 [C:\Program Files\dotnet\sdk]`
+  - `8.0.428 [C:\Program Files\dotnet\sdk]`
+  - `9.0.124 [C:\Program Files\dotnet\sdk]`
+  - `9.0.205 [C:\Program Files\dotnet\sdk]`
+  - `9.0.321 [C:\Program Files\dotnet\sdk]`
+  - `10.0.115 [C:\Program Files\dotnet\sdk]`
+  - `10.0.204 [C:\Program Files\dotnet\sdk]`
+  - `10.0.303 [C:\Program Files\dotnet\sdk]`
+  - `10.0.404 [C:\Program Files\dotnet\sdk]`
+  - `11.0.100 [C:\Program Files\dotnet\sdk]`
 - winget: v1.11.510
 - choco: 2.7.5
 - git: git version 2.56.1.windows.1
 
 ## Shell de usuario y AppX
 
-- explorer.exe: CORRIENDO (1 proceso/s, pid 6420)
-- procesos fuera de sesion 0: 31
+- explorer.exe: CORRIENDO (1 proceso/s, pid 7124)
+- procesos fuera de sesion 0: 30
 - AppX instalados (Get-AppxPackage): 46
 - Microsoft.WindowsStore: AUSENTE
 
@@ -117,7 +117,7 @@ ems                     Yes
 ```
 
 - Tareas programadas: 210
-- Estado Ready: 122
+- Estado Ready: 121
 
 ---
-generado: 2026-11-23T21:05:58Z sha=***REDACTED*** run=***REDACTED***
+generado: 2026-11-23T21:11:23Z sha=49bfc3fd4747492d5f5eb686fa8ac3939b90b26b run=45267030334
