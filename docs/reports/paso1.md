@@ -222,3 +222,15 @@ Rama: `arena/ab2d6de7-evo-optimizer-on` (sin merge a `main`).
   no_vacias=588, winutil=212, atlas=351, evo=23, general=2. Invariante OK en 17/17.
 - Sección 17: 49 no vacías, 2 generales (4,1 %).
 - `tools/ledger_extract/tests/test_count_inventory.py`: 9 passed.
+
+
+## Corrección del conteo: reglas (d) y (e) — commit 6
+
+- `count_inventory.py`: regla (d) líneas de nota (8 prefijos) -> `general` sin
+  cambiar el modo; regla (e) sección 17 -> 100 % `general`; `html.unescape`
+  solo al clasificar/contar y al emitir títulos, nunca sobre el fichero crudo.
+- Totales: no_vacias=588, winutil=210, atlas=300, evo=22, general=56
+  (winutil+atlas=510) · invariante OK 17/17 · sección 17: 49/49 general.
+- Contrastado con la predicción del responsable: general=56 ✓, evo=22 ✓,
+  winutil+atlas=510 ✓, sección 17 al 100 % ✓.
+- Suite: 24 passed.

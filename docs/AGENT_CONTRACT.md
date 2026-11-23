@@ -70,3 +70,23 @@ Medido en el run `45267030334`, commit `49bfc3f`. Evidencia literal en
   sección (que reinicia a `general`).
 - Verificado también que una viñeta **sangrada** (`  - X`) no debe abrir sección;
   se corrigió el bug de `strip()` que la aceptaba.
+- **Corrección (ERRATA-EVO-005):** en el primer cálculo se atribuyó `general=2`
+  a la "tabla aplanada" de la sección 17. Era **falso**: fue un fallo de
+  implementación (no se aplicaban las reglas de notas ni la excepción de la
+  sección 17). Corregido; hoy `general=56` con la sección 17 al 100 % general.
+
+### ERRATA-EVO-005: el texto del inventario atravesó el canal transformado
+
+El texto del inventario atravesó el canal del mensaje con transformaciones: los
+17 títulos llegaron como viñetas `- TÍTULO` y `&` llegó como `&amp;`.
+`INVENTARIO_USUARIO.md` es **byte-idéntico a lo recibido por el agente**, no
+necesariamente al original del responsable. Los extractores normalizan
+(`html.unescape`, quitar la viñeta de título) **sin modificar el fichero crudo**.
+
+Consecuencias medidas en este repo:
+
+- El regex de encabezado pedido (`^[0-9]{1,2}\.\s+[A-ZÁÉÍÓÚÑ]`) casa 0 líneas;
+  por eso el estilo por defecto es `bullet`.
+- `&amp;amp;` aparece **0** veces en el fichero; lo que hay es `&amp;` en
+  `O&amp;O ShutUp10++` (1 ocurrencia, línea 87). `html.unescape` aplica **un**
+  nivel: `&amp;amp;` -> `&amp;`, nunca `&amp;amp;` -> `&`.

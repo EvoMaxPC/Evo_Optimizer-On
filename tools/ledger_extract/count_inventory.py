@@ -23,6 +23,26 @@ Clasificación (reiniciada a `general` en cada encabezado de sección)
       desarrollar:"                                             -> evo
   cualquier otra                                                -> general
 
+Regla (d) — líneas de nota
+--------------------------
+Si una línea empieza (tras normalizar) por uno de los prefijos de NOTE_PREFIXES
+("Importante:", "Observación:", "Estas últimas capacidades",
+"WinUtil contiene además", "Atlas dispone de", "Fuentes de arquitectura",
+"GitHub+1", "También hay funcionalidades") se cuenta como `general` y **no
+cambia el modo**: la línea siguiente sigue en el modo anterior.
+
+Regla (e) — sección 17
+----------------------
+En la última sección (CAPACIDADES ADICIONALES...) no hay cambios de modo:
+TODAS sus líneas no vacías son `general`. Sus "WinUtil"/"AtlasOS" son cabeceras
+de columna de una tabla aplanada, no sub-cabeceras.
+
+Normalización
+-------------
+`html.unescape` y el quitar de la viñeta de título se aplican SOLO para
+clasificar/contar y para emitir títulos. El fichero crudo del inventario nunca
+se modifica (ERRATA-EVO-005).
+
 Se ignoran la línea 1 (cabecera del fichero) y todo lo anterior al primer
 encabezado.
 
@@ -36,6 +56,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import html
 import re
 import sys
 from pathlib import Path
@@ -51,6 +72,21 @@ HEADING_STYLES = {
     "numeric": re.compile(r"^[0-9]{1,2}\.\s+[A-ZÁÉÍÓÚÑ]"),
 }
 
+# Regla (d): prefijos de nota. Se comparan tras html.unescape + strip.
+NOTE_PREFIXES = (
+    "Importante:",
+    "Observación:",
+    "Estas últimas capacidades",
+    "WinUtil contiene además",
+    "Atlas dispone de",
+    "Fuentes de arquitectura",
+    "GitHub+1",
+    "También hay funcionalidades",
+)
+
+# Regla (e): título (ya normalizado) de la sección sin cambios de modo.
+NO_MODE_SECTION_TITLE = "CAPACIDADES ADICIONALES QUE NO DEBEMOS PERDER"
+
 COLUMNS = (
     "seccion",
     "titulo",
@@ -62,18 +98,29 @@ COLUMNS = (
 )
 
 
+def normalize(line: str) -> str:
+    """Texto listo para clasificar: html.unescape + strip. NO toca el fichero."""
+    return html.unescape(line).strip()
+
+
 def heading_title(line: str, style: str) -> str:
-    t = line.strip()
+    t = normalize(line)
     if style == "bullet":
-        t = t[1:].strip()  # quita el "- "
+        t = t[1:].strip()  # quita el "- " de la viñeta
     else:
         t = re.sub(r"^[0-9]{1,2}\.\s+", "", t)
     return t
 
 
+def is_note(line: str) -> bool:
+    """Regla (d): ¿es una línea de nota que no debe cambiar el modo?"""
+    s = normalize(line)
+    return s.startswith(NOTE_PREFIXES)
+
+
 def bucket_of(line: str) -> str | None:
     """Devuelve el cubo si la línea CAMBIA la clasificación, si no None."""
-    s = line.strip()
+    s = normalize(line)
     if s == "WinUtil":
         return "winutil"
     if s == "AtlasOS":
@@ -116,13 +163,26 @@ def parse(md_path: Path, style: str = "bullet") -> tuple[list[dict], int]:
         if current is None:
             continue  # antes del primer encabezado: ignorado
 
+        if not raw.strip():
+            continue  # las líneas vacías no cuentan ni cambian nada
+
+        current["nonempty"] += 1
+
+        # Regla (e): la sección de tabla no tiene cambios de modo.
+        if current["titulo"] == NO_MODE_SECTION_TITLE:
+            current["general"] += 1
+            continue
+
+        # Regla (d): una nota va a general y NO cambia el modo vigente.
+        if is_note(raw):
+            current["general"] += 1
+            continue
+
         new_bucket = bucket_of(raw)
         if new_bucket:
             bucket = new_bucket
 
-        if raw.strip():
-            current["nonempty"] += 1
-            current[bucket] += 1
+        current[bucket] += 1
 
     return sections, body_start
 
