@@ -1,0 +1,106 @@
+=== dotnet SDKs y runtimes ===
+8.0.134 [C:\Program Files\dotnet\sdk]
+8.0.206 [C:\Program Files\dotnet\sdk]
+8.0.319 [C:\Program Files\dotnet\sdk]
+8.0.428 [C:\Program Files\dotnet\sdk]
+9.0.124 [C:\Program Files\dotnet\sdk]
+9.0.205 [C:\Program Files\dotnet\sdk]
+9.0.321 [C:\Program Files\dotnet\sdk]
+10.0.115 [C:\Program Files\dotnet\sdk]
+10.0.204 [C:\Program Files\dotnet\sdk]
+10.0.303 [C:\Program Files\dotnet\sdk]
+10.0.404 [C:\Program Files\dotnet\sdk]
+11.0.100 [C:\Program Files\dotnet\sdk]
+Microsoft.AspNetCore.App 8.0.6 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 8.0.22 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 8.0.34 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 9.0.6 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 9.0.23 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 10.0.8 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 10.0.11 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 10.0.15 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.AspNetCore.App 11.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+Microsoft.NETCore.App 8.0.6 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 8.0.22 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 8.0.34 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 9.0.6 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 9.0.23 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 10.0.8 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 10.0.11 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 10.0.15 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.NETCore.App 11.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+Microsoft.WindowsDesktop.App 8.0.6 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 8.0.22 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 8.0.34 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 9.0.6 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 9.0.23 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 10.0.8 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 10.0.11 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 10.0.15 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+Microsoft.WindowsDesktop.App 11.0.0 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+=== PowerShell version ===
+7.6.10
+=== Windows build info (registro) ===
+
+CurrentBuildNumber : 26100
+UBR                : 33828
+EditionID          : ServerDatacenter
+DisplayVersion     : 24H2
+
+=== reg.exe funciona ===
+
+HKEY_CURRENT_USER\Software\Classes\Local Settings\MuiCache\1a8\52C64B7E
+    @tzres.dll,-142    REG_SZ    Canada Central Standard Time
+    @tzres.dll,-141    REG_SZ    Canada Central Daylight Time
+
+End of search: 2 match(es) found.
+EXITCODE=0
+=== whoami y admin ===
+
+GROUP INFORMATION
+-----------------
+
+Group Name                                                    Type             SID          Attributes                                                     
+============================================================= ================ ============ ===============================================================
+Everyone                                                      Well-known group S-1-1-0      Mandatory group, Enabled by default, Enabled group             
+NT AUTHORITY\Local account and member of Administrators group Well-known group S-1-5-114    Mandatory group, Enabled by default, Enabled group             
+BUILTIN\Administrators                                        Alias            S-1-5-32-544 Mandatory group, Enabled by default, Enabled group, Group owner
+BUILTIN\Users                                                 Alias            S-1-5-32-545 Mandatory group, Enabled by default, Enabled group             
+NT AUTHORITY\INTERACTIVE                                      Well-known group S-1-5-4      Mandatory group, Enabled by default, Enabled group             
+CONSOLE LOGON                                                 Well-known group S-1-2-1      Mandatory group, Enabled by default, Enabled group             
+NT AUTHORITY\Authenticated Users                              Well-known group S-1-5-11     Mandatory group, Enabled by default, Enabled group             
+NT AUTHORITY\This Organization                                Well-known group S-1-5-15     Mandatory group, Enabled by default, Enabled group             
+NT AUTHORITY\Local account                                    Well-known group S-1-5-113    Mandatory group, Enabled by default, Enabled group             
+LOCAL                                                         Well-known group S-1-2-0      Mandatory group, Enabled by default, Enabled group             
+NT AUTHORITY\NTLM Authentication                              Well-known group S-1-5-64-10  Mandatory group, Enabled by default, Enabled group             
+Mandatory Label\High Mandatory Level                          Label            S-1-16-12288                                                                
+
+USER INFORMATION
+----------------
+
+User Name                 SID                                          
+========================= =============================================
+runnervmbpeip\runneradmin S-1-5-21-3414932011-3134797172-3625386099-500
+IsAdmin=True
+User=runnervmbpeip\runneradmin
+IL=
+=== winget y choco ===
+v1.11.510
+winget_exit=0
+2.7.5
+choco_exit=0
+=== git y python ===
+git version 2.56.1.windows.1
+Python 3.12.10
+python_exit=0
+=== arquitectura ===
+PROCESSOR_ARCHITECTURE=AMD64
+Microsoft Windows NT 10.0.26100.0
+RunnerOS=Windows
+job_status=
+runner=GitHub Actions 1000000786
+run_id=45264279303
+run_attempt=1
+sha=bf60efa44b22d7ea52eec881a0124dc8bd4e3e60
+ref=refs/heads/arena/ab2d6de7-evo-optimizer-on
+generated_utc=2026-11-23T20:55:27Z
