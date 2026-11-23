@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Artefactos de CI locales (los de verdad van a la rama ci-report)
+ci-out/
+.ci-report-work/
