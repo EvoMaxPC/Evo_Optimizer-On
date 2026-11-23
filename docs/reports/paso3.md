@@ -201,3 +201,10 @@ extractor; es deuda declarada para el Paso 4.
   (ejecuta dos veces y `diff` de sha256; falla si difieren), "Cobertura de
   extract" y "Esquema de config"; los TSV generados se copian a `ci-out/` y se
   publican en la rama `ci-report`.
+
+Cierre: el workflow `ledger-verify` se ejecuta en cada push de esta capa. La
+evidencia vive en la rama `ci-report`: `latest/ledger-verify/meta.json` (campo
+`sha` = commit verificado, `files: 15`), `pytest.txt` (`71 passed`,
+`pytest_exit=0`), `determinism.txt` (`determinismo: OK`), `coverage.txt`
+(`sin motivo declarado: 0`, `coverage_exit=0`), `partition_check.txt`
+(`VEREDICTO: OK` ×2) y los tres TSV publicados.
