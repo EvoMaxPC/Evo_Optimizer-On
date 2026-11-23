@@ -1,0 +1,42 @@
+# Contrato de trabajo: EVO CLEAN
+1. Alcance: optimizador EXCLUSIVO para Windows 10 22H2 y Windows 11
+   23H2/24H2/25H2/26H2. C# / .NET 10 LTS (net10.0-windows) definido en una única
+   propiedad central. UI WPF. Licencia GPLv3.
+2. Requisitos maestros
+   - REQ-000: cobertura 100% de WinUtil + AtlasOS + capacidades EVO. Nada se
+     descarta por avanzado, experimental, privilegiado o de riesgo alto.
+   - REQ-001: incorporar != ejecutar. Cada operación tiene control propio,
+     requisitos, compatibilidad, privilegio mínimo, confirmación según riesgo
+     y restauración cuando proceda.
+   - REQ-002: nunca inventar datos; lo no verificado se marca NO VERIFICADO.
+   - REQ-003: las versiones de Windows viven en datos (catalog/windows-releases.json).
+     Un build desconocido NUNCA es compatible. Windows Server NO es objetivo.
+   - REQ-004: el motor accede al sistema solo mediante interfaces (dry-run,
+     simulación, tests con fakes, reversión verificable).
+   - REQ-005: trazabilidad total: cada fichero de upstream queda clasificado;
+     ninguno se ignora en silencio.
+   - REQ-006: no hay deuda oculta: desviaciones y suposiciones se declaran.
+3. Entorno del agente: Linux sin .NET ni PowerShell. Python 3.11 con pytest,
+   jsonschema y pyyaml (pip --break-system-packages). Todo build o test de
+   .NET/PowerShell ocurre en GitHub Actions. Los runners hosted de Windows
+   pueden ser Windows Server: sirven para compilar y para tests unitarios y
+   de integración en claves sandbox, no para validar AppX/Store/Explorer.
+   Windows 10 22H2 y los tweaks de shell se validan en VM del responsable.
+4. Lectura de resultados de CI: método estándar = rama ci-report vía git:
+   `git fetch origin ci-report` y `git show FETCH_HEAD:<ruta>`.
+   [ERRATA-EVO-001] `git fetch origin ci-report` NO crea `origin/ci-report`
+   (verificado: `fatal: invalid object name 'origin/ci-report'`). Para usar el
+   nombre remoto, refspec explícito:
+   `git fetch origin ci-report:refs/remotes/origin/ci-report`.
+   `gh run view --log` NO funciona (CDN bloqueado: `results-receiver.actions.githubusercontent.com`).
+   Estado por job: `gh api .../actions/runs/<id>/jobs`.
+   Salida del agente limitada a 20.000 caracteres: informes cortos y detalle en
+   docs/reports/.
+5. Licencias: el repo es GPLv3. WinUtil es MIT (atribución en
+   THIRD_PARTY_NOTICES.md). El inventario guarda metadatos, claves y hashes,
+   no cuerpos de código. Copiar código de upstream requiere un ADR.
+6. Convenciones: Conventional Commits, ADRs breves en docs/adr/, trabajar en la
+   rama actual, no hacer merge a main sin aprobación.
+7. Formato de informe: resumen; archivos; comandos con salida real; resultados
+   de tests; criterios CUMPLIDO/NO CUMPLIDO/NO VERIFICADO con evidencia;
+   desviaciones; datos asumidos; riesgos; preguntas abiertas; commit.

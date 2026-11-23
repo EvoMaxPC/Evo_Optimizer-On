@@ -3,119 +3,288 @@ name: probe
 on:
   workflow_dispatch:
   push:
-    branches:
-      - arena/ab2d6de7-evo-optimizer-on
+    paths:
+      - '.github/workflows/probe.yml'
+      - 'tools/ci/**'
+    branches-ignore:
+      - ci-report
 
 permissions:
   contents: write
-  checks: write
+
+concurrency:
+  group: probe-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  probe:
-    runs-on: windows-latest
+  probe-windows:
+    name: probe (${{ matrix.label }})
+    runs-on: ${{ matrix.label }}
+    timeout-minutes: 10
+    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        label:
+          - windows-latest
+          - windows-2022
+          - windows-2025
+          - windows-11-arm
     env:
-      REPORT_DIR: ci-report
-      REPORT_FILE: ci-report/probe.txt
+      REPORT_DIR: ${{ github.workspace }}/ci-out
+      LABEL: ${{ matrix.label }}
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        continue-on-error: true
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
 
-      - name: dotnet SDKs y runtimes
-        shell: pwsh
+      - name: Preparar directorio de salida
+        shell: powershell
         continue-on-error: true
         run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== dotnet SDKs y runtimes ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { dotnet --list-sdks; dotnet --list-runtimes } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: PowerShell version
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== PowerShell version ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { $PSVersionTable.PSVersion.ToString() } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: Windows build info (registro)
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== Windows build info (registro) ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion') | Select-Object CurrentBuildNumber,UBR,EditionID,DisplayVersion | Format-List * } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: reg.exe funciona
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== reg.exe funciona ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { reg query "HKCU\Software" /s /f nada; "EXITCODE=$LASTEXITCODE" } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: whoami y admin
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== whoami y admin ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { whoami /groups; whoami /user; $i=[Security.Principal.WindowsIdentity]::GetCurrent(); $p=New-Object Security.Principal.WindowsPrincipal($i); "IsAdmin="+$p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator); "User="+$i.Name; "IL="+($i.Groups|?{$_.Value -match "^S-1-16-"}|%{$_.Value}) } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: winget y choco
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== winget y choco ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { try{winget --version}catch{"winget NO: $_"}; "winget_exit=$LASTEXITCODE"; try{choco --version}catch{"choco NO: $_"}; "choco_exit=$LASTEXITCODE" } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: git y python
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== git y python ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { git --version; python --version; "python_exit=$LASTEXITCODE" } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: arquitectura
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          New-Item -ItemType Directory -Force -Path ci-report | Out-Null
-          "=== arquitectura ===" | Tee-Object -FilePath ci-report/probe.txt -Append
-          & { "PROCESSOR_ARCHITECTURE="+$env:PROCESSOR_ARCHITECTURE; [Environment]::OSVersion.VersionString; "RunnerOS="+$env:RUNNER_OS } 2>&1 | Tee-Object -FilePath ci-report/probe.txt -Append
-
-      - name: Publicar ci-report en rama huérfana
-        shell: pwsh
-        continue-on-error: true
-        run: |
-          $ErrorActionPreference = 'Continue'
           New-Item -ItemType Directory -Force -Path $env:REPORT_DIR | Out-Null
-          $meta = @(
-            "job_status=$env:JOB_STATUS"
-            "runner=$env:RUNNER_NAME"
-            "run_id=$env:GITHUB_RUN_ID"
-            "run_attempt=$env:GITHUB_RUN_ATTEMPT"
-            "sha=$env:GITHUB_SHA"
-            "ref=$env:GITHUB_REF"
-            "generated_utc=" + (Get-Date).ToUniversalTime().ToString('s') + "Z"
-          ) -join "`n"
-          Add-Content -Path $env:REPORT_FILE -Value $meta -Encoding utf8
-          "=== contenido de $env:REPORT_FILE ==="
-          Get-Content $env:REPORT_FILE | Out-String
+          "$env:LABEL" | Out-File -Encoding utf8 "$env:REPORT_DIR/.label"
 
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout --orphan ci-report 2>&1 | Out-String
-          git rm -rf --cached . 2>&1 | Out-String
-          git add -f $env:REPORT_DIR 2>&1 | Out-String
-          git commit -m "ci-report: run $env:GITHUB_RUN_ID" 2>&1 | Out-String
-          git push --force origin ci-report 2>&1 | Out-String
-          "PUSH_EXITCODE=$LASTEXITCODE"
-
-      - name: Resumen siempre visible
-        if: always()
-        shell: pwsh
+      - name: Identidad del runner
+        shell: powershell
         continue-on-error: true
         run: |
-          "JOB_STATUS=$env:JOB_STATUS"
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          $ErrorActionPreference = 'Continue'
+          Add-Content -Path $out -Value "# Runner: $env:LABEL"
+          Add-Content -Path $out -Value ""
+          Add-Content -Path $out -Value "| Campo | Valor |"
+          Add-Content -Path $out -Value "|---|---|"
+          try {
+            $os = Get-CimInstance Win32_OperatingSystem -ErrorAction Stop
+            $cv = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+            $rows = [ordered]@{
+              'OSCaption'          = $os.Caption
+              'ProductName(reg)'   = $cv.ProductName
+              'EditionID'          = $cv.EditionID
+              'InstallationType'   = $cv.InstallationType
+              'CurrentBuildNumber' = $cv.CurrentBuildNumber
+              'UBR'                = $cv.UBR
+              'DisplayVersion'     = $cv.DisplayVersion
+              'Version(OS)'        = $os.Version
+              'BuildNumber(OS)'    = $os.BuildNumber
+              'PROCESSOR_ARCHITECTURE' = $env:PROCESSOR_ARCHITECTURE
+              'PROCESSOR_ARCHITEW6432' = $env:PROCESSOR_ARCHITEW6432
+              'RUNNER_NAME'        = $env:RUNNER_NAME
+              'RUNNER_OS'          = $env:RUNNER_OS
+              'RUNNER_ARCH'        = $env:RUNNER_ARCH
+              'ImageOS'            = $env:ImageOS
+              'ImageVersion'       = $env:ImageVersion
+            }
+            foreach ($k in $rows.Keys) {
+              Add-Content -Path $out -Value "| $k | $($rows[$k]) |"
+            }
+          } catch {
+            Add-Content -Path $out -Value "| ERROR | identidad del runner: $_ |"
+          }
+          Add-Content -Path $out -Value ""
+
+      - name: Cliente o Server (clasificacion)
+        shell: powershell
+        continue-on-error: true
+        run: |
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          $cv = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+          $type = "$($cv.InstallationType)"
+          $product = "$($cv.ProductName)"
+          $verdict = "NO VERIFICADO"
+          if ($type -match 'Server' -or $product -match 'Server') { $verdict = "SERVER (no objetivo EVO)" }
+          elseif ($type -match 'Client' -or $product -match '^Windows (10|11)') { $verdict = "CLIENTE (objetivo EVO)" }
+          Add-Content -Path $out -Value "**Clasificacion: $verdict**"
+          Add-Content -Path $out -Value ""
+          Add-Content -Path $out -Value "- InstallationType crudo: ``$type``"
+          Add-Content -Path $out -Value "- ProductName crudo: ``$product``"
+          Add-Content -Path $out -Value ""
+
+      - name: Herramientas (pwsh, dotnet, winget, choco)
+        shell: powershell
+        continue-on-error: true
+        run: |
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          Add-Content -Path $out -Value "## Herramientas"
+          Add-Content -Path $out -Value ""
+
+          $pwsh = Get-Command pwsh -ErrorAction SilentlyContinue
+          if ($pwsh) { Add-Content -Path $out -Value "- pwsh: EXISTE ($($pwsh.Source))" }
+          else { Add-Content -Path $out -Value "- pwsh: NO EXISTE" }
+
+          $psv = "$($PSVersionTable.PSVersion)"
+          Add-Content -Path $out -Value "- powershell (este shell): $psv"
+
+          $sdks = & dotnet --list-sdks 2>&1
+          if ($LASTEXITCODE -eq 0) {
+            Add-Content -Path $out -Value "- dotnet --list-sdks:"
+            foreach ($l in $sdks) { Add-Content -Path $out -Value "  - ``$l``" }
+          } else {
+            Add-Content -Path $out -Value "- dotnet: NO DISPONIBLE ($sdks)"
+          }
+
+          $winget = & winget --version 2>&1
+          Add-Content -Path $out -Value "- winget: $(if ($LASTEXITCODE -eq 0) { $winget } else { 'NO DISPONIBLE' })"
+          $choco = & choco --version 2>&1
+          Add-Content -Path $out -Value "- choco: $(if ($LASTEXITCODE -eq 0) { $choco } else { 'NO DISPONIBLE' })"
+          $gitv = & git --version 2>&1
+          Add-Content -Path $out -Value "- git: $gitv"
+          Add-Content -Path $out -Value ""
+
+      - name: Shell del usuario (explorer) y AppX
+        shell: powershell
+        continue-on-error: true
+        run: |
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          Add-Content -Path $out -Value "## Shell de usuario y AppX"
+          Add-Content -Path $out -Value ""
+
+          $exp = Get-Process explorer -ErrorAction SilentlyContinue
+          if ($exp) { Add-Content -Path $out -Value "- explorer.exe: CORRIENDO ($($exp.Count) proceso/s, pid $($exp[0].Id))" }
+          else { Add-Content -Path $out -Value "- explorer.exe: NO CORRE (headless / sin shell de usuario)" }
+
+          # sesiones interactivas
+          $sess = Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -ne 0 } | Measure-Object
+          Add-Content -Path $out -Value "- procesos fuera de sesion 0: $($sess.Count)"
+
+          try {
+            $appx = Get-AppxPackage -ErrorAction Stop
+            Add-Content -Path $out -Value "- AppX instalados (Get-AppxPackage): $($appx.Count)"
+            $store = $appx | Where-Object { $_.Name -eq 'Microsoft.WindowsStore' }
+            if ($store) { Add-Content -Path $out -Value "- Microsoft.WindowsStore: PRESENTE ($($store.Version))" }
+            else { Add-Content -Path $out -Value "- Microsoft.WindowsStore: AUSENTE" }
+          } catch {
+            Add-Content -Path $out -Value "- AppX: ERROR ($_)"
+          }
+          Add-Content -Path $out -Value ""
+
+      - name: Servicios y arranque
+        shell: powershell
+        continue-on-error: true
+        run: |
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          Add-Content -Path $out -Value "## Servicios"
+          Add-Content -Path $out -Value ""
+          Add-Content -Path $out -Value "| Servicio | Estado | TipoInicio |"
+          Add-Content -Path $out -Value "|---|---|---|"
+          foreach ($n in @('WSearch','SysMain','DiagTrack','wuauserv','BthServ','Spooler')) {
+            try {
+              $s = Get-Service -Name $n -ErrorAction Stop
+              $st = (Get-CimInstance Win32_Service -Filter "Name='$n'" -ErrorAction SilentlyContinue).StartMode
+              if (-not $st) { $st = 'desconocido' }
+              Add-Content -Path $out -Value "| $n | $($s.Status) | $st |"
+            } catch {
+              Add-Content -Path $out -Value "| $n | NO EXISTE | - |"
+            }
+          }
+          Add-Content -Path $out -Value ""
+
+      - name: Energia y arranque (powercfg, bcdedit)
+        shell: powershell
+        continue-on-error: true
+        run: |
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          Add-Content -Path $out -Value "## powercfg / bcdedit"
+          Add-Content -Path $out -Value ""
+          $pc = & powercfg /list 2>&1
+          Add-Content -Path $out -Value "- powercfg /list (exit=$LASTEXITCODE):"
+          Add-Content -Path $out -Value '```'
+          foreach ($l in $pc) { Add-Content -Path $out -Value $l }
+          Add-Content -Path $out -Value '```'
+          $bc = & bcdedit /enum 2>&1
+          Add-Content -Path $out -Value "- bcdedit /enum (exit=$LASTEXITCODE):"
+          if ($LASTEXITCODE -eq 0) {
+            Add-Content -Path $out -Value '```'
+            foreach ($l in $bc) { Add-Content -Path $out -Value $l }
+            Add-Content -Path $out -Value '```'
+          } else {
+            Add-Content -Path $out -Value "NO DISPONIBLE / FALLO: $($bc -join ' ')"
+          }
+          Add-Content -Path $out -Value ""
+
+      - name: Tareas programadas
+        shell: powershell
+        continue-on-error: true
+        run: |
+          $out = "$env:REPORT_DIR\runner-matrix.md"
+          try {
+            $t = Get-ScheduledTask -ErrorAction Stop
+            Add-Content -Path $out -Value "- Tareas programadas: $($t.Count)"
+            $ready = ($t | Where-Object { "$($_.State)" -eq 'Ready' }).Count
+            Add-Content -Path $out -Value "- Estado Ready: $ready"
+          } catch {
+            Add-Content -Path $out -Value "- Tareas programadas: ERROR ($_)"
+          }
+          Add-Content -Path $out -Value ""
+          Add-Content -Path $out -Value "---"
+          Add-Content -Path $out -Value "generado: $((Get-Date).ToUniversalTime().ToString('s'))Z sha=$env:GITHUB_SHA run=$env:GITHUB_RUN_ID"
+          Get-Content $out | Out-String
+
+      - name: Publicar informe (siempre)
+        if: always()
+        shell: bash
+        continue-on-error: true
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          STATUS="${{ job.status }}"
+          mkdir -p ci-out
+          if [ ! -f ci-out/runner-matrix.md ]; then
+            printf '# Runner: %s\n\nNO DATA: el job no llego a ejecutar los pasos de recoleccion.\n' "$LABEL" > ci-out/runner-matrix.md
+          fi
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "$STATUS" || echo "publish-report fallo (no bloquea el job)"
+
+  probe-ubuntu:
+    name: probe (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+    env:
+      LABEL: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Versiones
+        shell: bash
+        continue-on-error: true
+        run: |
+          mkdir -p ci-out
+          {
+            echo "# Runner: ubuntu-latest"
+            echo
+            echo "- python3: $(python3 --version 2>&1)"
+            echo "- git: $(git --version 2>&1)"
+            echo "- uname: $(uname -a)"
+            echo "- bash: ${BASH_VERSION}"
+            echo
+            echo "generado: $(date -u +%Y-%m-%dT%H:%M:%SZ) sha=$GITHUB_SHA run=$GITHUB_RUN_ID"
+          } > ci-out/runner-matrix.md
+          cat ci-out/runner-matrix.md
+
+      - name: Publicar informe (siempre)
+        if: always()
+        shell: bash
+        continue-on-error: true
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          STATUS="${{ job.status }}"
+          mkdir -p ci-out
+          if [ ! -f ci-out/runner-matrix.md ]; then
+            printf '# Runner: %s\n\nNO DATA: el job no llego a ejecutar los pasos de recoleccion.\n' "$LABEL" > ci-out/runner-matrix.md
+          fi
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "$STATUS" || echo "publish-report fallo (no bloquea el job)"
