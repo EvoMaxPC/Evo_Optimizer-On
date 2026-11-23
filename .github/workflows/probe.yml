@@ -225,6 +225,24 @@ jobs:
           Add-Content -Path $out -Value ""
           Add-Content -Path $out -Value "---"
           Add-Content -Path $out -Value "generado: $((Get-Date).ToUniversalTime().ToString('s'))Z sha=$env:GITHUB_SHA run=$env:GITHUB_RUN_ID"
+          # meta.txt NO contiene nombres sensibles -> sobrevive a la redacción
+          # y deja la identidad del runner en el artefacto publicado.
+          $meta = @(
+            "label=$env:LABEL"
+            "runner_name=$env:RUNNER_NAME"
+            "runner_os=$env:RUNNER_OS"
+            "runner_arch=$env:RUNNER_ARCH"
+            "image_os=$env:ImageOS"
+            "image_version=$env:ImageVersion"
+            "sha=$env:GITHUB_SHA"
+            "run_id=$env:GITHUB_RUN_ID"
+            "arch=$env:PROCESSOR_ARCHITECTURE"
+            "os_caption=$((Get-CimInstance Win32_OperatingSystem).Caption)"
+            "build=$((Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').CurrentBuildNumber)"
+            "edition_id=$((Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').EditionID)"
+            "installation_type=$((Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').InstallationType)"
+          )
+          $meta | Out-File -Encoding utf8 "$env:REPORT_DIR\meta.txt"
           Get-Content $out | Out-String
 
       - name: Publicar informe (siempre)

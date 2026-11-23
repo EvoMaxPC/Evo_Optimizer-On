@@ -138,6 +138,28 @@ else
   ok "secreto redactado: $(cat "$SANDBOX/sec.out")"
 fi
 
+hdr "(g) no-redaccion de identidad (regresion ERRATA-EVO-002)"
+mkdir -p "$SANDBOX/id"
+printf 'sha=%s run=%s runner=%s image=%s\n' \
+  "${GITHUB_SHA:-deadbeefcafe}" "${GITHUB_RUN_ID:-1001}" \
+  "${RUNNER_NAME:-test-runner}" "${RUNNER_IMAGE:-local}" >"$SANDBOX/id/id.txt"
+pub "$SANDBOX/id" windows-latest success 6001 "$SANDBOX/wid" >/dev/null 2>&1
+git --git-dir="$REMOTE" cat-file -p "$BRANCH:latest/windows-latest/id.txt" >"$SANDBOX/id.out" 2>/dev/null
+cat "$SANDBOX/id.out" | sed 's/^/   /'
+grep -q 'REDACTED' "$SANDBOX/id.out" \
+  && bad "identidad redactada por error (RUNNER_NAME/SHA no deben tocarse)" \
+  || ok "identidad intacta (sin REDACTED)"
+grep -q "sha=${GITHUB_SHA:-deadbeefcafe}" "$SANDBOX/id.out" && ok "GITHUB_SHA conservado" || bad "GITHUB_SHA perdido"
+grep -q "runner=${RUNNER_NAME:-test-runner}" "$SANDBOX/id.out" && ok "RUNNER_NAME conservado" || bad "RUNNER_NAME perdido"
+
+hdr "(h) allowlist no bloquea secretos (GITHUB_TOKEN-like)"
+mkdir -p "$SANDBOX/sec2"
+MY_FAKE_TOKEN="otrosecretovalor987" printf 'tok=%s\n' "otrosecretovalor987" >"$SANDBOX/sec2/t.txt"
+MY_FAKE_TOKEN="otrosecretovalor987" pub "$SANDBOX/sec2" ubuntu-latest success 6002 "$SANDBOX/wsec2" >/dev/null 2>&1
+git --git-dir="$REMOTE" cat-file -p "$BRANCH:latest/ubuntu-latest/t.txt" >"$SANDBOX/sec2.out" 2>/dev/null
+cat "$SANDBOX/sec2.out" | sed 's/^/   /'
+grep -q 'otrosecretovalor987' "$SANDBOX/sec2.out" && bad "secreto no redactado" || ok "secreto redactado"
+
 hdr "RESUMEN"
 printf 'PASS=%d FAIL=%d\n' "$PASS" "$FAIL"
 printf 'commits en la rama: %s\n' "$(git --git-dir="$REMOTE" rev-list --count "$BRANCH")"

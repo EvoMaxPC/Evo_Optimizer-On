@@ -46,14 +46,29 @@ abs_path() { (cd "$1" 2>/dev/null && pwd -P); }
 # --- redacción de secretos ----------------------------------------------
 # Recorre el árbol de trabajo y sustituye, LITERALMENTE, los valores de las
 # variables de entorno sensibles por ***REDACTED***.
+# Nombres que NUNCA se redactan (identidad no sensible y necesaria para el informe).
+REDACT_ALLOWLIST_RE='^(GITHUB_SHA|GITHUB_RUN_ID|GITHUB_RUN_ATTEMPT|GITHUB_REPOSITORY|GITHUB_REF|GITHUB_REF_NAME|GITHUB_EVENT_NAME|GITHUB_WORKFLOW|GITHUB_JOB|GITHUB_ACTOR|RUNNER_NAME|RUNNER_OS|RUNNER_ARCH|RUNNER_TEMP|RUNNER_TOOL_CACHE|ImageOS|ImageVersion)$'
+
+# ¿El nombre de la variable debe redactarse?
+# Regla: contiene TOKEN/SECRET/KEY (case-insensitive) y no está en la allowlist.
+# [ERRATA-EVO-002] La primera versión redactaba TODAS las variables (un `case`
+# vacío actuaba como comodín) y borraba RUNNER_NAME/GITHUB_SHA del informe.
+should_redact() {
+  local name="$1"
+  printf '%s' "$name" | grep -qE "$REDACT_ALLOWLIST_RE" && return 1
+  printf '%s' "$name" | grep -qiE 'TOKEN|SECRET|KEY' && return 0
+  if [ -n "${CI_REPORT_REDACT_EXTRA:-}" ]; then
+    printf '%s' "$name" | grep -qE "$CI_REPORT_REDACT_EXTRA" && return 0
+  fi
+  return 1
+}
+
 redact_tree() {
   local root="$1" name value report
   report=$(mktemp)
   while IFS= read -r name; do
-    case "$name" in
-      GITHUB_TOKEN|GITHUB_*TOKEN*|*TOKEN*|*SECRET*|*KEY*|AWS_*|ACTIONS_*KEY*) ;;
-    esac
     [ -n "$name" ] || continue
+    should_redact "$name" || continue
     value="${!name-}"
     # ignora vacíos y valores demasiado cortos/genéricos para no destrozar ficheros
     [ "${#value}" -ge 8 ] || continue
@@ -171,6 +186,11 @@ main() {
   log "remoto: $(printf '%s' "$remote" | sed -E 's#//[^@]*@#//***@#')"
   log "run_id=$run_id etiqueta=$label estado=$status intento=$attempt"
   log "work=$work rama=$BRANCH retención=$max_runs truncado>${max_bytes}B"
+
+  # El origen puede estar dentro del work repo; evita recursión al copiar.
+  case "$src_abs/" in
+    "$work"/*) die "el directorio origen ($src_abs) está dentro de CI_REPORT_WORK ($work); usa otro work" ;;
+  esac
 
   local staging
   staging=$(mktemp -d)
