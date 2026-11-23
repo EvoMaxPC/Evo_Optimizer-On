@@ -1,0 +1,140 @@
+name: probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/ab2d6de7-evo-optimizer-on
+
+permissions:
+  contents: write
+  checks: write
+
+jobs:
+  probe:
+    runs-on: windows-latest
+    continue-on-error: true
+    env:
+      REPORT_DIR: ci-report
+      REPORT_FILE: ci-report/probe.txt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        continue-on-error: true
+
+      - name: dotnet SDKs y runtimes
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          $ErrorActionPreference = 'Continue'
+          "=== dotnet --list-sdks ==="
+          dotnet --list-sdks 2>&1 | Out-String
+          "=== dotnet --list-runtimes ==="
+          dotnet --list-runtimes 2>&1 | Out-String
+
+      - name: PowerShell version
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== PSVersionTable.PSVersion ==="
+          $PSVersionTable.PSVersion | Out-String
+          $PSVersionTable | Out-String
+
+      - name: Windows build info (registro)
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== HKLM CurrentVersion ==="
+          (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion') |
+            Select-Object CurrentBuildNumber, UBR, EditionID, DisplayVersion |
+            Format-List | Out-String
+
+      - name: reg.exe funciona
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== reg query HKCU\\Software /s /f nada ==="
+          reg query "HKCU\Software" /s /f nada 2>&1 | Out-String
+          "EXITCODE=$LASTEXITCODE"
+
+      - name: whoami y admin
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== whoami /groups ==="
+          whoami /groups 2>&1 | Out-String
+          "=== whoami /user ==="
+          whoami /user 2>&1 | Out-String
+          "=== admin? ==="
+          $id = [Security.Principal.WindowsIdentity]::GetCurrent()
+          $p  = New-Object Security.Principal.WindowsPrincipal($id)
+          "IsAdmin=" + $p.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+          "User=" + $id.Name
+          "IntegrityLevel=" + ($id.Groups | Where-Object { $_.Value -match '^S-1-16-' } | ForEach-Object { $_.Value })
+
+      - name: winget y choco
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== winget --version ==="
+          try { winget --version 2>&1 | Out-String } catch { "winget NO DISPONIBLE: $_" }
+          "EXITCODE=$LASTEXITCODE"
+          "=== choco --version ==="
+          try { choco --version 2>&1 | Out-String } catch { "choco NO DISPONIBLE: $_" }
+          "EXITCODE=$LASTEXITCODE"
+
+      - name: git y python
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== git --version ==="
+          git --version 2>&1 | Out-String
+          "=== python --version ==="
+          try { python --version 2>&1 | Out-String } catch { "python NO DISPONIBLE: $_" }
+
+      - name: arquitectura
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "=== PROCESSOR_ARCHITECTURE ==="
+          "PROCESSOR_ARCHITECTURE=" + $env:PROCESSOR_ARCHITECTURE
+          "PROCESSOR_ARCHITEW6432=" + $env:PROCESSOR_ARCHITEW6432
+          "OS=" + [Environment]::OSVersion.VersionString
+          "RunnerName=" + $env:RUNNER_NAME
+          "RunnerOS=" + $env:RUNNER_OS
+
+      - name: Publicar ci-report en rama huérfana
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          $ErrorActionPreference = 'Continue'
+          New-Item -ItemType Directory -Force -Path $env:REPORT_DIR | Out-Null
+          $meta = @(
+            "job_status=$env:JOB_STATUS"
+            "runner=$env:RUNNER_NAME"
+            "run_id=$env:GITHUB_RUN_ID"
+            "run_attempt=$env:GITHUB_RUN_ATTEMPT"
+            "sha=$env:GITHUB_SHA"
+            "ref=$env:GITHUB_REF"
+            "generated_utc=" + (Get-Date).ToUniversalTime().ToString('s') + "Z"
+          ) -join "`n"
+          Set-Content -Path $env:REPORT_FILE -Value $meta -Encoding utf8
+          "=== contenido de $env:REPORT_FILE ==="
+          Get-Content $env:REPORT_FILE | Out-String
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan ci-report 2>&1 | Out-String
+          git rm -rf --cached . 2>&1 | Out-String
+          git add -f $env:REPORT_DIR 2>&1 | Out-String
+          git commit -m "ci-report: run $env:GITHUB_RUN_ID" 2>&1 | Out-String
+          git push --force origin ci-report 2>&1 | Out-String
+          "PUSH_EXITCODE=$LASTEXITCODE"
+
+      - name: Resumen siempre visible
+        if: always()
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          "JOB_STATUS=$env:JOB_STATUS"
+          "GITHUB_SHA=$env:GITHUB_SHA"
