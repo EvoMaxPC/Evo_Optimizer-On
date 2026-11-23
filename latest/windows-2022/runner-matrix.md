@@ -1,4 +1,4 @@
-# Runner: ***REDACTED***
+# Runner: windows-2022
 
 | Campo | Valor |
 |---|---|
@@ -13,11 +13,11 @@
 | BuildNumber(OS) | 20348 |
 | PROCESSOR_ARCHITECTURE | AMD64 |
 | PROCESSOR_ARCHITEW6432 |  |
-| RUNNER_NAME | ***REDACTED*** |
+| RUNNER_NAME | GitHub Actions 1000000792 |
 | RUNNER_OS | Windows |
 | RUNNER_ARCH | X64 |
 | ImageOS | win22 |
-| ImageVersion | ***REDACTED*** |
+| ImageVersion | 20261116.370.1 |
 
 **Clasificacion: SERVER (no objetivo EVO)**
 
@@ -26,25 +26,25 @@
 
 ## Herramientas
 
-- pwsh: EXISTE (***REDACTED***\PowerShell\7\pwsh.exe)
+- pwsh: EXISTE (C:\Program Files\PowerShell\7\pwsh.exe)
 - powershell (este shell): 5.1.20348.5773
 - dotnet --list-sdks:
-  - `8.0.134 [***REDACTED***\dotnet\sdk]`
-  - `8.0.206 [***REDACTED***\dotnet\sdk]`
-  - `8.0.319 [***REDACTED***\dotnet\sdk]`
-  - `8.0.428 [***REDACTED***\dotnet\sdk]`
-  - `9.0.124 [***REDACTED***\dotnet\sdk]`
-  - `9.0.205 [***REDACTED***\dotnet\sdk]`
-  - `9.0.321 [***REDACTED***\dotnet\sdk]`
-  - `10.0.115 [***REDACTED***\dotnet\sdk]`
-  - `10.0.204 [***REDACTED***\dotnet\sdk]`
-  - `10.0.303 [***REDACTED***\dotnet\sdk]`
-  - `10.0.404 [***REDACTED***\dotnet\sdk]`
-  - `11.0.100 [***REDACTED***\dotnet\sdk]`
+  - `8.0.134 [C:\Program Files\dotnet\sdk]`
+  - `8.0.206 [C:\Program Files\dotnet\sdk]`
+  - `8.0.319 [C:\Program Files\dotnet\sdk]`
+  - `8.0.428 [C:\Program Files\dotnet\sdk]`
+  - `9.0.124 [C:\Program Files\dotnet\sdk]`
+  - `9.0.205 [C:\Program Files\dotnet\sdk]`
+  - `9.0.321 [C:\Program Files\dotnet\sdk]`
+  - `10.0.115 [C:\Program Files\dotnet\sdk]`
+  - `10.0.204 [C:\Program Files\dotnet\sdk]`
+  - `10.0.303 [C:\Program Files\dotnet\sdk]`
+  - `10.0.404 [C:\Program Files\dotnet\sdk]`
+  - `11.0.100 [C:\Program Files\dotnet\sdk]`
 ## Shell de usuario y AppX
 
-- explorer.exe: CORRIENDO (1 proceso/s, pid 4552)
-- procesos fuera de sesion 0: 29
+- explorer.exe: CORRIENDO (1 proceso/s, pid 4344)
+- procesos fuera de sesion 0: 30
 - AppX instalados (Get-AppxPackage): 32
 - Microsoft.WindowsStore: AUSENTE
 
@@ -111,7 +111,7 @@ ems                     Yes
 ```
 
 - Tareas programadas: 163
-- Estado Ready: 62
+- Estado Ready: 77
 
 ---
-generado: 2026-11-23T21:05:57Z sha=***REDACTED*** run=***REDACTED***
+generado: 2026-11-23T21:11:25Z sha=49bfc3fd4747492d5f5eb686fa8ac3939b90b26b run=45267030334
