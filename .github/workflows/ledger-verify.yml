@@ -1,0 +1,91 @@
+name: ledger-verify
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/ledger_extract/**'
+      - 'inventory/**'
+      - 'docs/inventory-recon/**'
+    branches-ignore:
+      - ci-report
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ledger-verify-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: ledger-verify (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      LABEL: ledger-verify
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
+
+      - name: Instalar pytest y pyyaml
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages pytest pyyaml
+          python3 -c "import pytest, yaml; print('pytest', pytest.__version__, '| pyyaml', yaml.__version__)"
+
+      - name: Reproducir upstream en el SHA fijado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/fetch_upstream.py --dest /tmp/upstream
+          python3 tools/ledger_extract/list_files.py --dest /tmp/upstream
+
+      - name: Suite pytest
+        shell: bash
+        run: |
+          mkdir -p ci-out
+          set +e
+          python3 -m pytest tools/ledger_extract/tests/ -q 2>&1 | tee ci-out/pytest.txt
+          rc=${PIPESTATUS[0]}
+          echo "pytest_exit=$rc" | tee -a ci-out/pytest.txt
+          exit $rc
+
+      - name: partition_check
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p ci-out
+          set +e
+          python3 tools/ledger_extract/partition_check.py 2>&1 | tee ci-out/partition_check.txt
+          rc=${PIPESTATUS[0]}
+          echo "partition_check_exit=$rc" | tee -a ci-out/partition_check.txt
+          # copia también los resultados por fichero
+          for f in inventory/partition/results/*.tsv; do
+            [ -f "$f" ] && cp "$f" "ci-out/$(basename "$f")"
+          done
+          exit $rc
+
+      - name: Recon (regenera y compara)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/recon_report.py 2>&1 | tee ci-out/recon.txt
+          echo "recon_exit=${PIPESTATUS[0]}" | tee -a ci-out/recon.txt
+          git diff --stat docs/inventory-recon/ | tee ci-out/recon-diff.txt || true
+
+      - name: Publicar informe
+        if: always()
+        shell: bash
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          mkdir -p ci-out
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "${{ job.status }}" \
+            || echo "publish-report fallo (no bloquea el job)"
