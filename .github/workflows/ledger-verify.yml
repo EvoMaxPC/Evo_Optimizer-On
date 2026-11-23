@@ -106,6 +106,30 @@ jobs:
         run: |
           python3 tools/ledger_extract/config_schema.py 2>&1 | tee ci-out/config-schema.txt
 
+      - name: Extractor de Atlas (determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/extract_atlas_files.py
+          cp inventory/ledger/atlas-files.tsv ci-out/atlas-files.tsv
+          cp inventory/ledger/atlas-reg-entries.tsv ci-out/atlas-reg-entries.tsv
+          sha256sum inventory/ledger/atlas-*.tsv | tee ci-out/atlas-sha-run1.txt
+          python3 tools/ledger_extract/extract_atlas_files.py
+          sha256sum inventory/ledger/atlas-*.tsv | tee ci-out/atlas-sha-run2.txt
+          if ! diff -u ci-out/atlas-sha-run1.txt ci-out/atlas-sha-run2.txt; then
+            echo "DETERMINISMO ATLAS ROTO" | tee ci-out/atlas-determinism.txt
+            exit 1
+          fi
+          echo "determinismo atlas: OK" | tee ci-out/atlas-determinism.txt
+
+      - name: Cobertura de extract (atlas)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/coverage_check_atlas.py 2>&1 | tee ci-out/coverage-atlas.txt
+          echo "coverage_atlas_exit=${PIPESTATUS[0]}" | tee -a ci-out/coverage-atlas.txt
+
       - name: Recon (regenera y compara)
         if: always()
         shell: bash

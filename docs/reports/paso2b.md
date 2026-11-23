@@ -362,4 +362,19 @@ El error estaba en el desglose del informe, no en el recuento: `package/Executab
 son **7** (no 8) y `.vscode` son **3** (no 2).
 
 Tras T0c (reclasificación de `package/Executables` a `extract`), el valor vigente
-es **201** (189 vendor + 2 licenses + 3 `.vscode` + 2 `.zed` + 5 sueltos).
+es **201**. Desglose completo por prefijo de ruta, sin categoría "sueltos"
+(recalculado en el paso 3b con `partition_review.load()` sobre el `atlas.tsv`
+actual):
+
+| prefijo | ficheros |
+|---|---:|
+| `app/vendor/` | 189 |
+| `app/licenses/` | 2 |
+| `app/build.rs` | 1 |
+| `app/examples/` | 1 |
+| `app/rustfmt.toml` | 1 |
+| `.vscode/` | 3 |
+| `.zed/` | 2 |
+| `lychee.toml` | 1 |
+| `package/atlas.json` | 1 |
+| **total** | **201** |
