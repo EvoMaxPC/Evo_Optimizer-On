@@ -142,7 +142,7 @@ jobs:
         if: always()
         shell: pwsh
         run: |
-          $files = Get-ChildItem -Path ci-out/test-results -Filter *.trx -ErrorAction SilentlyContinue
+          $files = Get-ChildItem -Path ci-out/test-results -Filter *.trx -Recurse -ErrorAction SilentlyContinue
           if (-not $files) { Write-Host "sin ficheros .trx"; exit 0 }
           $total = 0; $passed = 0; $failed = 0
           $perProject = @()
