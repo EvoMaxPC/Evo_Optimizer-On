@@ -1,0 +1,33 @@
+filas del mapa upstream : 435
+  atlas-manifest  182
+  atlas-toggle    91
+  winutil         162
+
+source x status:
+  atlas-manifest  covered=13 pending=169 variant-of=0 not-a-capability=0
+  atlas-toggle    covered=2 pending=89 variant-of=0 not-a-capability=0
+  winutil         covered=24 pending=127 variant-of=0 not-a-capability=11
+
+section_basis (todas las filas):
+  category   250
+  none       140
+  text-rule  45
+
+pending por section_guess:
+  (sin seccion)  129
+  10             91
+  11             16
+  12             8
+  13             15
+  14             10
+  15             35
+  16             2
+  2              3
+  3              32
+  4              7
+  5              13
+  7              4
+  8              12
+  9              8
+
+cobertura real: 39/435 (9.0 %)
