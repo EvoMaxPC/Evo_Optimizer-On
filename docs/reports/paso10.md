@@ -217,12 +217,12 @@ mismo bucle del job; el CI lo repite en `paso10-sha-run1.txt` contra
 `paso10-sha-run2.txt`, idénticos):
 
 ```
-1113394d11c196561b581e2ff42ef3f883216512f0ff3f37db56f77ac5fea9f8  catalog/capabilities/section9_system_registry.json
+252b1680ff9d5e5957da495fc77d59d6f0cfadba0446b5911883bfd602e71bb9  catalog/capabilities/section9_system_registry.json
 28e5521de1f1b4ef04e86165adf81781094dbea45643a32df8c507579804ee57  inventory/ledger/catalog-value-audit.tsv
 5ab76db21473d638514d6c764169dc263a751d029b8b58cd29dd5df0dc367268  inventory/ledger/upstream-capability-map.tsv
-bc188fdc0abe5e1931de3d847b6585a4c47506242f849981f21af17e0e910880  inventory/ledger/inventory-reconciliation.tsv
-0b02e67a19096463aacd11c856fca751ee400a74fc953c529ec30cdbbedf4b50  docs/reports/matriz-cobertura.md
-8b03c72dbd5748a535a72889f30a919e6caf8cd2c1080d142e261d395bf7576e  docs/reports/plan-oleadas.md
+876521e22780d898d48c8b8a16e3b25e744a0b694ccf42ab659a08f0cd7f2565  inventory/ledger/inventory-reconciliation.tsv
+74e9de079ecbc343a5cf08fcccc4ffb542eaeb4dfeab84f7071025e6f7f0fdab  docs/reports/matriz-cobertura.md
+fad8c45dde83568546bb0d63da99d24cfb6bcf1b19606219571daea4b9f6ccff  docs/reports/plan-oleadas.md
 e1c004f80e9d2a13d2528b09a29c52e45df60de920e0c4b78ae951d241bae1ce  docs/reports/rangos-build.md
 ```
 
@@ -233,15 +233,16 @@ $ python3 -m pytest tools/ledger_extract/tests tests -q
 518 passed
 ```
 
-CI en verde sobre el head `473eada` (los dos runners de `dotnet-ci` y el job
-`ledger-verify` con el job «Paso 10» dentro):
+CI en verde sobre el head final `3d5945c` (los dos runners de `dotnet-ci` y el
+job `ledger-verify` con el job «Paso 10» dentro):
 
 ```
-gh run 45495926401 | dotnet-ci      | success | 187/187 xUnit (windows-2025 y windows-11-arm)
+gh run 45497524401 | dotnet-ci      | success | 187/187 xUnit (windows-2025 y windows-11-arm)
                    |                |         |   Evo.Catalog.Tests 62 · Evo.Core.Tests 34
                    |                |         |   Evo.Detection.Tests 35 · Evo.Engine.Tests 56
-gh run 45495913740 | dotnet-ci      | success | reintento del mismo head (idéntico resultado)
-gh run 45495913132 | ledger-verify  | success | pytest 518 passed · determinismo paso 10: OK
+gh run 45497511627 | dotnet-ci      | success | reintento del mismo head (idéntico resultado)
+gh run 45497511272 | ledger-verify  | success | pytest 518 passed · determinismo paso 10: OK
+                   |                |         |   §9 30/30 cubiertas, 0 huecos
 ```
 
 Historial honesto de este paso en CI: los dos primeros runs de `dotnet-ci` sobre
@@ -343,7 +344,7 @@ U2 | Cobertura 100% de las líneas Mapped de §9                | CUMPLIDO
 U3 | Ledgers sin ambigüedad                                  | CUMPLIDO
    |   auditoría 194 filas, 0 ambiguous, 0 sin justificar; 2 desviaciones declaradas con evidencia; upstream-capability-map §9 con 8 covered / 3 pending explicados
 U4 | xUnit nuevos y suite por encima de la base              | CUMPLIDO
-   |   26 xUnit nuevos (15 catálogo + 11 motor); 187/187 en windows-2025 y windows-11-arm (runs 45495926401/45495913740)
+   |   26 xUnit nuevos (15 catálogo + 11 motor); 187/187 en windows-2025 y windows-11-arm (runs 45497524401/45497511627)
 U5 | tests/test_paso10.py >= 15 y suite completa > 502       | CUMPLIDO
    |   16 pruebas nuevas; 518 passed en el sandbox
 U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
@@ -497,6 +498,7 @@ U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
 Rama `arena/ab2d6de7-evo-optimizer-on`, cuatro commits (el PR #1 sigue **en draft**):
 
 ```
+3d5945c fix(ledger): tres falsos negativos de la seccion 9 medidos en el pin (269, 302, 307)
 473eada fix(tests): Wave1 no enumera las secciones 9/10 y admite Reduces con su puerta
 b163c95 fix(tests): cifra del catalogo 68 -> 86 en Wave1/Wave2 (oleada 3)
 88259a4 feat: paso 10 - oleada 3 catalogo seccion 9 registro y sistema
@@ -507,15 +509,15 @@ posteriores sólo tocan tests .NET (los defectos que vio el CI) y este informe.
 
 PR #1 (`gh api -X PATCH …/pulls/1`): título «Paso 10 — Oleada 3: catálogo de la
 Sección 9 (Registro y configuración del sistema), 18 capacidades / 39 acciones»,
-`state=OPEN`, `isDraft=true`, `head=473eada`.
+`state=OPEN`, `isDraft=true`, `head=3d5945c`.
 
 CI verificado sobre ese head:
 
 ```
-dotnet-ci run 45495926401     | success | 187/187 · windows-2025 y windows-11-arm
-dotnet-ci run 45495913740     | success | mismo head, reintento idéntico
-ledger-verify run 45495913132 | success | pytest 518 passed · determinismo paso 10: OK
+dotnet-ci run 45497524401     | success | 187/187 · windows-2025 y windows-11-arm
+dotnet-ci run 45497511627     | success | mismo head, reintento idéntico
+ledger-verify run 45497511272 | success | pytest 518 passed · determinismo paso 10: OK
 ```
 
 El `sha` que reporta el informe de `dotnet-ci` (`b562783`) es el del **merge del
-PR**, no el del head de rama: es el mismo árbol de `473eada`.
+PR**, no el del head de rama: es el mismo árbol de `3d5945c`.
