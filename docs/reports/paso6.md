@@ -55,7 +55,7 @@ con sus pins.
 | `win11-23h2` | 22631 | Client | false | cerrado |
 | `win11-24h2` | 26100 | Client | false | cerrado |
 | `win11-25h2` | 26200 | Client | false | cerrado |
-| `win11-26h2` | 27600 | Client | false | abierto hasta `policy.maxSupportedBuild` = 27999 |
+| `win11-26h2` | 27600 | Client | false | abierto, acotado por `policy.maxSupportedBuild` = 27999 |
 
 Política declarada en el propio dato: `unknownBuild: "reject"`,
 `nonClientInstallationType: "reject"`. Cada entrada lleva `provenance` (REQ-002).
@@ -166,3 +166,24 @@ las dos carpetas y publica `dotnet-structure.txt`/`.json`.
 - Las versiones de paquetes xUnit/Test.Sdk no se pudieron verificar contra
   nuget.org desde el sandbox (red bloqueada): **NO VERIFICADO** hasta el primer
   run de CI.
+
+---
+
+## Resultado real de CI (SHA `b639004`)
+
+| Workflow | Run | Evento | Conclusión |
+|---|---|---|---|
+| `ledger-verify` | `45306790504` | push | **success** |
+| `dotnet-ci` | `45306790532` | push | **success** |
+| `dotnet-ci` | `45306798455` | pull_request | **success** |
+
+Jobs de `45306790532`: `dotnet (windows-2025)` success (35/35 tests) y
+`dotnet (windows-11-arm)` success (35/35 tests), ambos con `ci-report`
+publicado. El primer intento del commit `afe737b` falló por dos motivos, los
+dos corregidos:
+
+1. `concurrency.group` usaba `matrix.os`, contexto no disponible a nivel de
+   workflow: el run abortaba sin jobs.
+2. `WindowsReleaseCatalog.Find` no aplicaba `policy.maxSupportedBuild` a los
+   rangos abiertos, así que 28000 y 99999 casaban con 26H2. Se corrigió el
+   **código** (fail-closed), no el test.
