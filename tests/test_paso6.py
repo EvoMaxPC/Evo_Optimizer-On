@@ -21,6 +21,8 @@ sys.path.insert(0, str(DOTNET_TOOLS))
 
 import validate_dotnet_structure as vds  # noqa: E402
 
+# Los cuatro proyectos del paso 6: se comprueba que siguen existiendo y que
+# forman parte de la solucion (que ahora tiene 9 proyectos, ver test_paso7.py).
 CSPROJ = [
     "src/Evo.Core/Evo.Core.csproj",
     "src/Evo.Detection/Evo.Detection.csproj",
@@ -45,7 +47,7 @@ def test_validador_json_ok():
     data = json.loads(res.stdout)
     assert data["ok"] is True
     assert data["errores"] == []
-    assert data["ca_proyectos"] == len(CSPROJ)
+    assert data["ca_proyectos"] >= len(CSPROJ)
     assert data["releases"] == 5
 
 
@@ -89,10 +91,8 @@ def test_directory_build_props_valores():
     assert "GPL-3.0-only" in values["Copyright"]
 
 
-def test_sln_referencia_los_cuatro_proyectos():
+def test_sln_referencia_los_proyectos_del_paso6():
     text = (ROOT / "Evo.sln").read_text(encoding="utf-8-sig")
-    refs = re.findall(r'"(src|tests)\\[^"]+\.csproj"', text)
-    assert len(refs) == len(CSPROJ)
     for name in CSPROJ:
         assert name.replace("/", "\\") in text, name
 

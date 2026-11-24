@@ -52,6 +52,28 @@ INHERITED = ("TargetFramework", "Nullable", "ImplicitUsings",
 
 MIN_RELEASES = 5
 
+# Proyectos exigidos por los pasos 6 y 7 (nombre de ensamblado -> ruta).
+EXPECTED_PROJECTS = {
+    "Evo.Core": "src/Evo.Core/Evo.Core.csproj",
+    "Evo.Detection": "src/Evo.Detection/Evo.Detection.csproj",
+    "Evo.Testing": "src/Evo.Testing/Evo.Testing.csproj",
+    "Evo.Engine": "src/Evo.Engine/Evo.Engine.csproj",
+    "Evo.Catalog": "src/Evo.Catalog/Evo.Catalog.csproj",
+    "Evo.Core.Tests": "tests/Evo.Core.Tests/Evo.Core.Tests.csproj",
+    "Evo.Detection.Tests": "tests/Evo.Detection.Tests/Evo.Detection.Tests.csproj",
+    "Evo.Engine.Tests": "tests/Evo.Engine.Tests/Evo.Engine.Tests.csproj",
+    "Evo.Catalog.Tests": "tests/Evo.Catalog.Tests/Evo.Catalog.Tests.csproj",
+}
+
+# Dependencias permitidas entre proyectos de producto (sin ciclos).
+ALLOWED_REFERENCES = {
+    "Evo.Core": set(),
+    "Evo.Detection": {"Evo.Core"},
+    "Evo.Testing": {"Evo.Core"},
+    "Evo.Engine": {"Evo.Core", "Evo.Detection"},
+    "Evo.Catalog": {"Evo.Core"},
+}
+
 
 def rel(path: Path) -> str:
     try:
@@ -191,6 +213,74 @@ def check_csprojs(errors: list[str]) -> None:
         if not any(r.endswith("Evo.Core/Evo.Core.csproj") for r in refs):
             errors.append("src/Evo.Detection/Evo.Detection.csproj: debe referenciar "
                           "Evo.Core")
+
+
+def project_name(path: Path) -> str:
+    """Nombre de ensamblado declarado en el .csproj (o el del fichero)."""
+    try:
+        declared = csproj_property(path, "AssemblyName")
+    except ET.ParseError:
+        declared = None
+    return declared or path.stem
+
+
+def check_expected_projects(errors: list[str]) -> None:
+    """Los 9 proyectos esperados existen y estan en la solucion."""
+    found = {rel(p): project_name(p) for p in find_csprojs()}
+    for name, path in EXPECTED_PROJECTS.items():
+        if path not in found:
+            errors.append(f"falta el proyecto esperado {path}")
+        elif found[path] != name:
+            errors.append(f"{path}: AssemblyName '{found[path]}' != '{name}'")
+
+
+def check_product_dependencies(errors: list[str]) -> None:
+    """Dependencias entre proyectos de producto: solo las permitidas y sin ciclos."""
+    graph: dict[str, set[str]] = {}
+    for name, path in EXPECTED_PROJECTS.items():
+        if name.endswith(".Tests"):
+            continue
+        target = ROOT / path
+        if not target.is_file():
+            continue
+        graph[name] = set()
+        try:
+            root = ET.parse(target).getroot()
+        except ET.ParseError:
+            continue
+        for node in root.iter("ProjectReference"):
+            include = (node.get("Include") or "").replace("\\", "/")
+            referenced = Path(include).stem
+            if referenced not in EXPECTED_PROJECTS:
+                errors.append(f"{rel(target)}: referencia un proyecto desconocido '{include}'")
+                continue
+            graph[name].add(referenced)
+            allowed = ALLOWED_REFERENCES.get(name)
+            if allowed is not None and referenced not in allowed:
+                errors.append(
+                    f"{rel(target)}: dependencia no permitida con '{referenced}' "
+                    f"(permitidas: {sorted(allowed) or 'ninguna'})")
+
+    # Deteccion de ciclos por DFS.
+    state: dict[str, int] = {}
+
+    def visit(node: str, stack: list[str]) -> None:
+        state[node] = 1
+        stack.append(node)
+        for nxt in sorted(graph.get(node, ())):
+            if nxt not in graph:
+                continue
+            if state.get(nxt) == 1:
+                cycle = " -> ".join(stack[stack.index(nxt):] + [nxt])
+                errors.append(f"dependencia circular entre proyectos: {cycle}")
+            elif state.get(nxt, 0) == 0:
+                visit(nxt, stack)
+        stack.pop()
+        state[node] = 2
+
+    for node in sorted(graph):
+        if state.get(node, 0) == 0:
+            visit(node, [])
 
 
 def _is_int(value: object) -> bool:
@@ -363,6 +453,8 @@ def validate() -> list[str]:
     check_props(errors)
     check_solution_membership(errors)
     check_csprojs(errors)
+    check_expected_projects(errors)
+    check_product_dependencies(errors)
     check_catalog(errors)
     check_notices(errors)
     return errors
@@ -388,6 +480,7 @@ def main(argv: list[str] | None = None) -> int:
         "ok": not errors,
         "proyectos": projects,
         "ca_proyectos": len(projects),
+        "proyectos_esperados": len(EXPECTED_PROJECTS),
         "releases": len(data.get("releases", [])) if isinstance(data, dict) else 0,
         "errores": errors,
     }
