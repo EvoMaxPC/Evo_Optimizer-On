@@ -176,11 +176,16 @@ las dos carpetas y publica `dotnet-structure.txt`/`.json`.
 | `ledger-verify` | `45306790504` | push | **success** |
 | `dotnet-ci` | `45306790532` | push | **success** |
 | `dotnet-ci` | `45306798455` | pull_request | **success** |
+| `ledger-verify` | `45307155503` | push | **success** (`f8cd86b`) |
+| `dotnet-ci` | `45307162438` | pull_request | **success** (`f8cd86b`) |
 
-Jobs de `45306790532`: `dotnet (windows-2025)` success (35/35 tests) y
-`dotnet (windows-11-arm)` success (35/35 tests), ambos con `ci-report`
-publicado. El primer intento del commit `afe737b` falló por dos motivos, los
-dos corregidos:
+Jobs de `45306790532` y de `45307162438`: `dotnet (windows-2025)` success
+(35/35 tests) y `dotnet (windows-11-arm)` success (35/35 tests), ambos con
+`ci-report` publicado (`test-summary.txt`: `total=35 passed=35 failed=0`).
+Reparto real medido: 35 casos = 19 de `Evo.Core.Tests` (12 `Fact` + 7
+`InlineData`) + 16 de `Evo.Detection.Tests` (9 `Fact` + 10 `InlineData` en el
+detector, 7 `Fact` + 9 `InlineData` en el catálogo). El primer intento del
+commit `afe737b` falló por dos motivos, los dos corregidos:
 
 1. `concurrency.group` usaba `matrix.os`, contexto no disponible a nivel de
    workflow: el run abortaba sin jobs.
