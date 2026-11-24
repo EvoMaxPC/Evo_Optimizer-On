@@ -143,28 +143,16 @@ def reach(calls: dict, direct: dict, start: str) -> tuple[set[str], int, bool, l
 def manifest_slugs(text: str) -> tuple[set[str], set[str]]:
     """Slugs habilitados y deshabilitados del manifiesto de tweaks.
 
-    Estructura real del fichero:
-        Categories = @( @{ Name = 'networking'; Tweaks = @( 'shares/x' ... ) } ... )
-    Los slugs de `Tweaks` son **relativos a la carpeta de la categoria**, asi que
-    la ruta completa es `<Name>/<slug>`. Fuera de categoria van como
-    `@{ Slug = '...' }` y los deshabilitados, en `Disabled = @( @{ Slug = ... } )`.
-    """
-    m = re.search(r"^\s*Disabled\s*=\s*@\(", text, re.MULTILINE)
-    head, tail = (text, "") if not m else (text[:m.start()], text[m.start():])
+    Delegado en `extract_atlas_manifest.parse` para no tener dos parsers.
 
-    enabled: set[str] = set()
-    # cada categoria: Name = '...' seguido de su bloque Tweaks = @( ... )
-    for cm in re.finditer(r"Name\s*=\s*'([^']+)'(.*?)(?=Name\s*=\s*'|\Z)",
-                          head, re.DOTALL):
-        cat, block = cm.group(1), cm.group(2)
-        tm = re.search(r"Tweaks\s*=\s*@\((.*?)\)", block, re.DOTALL)
-        if not tm:
-            continue
-        for slug in re.findall(r"'([^']+)'", tm.group(1)):
-            enabled.add(f"{cat}/{slug}")
-    # los que van fuera de categoria: @{ Slug = '...' }
-    enabled |= set(re.findall(r"Slug\s*=\s*'([^']+)'", head))
-    disabled = set(re.findall(r"Slug\s*=\s*'([^']+)'", tail))
+    HISTORIAL: la version del paso 4d cortaba el bloque `Tweaks = @( ... )` en el
+    primer `)`, y en las categorias `networking` y `performance` ese `)` es el de
+    `ParentModes = @('Fresh','Upgrade')`. Resultado: se perdian 74 slugs
+    (108 en vez de 182). Corregido en el paso 4e.
+    """
+    from extract_atlas_manifest import parse
+    enabled = {e["id"] for e in parse(text) if e["enabled"] == "true"}
+    disabled = {e["id"] for e in parse(text) if e["enabled"] == "false"}
     return enabled, disabled
 
 
@@ -240,7 +228,7 @@ def psd1_references(root: Path) -> tuple[list[dict], dict]:
         "en_manifest": sum(r["referenced_by_manifest"] for r in rows),
         "manifest_enabled": sum(1 for r in rows if r["manifest_state"] == "enabled"),
         "manifest_disabled": sum(1 for r in rows if r["manifest_state"] == "disabled"),
-        "no_en_manifest": sum(1 for r in rows if not r["manifest_state"]),
+        "no_en_manifest": [r["psd1"] for r in rows if not r["manifest_state"]],
     }
     return rows, meta
 

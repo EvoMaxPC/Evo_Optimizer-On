@@ -175,11 +175,12 @@ def test_psd1_refs_columnas_y_manifest():
     header, rows = _tsv(LEDGER / "atlas-psd1-refs.tsv")
     assert header == list(te.REF_COLUMNS)
     assert len(rows) == 183
-    # el manifiesto declara 108 slugs: 103 habilitados + 5 en `Disabled`
-    assert sum(int(r["referenced_by_manifest"]) for r in rows) == 108
+    # el paso 4e corrigio el parser del manifiesto: 108 -> 182 entradas
+    # (177 habilitados + 5 en `Disabled`). Ver docs/reports/paso4e.md.
+    assert sum(int(r["referenced_by_manifest"]) for r in rows) == 182
     estados = {r["manifest_state"] for r in rows}
     assert estados == {"enabled", "disabled", ""}
-    assert sum(1 for r in rows if r["manifest_state"] == "enabled") == 103
+    assert sum(1 for r in rows if r["manifest_state"] == "enabled") == 177
     assert sum(1 for r in rows if r["manifest_state"] == "disabled") == 5
 
 

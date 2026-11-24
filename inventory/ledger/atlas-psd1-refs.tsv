@@ -71,11 +71,11 @@ package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-phishi
 package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disallow-data-collection.psd1	Disallow Telemetry and Data Collection	2	0	0	0	1	enabled	3
 package/Executables/AtlasModules/Scripts/Tweaks/qol/add-sharing-settings-shortcut.psd1	Add Network Sharing Shortcut	1	0	0	0	1	enabled	2
 package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/atlas-theme-upgrade.psd1	Refresh Theme On Upgrade	2	0	0	0	1	enabled	3
-package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/atlas-theme.psd1	Add Theme	4	0	0	0	0		4
-package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/disallow-theme-changes.psd1	Disallow Themes to Change Certain Personalized Features	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/atlas-theme.psd1	Add Theme	4	0	0	0	1	enabled	5
+package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/disallow-theme-changes.psd1	Disallow Themes to Change Certain Personalized Features	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/bcdedit-tweaks.psd1	Configure Boot Configuration	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/best-wallpaper-quality.psd1	Disable Wallpaper Compression	0	0	0	0	1	enabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/config-start-menu.psd1	Configure Start Menu	4	0	0	0	0		4
+package/Executables/AtlasModules/Scripts/Tweaks/qol/config-start-menu.psd1	Configure Start Menu	4	0	0	0	1	enabled	5
 package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-auto-app-archival.psd1	Disable Automatic Store App Archiving	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-dynamic-lighting.psd1	Disable Dynamic Lighting	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-mouse-accel.psd1	Disable Mouse Acceleration	0	0	0	0	1	enabled	1
@@ -91,85 +91,85 @@ package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-win11-settings-banne
 package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-windows-feedback.psd1	Disable Windows Feedback	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-windows-spotlight.psd1	Disable Windows Spotlight	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/do-not-reduce-sounds.psd1	Do Not Reduce Sounds While in a Call	0	0	0	0	1	enabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-always-read-section.psd1	Disable 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-annoying-features-shortcuts.psd1	Disable Commonly Annoying Features and Shortcuts	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-making-touch-easier.psd1	Disable Accessibility Tool Shortcut	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-warning-sounds.psd1	Disable Ease of Access Sounds	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/merge-as-administrator.psd1	Add 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-bat.psd1	Add Batch Scripts to 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-ps1.psd1	Add PowerShell Script to 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-reg.psd1	Add Registry Entries to 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/always-more-details-transfer.psd1	Show More Details by Default on Transfers	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/classic-search.psd1	Disable Legacy File Explorer Search Redirect	1	0	0	0	0		1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/debloat-send-to.psd1	Debloat Send-To Context Menu	3	0	0	0	0		3
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-check-boxes.psd1	Disable Use Check Boxes to Select Items	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-always-read-section.psd1	Disable 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-annoying-features-shortcuts.psd1	Disable Commonly Annoying Features and Shortcuts	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-making-touch-easier.psd1	Disable Accessibility Tool Shortcut	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-warning-sounds.psd1	Disable Ease of Access Sounds	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/merge-as-administrator.psd1	Add 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-bat.psd1	Add Batch Scripts to 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-ps1.psd1	Add PowerShell Script to 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-reg.psd1	Add Registry Entries to 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/always-more-details-transfer.psd1	Show More Details by Default on Transfers	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/classic-search.psd1	Disable Legacy File Explorer Search Redirect	1	0	0	0	1	enabled	2
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/debloat-send-to.psd1	Debloat Send-To Context Menu	3	0	0	0	1	enabled	4
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-check-boxes.psd1	Disable Use Check Boxes to Select Items	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-folders-this-pc.psd1	Hide Folders from This PC	0	0	0	0	1	disabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-gallery.psd1	Hide Gallery in File Explorer	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-home.psd1	Disable File Explorer Home	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-invalid-shortcuts-search.psd1	Disable Searching for Invalid Shortcuts	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-network-navigation-pane.psd1	Disable Network Navigation Pane in Explorer	1	0	0	0	0		1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/dont-show-office-files.psd1	Don	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/enable-long-paths.psd1	Enable Long Paths	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/full-context-on-more-than-15-items.psd1	Always Show the Full Context Menu On Items	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/hide-frequently-used-items.psd1	Hide Recent Items	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/import-power-plan.psd1	Add Power Plan File Association	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/minimize-mouse-hover-time.psd1	Minimize Mouse Hover Time for Item Info	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/no-internet-open-with.psd1	Disable Internet File Association Service	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/open-to-this-pc.psd1	Open File Explorer to This PC	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/removable-drives-only-this-pc.psd1	Show Removable Drives Only in 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/cast-to-device.psd1	Remove 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/extract.psd1	Remove 	26	0	0	20	0		46
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/include-in-library.psd1	Remove 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/new-bitmap.psd1	Remove Bitmap Image from 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/new-rtf.psd1	Remove Rich Text Document from 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/paint-3D.psd1	Remove 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/printing-windows-11.psd1	Remove Windows 11 Printing Context Menu Entries	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/printing.psd1	Remove 	3	1	1	1	0		6
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/share.psd1	Remove 	49	1	2	74	0		126
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/troubleshooting-compat.psd1	Remove 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-previous-versions.psd1	Remove Previous Versions from Explorer	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-shortcut-text.psd1	Remove Shortcut Text	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/show-files.psd1	Configure Explorer to Show All Files with File Extensions	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/use-compact-mode.psd1	Use Compact Mode	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-gallery.psd1	Hide Gallery in File Explorer	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-home.psd1	Disable File Explorer Home	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-invalid-shortcuts-search.psd1	Disable Searching for Invalid Shortcuts	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-network-navigation-pane.psd1	Disable Network Navigation Pane in Explorer	1	0	0	0	1	enabled	2
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/dont-show-office-files.psd1	Don	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/enable-long-paths.psd1	Enable Long Paths	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/full-context-on-more-than-15-items.psd1	Always Show the Full Context Menu On Items	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/hide-frequently-used-items.psd1	Hide Recent Items	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/import-power-plan.psd1	Add Power Plan File Association	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/minimize-mouse-hover-time.psd1	Minimize Mouse Hover Time for Item Info	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/no-internet-open-with.psd1	Disable Internet File Association Service	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/open-to-this-pc.psd1	Open File Explorer to This PC	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/removable-drives-only-this-pc.psd1	Show Removable Drives Only in 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/cast-to-device.psd1	Remove 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/extract.psd1	Remove 	26	0	0	20	1	enabled	47
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/include-in-library.psd1	Remove 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/new-bitmap.psd1	Remove Bitmap Image from 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/new-rtf.psd1	Remove Rich Text Document from 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/paint-3D.psd1	Remove 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/printing-windows-11.psd1	Remove Windows 11 Printing Context Menu Entries	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/printing.psd1	Remove 	3	1	1	1	1	enabled	7
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/share.psd1	Remove 	49	1	2	74	1	enabled	127
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/troubleshooting-compat.psd1	Remove 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-previous-versions.psd1	Remove Previous Versions from Explorer	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-shortcut-text.psd1	Remove Shortcut Text	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/show-files.psd1	Configure Explorer to Show All Files with File Extensions	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/use-compact-mode.psd1	Use Compact Mode	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/hide-disabled-disconnected-sounds.psd1	Hide Disabled and Disconnected Devices in Sounds Panel	0	0	0	0	1	enabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/restore-start-folder-choices.psd1	Restore Start Folder Choices	2	0	0	0	0		2
-package/Executables/AtlasModules/Scripts/Tweaks/qol/security/disable-uac-secure-desktop.psd1	Disable UAC Secure Desktop	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/restore-start-folder-choices.psd1	Restore Start Folder Choices	2	0	0	0	1	enabled	3
+package/Executables/AtlasModules/Scripts/Tweaks/qol/security/disable-uac-secure-desktop.psd1	Disable UAC Secure Desktop	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.psd1	Set Hidden Pages	5	0	0	0	1	enabled	6
 package/Executables/AtlasModules/Scripts/Tweaks/qol/set-keyboard-switching.psd1	Set Keyboard Language Switching	1	0	0	0	1	enabled	2
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/alt-tab-open-windows.psd1	Do Not Show Edge Tabs in Alt-Tab	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/config-autorun.psd1	Disable AutoRun	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-aero-shake.psd1	Disable Aero Shake	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-low-disk-warning.psd1	Disable Low Disk Space Checks	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-menu-delay.psd1	Disable Menu Hover Delay	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-nearby-sharing.psd1	Disable Shared Experiences	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-network-location-wizard.psd1	Disable Network Location Wizard	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/no-recommendations-start-menu.psd1	Disable Recommendations in the Start Menu	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/restore-old-context-menu.psd1	Restore Old Context Menu	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/set-unpinned-notification-items.psd1	Set Unpinned Control Center Items	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/show-more-pins.psd1	Show More Pins in Start	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/alt-tab-open-windows.psd1	Do Not Show Edge Tabs in Alt-Tab	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/config-autorun.psd1	Disable AutoRun	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-aero-shake.psd1	Disable Aero Shake	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-low-disk-warning.psd1	Disable Low Disk Space Checks	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-menu-delay.psd1	Disable Menu Hover Delay	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-nearby-sharing.psd1	Disable Shared Experiences	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-network-location-wizard.psd1	Disable Network Location Wizard	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/no-recommendations-start-menu.psd1	Disable Recommendations in the Start Menu	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/restore-old-context-menu.psd1	Restore Old Context Menu	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/set-unpinned-notification-items.psd1	Set Unpinned Control Center Items	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/show-more-pins.psd1	Show More Pins in Start	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/show-all-tasks-control-panel.psd1	Show All Tasks in Control Panel	0	0	0	0	1	enabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/decrease-shutdown-time.psd1	Decrease Shutdown Time	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/disable-startup-delay.psd1	Disable Startup Delay	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/decrease-shutdown-time.psd1	Decrease Shutdown Time	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/disable-startup-delay.psd1	Disable Startup Delay	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/enable-verbose-messages.psd1	Enable verbose startup, shutdown, logon, and logoff status messages	0	0	0	0	1	disabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/force-end-shutdown-apps.psd1	Force Close Applications On Session End	0	0	0	0	1	disabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/system/crash-control-qol.psd1	Configure Crash Control	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/system/disable-wpbt.psd1	Disable Windows Platform Binary Table Execution (WPBT)	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/config-pins.psd1	Configure Taskbar Pins	3	0	0	0	0		3
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-cloud-optimized-content.psd1	Disable Cloud Optimized Content on Taskbar	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-copilot.psd1	Disable Microsoft Copilot	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-news-and-interests.psd1	Disable News and Interests	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/end-task.psd1	Add 	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/hide-task-view.psd1	Disable Task View on Taskbar	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/set-to-left.psd1	Set Taskbar to Align Left	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/system/crash-control-qol.psd1	Configure Crash Control	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/system/disable-wpbt.psd1	Disable Windows Platform Binary Table Execution (WPBT)	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/config-pins.psd1	Configure Taskbar Pins	3	0	0	0	1	enabled	4
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-cloud-optimized-content.psd1	Disable Cloud Optimized Content on Taskbar	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-copilot.psd1	Disable Microsoft Copilot	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-news-and-interests.psd1	Disable News and Interests	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/end-task.psd1	Add 	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/hide-task-view.psd1	Disable Task View on Taskbar	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/set-to-left.psd1	Set Taskbar to Align Left	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1	Configure Visual Effects	0	0	0	0	1	enabled	1
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-reboot.psd1	Disable automatic Windows Update restarts	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-updates-option.psd1	Disable WU Auto-Updates	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-updates.psd1	Prevent Dev Home and Outlook Reinstalls	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-delivery-optimization.psd1	Disable Delivery Optimization	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-feature-updates.psd1	Disable Feature Updates	2	0	0	0	0		2
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-insider.psd1	Restrict Windows Insider	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-msrt-telemetry.psd1	Disable MSRT telemetry	0	0	0	0	0		0
-package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-nagging.psd1	Disable WU Nagging	0	0	0	0	0		0
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-reboot.psd1	Disable automatic Windows Update restarts	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-updates-option.psd1	Disable WU Auto-Updates	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-updates.psd1	Prevent Dev Home and Outlook Reinstalls	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-delivery-optimization.psd1	Disable Delivery Optimization	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-feature-updates.psd1	Disable Feature Updates	2	0	0	0	1	enabled	3
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-insider.psd1	Restrict Windows Insider	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-msrt-telemetry.psd1	Disable MSRT telemetry	0	0	0	0	1	enabled	1
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-nagging.psd1	Disable WU Nagging	0	0	0	0	1	enabled	1
 package/Executables/AtlasModules/Scripts/Tweaks/scripts/backup-services.psd1	Backup Atlas Services and Drivers	2	0	0	0	1	enabled	3
 package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-core-isolation.psd1	Disable Virtualization-Based Security	9	2	3	6	1	enabled	21
 package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-mitigations.psd1	Disable Mitigations	1	0	0	0	1	enabled	2

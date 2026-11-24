@@ -253,6 +253,40 @@ jobs:
           sys.exit(0 if ok else 1)
           PYEOF
 
+      - name: Extractores de 4e (manifiesto + conciliacion, determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_manifest.py
+            python3 tools/ledger_extract/build_conciliacion.py
+            sha256sum inventory/ledger/atlas-manifest.tsv \
+                      inventory/ledger/conciliacion-borrador.tsv \
+              > "ci-out/paso4e-sha-run${i}.txt"
+            cp inventory/ledger/atlas-manifest.tsv ci-out/atlas-manifest.tsv
+            cp inventory/ledger/conciliacion-borrador.tsv ci-out/conciliacion-borrador.tsv
+          done
+          if ! diff -u ci-out/paso4e-sha-run1.txt ci-out/paso4e-sha-run2.txt; then
+            echo "DETERMINISMO 4E ROTO" | tee ci-out/paso4e-determinism.txt
+            exit 1
+          fi
+          echo "determinismo 4e: OK" | tee ci-out/paso4e-determinism.txt
+          python3 - <<'PYEOF'
+          import csv
+          rows = list(csv.DictReader(open("inventory/ledger/conciliacion-borrador.tsv",
+                                         encoding="utf-8"), delimiter="\t"))
+          man = list(csv.DictReader(open("inventory/ledger/atlas-manifest.tsv",
+                                         encoding="utf-8"), delimiter="\t"))
+          print("manifiesto:", len(man), "entradas | enabled:",
+                sum(1 for r in man if r["enabled"] == "true"))
+          print("conciliacion:", len(rows), "filas")
+          bad = [r for r in rows if "Mapped" in r.values()]
+          print("filas con Mapped:", len(bad))
+          assert len(rows) == 588, "la conciliacion debe tener 588 filas"
+          assert not bad, "prohibido Mapped en el borrador"
+          assert len(man) == 182, "el manifiesto debe tener 182 entradas"
+          PYEOF
+
       - name: Sonda de coincidencia con el inventario
         if: always()
         shell: bash
