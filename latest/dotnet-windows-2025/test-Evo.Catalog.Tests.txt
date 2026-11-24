@@ -1,11 +1,11 @@
-Build started 11/24/2026 2:14:50 AM.
+Build started 11/24/2026 2:17:21 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\bin\Release\net10.0-windows\Evo.Catalog.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
 [xUnit.net 00:00:00.14]   Discovering: Evo.Catalog.Tests
-[xUnit.net 00:00:00.23]   Discovered:  Evo.Catalog.Tests
-[xUnit.net 00:00:00.23]   Starting:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [157 ms]
+[xUnit.net 00:00:00.24]   Discovered:  Evo.Catalog.Tests
+[xUnit.net 00:00:00.24]   Starting:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [181 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry.") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry/DiagTrack") [< 1 ms]
@@ -28,14 +28,14 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Catalog.Tests.CatalogValidatorTests.AcyclicDependencyChainPassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestAsymmetricConflict_FailsValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [193 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [215 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [5 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
-[xUnit.net 00:00:00.53]   Finished:    Evo.Catalog.Tests
+[xUnit.net 00:00:00.56]   Finished:    Evo.Catalog.Tests
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [2 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [5 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [4 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Catalog.Tests\Evo.Catalog.Tests.trx
@@ -43,10 +43,10 @@ Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Cat
 Test Run Successful.
 Total tests: 32
      Passed: 32
- Total time: 1.0686 Seconds
+ Total time: 1.1260 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.36
+Time Elapsed 00:00:02.37
