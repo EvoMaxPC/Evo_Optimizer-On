@@ -156,9 +156,15 @@ Con el informe ya escrito (`a32e1ea`): `dotnet-ci` run `45316592984` success
 (windows-2025 y windows-11-arm, `total=109 passed=109 failed=0` en los dos) y
 `ledger-verify` run `45316586774` success (`353 passed`, `pytest_exit=0`).
 
-**SHA final de la rama: `6260f92`** — `dotnet-ci` run `45317032429` **success**
-en `windows-2025` y en `windows-11-arm` (`total=109 passed=109 failed=0`) y
-`ledger-verify` run `45317025041` **success** (`353 passed`, `pytest_exit=0`).
+**Ultimo commit medido: `1702807`** — `dotnet-ci` run `45318689893` **success**
+en `windows-2025` y en `windows-11-arm` (`total=109 passed=109 failed=0` en los
+dos) y `ledger-verify` run `45318683544` **success** (`353 passed`,
+`pytest_exit=0`).
+
+Los commits posteriores a `b65f5c7` son **solo documentacion** (`a32e1ea`,
+`6260f92`, `1702807`) y este mismo: el codigo, los JSON del catalogo y los tests
+medidos son byte a byte los de `b65f5c7`. Las cifras se replicaron en las tres
+ejecuciones (`45316213354`, `45316592984`, `45318689893`).
 
 PR #1: `state=open`, `draft=true`, cuerpo de 13 192 caracteres con la seccion
 del paso 8. Inventario sin tocar: `sha256 = 0b6aeaef0aa2142bce342f0cbed6bcd2c19030555ff3a38c3699c8d1dad2f709`.
