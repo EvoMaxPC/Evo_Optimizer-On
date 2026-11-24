@@ -162,7 +162,10 @@ def test_el_mapa_upstream_conserva_435_filas_y_anade_section_basis() -> None:
     rows = read_tsv(MAP_TSV)
     assert len(rows) == 435
     assert list(rows[0].keys()) == list(bucm.COLUMNS)
-    assert {r["section_basis"] for r in rows} <= {"category", "text-rule", "none"}
+    # El paso 8d añade las bases por ítem (item-effect/item-name-rule/...).
+    assert {r["section_basis"] for r in rows} <= {
+        "category", "text-rule", "none",
+        "item-effect", "item-name-rule", "item-manifest-path"}
     # La regla nueva debe haber reducido de verdad las filas sin sección.
     without = sum(1 for r in rows if not r["section_guess"])
     assert without < 361, "el paso 8b dejaba 361 filas sin sección"
@@ -171,6 +174,8 @@ def test_el_mapa_upstream_conserva_435_filas_y_anade_section_basis() -> None:
             assert row["section_guess"], row["upstream_id"]
         if row["section_basis"] == "none":
             assert not row["section_guess"], row["upstream_id"]
+        if row["section_basis"].startswith("item-"):
+            assert row["section_guess"], row["upstream_id"]
 
 
 def test_ninguna_celda_de_los_tsv_nuevos_supera_400_caracteres() -> None:

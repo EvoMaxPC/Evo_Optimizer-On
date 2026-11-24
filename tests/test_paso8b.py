@@ -202,6 +202,11 @@ def test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada() -
 
     implemented = [c for c in caps.values() if c["state"] == "Implemented"]
     specified = [c for c in caps.values() if c["state"] == "Specified"]
+    # Paso 8d: Copilot baja a Specified porque el pin no fija el rango de su
+    # política por build (RANGO NO VERIFICADO).
+    assert caps["debloat.copilot.remove"]["state"] == "Specified"
+    assert "RANGO NO VERIFICADO" in caps["debloat.copilot.remove"]["provenance"]
+
     assert len(implemented) + len(specified) == len(caps) == 39
 
 

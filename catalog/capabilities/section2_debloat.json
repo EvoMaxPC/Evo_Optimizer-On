@@ -587,7 +587,7 @@
       "restore": "None",
       "reversibility": "Irreversible",
       "confirmation": "SummaryAndRestorePoint",
-      "state": "Implemented",
+      "state": "Specified",
       "variants": [
         "Evo",
         "WinUtil",
@@ -600,7 +600,7 @@
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/qol/taskbar/disable-copilot.psd1 (RemoveMicrosoftCopilotApp=1; comentario '25H2+ ... only Enterprise and Education honour it') + Toggles/General/Copilot.psd1 (estado Disable: RemoveMicrosoftCopilotApp=1, ShowCopilotButton=0) + Toggles/General/Copilot.ps1:48-52 ('When the taskbar Copilot button is unavailable (24H2+), Copilot is a separate app'; $legacyTaskbarAvailable = WindowsBuild -lt 26100) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (InvokeScript con Get-AppxPackage -AllUsers *Copilot* y Remove-AppxPackage). Reversibilidad (ADR-0003): Irreversible — quitar el paquete de todos los usuarios no lo devuelve el diario. ledger_refs: atlas:toggle:Copilot | winutil:tweak:WPFTweaksWindowsAI",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/qol/taskbar/disable-copilot.psd1:6 (comentario del pin: 'RemoveMicrosoftCopilotApp (25H2+) additionally uninstalls the Copilot app where supported; only Enterprise and Education honour it') + Tweaks/qol/taskbar/disable-copilot.psd1:9 (RemoveMicrosoftCopilotApp=1) + Toggles/General/Copilot.psd1:13-14 (estado Disable: RemoveMicrosoftCopilotApp=1 en HKLM y ShowCopilotButton=0 en HKCU) + Toggles/General/Copilot.ps1:42 (Enable borra la politica) + Toggles/General/Copilot.ps1:52 ('$legacyTaskbarAvailable = ($Toggle.WindowsBuild -lt 26100 ...)': el boton de la barra de tareas solo existe por debajo de 26100) + Toggles/General/Copilot.ps1:18 y :59 (paquete Microsoft.Copilot*; Copilot.ps1:71 lo reinstala desde la Store con el id 9NHT9RB2F4HD) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (InvokeScript con Get-AppxPackage -AllUsers *Copilot* y Remove-AppxPackage). Builds: el pin NO declara un numero de build para la politica mas alla de 25H2+ (que en este pin es 26200, app/src/services/windows_release.rs:48); 26100 aparece en el pin como la build a partir de la cual NO hay boton de barra de tareas y 22631 solo como build de ejemplo en pruebas (tests/Atlas.AiFeatureToggles.Tests.ps1:127,161). Rango por accion: politica RemoveMicrosoftCopilotApp = 26200 (25H2+) segun el pin; paquete y ShowCopilotButton = NO VERIFICADO por build. RANGO NO VERIFICADO: se declaran 22631/26100/26200 porque el paso cubierto por cada accion cambia con la build, no porque el pin fije esos tres limites. Reversibilidad (ADR-0003): Irreversible, quitar el paquete de todos los usuarios no lo devuelve el diario. ledger_refs: atlas:toggle:Copilot | winutil:tweak:WPFTweaksWindowsAI",
       "actions": [
         {
           "type": "registry",

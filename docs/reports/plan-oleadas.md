@@ -8,26 +8,26 @@ MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/invent
 
 | § | Título | Líneas | Mapped | Mapped-To-App | EVO-Exclusive | Absent-At-Pin | Informative | Mapped cubiertas | Mapped sin cubrir | Trabajo (medido) | Pending upstream |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | Limpieza y eliminación de componentes | 29 | 3 | 0 | 1 | 23 | 2 | 3 | 0 | 24 | 0 |
-| 2 | Debloat de Windows | 42 | 17 | 0 | 0 | 23 | 2 | 17 | 0 | 23 | 3 |
-| 3 | Telemetría y privacidad | 42 | 6 | 0 | 0 | 34 | 2 | 6 | 0 | 34 | 32 |
-| 4 | Optimización de servicios | 26 | 9 | 0 | 0 | 14 | 3 | 0 | 9 | 23 | 7 |
-| 5 | Optimización CPU y rendimiento | 28 | 7 | 0 | 0 | 18 | 3 | 1 | 6 | 24 | 13 |
-| 6 | Optimización gaming | 32 | 6 | 0 | 11 | 12 | 3 | 0 | 6 | 29 | 0 |
+| 1 | Limpieza y eliminación de componentes | 29 | 3 | 0 | 1 | 23 | 2 | 3 | 0 | 24 | 2 |
+| 2 | Debloat de Windows | 42 | 17 | 0 | 0 | 23 | 2 | 17 | 0 | 23 | 5 |
+| 3 | Telemetría y privacidad | 42 | 6 | 0 | 0 | 34 | 2 | 6 | 0 | 34 | 36 |
+| 4 | Optimización de servicios | 26 | 9 | 0 | 0 | 14 | 3 | 0 | 9 | 23 | 9 |
+| 5 | Optimización CPU y rendimiento | 28 | 7 | 0 | 0 | 18 | 3 | 1 | 6 | 24 | 21 |
+| 6 | Optimización gaming | 32 | 6 | 0 | 11 | 12 | 3 | 0 | 6 | 29 | 2 |
 | 7 | Memoria y aplicaciones en segundo plano | 29 | 7 | 0 | 10 | 10 | 2 | 1 | 6 | 26 | 4 |
-| 8 | Administración de inicio y apagado | 21 | 4 | 0 | 0 | 15 | 2 | 0 | 4 | 19 | 12 |
-| 9 | Registro de Windows y configuración del sistema | 58 | 28 | 0 | 0 | 28 | 2 | 6 | 22 | 50 | 8 |
-| 10 | Explorador de archivos e interfaz | 48 | 25 | 0 | 0 | 21 | 2 | 9 | 16 | 37 | 91 |
-| 11 | Red y conectividad | 26 | 4 | 0 | 0 | 20 | 2 | 0 | 4 | 24 | 16 |
-| 12 | Windows Update y mantenimiento | 28 | 5 | 0 | 0 | 21 | 2 | 0 | 5 | 26 | 8 |
-| 13 | Seguridad y protección | 25 | 9 | 0 | 0 | 13 | 3 | 1 | 8 | 21 | 15 |
-| 14 | Reparación y diagnóstico | 29 | 13 | 0 | 0 | 14 | 2 | 3 | 10 | 24 | 10 |
-| 15 | Administración de aplicaciones | 32 | 1 | 5 | 0 | 23 | 3 | 0 | 6 | 29 | 35 |
-| 16 | Funciones de instalación y administración avanzada | 44 | 5 | 0 | 0 | 35 | 4 | 0 | 5 | 40 | 2 |
+| 8 | Administración de inicio y apagado | 21 | 4 | 0 | 0 | 15 | 2 | 0 | 4 | 19 | 16 |
+| 9 | Registro de Windows y configuración del sistema | 58 | 28 | 0 | 0 | 28 | 2 | 6 | 22 | 50 | 11 |
+| 10 | Explorador de archivos e interfaz | 48 | 25 | 0 | 0 | 21 | 2 | 9 | 16 | 37 | 135 |
+| 11 | Red y conectividad | 26 | 4 | 0 | 0 | 20 | 2 | 0 | 4 | 24 | 27 |
+| 12 | Windows Update y mantenimiento | 28 | 5 | 0 | 0 | 21 | 2 | 0 | 5 | 26 | 17 |
+| 13 | Seguridad y protección | 25 | 9 | 0 | 0 | 13 | 3 | 1 | 8 | 21 | 17 |
+| 14 | Reparación y diagnóstico | 29 | 13 | 0 | 0 | 14 | 2 | 3 | 10 | 24 | 14 |
+| 15 | Administración de aplicaciones | 32 | 1 | 5 | 0 | 23 | 3 | 0 | 6 | 29 | 44 |
+| 16 | Funciones de instalación y administración avanzada | 44 | 5 | 0 | 0 | 35 | 4 | 0 | 5 | 40 | 7 |
 | 17 | Capacidades adicionales que no debemos perder | 49 | 0 | 0 | 15 | 2 | 32 | 0 | 0 | 17 | 0 |
-| **Σ** | **17 secciones** | **588** | **149** | **5** | **37** | **326** | **71** | **47** | **107** | **470** | **256** |
+| **Σ** | **17 secciones** | **588** | **149** | **5** | **37** | **326** | **71** | **47** | **107** | **470** | **367** |
 
-Pendientes upstream **sin sección**: 129. Son los ítems cuya categoría está marcada `mixed` en `inventory/partition/category-section-map.tsv`; el reparto por ítem es trabajo del paso siguiente, no se inventa aquí.
+Pendientes upstream **sin sección**: 18. Desde el paso 8d la sección sale también de `inventory/partition/item-section-map.tsv` (435 filas, regla y evidencia escritas). Lo que queda sin sección no tiene efecto propio: entradas de navegación, presets, paneles heredados y scripts cuyo efecto no está medido en el pin.
 
 ## Orden propuesto de oleadas
 
@@ -57,4 +57,4 @@ PROPUESTA (no medida): el orden y los motivos son del agente; las cifras de cada
 
 - «Trabajo» = Mapped sin cubrir + EVO-Exclusive + Absent-At-Pin. No cuenta las líneas informativas.
 - «Pending upstream» no se suma con «Trabajo»: miden universos distintos (ítems de upstream frente a líneas del inventario).
-- Los ítems `mixed` no aparecen en ninguna sección porque su categoría no permite asignarlos sin mirarlos uno a uno.
+- Desde el paso 8d, los ítems de categorías `mixed` sí aparecen: se reparten por ítem con regla y evidencia en `inventory/partition/item-section-map.tsv`. Los 33 que siguen sin sección son los que no tienen efecto propio (navegación, presets, paneles, scripts sin operación medida).

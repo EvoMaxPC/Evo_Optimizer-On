@@ -158,6 +158,14 @@ public sealed class UndoJournal
 
     public bool IsEmpty => _entries.Count == 0;
 
+    /// <summary>
+    /// Punto de restauración al que queda vinculado este diario. El motor lo
+    /// rellena antes de la primera mutación cuando el contrato lo exige
+    /// (ADR-0004): el punto y las entradas se guardan juntos, no en dos sitios
+    /// que puedan desincronizarse.
+    /// </summary>
+    public string? RestorePointId { get; set; }
+
     /// <summary>Añade una entrada (atómico: o se añade entera o no se añade).</summary>
     public void Add(UndoJournalEntry entry)
     {

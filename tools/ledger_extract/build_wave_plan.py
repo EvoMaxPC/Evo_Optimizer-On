@@ -152,10 +152,12 @@ def build() -> str:
         f"**{totals['covered']}** | **{totals['uncovered']}** | **{totals['work']}** | "
         f"**{totals['pending']}** |")
     lines.append("")
-    lines.append(f"Pendientes upstream **sin sección**: {pending_no_section}. Son los "
-                 "ítems cuya categoría está marcada `mixed` en "
-                 "`inventory/partition/category-section-map.tsv`; el reparto por ítem "
-                 "es trabajo del paso siguiente, no se inventa aquí.")
+    lines.append(f"Pendientes upstream **sin sección**: {pending_no_section}. Desde el "
+                 "paso 8d la sección sale también de "
+                 "`inventory/partition/item-section-map.tsv` (435 filas, regla y "
+                 "evidencia escritas). Lo que queda sin sección no tiene efecto "
+                 "propio: entradas de navegación, presets, paneles heredados y "
+                 "scripts cuyo efecto no está medido en el pin.")
     lines.append("")
     lines.append("## Orden propuesto de oleadas")
     lines.append("")
@@ -178,8 +180,11 @@ def build() -> str:
                  "No cuenta las líneas informativas.")
     lines.append("- «Pending upstream» no se suma con «Trabajo»: miden universos "
                  "distintos (ítems de upstream frente a líneas del inventario).")
-    lines.append("- Los ítems `mixed` no aparecen en ninguna sección porque su "
-                 "categoría no permite asignarlos sin mirarlos uno a uno.")
+    lines.append("- Desde el paso 8d, los ítems de categorías `mixed` sí aparecen: "
+                 "se reparten por ítem con regla y evidencia en "
+                 "`inventory/partition/item-section-map.tsv`. Los 33 que siguen sin "
+                 "sección son los que no tienen efecto propio (navegación, presets, "
+                 "paneles, scripts sin operación medida).")
     return "\n".join(lines) + "\n"
 
 

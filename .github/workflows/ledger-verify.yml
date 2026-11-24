@@ -389,6 +389,61 @@ jobs:
           sys.exit(0 if ok else 1)
           PYEOF
 
+      - name: Paso 8d (claves de toggle, seccion por item, plan y rangos)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_toggle_keys.py \
+              | tee "ci-out/paso8d-togglekeys-run${i}.txt"
+            python3 tools/ledger_extract/build_item_section_map.py \
+              | tee "ci-out/paso8d-items-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py \
+              > "ci-out/paso8d-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso8d-plan-run${i}.txt"
+            sha256sum inventory/ledger/atlas-toggle-keys.tsv \
+                      inventory/partition/item-section-map.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      docs/reports/plan-oleadas.md \
+              > "ci-out/paso8d-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso8d-sha-run1.txt ci-out/paso8d-sha-run2.txt; then
+            echo "DETERMINISMO PASO 8D ROTO" | tee ci-out/paso8d-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 8d: OK" | tee ci-out/paso8d-determinism.txt
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          cp inventory/ledger/atlas-toggle-keys.tsv ci-out/
+          cp inventory/partition/item-section-map.tsv ci-out/
+          cp inventory/ledger/upstream-capability-map.tsv ci-out/
+          cp docs/reports/plan-oleadas.md ci-out/
+          python3 tools/ledger_extract/build_item_section_map.py --json \
+            > ci-out/paso8d-items.json
+          python3 tools/ledger_extract/build_upstream_capability_map.py --json \
+            > ci-out/paso8d-map.json
+          python3 tools/ledger_extract/extract_atlas_toggle_keys.py --json \
+            > ci-out/paso8d-togglekeys.json
+          python3 - <<'PYEOF'
+          import json, sys
+          items = json.load(open("ci-out/paso8d-items.json", encoding="utf-8"))
+          mapa = json.load(open("ci-out/paso8d-map.json", encoding="utf-8"))
+          keys = json.load(open("ci-out/paso8d-togglekeys.json", encoding="utf-8"))
+          print("items:", items["filas"], "| con seccion:", items["asignadas"],
+                "| unassigned:", items["unassigned"])
+          print("basis:", items["por_basis"])
+          print("claves de toggle:", keys["filas"], "|", keys["por_hive"])
+          print("mapa upstream: basis:", mapa["por_basis"])
+          print("pending sin seccion:", mapa["pending_por_seccion"].get("(sin seccion)", 0))
+          ok = (items["filas"] == 435
+                and items["asignadas"] + items["unassigned"] == 435
+                and mapa["filas"] == 435
+                and mapa["por_basis"].get("none", 0) < 140
+                and items["por_basis"].get("manual-review", 0) < 140
+                and keys["filas"] > 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
       - name: Estructura .NET (validador)
         if: always()
         shell: bash

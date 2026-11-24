@@ -21,7 +21,9 @@ internal sealed class TestHarness
         FakeTaskAccessor tasks,
         FakeProcessAccessor processes,
         FakeCommandRunner commands,
-        EngineCoordinator coordinator)
+        EngineCoordinator coordinator,
+        FakeRestorePointService restorePoints,
+        FakeConfirmationProvider confirmations)
     {
         Environment = environment;
         Registry = registry;
@@ -30,6 +32,8 @@ internal sealed class TestHarness
         Processes = processes;
         Commands = commands;
         Coordinator = coordinator;
+        RestorePoints = restorePoints;
+        Confirmations = confirmations;
     }
 
     public FakeSystemEnvironment Environment { get; }
@@ -46,10 +50,20 @@ internal sealed class TestHarness
 
     public EngineCoordinator Coordinator { get; }
 
+    /// <summary>Punto de restauración falso (disponible y con éxito por defecto).</summary>
+    public FakeRestorePointService RestorePoints { get; }
+
+    /// <summary>Confirmación falsa (aprueba por defecto).</summary>
+    public FakeConfirmationProvider Confirmations { get; }
+
     public static TestHarness Create(
         bool admin = true,
         int build = 26100,
-        IEnumerable<CapabilityContract>? catalog = null)
+        IEnumerable<CapabilityContract>? catalog = null,
+        bool restorePointAvailable = true,
+        bool restorePointFails = false,
+        bool confirmationApproves = true,
+        bool typeExactName = true)
     {
         var environment = new FakeSystemEnvironment
         {
@@ -73,6 +87,16 @@ internal sealed class TestHarness
         var tasks = new FakeTaskAccessor();
         var processes = new FakeProcessAccessor();
         var commands = new FakeCommandRunner();
+        var restorePoints = new FakeRestorePointService
+        {
+            Available = restorePointAvailable,
+            FailOnCreate = restorePointFails,
+        };
+        var confirmations = new FakeConfirmationProvider
+        {
+            Approve = confirmationApproves,
+            TypeExactName = typeExactName,
+        };
 
         var coordinator = new EngineCoordinator(
             environment,
@@ -85,9 +109,13 @@ internal sealed class TestHarness
                 new ProcessActionExecutor(),
                 new CommandActionExecutor(),
             },
-            catalog);
+            catalog,
+            restorePoints,
+            confirmations);
 
-        return new TestHarness(environment, registry, services, tasks, processes, commands, coordinator);
+        return new TestHarness(
+            environment, registry, services, tasks, processes, commands, coordinator,
+            restorePoints, confirmations);
     }
 
     /// <summary>Contexto que el motor usa para leer el entorno real (los fakes).</summary>
@@ -110,6 +138,7 @@ internal sealed class TestHarness
         RiskLevel risk = RiskLevel.Medium,
         PrivilegeLevel privilege = PrivilegeLevel.User,
         RestoreLevel restore = RestoreLevel.RestorePoint,
+        ConfirmationType? confirmation = null,
         IReadOnlyList<string>? dependsOn = null,
         IReadOnlyList<string>? conflictsWith = null,
         IReadOnlyList<int>? supportedBuilds = null) => new()
@@ -123,7 +152,7 @@ internal sealed class TestHarness
             Privilege = privilege,
             Restore = restore,
             Reversibility = Reversibility.Reversible,
-            Confirmation = CapabilityRules.MinimumConfirmation(risk),
+            Confirmation = confirmation ?? CapabilityRules.MinimumConfirmation(risk),
             State = CapabilityState.Implemented,
             Variants = [Variant.Evo],
             ConflictsWith = conflictsWith ?? [],

@@ -27,6 +27,13 @@ public sealed record ActionContext
 
     public required string CapabilityId { get; init; }
 
+    /// <summary>
+    /// Opción explícita del usuario: aceptar ejecutar sin punto de restauración
+    /// aunque el contrato lo exija. El motor lo registra en el resumen
+    /// (<c>RestorePointWaived</c>). Nunca se activa solo.
+    /// </summary>
+    public bool AcceptNoRestorePoint { get; init; }
+
     /// <summary>True solo en <see cref="ExecutionMode.Execute"/>.</summary>
     public bool Mutates => Mode == ExecutionMode.Execute;
 }

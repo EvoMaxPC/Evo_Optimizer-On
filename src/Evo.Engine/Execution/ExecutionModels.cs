@@ -1,3 +1,4 @@
+using Evo.Core.Enums;
 using Evo.Core.Models;
 
 namespace Evo.Engine.Execution;
@@ -116,6 +117,31 @@ public sealed record ExecutionSummary
 
     /// <summary>Plan evaluado (para informes de DryRun/Audit).</summary>
     public IReadOnlyList<string> PlannedActions { get; init; } = [];
+
+    /// <summary>
+    /// Motivo por el que el motor abortó ANTES de la primera mutación
+    /// (confirmación rechazada, punto de restauración no disponible o fallido).
+    /// Es distinto de <see cref="BlockedReason"/>, que es del preflight.
+    /// </summary>
+    public string AbortedReason { get; init; } = string.Empty;
+
+    /// <summary>True si el motor abortó por la puerta previa a mutar.</summary>
+    public bool Aborted => !string.IsNullOrEmpty(AbortedReason);
+
+    /// <summary>Id del punto de restauración creado, si se creó.</summary>
+    public string? RestorePointId { get; init; }
+
+    /// <summary>Confirmación que exigía el contrato (None si no pedía ninguna).</summary>
+    public ConfirmationType ConfirmationRequested { get; init; } = ConfirmationType.None;
+
+    /// <summary>True si el usuario aprobó la confirmación.</summary>
+    public bool Confirmed { get; init; }
+
+    /// <summary>
+    /// True si se ejecutó sin punto de restauración por la opción explícita
+    /// <c>AcceptNoRestorePoint</c>. Queda visible para el informe.
+    /// </summary>
+    public bool RestorePointWaived { get; init; }
 }
 
 /// <summary>Acción declarada con su contrato de origen.</summary>

@@ -18,17 +18,20 @@ Columnas:
     source          winutil | atlas-toggle | atlas-manifest
     label           etiqueta legible del item
     section_guess   1-17 o vacio si no hay evidencia
-    section_basis   category | text-rule | none (de donde sale section_guess)
+    section_basis   category | item-effect | item-name-rule | item-manifest-path |
+                    text-rule | none (de donde sale section_guess)
     capability_id   id de la capacidad del catalogo que lo cubre (vacio si no hay)
     status          covered | pending | variant-of | not-a-capability
     reason          por que tiene ese estado
 
-Orden de `section_guess` (paso 8c):
+Orden de `section_guess` (paso 8d):
     1. categoria del item segun inventory/partition/category-section-map.tsv, si
        esa categoria tiene una seccion 1-17 (no vale si es mixed/unassigned);
-    2. si no, la capacidad que lo cubre o la seccion ya medida en
+    2. si no, la seccion del item en inventory/partition/item-section-map.tsv
+       (regla `item-effect`, `item-name-rule` o `item-manifest-path`);
+    3. si no, la capacidad que lo cubre o la seccion ya medida en
        inventory-reconciliation.tsv (regla `text-rule`);
-    3. si no hay nada, vacio (`none`).
+    4. si no hay nada, vacio (`none`).
 
 `covered`  algun `ledger_refs:` de una capacidad del catalogo cita el item.
 `pending`  ningun item del catalogo lo cita.
@@ -60,6 +63,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import verify_catalog_coverage as vcc  # noqa: E402
 import build_category_section_map as csm  # noqa: E402
+import build_item_section_map as ism  # noqa: E402
 LEDGER = ROOT / "inventory" / "ledger"
 CATALOG_DIR = ROOT / "catalog" / "capabilities"
 OUT = LEDGER / "upstream-capability-map.tsv"
@@ -183,6 +187,11 @@ def guess_section(capability: str | None, sections: dict[str, int], label: str,
 # upstream_id -> (seccion propuesta por categoria, categoria). Se calcula una vez.
 CATEGORY_SECTION = csm.index()
 
+# upstream_id -> (seccion, basis) del mapa por item (paso 8d). Se calcula una
+# vez; cubre las categorias mixed y los items sin categoria.
+ITEM_SECTION = {row["upstream_id"]: (row["section"], row["basis"])
+                for row in ism.build()}
+
 
 def section_from_category(item_id: str) -> str:
     """Seccion propuesta por la categoria del item, si no es mixed/unassigned."""
@@ -241,10 +250,14 @@ def build() -> list[dict]:
             status = "pending"
             reason = "ninguna capacidad del catalogo la cita todavia"
 
-        # 1) categoria; 2) reglas de siempre (capacidad / conciliacion); 3) vacio.
+        # 1) categoria; 2) mapa por item del paso 8d; 3) reglas de siempre
+        # (capacidad / conciliacion); 4) vacio.
         by_category = section_from_category(row["upstream_id"])
+        item_section, item_basis = ITEM_SECTION.get(row["upstream_id"], ("", "manual-review"))
         if by_category:
             section_guess, section_basis = by_category, "category"
+        elif item_section.isdigit():
+            section_guess, section_basis = item_section, f"item-{item_basis}"
         else:
             section_guess = guess_section(capability, sections, row["upstream_id"],
                                           row["source"])
