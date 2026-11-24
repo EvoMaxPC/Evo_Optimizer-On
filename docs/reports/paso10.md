@@ -495,29 +495,33 @@ U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
 
 ## Commit
 
-Rama `arena/ab2d6de7-evo-optimizer-on`, cuatro commits (el PR #1 sigue **en draft**):
+Rama `arena/ab2d6de7-evo-optimizer-on`, cinco commits (el PR #1 sigue **en draft**):
 
 ```
+04d1565 docs(paso10): runs y sha256 definitivos del CI en verde
 3d5945c fix(ledger): tres falsos negativos de la seccion 9 medidos en el pin (269, 302, 307)
 473eada fix(tests): Wave1 no enumera las secciones 9/10 y admite Reduces con su puerta
 b163c95 fix(tests): cifra del catalogo 68 -> 86 en Wave1/Wave2 (oleada 3)
 88259a4 feat: paso 10 - oleada 3 catalogo seccion 9 registro y sistema
 ```
 
-El árbol del catálogo y sus ledgers queda cerrado en el commit `feat`; los dos
-posteriores sólo tocan tests .NET (los defectos que vio el CI) y este informe.
+El árbol del catálogo y sus ledgers queda cerrado en `88259a4`; `3d5945c` sólo
+reconcilia tres líneas de §9, `473eada`/`b163c95` sólo tocan tests .NET (los
+defectos que vio el CI) y `04d1565` sólo este informe.
 
 PR #1 (`gh api -X PATCH …/pulls/1`): título «Paso 10 — Oleada 3: catálogo de la
 Sección 9 (Registro y configuración del sistema), 18 capacidades / 39 acciones»,
-`state=OPEN`, `isDraft=true`, `head=3d5945c`.
+`state=OPEN`, `isDraft=true`, `head=04d1565`.
 
 CI verificado sobre ese head:
 
 ```
-dotnet-ci run 45497524401     | success | 187/187 · windows-2025 y windows-11-arm
-dotnet-ci run 45497511627     | success | mismo head, reintento idéntico
-ledger-verify run 45497511272 | success | pytest 518 passed · determinismo paso 10: OK
+dotnet-ci run 45498908303     | success | 187/187 · windows-2025 y windows-11-arm
+ledger-verify run 45498895158 | success | pytest 518 passed · determinismo paso 10: OK
+dotnet-ci run 45497524401     | success | head anterior 3d5945c, 187/187 (mismo árbol de catálogo)
+dotnet-ci run 45497511627     | success | reintento idéntico de 3d5945c
+ledger-verify run 45497511272 | success | head anterior 3d5945c
 ```
 
-El `sha` que reporta el informe de `dotnet-ci` (`b562783`) es el del **merge del
-PR**, no el del head de rama: es el mismo árbol de `3d5945c`.
+El `sha` que reporta el informe de `dotnet-ci` es el del **merge del PR**, no el
+del head de rama: es el mismo árbol.
