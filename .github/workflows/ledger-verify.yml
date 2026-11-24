@@ -444,6 +444,68 @@ jobs:
           sys.exit(0 if ok else 1)
           PYEOF
 
+      - name: Paso 9 (catalogo de la seccion 10, cobertura y doble ejecucion)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section10_catalog.py \
+              | tee "ci-out/paso9-catalog-run${i}.txt"
+            python3 tools/ledger_extract/generate_coverage_matrix.py \
+              > "ci-out/paso9-matrix-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py \
+              > "ci-out/paso9-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py \
+              > "ci-out/paso9-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso9-plan-run${i}.txt"
+            python3 tools/ledger_extract/build_build_ranges_report.py \
+              > "ci-out/paso9-ranges-run${i}.txt"
+            sha256sum catalog/capabilities/section10_explorer_ui.json \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      inventory/ledger/inventory-reconciliation.tsv \
+                      docs/reports/matriz-cobertura.md \
+                      docs/reports/plan-oleadas.md \
+                      docs/reports/rangos-build.md \
+              > "ci-out/paso9-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso9-sha-run1.txt ci-out/paso9-sha-run2.txt; then
+            echo "DETERMINISMO PASO 9 ROTO" | tee ci-out/paso9-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 9: OK" | tee ci-out/paso9-determinism.txt
+          python3 tools/ledger_extract/build_section10_catalog.py --check
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          python3 tools/ledger_extract/build_build_ranges_report.py --check
+          cp catalog/capabilities/section10_explorer_ui.json ci-out/
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso9-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso9-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          cov = json.load(open("ci-out/paso9-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso9-audit.json", encoding="utf-8"))
+          print("capacidades:", cov["capacidades"],
+                "| secciones:", cov["secciones_terminadas"],
+                "| mapped:", cov["lineas_mapped_1_3"],
+                "| cubiertas:", cov["cubiertas"],
+                "| huecos:", cov["huecos"])
+          print("seccion 10:", cov["por_seccion"]["10"])
+          print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
+          sec10 = cov["por_seccion"]["10"]
+          ok = (cov["capacidades"] == 68
+                and sec10["lineas_mapped"] == 29
+                and sec10["cubiertas"] == 29
+                and sec10["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and aud["sin_excepcion"] == 0
+                and aud["distribucion"].get("ambiguous", 0) == 0
+                and aud["distribucion"].get("unhandled", 0) == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
       - name: Estructura .NET (validador)
         if: always()
         shell: bash

@@ -3,17 +3,17 @@
 Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a mano.
 
 - Filas de la conciliacion: **588**
-- `inventory/ledger/inventory-reconciliation.tsv` sha256 `a6ae2b260aa84108423e3168fac78ae0b184ea2be71317cd1d26eedcad08e27b`
+- `inventory/ledger/inventory-reconciliation.tsv` sha256 `c35c1791056f4348a664b91f1299d56f0df0cfd2c2209412cfe712e8b1f8a46a`
 - Pins: Atlas `ec3c4058`, WinUtil `70c23c80`
 
 ## 1. Totales por estado
 
 | Estado | Filas | % |
 |---|---:|---:|
-| `Mapped` | 149 | 25.3 % |
+| `Mapped` | 153 | 26.0 % |
 | `Mapped-To-App` | 5 | 0.9 % |
 | `EVO-Exclusive` | 37 | 6.3 % |
-| `Absent-At-Pin` | 326 | 55.4 % |
+| `Absent-At-Pin` | 322 | 54.8 % |
 | `Informative-Header` | 71 | 12.1 % |
 | **Total** | **588** | 100.0 % |
 
@@ -30,7 +30,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 7 | 7 | 0 | 10 | 10 | 2 | 29 |
 | 8 | 4 | 0 | 0 | 15 | 2 | 21 |
 | 9 | 28 | 0 | 0 | 28 | 2 | 58 |
-| 10 | 25 | 0 | 0 | 21 | 2 | 48 |
+| 10 | 29 | 0 | 0 | 17 | 2 | 48 |
 | 11 | 4 | 0 | 0 | 20 | 2 | 26 |
 | 12 | 5 | 0 | 0 | 21 | 2 | 28 |
 | 13 | 9 | 0 | 0 | 13 | 3 | 25 |
@@ -38,7 +38,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 15 | 1 | 5 | 0 | 23 | 3 | 32 |
 | 16 | 5 | 0 | 0 | 35 | 4 | 44 |
 | 17 | 0 | 0 | 15 | 2 | 32 | 49 |
-| **Total** | **149** | **5** | **37** | **326** | **71** | **588** |
+| **Total** | **153** | **5** | **37** | **322** | **71** | **588** |
 
 ## 3. Cobertura WinUtil
 
@@ -54,7 +54,7 @@ Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; lo
 
 | Conjunto | Total | Mapeados | Cobertura |
 |---|---:|---:|---:|
-| Toggles | 91 | 8 | 8.8 % |
+| Toggles | 91 | 11 | 12.1 % |
 | Entradas de manifiesto | 182 (177 habilitadas) | 0 | 0.0 % |
 | Valores `.reg` (`atlas-reg-entries.tsv`) | 327 | 0 | 0.0 % |
 | Ficheros `.reg` | 11 | — | n/d |
@@ -65,10 +65,10 @@ Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; lo
 
 | Concepto | Valor |
 |---|---:|
-| `mapped_ids` distintos en toda la conciliacion | 92 |
+| `mapped_ids` distintos en toda la conciliacion | 95 |
 | De ellos, apps de WinUtil | 5 |
 | De ellos, items de WinUtil | 51 |
-| De ellos, toggles Atlas | 8 |
+| De ellos, toggles Atlas | 11 |
 | De ellos, entradas de manifiesto Atlas | 0 |
 | De ellos, operaciones de tweak de WinUtil | 17 |
 | De ellos, efectos de script de Atlas | 11 |

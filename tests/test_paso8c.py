@@ -207,8 +207,14 @@ def test_la_cobertura_1_3_sigue_siendo_26_de_26() -> None:
     report = json.loads(subprocess.run(
         [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
          "--json"], capture_output=True, text=True, check=False).stdout)
-    assert report["lineas_mapped_1_3"] == 26
-    assert report["cubiertas"] == 26
+    # Paso 9: el campo incluye ya la sección 10 (26 de 1-3 + 29 de 10 = 55).
+    # Lo que este test protege sigue siendo lo mismo: que 1+2+3 no pierdan ni
+    # una línea Mapped al añadir secciones al verificador.
+    assert report["lineas_mapped_1_3"] == 26 + 29
+    assert report["por_seccion"]["1"]["lineas_mapped"] == 3
+    assert report["por_seccion"]["2"]["lineas_mapped"] == 17
+    assert report["por_seccion"]["3"]["lineas_mapped"] == 6
+    assert report["cubiertas"] == 26 + 29
     assert report["huecos"] == 0
     assert len(report["por_seccion_17"]) == 17
 

@@ -58,6 +58,7 @@ OUT_TSV = ROOT / "inventory" / "ledger" / "catalog-value-audit.tsv"
 EXCEPTIONS = ROOT / "catalog" / "exceptions" / "value-deviations.json"
 UPSTREAM = Path("/tmp/upstream")
 ATLAS_TWEAKS = "package/Executables/AtlasModules/Scripts/Tweaks"
+ATLAS_TOGGLES = "package/Executables/AtlasModules/Toggles"
 
 COLUMNS = ("capability_id", "hive", "key", "name", "catalog_value", "source",
            "source_ref", "source_apply_value", "source_original_value",
@@ -168,6 +169,84 @@ FIELD_RES = {
 }
 
 
+def balanced_hashtables(text: str) -> list[str]:
+    """Trocea `@{ … }` de un texto respetando comillas y `@( … )`.
+
+    Hace falta porque las rutas de Atlas llevan llaves dentro de comillas
+    (`CLSID\\{e88865ea-…}`) y hay valores que son `@(0x0E, …)`.
+    """
+    spans: list[str] = []
+    index = 0
+    while index < len(text):
+        start = text.find("@{", index)
+        if start < 0:
+            return spans
+        depth, cursor, in_quote = 0, start, False
+        closed = False
+        while cursor < len(text):
+            char = text[cursor]
+            if char == "'":
+                in_quote = not in_quote
+            elif not in_quote:
+                if char in "{(":
+                    depth += 1
+                elif char in "})":
+                    depth -= 1
+                    if depth == 0:
+                        spans.append(text[start:cursor + 1])
+                        closed = True
+                        break
+            cursor += 1
+        if not closed:
+            return spans
+        index = cursor + 1
+    return spans
+
+
+STATE_NAME = re.compile(r"Name\s*=\s*'([^']+)'")
+STATE_VALUE = re.compile(r"StateValue\s*=")
+
+
+def atlas_states(text: str) -> list[tuple[str, str]]:
+    """Estado -> interior del estado, en el orden del fichero.
+
+    Un `.psd1` de Toggles declara varios estados con `StateValue`; los de Tweaks
+    no declaran estados (una sola forma de aplicarse). Sin esta separación, un
+    toggle con Data 0 en un estado y 1 en otro aparece como `ambiguous` aunque
+    el catálogo esté copiando exactamente uno de los dos.
+    """
+    text = re.sub(r"#[^\n]*", "", text)
+    marker = text.find("States")
+    if marker < 0:
+        return []
+    paren = text.find("@(", marker)
+    if paren < 0:
+        return []
+    depth, cursor, in_quote = 0, paren + 1, False
+    while cursor < len(text):
+        char = text[cursor]
+        if char == "'":
+            in_quote = not in_quote
+        elif not in_quote:
+            if char == "(":
+                depth += 1
+            elif char == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+        cursor += 1
+    block = text[paren + 2:cursor]
+
+    states: list[tuple[str, str]] = []
+    for body in balanced_hashtables(block):
+        if not STATE_VALUE.search(body):
+            continue
+        name = STATE_NAME.search(body)
+        if name:
+            states.append((name.group(1), body[2:-1]))
+    return states
+
+
 def atlas_entries(path: Path, rel: str) -> list[dict]:
     """Entradas de los bloques `Registry = @( ... )` de un .psd1, con línea."""
     text = path.read_text(encoding="utf-8", errors="replace")
@@ -234,23 +313,79 @@ def atlas_entries(path: Path, rel: str) -> list[dict]:
     return parsed
 
 
+def atlas_toggle_states(path: Path, rel: str) -> list[dict]:
+    """Entradas de registro de un `.psd1` de Toggles, con el estado del que salen."""
+    text = path.read_text(encoding="utf-8", errors="replace")
+    parsed: list[dict] = []
+    for state_name, body in atlas_states(text):
+        for entry in balanced_hashtables(body):
+            path_match = FIELD_RES["path"].search(entry)
+            name_match = FIELD_RES["name"].search(entry)
+            if not path_match or not name_match:
+                continue
+            data_match = FIELD_RES["data"].search(entry)
+            operation_match = FIELD_RES["operation"].search(entry)
+            operation = operation_match.group(1) if operation_match else "Set"
+            value = "<RemoveEntry>" if operation.lower() == "delete" else (
+                norm_value(data_match.group(1)) if data_match else "")
+            if operation.lower() != "delete" and not data_match:
+                # Sin Data no hay literal comparable: no se inventa uno.
+                continue
+            hive, key = split_hive(path_match.group(1))
+            parsed.append(
+                {
+                    "source": "atlas-toggle",
+                    "source_ref": f"atlas@ec3c4058:{rel}:{state_name}",
+                    "hive": hive,
+                    "key": key,
+                    "name": name_match.group(1).lower(),
+                    "apply": value,
+                    "original": "",
+                    "state": state_name,
+                }
+            )
+    return parsed
+
+
 def load_atlas() -> dict[tuple[str, str, str], list[dict]]:
     index: dict[tuple[str, str, str], list[dict]] = {}
-    base = UPSTREAM / "atlas" / ATLAS_TWEAKS
-    if not base.is_dir():
+    if not (UPSTREAM / "atlas").is_dir():
         return index
-    for path in sorted(base.rglob("*.psd1"), key=lambda p: str(p)):
-        rel = path.relative_to(UPSTREAM / "atlas").as_posix()
-        for entry in atlas_entries(path, rel):
-            index.setdefault((entry["hive"], entry["key"], entry["name"]), []).append(entry)
+    # 1) Tweaks: una sola forma de aplicarse.
+    base = UPSTREAM / "atlas" / ATLAS_TWEAKS
+    if base.is_dir():
+        for path in sorted(base.rglob("*.psd1"), key=lambda p: str(p)):
+            rel = path.relative_to(UPSTREAM / "atlas").as_posix()
+            for entry in atlas_entries(path, rel):
+                index.setdefault((entry["hive"], entry["key"], entry["name"]), []).append(entry)
+    # 2) Toggles: el catálogo copia UN estado concreto (normalmente el que
+    #    anuncia el efecto de la capacidad). Se indexan por estado para que la
+    #    auditoría no confunda «hay dos estados con valores distintos» con
+    #    «las fuentes discrepan».
+    toggles = UPSTREAM / "atlas" / ATLAS_TOGGLES
+    if toggles.is_dir():
+        for path in sorted(toggles.rglob("*.psd1"), key=lambda p: str(p)):
+            rel = path.relative_to(UPSTREAM / "atlas").as_posix()
+            for entry in atlas_toggle_states(path, rel):
+                index.setdefault((entry["hive"], entry["key"], entry["name"]), []).append(entry)
     return index
 
 
 # --------------------------------------------------------------------------- relaciones
 def classify(catalog_value: str, candidates: list[dict]) -> tuple[str, str, str, str, str]:
-    """Devuelve (relation, source, source_ref, apply, original)."""
+    """Devuelve (relation, source, source_ref, apply, original).
+
+    Antes de decidir, se queda con las fuentes que COINCIDEN con el valor del
+    catálogo si alguna lo hace: así un toggle de Atlas con estados 0 y 1 no sale
+    `ambiguous` cuando el catálogo copia uno de ellos exactamente. Si ninguna
+    coincide y hay varios literales distintos, sí es `ambiguous` de verdad.
+    """
     if not candidates:
         return ("no-source", "", "", "", "", "")
+
+    matching = [c for c in candidates if c["apply"] == catalog_value]
+    if matching and len({c["apply"] for c in candidates}) > 1:
+        candidates = matching
 
     distinct = {(c["source"], c["source_ref"], c["apply"], c.get("tweak_type", ""))
                 for c in candidates}
@@ -355,8 +490,19 @@ def main(argv: list[str] | None = None) -> int:
             for row in rows:
                 writer.writerow(trim(row))
 
+    # Recuento por sección del catálogo, para poder informar de cuántas acciones
+    # de la sección 10 entraron en la auditoría (no se estima: se cuenta).
+    section_of = {}
+    catalog_dir = ROOT / "catalog" / "capabilities"
+    for path in sorted(catalog_dir.glob("*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        for definition in document.get("capabilities", []):
+            section_of[definition["id"]] = str(definition.get("sectionId", ""))
+
     summary = {
         "filas": len(rows),
+        "por_seccion": dict(sorted(Counter(
+            section_of.get(r["capability_id"], "?") for r in rows).items())),
         "distribucion": dict(sorted(distribution.items())),
         "excepciones": len(exceptions),
         "sin_excepcion": len(unsafe),
@@ -372,6 +518,7 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"acciones de registro auditadas : {summary['filas']}")
     print(f"  distribucion                 : {summary['distribucion']}")
+    print(f"  por seccion del catalogo     : {summary['por_seccion']}")
     print(f"  excepciones declaradas       : {summary['excepciones']}")
     print(f"  sin excepcion (debe ser 0)   : {summary['sin_excepcion']}")
     if unsafe:

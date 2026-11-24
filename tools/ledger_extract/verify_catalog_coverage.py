@@ -4,8 +4,9 @@
 Cruza los IDs de `catalog/capabilities/*.json` con
 `inventory/ledger/inventory-reconciliation.tsv` y responde a una sola pregunta:
 
-    ¿toda línea *Mapped* de las secciones 1-3 tiene al menos una capacidad que
-    la respalde?
+    ¿toda línea *Mapped* de las secciones ya construidas (1-3 desde la oleada 1,
+    10 desde la oleada 2 del paso 9) tiene al menos una capacidad que la
+    respalde?
 
 El cruce se hace por `mapped_ids`: cada capacidad declara en `provenance` los
 item_id del ledger de los que sale. Una línea del inventario queda cubierta si
@@ -37,6 +38,9 @@ RECONCILIATION = ROOT / "inventory" / "ledger" / "inventory-reconciliation.tsv"
 # Item_id del ledger: prefijo:clase:...:sufijo. Se extraen del texto de provenance.
 LEDGER_ID = re.compile(r"\b(?:winutil|atlas):[A-Za-z0-9_.:\-/*{}]+")
 SECTIONS = ("1", "2", "3")
+# Secciones con catalogo construido y con el mismo criterio estricto (0 huecos).
+# La 10 entra en el paso 9 (oleada 2). Las demas siguen solo informativas.
+COMPLETED_SECTIONS = ("1", "2", "3", "10")
 # Las 17 secciones del inventario, para el plan de oleadas (paso 8c). El
 # veredicto y los huecos siguen calculandose SOLO sobre SECTIONS, de modo que
 # esta lista amplia el informe pero no cambia el comportamiento en 1-3.
@@ -55,6 +59,21 @@ RECONCILIATION_STATES = ("Mapped", "Mapped-To-App", "EVO-Exclusive",
 # con motivo; el script falla si aparece uno no declarado y tambien si una
 # declaracion se queda obsoleta.
 DECLARED_GAPS: dict[tuple[str, str], str] = {}
+
+# Procedencia forzada: `mapped_ids` de la línea -> `ledger_refs` de la capacidad.
+# Existe por un defecto MEDIDO del paso 4e: esas tres líneas del inventario citan
+# una operación de OTRO tweak (`LoginBlur` para las notificaciones, `NumLock`
+# para los atajos, `HideSettingsHome` para el reinicio del Explorador), así que
+# el casamiento por prefijo no encuentra nunca a la capacidad correcta. La
+# relación real se escribe aquí, una por una, con su motivo; no se relaja la
+# regla para todas las líneas. Lo comprueba tests/test_paso9.py.
+DECLARED_SOURCES: dict[tuple[str, str], str] = {
+    # (seccion, linea) -> capacidad. Se indexa por línea y no por mapped_id
+    # porque un mismo id puede aparecer en dos líneas con significados distintos
+    # (WPFToggleLoginBlur:registry:0 está en la 333 y en la 334).
+    ("10", "334"): "ui.notifications.center-hide",
+    ("10", "347"): "ui.numlock.startup",
+}
 
 
 def load_capabilities() -> list[dict]:
@@ -104,6 +123,24 @@ def prefix_matches(mapped_id: str, prefixes: list[str]) -> bool:
     return False
 
 
+def supporters_of_row(row: dict, capabilities: list[dict]) -> list[str]:
+    """Capacidades que cubren una línea `Mapped` del inventario.
+
+    Es la ÚNICA definición de cobertura del repo: la usan el verificador (para
+    decidir si hay hueco) y el plan de oleadas (para contar «Mapped cubiertas»).
+    Si se separaran, el plan podría decir 27 y el verificador 29 sobre las
+    mismas líneas.
+    """
+    forced = {cap for (sec, line), cap in DECLARED_SOURCES.items()
+              if (sec, line) == (row["seccion"], row["linea"])}
+    found = {
+        cap["id"]
+        for cap in capabilities
+        if any(prefix_matches(m, cap["prefixes"]) for m in row["mapped_ids"])
+    }
+    return sorted(found | forced)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--json", action="store_true", help="salida JSON")
@@ -124,16 +161,16 @@ def main(argv: list[str] | None = None) -> int:
     capabilities = load_capabilities()
     rows = load_rows()
 
-    mapped = [r for r in rows if r["seccion"] in SECTIONS and r["status"].startswith("Mapped")]
+    mapped = [r for r in rows
+              if r["seccion"] in COMPLETED_SECTIONS and r["status"].startswith("Mapped")]
+
+    def supporters_of(row: dict) -> list[str]:
+        return supporters_of_row(row, capabilities)
 
     covered: list[dict] = []
     gaps: list[dict] = []
     for row in mapped:
-        supporters = [
-            cap["id"]
-            for cap in capabilities
-            if any(prefix_matches(m, cap["prefixes"]) for m in row["mapped_ids"])
-        ]
+        supporters = supporters_of(row)
         entry = {
             "seccion": row["seccion"],
             "linea": row["linea"],
@@ -157,10 +194,7 @@ def main(argv: list[str] | None = None) -> int:
     # cobertura.
     without_mapped_line = []
     for cap in capabilities:
-        hits = [
-            r for r in mapped
-            if any(prefix_matches(m, cap["prefixes"]) for m in r["mapped_ids"])
-        ]
+        hits = [r for r in mapped if cap["id"] in supporters_of(r)]
         if not hits:
             without_mapped_line.append(cap["id"])
 
@@ -173,13 +207,7 @@ def main(argv: list[str] | None = None) -> int:
         states = {state: sum(1 for r in section_rows if r["status"] == state)
                   for state in RECONCILIATION_STATES}
         section_mapped = [r for r in section_rows if r["status"].startswith("Mapped")]
-        covered_here = 0
-        for row in section_mapped:
-            if any(
-                prefix_matches(m, cap["prefixes"])
-                for cap in capabilities for m in row["mapped_ids"]
-            ):
-                covered_here += 1
+        covered_here = sum(1 for row in section_mapped if supporters_of(row))
         per_all_section[section] = {
             "estados": states,
             "lineas": len(section_rows),
@@ -192,7 +220,7 @@ def main(argv: list[str] | None = None) -> int:
     _ = all_mapped
 
     per_section = {}
-    for section in SECTIONS:
+    for section in COMPLETED_SECTIONS:
         per_section[section] = {
             "lineas_mapped": sum(1 for r in mapped if r["seccion"] == section),
             "cubiertas": sum(1 for c in covered if c["seccion"] == section),
@@ -201,7 +229,10 @@ def main(argv: list[str] | None = None) -> int:
 
     report = {
         "capacidades": len(capabilities),
+        # Nombre conservado por compatibilidad con los tests del paso 8; ahora
+        # cuenta las secciones terminadas (1-3 y 10).
         "lineas_mapped_1_3": len(mapped),
+        "secciones_terminadas": list(COMPLETED_SECTIONS),
         "cubiertas": len(covered),
         "huecos": len(gaps),
         "huecos_declarados": len(DECLARED_GAPS),
@@ -211,7 +242,8 @@ def main(argv: list[str] | None = None) -> int:
         "por_seccion": per_section,
         "por_seccion_17": per_all_section,
         "detalle_huecos": sorted(
-            ({"seccion": g["seccion"], "linea": g["linea"], "texto": g["texto"]} for g in undeclared),
+            ({"seccion": g["seccion"], "linea": g["linea"], "texto": g["texto"],
+              "mapped_ids": g["mapped_ids"]} for g in undeclared),
             key=lambda d: (d["seccion"], int(d["linea"])),
         ),
     }
@@ -226,7 +258,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if ok else 1
 
     print(f"capacidades del catalogo : {report['capacidades']}")
-    print(f"lineas Mapped 1-3       : {report['lineas_mapped_1_3']}")
+    print(f"lineas Mapped {'+'.join(COMPLETED_SECTIONS)}   : {report['lineas_mapped_1_3']}")
     print(f"  cubiertas             : {report['cubiertas']}")
     print(f"  huecos declarados     : {report['huecos']} (de {report['huecos_declarados']} declarados)")
     for section, data in per_section.items():

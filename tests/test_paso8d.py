@@ -293,7 +293,13 @@ def test_el_motor_aborta_antes_de_mutar_si_falta_el_punto() -> None:
 def test_las_capacidades_con_rango_incompleto_lo_justifican() -> None:
     four = {19045, 22631, 26100, 26200}
     caps = capabilities()
-    incomplete = [c for c in caps.values() if not four <= set(c["supportedBuilds"])]
+    # Paso 9: la sección 10 trae capacidades que SOLO existen en Windows 11
+    # (CLSID del menú contextual, Snap Layouts, End Task...). Su rango parcial es
+    # correcto y lo justifica `tests/test_paso9.py`; aquí se sigue exigiendo lo
+    # mismo a las capacidades de las secciones 1-3, que son las de este paso.
+    incomplete = [c for c in caps.values()
+                  if c["sectionId"] in (1, 2, 3)
+                  and not four <= set(c["supportedBuilds"])]
     assert {c["id"] for c in incomplete} == {
         "debloat.windows.ai.recall", "debloat.copilot.remove"}
     for capability in incomplete:

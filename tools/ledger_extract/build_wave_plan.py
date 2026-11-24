@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import sys
 from collections import Counter
 from pathlib import Path
@@ -43,8 +44,9 @@ PROPOSAL = [
     (1, "Base de limpieza: 24 unidades de trabajo y ya tiene 3/3 Mapped cubiertas. "
         "Va primero porque las demás oleadas reutilizan su motor de borrado."),
     (2, "Debloat es el núcleo del producto y ya está 17/17. Continúa con 10 y 9."),
-    (10, "Explorador e interfaz: 25 Mapped de 48 líneas, el bloque más grande de "
-         "upstream (92 ítems con sección). Depende de las políticas de 2."),
+    (10, "Explorador e interfaz: oleada 2, ya cerrada en el catálogo (29 de 29 "
+         "líneas Mapped cubiertas). Ahora es la sección con más ítems de upstream "
+         "todavía pendientes: el trabajo que queda es de upstream, no del inventario."),
     (9, "Registro y configuración: 28 Mapped, casi el mismo tamaño que 10 y sin "
         "dependencias; buen candidato a oleada paralela."),
     (3, "Telemetría: 6/6 Mapped cubiertas; el resto (34 Absent-At-Pin) son los "
@@ -94,8 +96,7 @@ def build() -> str:
     for row in rows:
         if not row["status"].startswith("Mapped"):
             continue
-        if any(vcc.prefix_matches(m, cap["prefixes"])
-               for cap in capabilities for m in row["mapped_ids"]):
+        if vcc.supporters_of_row(row, capabilities):
             covered_by_section[row["seccion"]] += 1
 
     pending_section = Counter(
@@ -114,8 +115,9 @@ def build() -> str:
     lines.append("")
     lines.append("MEDIDO: las cuatro primeras columnas de estado salen de "
                  "`inventory/ledger/inventory-reconciliation.tsv` (588 líneas); "
-                 "«Mapped cubiertas» cruza esas líneas con `ledger_refs` de las "
-                 "39 capacidades; «pending upstream» cuenta las filas `pending` "
+                 f"«Mapped cubiertas» cruza esas líneas con `ledger_refs` de las "
+                 f"{capability_count()} capacidades del catálogo; "
+                 "«pending upstream» cuenta las filas `pending` "
                  "de `upstream-capability-map.tsv` con `section_guess` igual a esa "
                  "sección.")
     lines.append("")
@@ -182,7 +184,7 @@ def build() -> str:
                  "distintos (ítems de upstream frente a líneas del inventario).")
     lines.append("- Desde el paso 8d, los ítems de categorías `mixed` sí aparecen: "
                  "se reparten por ítem con regla y evidencia en "
-                 "`inventory/partition/item-section-map.tsv`. Los 33 que siguen sin "
+                 "`inventory/partition/item-section-map.tsv`. Los que siguen sin "
                  "sección son los que no tienen efecto propio (navegación, presets, "
                  "paneles, scripts sin operación medida).")
     return "\n".join(lines) + "\n"
@@ -209,6 +211,14 @@ TITLES = {
     "16": "Funciones de instalación y administración avanzada",
     "17": "Capacidades adicionales que no debemos perder",
 }
+
+
+def capability_count() -> int:
+    """Número de capacidades del catálogo (se lee, no se escribe a mano)."""
+    total = 0
+    for path in sorted((ROOT / "catalog" / "capabilities").glob("*.json")):
+        total += len(json.loads(path.read_text(encoding="utf-8")).get("capabilities", []))
+    return total
 
 
 def vcc_section_title(section) -> str:

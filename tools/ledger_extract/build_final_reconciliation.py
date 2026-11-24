@@ -95,6 +95,35 @@ GAMING_EVO = ("perfil", "detección del juego", "rededucción", "reducción temp
               "comparación antes", "preparación automática", "control de procesos")
 
 
+# Correcciones medidas en el paso 9 (oleada 2). El paso 4e dejo estas lineas en
+# `Absent-At-Pin` por un falso negativo: el TEXTO de la linea no casa con el
+# ledger y no se miro que si hubiera efecto. Ahora que existe seccion 10 en el
+# catalogo, cada una se puede comprobar contra el pin. Se indexa por
+# (seccion, linea) y NO por texto: el texto puede repetirse en dos secciones.
+# Evidencia de cada una en docs/reports/paso9.md.
+MAPPED_OVERRIDES: dict[tuple[int, str], tuple[str, str]] = {
+    (10, "326"): ("winutil:tweak:WPFTweaksRightClickMenu",
+                  "falso negativo del paso 4e: WinUtil aplica el menu contextual clasico "
+                  "(functions/private/Set-WinUtilClassicContextMenu, invocado por "
+                  "WPFTweaksRightClickMenu) y Atlas tiene el mismo efecto en OldContextMenu.psd1"),
+    (10, "339"): ("atlas:toggle:AppIconThumbnail",
+                  "falso negativo del paso 4e: Atlas lo expone como toggle "
+                  "(Toggles/Interface/AppIconThumbnail.psd1, ShowTypeOverlay)"),
+    (10, "341"): ("atlas:toggle:CompactView",
+                  "falso negativo del paso 4e: Atlas lo expone como toggle "
+                  "(Toggles/Interface/CompactView.psd1, UseCompactMode)"),
+    (10, "343"): ("winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0",
+                  "falso negativo del paso 4e: el efecto real esta en el debloat de Edge, "
+                  "que ya estaba mapeado como Mapped en la linea 9:291"),
+    (10, "344"): ("atlas:toggle:ExtractContextMenu",
+                  "falso negativo del paso 4e: Atlas lo expone como toggle "
+                  "(Toggles/Interface/ExtractContextMenu.psd1)"),
+    (10, "347"): ("winutil:tweak-op:WPFToggleNumLock:registry:0",
+                  "falso negativo del paso 4e: la linea del inventario agrupa los atajos de "
+                  "teclado; en el pin el unico efecto de esa familia es NumLock al iniciar"),
+}
+
+
 def read_tsv(path: Path) -> list[dict]:
     if not path.is_file():
         return []
@@ -354,6 +383,17 @@ def main(argv: list[str] | None = None) -> int:
                 "rationale": (s17_why if s17_ids else
                               "fila de la tabla de la seccion 17 sin implementacion "
                               "en el pin: la asume EVO"),
+            })
+            continue
+
+        # --- E0 correcciones medidas del paso 9 (antes de cualquier heuristica)
+        forced = MAPPED_OVERRIDES.get((cur_sec, str(idx)))
+        if forced:
+            rows.append({
+                "seccion": cur_sec, "linea": idx, "fuente_declarada": fuente,
+                "texto": texto[:bc.TEXTO_MAX], "status": "Mapped",
+                "mapped_ids": forced[0], "confidence": "alta",
+                "rationale": forced[1],
             })
             continue
 

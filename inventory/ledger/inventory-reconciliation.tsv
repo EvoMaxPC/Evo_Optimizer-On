@@ -312,7 +312,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 10	323	winutil	File Extensions.	Mapped	winutil:tweak:WPFToggleShowExt	alta	regla R2 del paso 4e: coincide con el ledger
 10	324	winutil	Hidden Files.	Mapped	winutil:tweak:WPFToggleHiddenFiles	alta	regla R2 del paso 4e: coincide con el ledger
 10	325	winutil	Previous Start Menu Layout.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0	media	regla R3 del paso 4e: coincide con el ledger
-10	326	winutil	Previous Right-Click Menu.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	326	winutil	Previous Right-Click Menu.	Mapped	winutil:tweak:WPFTweaksRightClickMenu	alta	falso negativo del paso 4e: WinUtil aplica el menu contextual clasico (functions/private/Set-WinUtilClassicContextMenu, invocado por WPFTweaksRightClickMenu) y Atlas tiene el mismo efecto en OldContextMenu.psd1
 10	327	winutil	Dark Theme.	Mapped	winutil:tweak:WPFToggleDarkMode	alta	regla R2 del paso 4e: coincide con el ledger
 10	328	winutil	Scrollbars Always Visible.	Mapped	winutil:tweak:WPFToggleScrollbars	alta	regla R1 del paso 4e: coincide con el ledger
 10	329	winutil	Taskbar Centered Icons.	Mapped	winutil:tweak:WPFToggleTaskbarAlignment	alta	regla R1 del paso 4e: coincide con el ledger
@@ -325,15 +325,15 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 10	336	winutil	Settings Home Page.	Mapped	winutil:tweak:WPFToggleHideSettingsHome	alta	regla R1 del paso 4e: coincide con el ledger
 10	337	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
 10	338	atlas	Animation.	Mapped	atlas:toggle:Animation	alta	regla R1 del paso 4e: coincide con el ledger
-10	339	atlas	App Icon Thumbnail.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	339	atlas	App Icon Thumbnail.	Mapped	atlas:toggle:AppIconThumbnail	alta	falso negativo del paso 4e: Atlas lo expone como toggle (Toggles/Interface/AppIconThumbnail.psd1, ShowTypeOverlay)
 10	340	atlas	Automatic Folder Discovery.	Mapped	winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery	alta	regla R2 del paso 4e: coincide con el ledger
-10	341	atlas	Compact View.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	341	atlas	Compact View.	Mapped	atlas:toggle:CompactView	alta	falso negativo del paso 4e: Atlas lo expone como toggle (Toggles/Interface/CompactView.psd1, UseCompactMode)
 10	342	atlas	Context Menu Terminals.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-10	343	atlas	Edge Swipe.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
-10	344	atlas	Extract Context Menu.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	343	atlas	Edge Swipe.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	alta	falso negativo del paso 4e: el efecto real esta en el debloat de Edge, que ya estaba mapeado como Mapped en la linea 9:291
+10	344	atlas	Extract Context Menu.	Mapped	atlas:toggle:ExtractContextMenu	alta	falso negativo del paso 4e: Atlas lo expone como toggle (Toggles/Interface/ExtractContextMenu.psd1)
 10	345	atlas	Gallery.	Mapped	atlas:toggle:Gallery	alta	regla R1 del paso 4e: coincide con el ledger
 10	346	atlas	Home.	Mapped	atlas:toggle:Home	alta	regla R1 del paso 4e: coincide con el ledger
-10	347	atlas	Keyboard Shortcuts.	Mapped	winutil:tweak-op:WPFToggleNumLock:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+10	347	atlas	Keyboard Shortcuts.	Mapped	winutil:tweak-op:WPFToggleNumLock:registry:0	alta	falso negativo del paso 4e: la linea del inventario agrupa los atajos de teclado; en el pin el unico efecto de esa familia es NumLock al iniciar
 10	348	atlas	Lock Screen.	Mapped	winutil:tweak:WPFToggleDisableLockscreen	alta	regla R2 del paso 4e: coincide con el ledger
 10	349	atlas	Modern Battery Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 10	350	atlas	Modern Date and Time.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
