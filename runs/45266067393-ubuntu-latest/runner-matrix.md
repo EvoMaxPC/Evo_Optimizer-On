@@ -1,8 +1,0 @@
-# Runner: ***REDACTED***
-
-- python3: Python 3.14.4
-- git: git version 2.56.1
-- uname: Linux runnervm0hi8g 7.0.0-1020-azure #21-Ubuntu SMP PREEMPT Tue Oct 27 22:34:38 UTC 2026 x86_64 GNU/Linux
-- bash: 5.3.9(1)-release
-
-generado: 2026-11-23T21:05:35Z sha=***REDACTED*** run=***REDACTED***
