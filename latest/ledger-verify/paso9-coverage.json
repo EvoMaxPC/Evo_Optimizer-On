@@ -29,9 +29,7 @@
     "privacy.telemetry.diagtrack",
     "privacy.telemetry.dmwappush",
     "system.error-reporting.crash-control",
-    "system.error-reporting.wpbt-disable",
     "system.menu-delay.disable",
-    "system.oem-information.identify",
     "system.registry-backup.enable",
     "system.search-indexing.disable",
     "system.time.ntp-servers",
@@ -39,13 +37,13 @@
     "ui.snap-layouts.disable",
     "ui.verbose-messages.enable"
   ],
-  "cubiertas": 82,
+  "cubiertas": 85,
   "declaraciones_obsoletas": [],
   "detalle_huecos": [],
   "huecos": 0,
   "huecos_declarados": 0,
   "huecos_no_declarados": 0,
-  "lineas_mapped_1_3": 82,
+  "lineas_mapped_1_3": 85,
   "ok": true,
   "por_seccion": {
     "1": {
@@ -69,9 +67,9 @@
       "lineas_mapped": 6
     },
     "9": {
-      "cubiertas": 27,
+      "cubiertas": 30,
       "huecos": 0,
-      "lineas_mapped": 27
+      "lineas_mapped": 30
     }
   },
   "por_seccion_17": {
@@ -301,17 +299,17 @@
     },
     "9": {
       "estados": {
-        "Absent-At-Pin": 29,
+        "Absent-At-Pin": 26,
         "EVO-Exclusive": 0,
         "Informative-Header": 2,
-        "Mapped": 27,
+        "Mapped": 30,
         "Mapped-To-App": 0
       },
       "lineas": 58,
-      "mapped": 27,
-      "mapped_cubiertas": 27,
+      "mapped": 30,
+      "mapped_cubiertas": 30,
       "mapped_sin_cubrir": 0,
-      "trabajo": 29
+      "trabajo": 26
     }
   },
   "secciones_terminadas": [

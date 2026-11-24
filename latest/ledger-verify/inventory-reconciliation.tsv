@@ -256,7 +256,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	266	winutil	svchost Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	267	winutil	Consumer Features.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	268	winutil	Delivery Optimization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-9	269	winutil	WPBT.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	269	winutil	WPBT.	Mapped	atlas:manifest:qol/system/disable-wpbt	alta	falso negativo del paso 4e: la linea esta en el bloque AtlasOS y el pin implementa WPBT en Scripts/Tweaks/qol/system/disable-wpbt.psd1 (DisableWpbtExecution=1 en HKLM\SYSTEM\CurrentControlSet\Control\Session Manager); la capacidad system.error-reporting.wpbt-disable lo declara
 9	270	winutil	Storage Sense.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	271	winutil	Reserved Storage.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	272	winutil	Game Mode.	Mapped	winutil:tweak:WPFToggleGameMode	alta	regla R1 del paso 4e: coincide con el ledger
@@ -289,12 +289,12 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	299	atlas	Power Settings.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	300	atlas	File Associations.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	301	atlas	Profile Pictures.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-9	302	atlas	OEM Information.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	302	atlas	OEM Information.	Mapped	atlas:manifest:misc/config-oem-information	alta	falso negativo del paso 4e: el pin implementa OEM Information en Scripts/Tweaks/misc/config-oem-information.psd1 (Manufacturer, SupportURL y SupportPhone en HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation); la capacidad system.oem-information.identify lo declara
 9	303	atlas	Start Menu.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0	media	regla R3 del paso 4e: coincide con el ledger
 9	304	atlas	Taskbar Pins.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	305	atlas	Windows Explorer.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
 9	306	atlas	Context Menus.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-9	307	atlas	Keyboard Switching.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	307	atlas	Keyboard Switching.	Mapped	atlas:toggle:KeyboardShortcuts	alta	falso negativo del paso 4e: la linea 'Keyboard Switching' del bloque AtlasOS es el manifiesto qol/set-keyboard-switching, cuyo script (set-keyboard-switching.ps1) no escribe valores propios: aplica el estado del toggle KeyboardShortcuts, que es el mismo efecto que la linea 308 y que declara system.keyboard-shortcuts.disable
 9	308	atlas	Keyboard Shortcuts.	Mapped	atlas:toggle:KeyboardShortcuts	alta	mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas SI expone Toggles/Interface/KeyboardShortcuts.psd1, que escribe Hotkey, Language Hotkey y Layout Hotkey en HKCU\Keyboard Layout\Toggle; el paso 4e la habia casado con el NumLock de WinUtil, que es otro ajuste
 9	309	atlas	Lock Screen.	Mapped	winutil:tweak:WPFToggleDisableLockscreen	alta	regla R2 del paso 4e: coincide con el ledger
 9	310	atlas	Visual Effects.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
