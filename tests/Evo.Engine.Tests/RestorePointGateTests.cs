@@ -4,6 +4,7 @@ using Evo.Core.Enums;
 using Evo.Core.Models;
 using Evo.Core.Restore;
 using Evo.Engine.Execution;
+using Evo.Engine.Executors;
 using Evo.Testing;
 using Microsoft.Win32;
 using Xunit;
@@ -133,10 +134,17 @@ public sealed class RestorePointGateTests
         Assert.Equal(0, mutationsWhenPointCreated);
         Assert.Equal(1, harness.RestorePoints.CreatedCount);
 
-        // Orden: primero la disponibilidad, luego la creación del punto y sólo
-        // después las mutaciones del registro falso.
+        // Orden: la disponibilidad se consulta dos veces (una para informar al
+        // usuario en el diálogo de confirmación y otra justo antes de crear el
+        // punto, porque el estado puede haber cambiado), luego la creación y
+        // sólo después las mutaciones del registro falso.
         Assert.Equal(
-            new[] { "available", "create:EVO CLEAN — test.capability" },
+            new[]
+            {
+                "available",
+                "available",
+                "create:EVO CLEAN — test.capability",
+            },
             harness.RestorePoints.Calls);
 
         Assert.Equal(2, harness.Registry.MutationCount);
@@ -165,7 +173,7 @@ public sealed class RestorePointGateTests
         Assert.Empty(summary.UndoJournalEntry);
 
         // Nada se escribió: el valor sembrado sigue igual y el fake no registró mutaciones.
-        Assert.Equal(7, harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "First"));
+        Assert.Equal(7, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "First"));
         Assert.Equal(0, harness.Registry.MutationCount);
         Assert.Empty(summary.Results);
     }
@@ -439,7 +447,7 @@ public sealed class RestorePointGateTests
         // devolvió el registro al valor inicial.
         Assert.Equal(1, harness.RestorePoints.CreatedCount);
         Assert.Equal(1, summary.Failed);
-        Assert.Equal(5, harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "First"));
+        Assert.Equal(5, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "First"));
         Assert.Empty(harness.Coordinator.Journal.Entries);
     }
 }
