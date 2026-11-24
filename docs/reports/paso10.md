@@ -495,7 +495,8 @@ U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
 
 ## Commit
 
-Rama `arena/ab2d6de7-evo-optimizer-on`, cinco commits (el PR #1 sigue **en draft**):
+Rama `arena/ab2d6de7-evo-optimizer-on` (el PR #1 sigue **en draft**), commits
+que construyen el paso 10:
 
 ```
 04d1565 docs(paso10): runs y sha256 definitivos del CI en verde
@@ -507,13 +508,15 @@ b163c95 fix(tests): cifra del catalogo 68 -> 86 en Wave1/Wave2 (oleada 3)
 
 El árbol del catálogo y sus ledgers queda cerrado en `88259a4`; `3d5945c` sólo
 reconcilia tres líneas de §9, `473eada`/`b163c95` sólo tocan tests .NET (los
-defectos que vio el CI) y `04d1565` sólo este informe.
+defectos que vio el CI) y los dos últimos sólo este informe.
 
 PR #1 (`gh api -X PATCH …/pulls/1`): título «Paso 10 — Oleada 3: catálogo de la
 Sección 9 (Registro y configuración del sistema), 18 capacidades / 39 acciones»,
-`state=OPEN`, `isDraft=true`, `head=04d1565`.
+`state=OPEN`, `isDraft=true`, con el head de rama (el commit que contiene este
+informe; no se cita su sha porque cambia con el propio informe).
 
-CI verificado sobre ese head:
+CI verificado (los dos runs de `dotnet-ci` y el `ledger-verify` del árbol ya
+cerrado; este informe sólo añade líneas de documentación):
 
 ```
 dotnet-ci run 45498908303     | success | 187/187 · windows-2025 y windows-11-arm
