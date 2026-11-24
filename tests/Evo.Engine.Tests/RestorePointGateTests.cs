@@ -121,7 +121,11 @@ public sealed class RestorePointGateTests
         var actions = Actions();
         var plan = TestHarness.Plan(RestorePointContract(actions), actions);
 
-        // Fotografía en el instante de crear el punto: 0 mutaciones.
+        // Sembrar el valor inicial cuenta como una mutación en el fake: la
+        // línea base es lo que había ANTES de que el motor toque nada.
+        var baseline = harness.Registry.MutationCount + harness.Services.MutationCount;
+
+        // Fotografía en el instante de crear el punto: 0 mutaciones del motor.
         var mutationsWhenPointCreated = -1;
         harness.RestorePoints.BeforeCreate = () =>
             mutationsWhenPointCreated = harness.Registry.MutationCount + harness.Services.MutationCount;
@@ -131,7 +135,7 @@ public sealed class RestorePointGateTests
 
         Assert.False(summary.Aborted, summary.AbortedReason);
         Assert.False(string.IsNullOrEmpty(summary.RestorePointId));
-        Assert.Equal(0, mutationsWhenPointCreated);
+        Assert.Equal(baseline, mutationsWhenPointCreated);
         Assert.Equal(1, harness.RestorePoints.CreatedCount);
 
         // Orden: la disponibilidad se consulta dos veces (una para informar al
@@ -147,7 +151,8 @@ public sealed class RestorePointGateTests
             },
             harness.RestorePoints.Calls);
 
-        Assert.Equal(2, harness.Registry.MutationCount);
+        // Dos mutaciones del motor sobre la línea base del sembrado.
+        Assert.Equal(baseline + 2, harness.Registry.MutationCount);
 
         // El id del punto queda vinculado al diario de deshacer.
         Assert.Equal(summary.RestorePointId, harness.Coordinator.Journal.RestorePointId);
@@ -160,6 +165,7 @@ public sealed class RestorePointGateTests
     {
         var harness = TestHarness.Create(restorePointAvailable: false);
         harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "First", 7);
+        var baseline = harness.Registry.MutationCount;
         var actions = Actions();
         var plan = TestHarness.Plan(RestorePointContract(actions), actions);
 
@@ -174,7 +180,7 @@ public sealed class RestorePointGateTests
 
         // Nada se escribió: el valor sembrado sigue igual y el fake no registró mutaciones.
         Assert.Equal(7, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "First"));
-        Assert.Equal(0, harness.Registry.MutationCount);
+        Assert.Equal(baseline, harness.Registry.MutationCount);
         Assert.Empty(summary.Results);
     }
 
