@@ -1,97 +1,56 @@
-Build started 11/23/2026 7:40:11 PM.
+Build started 11/23/2026 7:49:15 PM.
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\bin\Release\net10.0-windows\Evo.Catalog.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.12]   Discovering: Evo.Catalog.Tests
-[xUnit.net 00:00:00.46]   Discovered:  Evo.Catalog.Tests
-[xUnit.net 00:00:00.47]   Starting:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [798 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [2 ms]
+[xUnit.net 00:00:00.14]   Discovering: Evo.Catalog.Tests
+[xUnit.net 00:00:00.20]   Discovered:  Evo.Catalog.Tests
+[xUnit.net 00:00:00.21]   Starting:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [166 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry.") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry/DiagTrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: ".privacy.telemetry") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "Privacy.Telemetry.DiagTrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy") [< 1 ms]
-[xUnit.net 00:00:01.39]       Assert.Equal() Failure: Collections differ
-[xUnit.net 00:00:01.40]                                                                          ↓ (pos 7)
-[xUnit.net 00:00:01.39]     Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [FAIL]
-[xUnit.net 00:00:01.40]       Expected: [···, "cleanup.wer.reports", "cleanup.winsxs.component", "debloat.appx.consumer", "debloat.content.delivery", "debloat.cortana.remove", ···]
-[xUnit.net 00:00:01.40]       Actual:   [···, "cleanup.wer.reports", "cleanup.winsxs.component", "cleanup.winsxs.resetbase", "debloat.appx.consumer", "debloat.content.delivery", ···]
-[xUnit.net 00:00:01.40]                                                                          ↑ (pos 7)
-[xUnit.net 00:00:01.40]       Stack Trace:
-[xUnit.net 00:00:01.40]         /_/tests/Evo.Catalog.Tests/Wave1CatalogTests.cs(79,0): at Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates()
-[xUnit.net 00:00:01.40]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:01.40]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy telemetry") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry_diagtrack") [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [6 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SymmetricConflictPassesValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [816 ms]
-  Failed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [817 ms]
-  Error Message:
-   Assert.Equal() Failure: Collections differ
-                                                                   ↓ (pos 7)
-Expected: [···, "cleanup.wer.reports", "cleanup.winsxs.component", "debloat.appx.consumer", "debloat.content.delivery", "debloat.cortana.remove", ···]
-Actual:   [···, "cleanup.wer.reports", "cleanup.winsxs.component", "cleanup.winsxs.resetbase", "debloat.appx.consumer", "debloat.content.delivery", ···]
-                                                                   ↑ (pos 7)
-  Stack Trace:
-     at Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates() in /_/tests/Evo.Catalog.Tests/Wave1CatalogTests.cs:line 79
-   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [26 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.SelfDependencyIsACycle [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.SelfDependencyIsACycle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.DuplicateIdsFailValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [25 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForReversibleRiskFails [2 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [2 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ValidIdWithDashesPassesThePattern [< 1 ms]
-[xUnit.net 00:00:01.41]     Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [FAIL]
-[xUnit.net 00:00:01.41]       Assert.True() Failure
-[xUnit.net 00:00:01.41]       Expected: True
-[xUnit.net 00:00:01.42]       Actual:   False
-[xUnit.net 00:00:01.42]       Stack Trace:
-[xUnit.net 00:00:01.42]         /_/tests/Evo.Catalog.Tests/CatalogLoaderTests.cs(86,0): at Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata()
-[xUnit.net 00:00:01.42]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:01.42]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
   Passed Evo.Catalog.Tests.CatalogValidatorTests.IrreversibleHighWithNoneIsValidUnderAdr0003 [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [8 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [4 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.CriticalRiskWithTypeOperationNamePasses [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.AcyclicDependencyChainPassesValidation [< 1 ms]
-  Failed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [11 ms]
-  Error Message:
-   Assert.True() Failure
-Expected: True
-Actual:   False
-  Stack Trace:
-     at Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata() in /_/tests/Evo.Catalog.Tests/CatalogLoaderTests.cs:line 86
-   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [194 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestAsymmetricConflict_FailsValidation [< 1 ms]
-[xUnit.net 00:00:01.43]   Finished:    Evo.Catalog.Tests
   Passed Evo.Catalog.Tests.CatalogValidatorTests.MissingReversibilityFailsValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [11 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [15 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [6 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [7 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [2 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [4 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
+[xUnit.net 00:00:00.50]   Finished:    Evo.Catalog.Tests
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [60 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [225 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [7 ms]
 Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Catalog.Tests\Evo.Catalog.Tests.trx
 
-Test Run Failed.
+Test Run Successful.
 Total tests: 36
-     Passed: 34
-     Failed: 2
- Total time: 1.9966 Seconds
-     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\Evo.Catalog.Tests.csproj" on node 1 (VSTest target(s)).
-     1>_VSTestConsole:
-         MSB4181: The "VSTestTask" task returned false but did not log an error.
-     1>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\Evo.Catalog.Tests.csproj" (VSTest target(s)) -- FAILED.
+     Passed: 36
+ Total time: 1.0821 Seconds
 
-Build FAILED.
+Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:03.52
+Time Elapsed 00:00:02.53
