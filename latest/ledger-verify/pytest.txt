@@ -1,32 +1,6 @@
 ........................................................................ [ 30%]
 ........................................................................ [ 60%]
 ........................................................................ [ 90%]
-.F.....................                                                  [100%]
-=================================== FAILURES ===================================
-________________________ test_workflow_dotnet_ci_valido ________________________
-
-    def test_workflow_dotnet_ci_valido():
-        import yaml
-    
-        path = ROOT / ".github/workflows/dotnet-ci.yml"
-        assert path.is_file()
-        doc = yaml.safe_load(path.read_text(encoding="utf-8"))
-        assert "jobs" in doc
-        job = doc["jobs"]["build-and-test"]
-        matrix = job["strategy"]["matrix"]["include"]
-        runners = {entry["os"] for entry in matrix}
-        assert runners == {"windows-2025", "windows-11-arm"}
-        steps = " ".join(json.dumps(step) for step in job["steps"])
-        for needle in ("setup-dotnet", "dotnet restore Evo.sln",
-                       "dotnet build Evo.sln", "dotnet test Evo.sln",
-                       "publish-report.sh"):
->           assert needle in steps, needle
-E           AssertionError: dotnet test Evo.sln
-E           assert 'dotnet test Evo.sln' in '{"name": "Checkout", "uses": "actions/checkout@v4", "with": {"fetch-depth": 1}} {"name": "Entorno del runner", "shell...rt.sh ci-out \\"$LABEL\\" \\"${{ job.status }}\\" \\\\\\n  || echo \\"publish-report fallo (no bloquea el job)\\"\\n"}'
-
-tests/test_paso6.py:229: AssertionError
-=========================== short test summary info ============================
-FAILED tests/test_paso6.py::test_workflow_dotnet_ci_valido - AssertionError: dotnet test Evo.sln
-assert 'dotnet test Evo.sln' in '{"name": "Checkout", "uses": "actions/checkout@v4", "with": {"fetch-depth": 1}} {"name": "Entorno del runner", "shell...rt.sh ci-out \\"$LABEL\\" \\"${{ job.status }}\\" \\\\\\n  || echo \\"publish-report fallo (no bloquea el job)\\"\\n"}'
-1 failed, 238 passed in 3.85s
-pytest_exit=1
+.......................                                                  [100%]
+239 passed in 3.40s
+pytest_exit=0
