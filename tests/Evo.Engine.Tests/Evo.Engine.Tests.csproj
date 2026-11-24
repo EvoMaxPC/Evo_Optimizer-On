@@ -17,11 +17,18 @@
     <ProjectReference Include="..\..\src\Evo.Engine\Evo.Engine.csproj" />
     <ProjectReference Include="..\..\src\Evo.Testing\Evo.Testing.csproj" />
     <ProjectReference Include="..\..\src\Evo.Detection\Evo.Detection.csproj" />
+    <ProjectReference Include="..\..\src\Evo.Catalog\Evo.Catalog.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\catalog\windows-releases.json"
           Link="catalog\windows-releases.json"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\catalog\capabilities\*.json"
+          Link="capabilities\%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

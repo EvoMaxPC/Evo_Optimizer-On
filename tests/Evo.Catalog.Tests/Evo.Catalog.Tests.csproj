@@ -18,4 +18,10 @@
     <ProjectReference Include="..\..\src\Evo.Testing\Evo.Testing.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\catalog\capabilities\*.json"
+          Link="capabilities\%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

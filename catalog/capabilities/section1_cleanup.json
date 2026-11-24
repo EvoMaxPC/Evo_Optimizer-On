@@ -1,0 +1,325 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "schemaVersion": 1,
+    "provenance": "Paso 8, seccion 1. Fuentes: winutil@70c23c80641d7370532af2f619b2842658600842, atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f; ledger inventory/ledger/winutil-tweak-ops.tsv",
+    "generatedBy": "paso 8 (oleada 1)"
+  },
+  "capabilities": [
+    {
+      "id": "cleanup.temp.user",
+      "name": "Limpiar la carpeta TEMP del usuario",
+      "description": "Vacía el contenido de %TEMP% del usuario que ejecuta la operación. No toca perfiles de otros usuarios ni rutas del sistema. Es irreversible: EVO no guarda copia de los ficheros borrados.",
+      "sectionId": 1,
+      "risk": "Safe",
+      "securityImpact": "Neutral",
+      "privilege": "User",
+      "restore": "None",
+      "confirmation": "None",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeleteTempFiles (Remove-Item \"$Env:Temp\\*\") + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (-Scope CurrentUser -> Invoke-AtlasTempCleanup sobre LocalAppData\\Temp)",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Vaciar %TEMP% del usuario actual",
+          "fileName": "cmd.exe",
+          "arguments": [
+            "/c",
+            "del",
+            "/f",
+            "/s",
+            "/q",
+            "%TEMP%\\*"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "cleanup.temp.system",
+      "name": "Limpiar la carpeta TEMP del sistema",
+      "description": "Vacía el contenido de %SystemRoot%\\Temp. Requiere administrador y no elimina la carpeta ni sus permisos. Es irreversible.",
+      "sectionId": 1,
+      "risk": "Safe",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "confirmation": "None",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeleteTempFiles (Remove-Item \"$Env:SystemRoot\\Temp\\*\") + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (Invoke-AtlasTempCleanup -Path <Windows>\\Temp)",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Vaciar %SystemRoot%\\Temp",
+          "fileName": "cmd.exe",
+          "arguments": [
+            "/c",
+            "del",
+            "/f",
+            "/s",
+            "/q",
+            "%SystemRoot%\\Temp\\*"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "cleanup.delivery.optimization",
+      "name": "Limpiar la caché de Optimización de entrega",
+      "description": "Fija DODownloadMode=0, con lo que Optimización de entrega deja de usar la caché de reparto entre equipos. Reversible: el motor guarda el valor previo (o su ausencia) y lo restaura al deshacer.",
+      "sectionId": 1,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeliveryOptimization (HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization\\DODownloadMode=0, original <RemoveEntry>) + winutil@70c23c80641d7370532af2f619b2842658600842:inventory/ledger/winutil-tweak-ops.tsv",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Desactivar la caché de reparto (DODownloadMode=0)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization",
+          "valueName": "DODownloadMode",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "cleanup.wer.reports",
+      "name": "Limpiar los informes de Errores de Windows",
+      "description": "Selecciona la categoría 'Windows Error Reporting Files' de Liberador de espacio y la ejecuta con cleanmgr /sagerun:64, igual que Atlas. No desactiva Windows Error Reporting: solo borra los informes acumulados. Irreversible.",
+      "sectionId": 1,
+      "risk": "Safe",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "confirmation": "None",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'Windows Error Reporting Files' = 2 y Start-Process cleanmgr /sagerun:64)",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Marcar la categoría 'Windows Error Reporting Files' (StateFlags0064=2)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VolumeCaches\\Windows Error Reporting Files",
+          "valueName": "StateFlags0064",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "2"
+        },
+        {
+          "type": "command",
+          "order": 2,
+          "description": "Ejecutar las categorías seleccionadas",
+          "fileName": "cleanmgr.exe",
+          "arguments": [
+            "/sagerun:64"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "cleanup.recycle.bin",
+      "name": "Vaciar la Papelera de reciclaje",
+      "description": "Selecciona la categoría 'Recycle Bin' de Liberador de espacio (nota de Atlas: por defecto viene a 0, es decir, desmarcada) y ejecuta cleanmgr /sagerun:64. Irreversible.",
+      "sectionId": 1,
+      "risk": "Safe",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "confirmation": "None",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'Recycle Bin' = 0, comentario: 'Recycle Bin' = 0 en el mapa original)",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Marcar la categoría 'Recycle Bin' (StateFlags0064=2)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VolumeCaches\\Recycle Bin",
+          "valueName": "StateFlags0064",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "2"
+        },
+        {
+          "type": "command",
+          "order": 2,
+          "description": "Ejecutar las categorías seleccionadas",
+          "fileName": "cleanmgr.exe",
+          "arguments": [
+            "/sagerun:64"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "cleanup.winsxs.component",
+      "name": "Limpiar componentes de WinSxS",
+      "description": "Ejecuta DISM /Online /Cleanup-Image /StartComponentCleanup, que elimina las versiones sustituidas de los componentes. EVO NO usa /ResetBase (WinUtil sí): con /ResetBase las actualizaciones instaladas dejan de poder desinstalarse. Aun sin /ResetBase la operación no tiene inversa, por eso se exige punto de restauración.",
+      "sectionId": 1,
+      "risk": "Medium",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "RestorePoint",
+      "confirmation": "Summary",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-FeaturesPhase.ps1 (linea 128: '/Online','/Cleanup-Image','/StartComponentCleanup', sin /ResetBase) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDiskCleanup (anade /ResetBase; EVO lo omite: desviacion 2 del informe)",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Limpiar componentes sustituidos (sin /ResetBase)",
+          "fileName": "dism.exe",
+          "arguments": [
+            "/Online",
+            "/Cleanup-Image",
+            "/StartComponentCleanup"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cleanup.memory.dumps",
+      "name": "Eliminar volcados de memoria",
+      "description": "Borra el volcado de kernel (MEMORY.DMP) y los minivolcados de %SystemRoot%\\Minidump. Borrar volcados impide diagnosticar un fallo posterior: es irreversible y no se ofrece en modo sesión deshacible.",
+      "sectionId": 1,
+      "risk": "Safe",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "confirmation": "None",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'System error memory dump files' y 'System error minidump files' del mapa de cleanmgr)",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Borrar MEMORY.DMP",
+          "fileName": "cmd.exe",
+          "arguments": [
+            "/c",
+            "del",
+            "/f",
+            "/q",
+            "%SystemRoot%\\MEMORY.DMP"
+          ],
+          "ignoreExitCode": true
+        },
+        {
+          "type": "command",
+          "order": 2,
+          "description": "Borrar los minivolcados",
+          "fileName": "cmd.exe",
+          "arguments": [
+            "/c",
+            "del",
+            "/f",
+            "/s",
+            "/q",
+            "%SystemRoot%\\Minidump\\*"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    }
+  ]
+}
