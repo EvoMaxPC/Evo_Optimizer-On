@@ -1,0 +1,708 @@
+Build started 11/24/2026 8:16:14 PM.
+Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.09]   Discovering: Evo.Engine.Tests
+[xUnit.net 00:00:00.14]   Discovered:  Evo.Engine.Tests
+[xUnit.net 00:00:00.14]   Starting:    Evo.Engine.Tests
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [95 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [106 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [8 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [11 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [15 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [37 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [5 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [6 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [14 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [9 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [6 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [10 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [3 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [4 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [16 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion [6 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible [2 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.CapacidadSinRequisitoDePunto_NoLoCrea [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.UnPuntoPorPlan_NoUnoPorAccion [1 ms]
+[xUnit.net 00:00:00.44]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [FAIL]
+[xUnit.net 00:00:00.44]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.44]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.44]       Stack Trace:
+[xUnit.net 00:00:00.45]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.45]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.45]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.45]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(38,0): at Evo.Engine.Tests.Wave2EngineTests.Definition(String id)
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(170,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips()
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.45]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.45]         
+[xUnit.net 00:00:00.45]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [FAIL]
+[xUnit.net 00:00:00.45]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.45]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.45]       Stack Trace:
+[xUnit.net 00:00:00.45]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.45]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.45]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.45]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(125,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation()
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.45]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.45]         
+[xUnit.net 00:00:00.45]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [FAIL]
+[xUnit.net 00:00:00.45]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.45]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.45]       Stack Trace:
+[xUnit.net 00:00:00.45]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.45]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.46]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.46]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.46]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()
+[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(261,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin()
+[xUnit.net 00:00:00.46]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.46]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.46]         
+[xUnit.net 00:00:00.46]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [FAIL]
+[xUnit.net 00:00:00.46]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.46]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.46]       Stack Trace:
+[xUnit.net 00:00:00.46]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.46]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.46]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.46]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.46]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()
+[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(36,0): at Evo.Engine.Tests.Wave1EngineTests.Definition(String id)
+[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(301,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate()
+[xUnit.net 00:00:00.46]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.46]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.46]         
+[xUnit.net 00:00:00.46]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [FAIL]
+[xUnit.net 00:00:00.46]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.46]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.46]       Stack Trace:
+[xUnit.net 00:00:00.47]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.47]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.47]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.47]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.47]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.47]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()
+[xUnit.net 00:00:00.47]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.47]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(265,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing()
+[xUnit.net 00:00:00.47]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.47]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.47]         
+  Passed Evo.Engine.Tests.RestorePointGateTests.DryRun_NoCreaPuntoNiPideConfirmacion [1 ms]
+  Failed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [23 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31
+   at Evo.Engine.Tests.Wave2EngineTests.Definition(String id) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 38
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 170
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Failed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [208 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 125
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Failed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [1 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 261
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Failed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [2 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32
+   at Evo.Engine.Tests.Wave1EngineTests.Definition(String id) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 36
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 301
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos [17 ms]
+  Failed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [1 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 265
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+[xUnit.net 00:00:00.48]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [FAIL]
+[xUnit.net 00:00:00.48]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.48]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.48]       Stack Trace:
+[xUnit.net 00:00:00.48]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.48]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.48]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.48]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.48]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()
+[xUnit.net 00:00:00.48]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(38,0): at Evo.Engine.Tests.Wave2EngineTests.Definition(String id)
+[xUnit.net 00:00:00.48]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(231,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation()
+[xUnit.net 00:00:00.48]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.48]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.48]         
+[xUnit.net 00:00:00.48]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [FAIL]
+[xUnit.net 00:00:00.48]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.48]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.48]       Stack Trace:
+[xUnit.net 00:00:00.48]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.48]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.49]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.49]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.49]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()
+[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(195,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating()
+[xUnit.net 00:00:00.49]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.49]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.49]         
+[xUnit.net 00:00:00.49]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [FAIL]
+[xUnit.net 00:00:00.49]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.49]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.49]       Stack Trace:
+[xUnit.net 00:00:00.49]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.49]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.49]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.49]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()
+[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(81,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation()
+[xUnit.net 00:00:00.49]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.49]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.49]         
+[xUnit.net 00:00:00.49]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [FAIL]
+[xUnit.net 00:00:00.49]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.49]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.49]       Stack Trace:
+[xUnit.net 00:00:00.49]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.49]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(159,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState()
+[xUnit.net 00:00:00.50]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.50]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.50]         
+  Passed Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion [1 ms]
+  Failed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [5 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31
+   at Evo.Engine.Tests.Wave2EngineTests.Definition(String id) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 38
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 231
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada [3 ms]
+  Failed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [2 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 195
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Passed Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion [1 ms]
+  Failed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [2 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 81
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Failed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [11 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 159
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+[xUnit.net 00:00:00.50]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [FAIL]
+[xUnit.net 00:00:00.50]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.50]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.50]       Stack Trace:
+[xUnit.net 00:00:00.50]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(112,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState()
+[xUnit.net 00:00:00.50]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.50]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.50]         
+[xUnit.net 00:00:00.50]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [FAIL]
+[xUnit.net 00:00:00.50]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+[xUnit.net 00:00:00.50]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+[xUnit.net 00:00:00.50]       Stack Trace:
+[xUnit.net 00:00:00.50]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+[xUnit.net 00:00:00.50]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)
+[xUnit.net 00:00:00.50]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)
+[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(229,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly()
+[xUnit.net 00:00:00.50]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.50]         ----- Inner Stack Trace -----
+[xUnit.net 00:00:00.50]         
+[xUnit.net 00:00:00.51]   Finished:    Evo.Engine.Tests
+  Failed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [2 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 112
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Failed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [1 ms]
+  Error Message:
+   System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.
+  Stack Trace:
+     at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack& state, Utf8JsonReader& reader, Exception innerException)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState& bufferState, JsonReaderState& jsonReaderState, ReadStack& readStack, T& value)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 229
+--- End of stack trace from previous location ---
+----- Inner Stack Trace -----
+
+  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto [12 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar [4 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias [< 1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto [4 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada [2 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto [3 ms]
+Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Engine.Tests\Evo.Engine.Tests.trx
+
+Test Run Failed.
+Total tests: 45
+     Passed: 34
+     Failed: 11
+ Total time: 1.0858 Seconds
+     1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.87
