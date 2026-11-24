@@ -95,12 +95,14 @@ public sealed class Wave1CatalogTests
         // + 18 de la oleada 3 (sección 9, paso 10) = 86.
         Assert.Equal(86, catalog.Count);
 
-        // Las 39 de las secciones 1-3 siguen ahí, y el resto son de la sección 10.
+        // Las 39 de las secciones 1-3 siguen ahí; las oleadas 2 y 3 añaden las
+        // secciones 10 y 9, que este test no enumera (tienen sus propios tests).
         var wave1 = Section1.Concat(Section2).Concat(Section3).ToList();
         Assert.Equal(wave1.OrderBy(i => i, StringComparer.Ordinal),
-            catalog.Definitions.Where(d => d.SectionId != 10)
+            catalog.Definitions.Where(d => d.SectionId is not 10 and not 9)
                 .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal));
         Assert.Equal(29, catalog.Definitions.Count(d => d.SectionId == 10));
+        Assert.Equal(18, catalog.Definitions.Count(d => d.SectionId == 9));
 
         var report = new CatalogValidator(KnownBuilds).Validate(catalog);
 
@@ -123,14 +125,28 @@ public sealed class Wave1CatalogTests
                 new[] { CapabilityState.Implemented, CapabilityState.Specified });
             Assert.NotEmpty(definition.Actions);
             Assert.False(string.IsNullOrWhiteSpace(definition.Provenance));
-            // Este bucle recorre TODO el catálogo (incluida la sección 10 desde el
-            // paso 9), así que la lista de impactos permitidos sale de las reglas:
-            // Neutral la mayoría; Improves en las que quitan telemetría o
-            // superficie; y Reduces sólo se admite con riesgo >= Medium
-            // (CapabilityRules.SecurityImpact), que ninguna de estas cumple.
-            Assert.True(
-                definition.SecurityImpact is SecurityImpact.Neutral or SecurityImpact.Improves,
-                $"{definition.Id}: SecurityImpact={definition.SecurityImpact} no esperado.");
+            // Este bucle recorre TODO el catálogo (sección 10 desde el paso 9 y
+            // sección 9 desde el paso 10), así que la lista de impactos permitidos
+            // sale de las reglas del motor: Neutral la mayoría; Improves en las que
+            // quitan telemetría o superficie; y Reduces sólo con riesgo >= Medium
+            // (CapabilityRules.SecurityImpact). En la sección 9 hay exactamente dos
+            // Reduces declaradas a propósito (mitigaciones del kernel y volcado de
+            // fallos), y el validador ya exige ahí RestorePoint.
+            if (definition.SecurityImpact == SecurityImpact.Reduces)
+            {
+                Assert.True(
+                    definition.Risk >= RiskLevel.Medium,
+                    $"{definition.Id}: Reduces con riesgo {definition.Risk} < Medium.");
+                Assert.True(
+                    definition.Restore >= RestoreLevel.RestorePoint,
+                    $"{definition.Id}: Reduces sin RestorePoint.");
+            }
+            else
+            {
+                Assert.True(
+                    definition.SecurityImpact is SecurityImpact.Neutral or SecurityImpact.Improves,
+                    $"{definition.Id}: SecurityImpact={definition.SecurityImpact} no esperado.");
+            }
 
             // Invariantes de riesgo del paso 6, vía el contrato del motor.
             var contract = definition.ToContract();
