@@ -151,7 +151,7 @@ ui.theme.dark	HKCU	software\microsoft\windows\currentversion\themes\personalize	
 ui.verbose-messages.enable	HKLM	software\microsoft\windows\currentversion\policies\system	verbosestatus	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/enable-verbose-messages.psd1:6	1			equals-apply
 ui.visual-effects.minimal	HKCU	control panel\desktop	DragFullWindows	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1:7	1			equals-apply
 ui.visual-effects.minimal	HKCU	control panel\desktop	FontSmoothing	2	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1:5	2			equals-apply
-ui.visual-effects.minimal	HKCU	control panel\desktop	UserPreferencesMask	kBIDgBAAAAA=	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1:6	@(0x90|@(0x9E			ambiguous
+ui.visual-effects.minimal	HKCU	control panel\desktop	UserPreferencesMask	kBIDgBAAAAA=	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/Interface/Animation.psd1:Disable	kBIDgBAAAAA=			equals-apply
 ui.visual-effects.minimal	HKCU	control panel\desktop\windowmetrics	MinAnimate	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1:8	0			equals-apply
 ui.visual-effects.minimal	HKCU	software\microsoft\windows\currentversion\explorer\advanced	IconsOnly	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1:10	0			equals-apply
 ui.visual-effects.minimal	HKCU	software\microsoft\windows\currentversion\explorer\advanced	ListviewAlphaSelect	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1:9	1			equals-apply

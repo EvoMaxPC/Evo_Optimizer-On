@@ -57,6 +57,20 @@ def test_el_fichero_de_la_seccion_10_reproduce_byte_a_byte() -> None:
     assert "\r\n" not in SECTION10.read_text(encoding="utf-8")
 
 
+def test_todas_las_acciones_llevan_el_discriminador_de_tipo() -> None:
+    """`CapabilityAction` es polimórfica: sin `"type": "registry"` el cargador
+    estricto de .NET rechaza el fichero entero (lo comprobó el CI del paso 9)."""
+    for cap in CAPS:
+        for action in cap["actions"]:
+            assert action["type"] == "registry", (cap["id"], action["order"])
+    # Y todas las acciones tienen EXACTAMENTE las mismas claves: un campo de más
+    # en una sola capacidad sería una acción que el cargador ignora en silencio.
+    shapes = {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]}
+    assert len(shapes) == 1, shapes
+    assert shapes == {('description', 'hive', 'keyPath', 'operation', 'order',
+                       'type', 'value', 'valueName', 'valueType')}
+
+
 def test_hay_29_capacidades_y_56_acciones() -> None:
     assert len(CAPS) == 29
     assert sum(len(c["actions"]) for c in CAPS) == 56
@@ -261,13 +275,14 @@ def test_la_auditoria_de_valores_no_tiene_ni_ambiguous_ni_unhandled() -> None:
     assert rows
     assert not [r for r in rows if r["relation"] == "ambiguous"]
     assert not [r for r in rows if r["relation"] == "unhandled"]
-    # Las de la sección 10 que el auditor puede casar con el pin coinciden con él.
-    # Son 16 y no las 56 acciones: el auditor sólo audita acciones de HKCU/HKLM
-    # con equivalente localizable en los bloques de los pins (24 de las 56 son de
-    # Atlas y ya se comprueban contra el .psd1 en `build_section10_catalog.py`).
+    # Al principio el auditor sólo veía 16 de las 56 acciones de la sección 10:
+    # filtraba por `action["type"] == "registry"` y el generador no escribía el
+    # discriminador en la rama de Atlas. Con el discriminador corregido entran las
+    # 56 y todas coinciden con el pin (Set y Delete incluidos).
     section10 = [r for r in rows if r["capability_id"] in BY_ID]
-    assert len(section10) == 16, len(section10)
-    assert all(r["relation"] in ("equals-apply", "equals-on") for r in section10)
+    assert len(section10) == 56, len(section10)
+    assert all(r["relation"] in ("equals-apply", "equals-on") for r in section10), [
+        r for r in section10 if r["relation"] not in ("equals-apply", "equals-on")]
 
 
 def test_el_mapa_de_upstream_marca_covered_con_una_capacidad_real() -> None:

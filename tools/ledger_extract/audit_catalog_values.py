@@ -44,6 +44,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import base64
 import csv
 import json
 import re
@@ -164,7 +165,10 @@ def load_winutil() -> dict[tuple[str, str, str], list[dict]]:
 FIELD_RES = {
     "path": re.compile(r"\bPath\s*=\s*'([^']*)'"),
     "name": re.compile(r"\bName\s*=\s*'([^']*)'"),
-    "data": re.compile(r"\bData\s*=\s*('[^']*'|[^;\s,}]+)"),
+    # `Data` puede ser un literal (`'texto'`, `1`), una lista `@(0x90, ...)` o un
+    # `@(0x90,0x12,...)` sin espacios: se captura entera para no quedarse con el
+    # primer elemento y llamarlo «valor» (UserPreferencesMask es un binario).
+    "data": re.compile(r"\bData\s*=\s*('(?:[^']*)'|@\([^)]*\)|[^;\s,}]+)"),
     "operation": re.compile(r"\bOperation\s*=\s*'([^']*)'"),
 }
 
@@ -313,6 +317,26 @@ def atlas_entries(path: Path, rel: str) -> list[dict]:
     return parsed
 
 
+def atlas_binary(expression: str) -> str:
+    """Convierte la lista `@(0x90, 0x12, ...)` de un `Data` binario a base64.
+
+    Sirve para comparar con el catálogo, que guarda los binarios en base64 (es
+    el mismo convenio que `RegistryAction.Value`). Si la expresión no es una
+    lista de bytes, devuelve el texto normalizado tal cual.
+    """
+    body = expression.strip()
+    if not (body.startswith("@(") and body.endswith(")")):
+        return norm_value(expression)
+    items = [item.strip() for item in body[2:-1].split(",") if item.strip()]
+    try:
+        values = [int(item, 0) for item in items]
+    except ValueError:
+        return norm_value(expression)
+    if not values or any(value < 0 or value > 255 for value in values):
+        return norm_value(expression)
+    return base64.b64encode(bytes(values)).decode("ascii")
+
+
 def atlas_toggle_states(path: Path, rel: str) -> list[dict]:
     """Entradas de registro de un `.psd1` de Toggles, con el estado del que salen."""
     text = path.read_text(encoding="utf-8", errors="replace")
@@ -327,7 +351,7 @@ def atlas_toggle_states(path: Path, rel: str) -> list[dict]:
             operation_match = FIELD_RES["operation"].search(entry)
             operation = operation_match.group(1) if operation_match else "Set"
             value = "<RemoveEntry>" if operation.lower() == "delete" else (
-                norm_value(data_match.group(1)) if data_match else "")
+                atlas_binary(data_match.group(1)) if data_match else "")
             if operation.lower() != "delete" and not data_match:
                 # Sin Data no hay literal comparable: no se inventa uno.
                 continue
