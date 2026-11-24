@@ -27,7 +27,7 @@ Con las cuatro builds del catálogo: **61**. Con rango recortado: **7**.
 | `explorer.gallery.hide` | `[22631, 26100, 26200]` | Implemented | la Galería del Explorador es una carpeta de Windows 11 (su CLSID {e88865ea-...} no existe en 19045) |
 | `explorer.home.hide` | `[22631, 26100, 26200]` | Implemented | la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de Windows 11; 19045 no se declara |
 | `ui.context-menu.classic` | `[22631, 26100, 26200]` | Implemented | el CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2} es el del menú contextual de Windows 11; Windows 10 no lo usa |
-| `ui.taskbar.end-task` | `[22631, 26100, 26200]` | Implemented | TaskbarEndTask no existe en Windows 10 ni en 22000/22621 sin la actualización que lo introdujo; se limita a las builds del catálogo que lo leen (22631, 26100 y 26200) |
+| `ui.taskbar.end-task` | `[22631, 26100, 26200]` | Implemented | TaskbarEndTask no existe en 19045 (Windows 10) y en las primeras builds de Windows 11 tampoco; se limita a las builds del catálogo que lo leen (22631, 26100 y 26200) |
 | `ui.taskbar.icons-centered` | `[22631, 26100, 26200]` | Implemented | TaskbarAl (centrado de iconos de la barra) sólo existe en Windows 11; en 19045 la clave se escribe pero Explorer no la lee, así que la capacidad no se ofrece ahí |
 
 ## Qué comprueba CI

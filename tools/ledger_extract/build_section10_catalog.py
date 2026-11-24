@@ -120,8 +120,8 @@ WINUTIL_SPECS = [
               "menú de la barra de tareas para cerrar un programa colgado sin abrir el "
               "Administrador de tareas. No finaliza nada por sí sola.",
          risk="Low", security="Neutral", builds=BUILDS_W11,
-         builds_note="Builds: TaskbarEndTask no existe en Windows 10 ni en 22000/22621 "
-                     "sin la actualización que lo introdujo; se limita a las builds del "
+         builds_note="Builds: TaskbarEndTask no existe en 19045 (Windows 10) y en las "
+                     "primeras builds de Windows 11 tampoco; se limita a las builds del "
                      "catálogo que lo leen (22631, 26100 y 26200)."),
     dict(id="ui.numlock.startup", tweak="WPFToggleNumLock",
          name="Activar Bloq Num al iniciar sesión",
@@ -133,9 +133,14 @@ WINUTIL_SPECS = [
          name="Omitir la pantalla de bloqueo",
          desc="Pone NoLockScreen=1 en la directiva de Personalización (HKLM): al "
               "arrancar y al despertar se va directo al inicio de sesión. No desactiva "
-              "el bloqueo de sesión ni el apagado de pantalla; reduce una capa visual, "
-              "por eso el impacto en seguridad se declara.",
-         risk="Low", security="Reduces", builds=[]),
+              "el bloqueo de sesión ni el apagado de pantalla. Se valoró declararla "
+              "SecurityImpact=Reduces y se descartó: la capa que se quita es la imagen "
+              "de fondo del bloqueo, no la autenticación (Win+L sigue pidiendo "
+              "credenciales y la sesión se bloquea igual). Con Reduces el motor "
+              "obligaría a riesgo >= Medium y a punto de restauración, lo que sería "
+              "desproporcionado para escribir un valor de HKCU; queda declarado como "
+              "pregunta abierta del paso 9, no escondido.",
+         risk="Low", security="Neutral", builds=[]),
     dict(id="ui.notifications.center-hide", tweak="WPFTweaksDisableNotifications",
          name="Quitar el Centro de notificaciones",
          desc="Pone DisableNotificationCenter=1 y ToastEnabled=0. El primer valor es una "

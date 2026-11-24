@@ -96,12 +96,14 @@ def test_adr_0003_en_todas_las_capacidades() -> None:
         assert cap["state"] == "Implemented", cap["id"]
         assert cap["variants"], cap["id"]
         assert set(cap["variants"]) <= {"Evo", "Atlas", "WinUtil", "Default"}
-        assert cap["confirmation"] in ("None", "SimpleClick")
-        if cap["risk"] == "Low":
-            assert cap["confirmation"] == "SimpleClick", cap["id"]
-        else:
-            assert cap["risk"] == "Safe", cap["id"]
-            assert cap["confirmation"] == "None", cap["id"]
+        # La confirmación es exactamente la del riesgo (CapabilityRules).
+        assert cap["confirmation"] == {
+            "Safe": "None", "Low": "SimpleClick", "Medium": "Summary",
+            "High": "SummaryAndRestorePoint", "Critical": "TypeOperationName",
+        }[cap["risk"]], cap["id"]
+        # Y quien reduce seguridad no puede ir por debajo de Medium.
+        if cap["securityImpact"] == "Reduces":
+            assert cap["risk"] in ("Medium", "High", "Critical"), cap["id"]
 
 
 def test_el_privilegio_sale_de_las_colmenas_que_escribe() -> None:
@@ -135,6 +137,27 @@ def test_el_menu_contextual_clasico_es_solo_windows_11() -> None:
     assert set(cap["variants"]) == {"Evo", "Atlas", "WinUtil"}
     assert "winutil:tweak:WPFTweaksRightClickMenu" in cap["provenance"]
     assert "1172" in cap["provenance"]
+
+
+def test_omitir_la_pantalla_de_bloqueo_no_se_declara_como_reduccion() -> None:
+    """`ui.lockscreen.hide` quita la imagen del bloqueo, no la autenticación.
+
+    Se valoró declararla SecurityImpact=Reduces y se descartó: con Reduces el motor
+    exige riesgo >= Medium y punto de restauración para escribir un valor de HKCU,
+    desproporcionado para una capa visual. La decisión queda escrita en su
+    `description` y en las preguntas abiertas del informe del paso 9.
+    """
+    cap = BY_ID["ui.lockscreen.hide"]
+    assert cap["securityImpact"] == "Neutral"
+    assert cap["risk"] == "Low"
+    assert cap["confirmation"] == "SimpleClick"
+    assert cap["reversibility"] == "Reversible"
+    assert cap["restore"] == "SessionUndo"
+    assert "Reduces" in cap["description"], "la decisión y su motivo deben quedar escritos"
+    # Y ninguna capacidad de la sección 10 reduce seguridad con riesgo < Medium.
+    for other in CAPS:
+        if other["securityImpact"] == "Reduces":
+            assert other["risk"] in ("Medium", "High", "Critical"), other["id"]
 
 
 def test_las_cinco_capacidades_sin_19045_lo_justifican() -> None:

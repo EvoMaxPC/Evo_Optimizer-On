@@ -735,10 +735,10 @@
       {
          "id": "ui.lockscreen.hide",
          "name": "Omitir la pantalla de bloqueo",
-         "description": "Pone NoLockScreen=1 en la directiva de Personalización (HKLM): al arrancar y al despertar se va directo al inicio de sesión. No desactiva el bloqueo de sesión ni el apagado de pantalla; reduce una capa visual, por eso el impacto en seguridad se declara.",
+         "description": "Pone NoLockScreen=1 en la directiva de Personalización (HKLM): al arrancar y al despertar se va directo al inicio de sesión. No desactiva el bloqueo de sesión ni el apagado de pantalla. Se valoró declararla SecurityImpact=Reduces y se descartó: la capa que se quita es la imagen de fondo del bloqueo, no la autenticación (Win+L sigue pidiendo credenciales y la sesión se bloquea igual). Con Reduces el motor obligaría a riesgo >= Medium y a punto de restauración, lo que sería desproporcionado para escribir un valor de HKCU; queda declarado como pregunta abierta del paso 9, no escondido.",
          "sectionId": 10,
          "risk": "Low",
-         "securityImpact": "Reduces",
+         "securityImpact": "Neutral",
          "privilege": "Admin",
          "restore": "SessionUndo",
          "reversibility": "Reversible",
@@ -1061,7 +1061,7 @@
             26100,
             26200
          ],
-         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:920 (#WPFTweaksEndTaskOnTaskbar, Type=sin Type). Valores tomados de la fuente: TaskbarEndTask=1. Semantica: en un Toggle de WinUtil `Value` es la casilla ENCENDIDA y `OriginalValue` la apagada (functions/private/Invoke-WinUtilTweaks.ps1:34-46, Get-WinUtilToggleStatus.ps1:44). Reversibilidad (ADR-0003): Reversible - el motor guarda el valor previo de cada clave antes de escribir y lo restaura al deshacer. Builds: TaskbarEndTask no existe en Windows 10 ni en 22000/22621 sin la actualización que lo introdujo; se limita a las builds del catálogo que lo leen (22631, 26100 y 26200).ledger_refs: winutil:tweak:WPFTweaksEndTaskOnTaskbar",
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:920 (#WPFTweaksEndTaskOnTaskbar, Type=sin Type). Valores tomados de la fuente: TaskbarEndTask=1. Semantica: en un Toggle de WinUtil `Value` es la casilla ENCENDIDA y `OriginalValue` la apagada (functions/private/Invoke-WinUtilTweaks.ps1:34-46, Get-WinUtilToggleStatus.ps1:44). Reversibilidad (ADR-0003): Reversible - el motor guarda el valor previo de cada clave antes de escribir y lo restaura al deshacer. Builds: TaskbarEndTask no existe en 19045 (Windows 10) y en las primeras builds de Windows 11 tampoco; se limita a las builds del catálogo que lo leen (22631, 26100 y 26200).ledger_refs: winutil:tweak:WPFTweaksEndTaskOnTaskbar",
          "actions": [
             {
                "type": "registry",

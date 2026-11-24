@@ -122,7 +122,14 @@ public sealed class Wave1CatalogTests
                 new[] { CapabilityState.Implemented, CapabilityState.Specified });
             Assert.NotEmpty(definition.Actions);
             Assert.False(string.IsNullOrWhiteSpace(definition.Provenance));
-            Assert.Equal(SecurityImpact.Neutral, definition.SecurityImpact);
+            // Este bucle recorre TODO el catálogo (incluida la sección 10 desde el
+            // paso 9), así que la lista de impactos permitidos sale de las reglas:
+            // Neutral la mayoría; Improves en las que quitan telemetría o
+            // superficie; y Reduces sólo se admite con riesgo >= Medium
+            // (CapabilityRules.SecurityImpact), que ninguna de estas cumple.
+            Assert.True(
+                definition.SecurityImpact is SecurityImpact.Neutral or SecurityImpact.Improves,
+                $"{definition.Id}: SecurityImpact={definition.SecurityImpact} no esperado.");
 
             // Invariantes de riesgo del paso 6, vía el contrato del motor.
             var contract = definition.ToContract();

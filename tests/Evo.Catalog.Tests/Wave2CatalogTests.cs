@@ -191,6 +191,29 @@ public sealed class Wave2CatalogTests
         }
     }
 
+    /// <summary>T1 (ADR-0003): quien declare reducción de seguridad no puede bajar
+    /// de riesgo Medium ni de confirmación Summary. La sección 10 no tiene ninguna
+    /// así: `ui.lockscreen.hide` quita la imagen del bloqueo, no la autenticación, y
+    /// se dejó en Neutral/Low con el motivo escrito en su descripción.</summary>
+    [Fact]
+    public void TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk()
+    {
+        foreach (var definition in Wave2().Where(d => d.SecurityImpact == SecurityImpact.Reduces))
+        {
+            Assert.True(definition.Risk >= RiskLevel.Medium, definition.Id);
+            Assert.True(definition.Confirmation >= ConfirmationType.Summary, definition.Id);
+        }
+
+        var lockscreen = Definition("ui.lockscreen.hide");
+        Assert.Equal(SecurityImpact.Neutral, lockscreen.SecurityImpact);
+        Assert.Equal(RiskLevel.Low, lockscreen.Risk);
+        Assert.Equal(ConfirmationType.SimpleClick, lockscreen.Confirmation);
+        Assert.Equal(Reversibility.Reversible, lockscreen.Reversibility);
+        Assert.Equal(RestoreLevel.SessionUndo, lockscreen.Restore);
+        Assert.Contains("Reduces", lockscreen.Description, StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(lockscreen.ToContract()));
+    }
+
     // --------------------------------------------------------- T1 rangos build
     /// <summary>T1: el menú contextual clásico escribe el CLSID de Windows 11 y sólo
     /// declara 22631/26100/26200; 19045 (Windows 10) NO está soportada.</summary>
@@ -267,9 +290,19 @@ public sealed class Wave2CatalogTests
         var atlas = Wave2().Where(d => d.Variants.Contains(Variant.Atlas)).ToList();
         Assert.NotEmpty(atlas);
 
-        foreach (var definition in atlas.Where(d => d.Provenance.Contains("atlas@", StringComparison.Ordinal)))
+        // Las que salen de un toggle con estados lo dicen; las que salen de un
+        // .psd1 de Tweaks (una sola forma de aplicarse) no tienen estado y no se
+        // les inventa uno.
+        var toggles = atlas.Where(d => d.Provenance.Contains("Interface/", StringComparison.Ordinal)
+                                       || d.Provenance.Contains("Toggles/", StringComparison.Ordinal));
+        Assert.NotEmpty(toggles);
+        foreach (var definition in toggles)
         {
             Assert.Matches(new Regex(@"\(estado '[A-Za-z]+'\)"), definition.Provenance);
+        }
+
+        foreach (var definition in atlas)
+        {
             Assert.Matches(new Regex(@"atlas@[0-9a-f]{40}:"), definition.Provenance);
         }
     }

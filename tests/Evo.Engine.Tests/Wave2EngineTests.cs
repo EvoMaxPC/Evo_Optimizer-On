@@ -62,6 +62,34 @@ public sealed class Wave2EngineTests
     private static int MutationCount(TestHarness h) =>
         h.Registry.MutationCount + h.Services.MutationCount + h.Tasks.MutationCount;
 
+    /// <summary>Compara los VALORES existentes de dos snapshots, como hace el test
+    /// de la oleada 1: el rollback deja atrás las claves que él mismo creó vacías
+    /// (no había nada que restaurar) y una clave vacía no es un cambio de estado.</summary>
+    private static void AssertSameValues(
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> expected,
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> actual)
+    {
+        static Dictionary<string, RegistryEntry> Flatten(
+            IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> snapshot) =>
+            snapshot
+                .SelectMany(key => key.Value
+                    .Where(value => value.Value.Exists)
+                    .Select(value => new KeyValuePair<string, RegistryEntry>(
+                        $"{key.Key}\\{value.Key}", value.Value)))
+                .ToDictionary(pair => pair.Key, pair => pair.Value,
+                    StringComparer.OrdinalIgnoreCase);
+
+        var left = Flatten(expected);
+        var right = Flatten(actual);
+        Assert.Equal(left.Keys.OrderBy(k => k, StringComparer.Ordinal),
+            right.Keys.OrderBy(k => k, StringComparer.Ordinal));
+        foreach (var (key, entry) in left)
+        {
+            Assert.Equal(entry.Kind, right[key].Kind);
+            Assert.Equal(entry.Value, right[key].Value);
+        }
+    }
+
     // -------------------------------------------------------------- T4.2 DryRun
     /// <summary>T4.2: en DryRun el plan se informa entero y los fakes no cambian.</summary>
     [Fact]
@@ -96,9 +124,7 @@ public sealed class Wave2EngineTests
             Assert.All(summary.Results, r => Assert.False(r.Applied));
 
             Assert.Equal(mutationsBefore, MutationCount(harness));
-            Assert.Equal(
-                snapshot.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase),
-                harness.Registry.Snapshot().Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase));
+            AssertSameValues(snapshot, harness.Registry.Snapshot());
         }
     }
 
@@ -156,9 +182,7 @@ public sealed class Wave2EngineTests
         Assert.Null(harness.Registry.GetValue(
             RegistryHive.CurrentUser, Advanced, "ShowTaskViewButton"));
 
-        Assert.Equal(
-            before.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase),
-            harness.Registry.Snapshot().Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase));
+        AssertSameValues(before, harness.Registry.Snapshot());
     }
 
     /// <summary>T4.3b: la capacidad de nueve acciones (elementos recientes) se
@@ -181,9 +205,7 @@ public sealed class Wave2EngineTests
 
         var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
         Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
-        Assert.Equal(
-            before.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase),
-            harness.Registry.Snapshot().Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase));
+        AssertSameValues(before, harness.Registry.Snapshot());
     }
 
     // ------------------------------------------------------------- T1 por build
@@ -205,9 +227,7 @@ public sealed class Wave2EngineTests
         Assert.False(summary.Mutated);
         Assert.Empty(summary.UndoJournalEntry);
         Assert.Equal(mutationsBefore, MutationCount(harness));
-        Assert.Equal(
-            before.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase),
-            harness.Registry.Snapshot().Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase));
+        AssertSameValues(before, harness.Registry.Snapshot());
 
         // Y en 26100 la misma capacidad sí se aplica.
         var supported = Harness(build: 26100);
