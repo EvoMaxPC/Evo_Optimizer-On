@@ -130,6 +130,49 @@ jobs:
           python3 tools/ledger_extract/coverage_check_atlas.py 2>&1 | tee ci-out/coverage-atlas.txt
           echo "coverage_atlas_exit=${PIPESTATUS[0]}" | tee -a ci-out/coverage-atlas.txt
 
+      - name: Extractor de toggles de Atlas (determinismo + cruces)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/extract_atlas_toggles.py
+          cp inventory/ledger/atlas-toggles.tsv ci-out/atlas-toggles.tsv
+          cp inventory/ledger/atlas-tweak-files.tsv ci-out/atlas-tweak-files.tsv
+          sha256sum inventory/ledger/atlas-toggles.tsv \
+                    inventory/ledger/atlas-tweak-files.tsv \
+            | tee ci-out/toggles-sha-run1.txt
+          python3 tools/ledger_extract/extract_atlas_toggles.py
+          sha256sum inventory/ledger/atlas-toggles.tsv \
+                    inventory/ledger/atlas-tweak-files.tsv \
+            | tee ci-out/toggles-sha-run2.txt
+          if ! diff -u ci-out/toggles-sha-run1.txt ci-out/toggles-sha-run2.txt; then
+            echo "DETERMINISMO TOGGLES ROTO" | tee ci-out/toggles-determinism.txt
+            exit 1
+          fi
+          echo "determinismo toggles: OK" | tee ci-out/toggles-determinism.txt
+          python3 tools/ledger_extract/extract_atlas_toggles.py --json \
+            > ci-out/toggles-cross.json
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/toggles-cross.json", encoding="utf-8"))
+          c = d["cross"]
+          bad = c["duplicate_ids"] or c["unnamed"] or c["broken_refs"]
+          print("toggles:", c["toggles"], "| prediccion 91:",
+                "OK" if c["prediction_ok"] else "DIFIERE")
+          print("ids duplicados:", len(c["duplicate_ids"]),
+                "| sin etiqueta:", len(c["unnamed"]),
+                "| refs rotas:", len(c["broken_refs"]))
+          sys.exit(1 if bad else 0)
+          PYEOF
+
+      - name: Sonda de coincidencia con el inventario
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/probe_inventory_match.py 2>&1 \
+            | tee ci-out/probe-coincidencia.txt
+          cp docs/reports/probe-coincidencia-inventario.tsv ci-out/ 2>/dev/null
+
       - name: Recon (regenera y compara)
         if: always()
         shell: bash

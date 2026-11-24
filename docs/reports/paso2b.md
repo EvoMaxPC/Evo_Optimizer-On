@@ -44,7 +44,7 @@ _Ninguno._
 
 | top_dir | extract | reference | exclude | total |
 |---|---:|---:|---:|---:|
-| `package` | 802 | 40 | 0 | 842 |
+| `package` | 803 | 39 | 0 | 842 |
 | `app` | 152 | 299 | 0 | 451 |
 | `tests` | 124 | 0 | 0 | 124 |
 | `tools` | 0 | 33 | 0 | 33 |
@@ -54,11 +54,11 @@ _Ninguno._
 | `.` | 3 | 6 | 3 | 12 |
 | `.vscode` | 0 | 3 | 0 | 3 |
 | `.zed` | 0 | 2 | 0 | 2 |
-| **TOTAL** | **1081** | **466** | **3** | **1550** |
+| **TOTAL** | **1082** | **465** | **3** | **1550** |
 
 ## atlas — comportamiento en `reference`
 
-Ficheros con extensión de comportamiento en `reference`: **236**
+Ficheros con extensión de comportamiento en `reference`: **235**
 
 | directorio de 1er nivel | ficheros |
 |---|---:|
@@ -69,7 +69,6 @@ Ficheros con extensión de comportamiento en `reference`: **236**
 | `.github` | 2 |
 | `.zed` | 2 |
 | `.` | 1 |
-| `package` | 1 |
 
 | directorio de 2º nivel | ficheros |
 |---|---:|
@@ -89,20 +88,10 @@ Ficheros con extensión de comportamiento en `reference`: **236**
 | `app/build.rs` | 1 |
 | `app/examples` | 1 |
 
-**A REVISAR** (comportamiento en reference fuera de `tests/`, `.github/`, `docs/`, `tools/`, `services/`): **201**
+**A REVISAR** (comportamiento en reference fuera de `tests/`, `.github/`, `docs/`, `tools/`, `services/`): **189**
 
 | ruta | ext | bytes |
 |---|---|---:|
-| `.vscode/extensions.json` | json | 162 |
-| `.vscode/launch.json` | json | 1250 |
-| `.vscode/settings.json` | json | 1216 |
-| `.zed/settings.json` | json | 626 |
-| `.zed/tasks.json` | json | 1298 |
-| `app/build.rs` | rs | 5940 |
-| `app/examples/i18n_spike.rs` | rs | 6575 |
-| `app/licenses/dependency-inventory.json` | json | 196727 |
-| `app/licenses/supplements.json` | json | 11369 |
-| `app/rustfmt.toml` | toml | 62 |
 | `app/vendor/accesskit_windows/.cargo_vcs_info.json` | json | 110 |
 | `app/vendor/accesskit_windows/Cargo.toml` | toml | 1973 |
 | `app/vendor/accesskit_windows/src/adapter.rs` | rs | 26726 |
@@ -292,8 +281,6 @@ Ficheros con extensión de comportamiento en `reference`: **236**
 | `app/vendor/gpui-pre/src/window/a11y/debug.rs` | rs | 11527 |
 | `app/vendor/gpui-pre/src/window/prompts.rs` | rs | 6719 |
 | `app/vendor/gpui-pre/tests/action_macros.rs` | rs | 1285 |
-| `lychee.toml` | toml | 1215 |
-| `package/atlas.json` | json | 5343 |
 
 ## atlas — `tools/` y `services/` por subdirectorio
 
@@ -339,42 +326,28 @@ Ficheros con extensión de comportamiento en `reference`: **236**
 | `public/` | 3 | reference=3 | 74803 |
 | `src/` | 197 | reference=197 | 2771634 |
 
+## Corrección del paso 4b (T0f)
 
+Tras el paso 3b el valor vigente era **201**. En el paso 4b se revisó cada
+fichero que quedaba y se decidió **por escrito**, con `reason` explícito en
+`inventory/partition/atlas.yml`:
 
-## Corrección del paso 3 (T0a)
+| decisión | ficheros | tratamiento |
+|---|---:|---|
+| `package/atlas.json` es configuración del paquete | 1 | **extract** (regla `package/**/*.json`) |
+| `app/build.rs`, `app/examples/`, `app/rustfmt.toml`, `app/licenses/`, `.vscode/`, `.zed/`, `lychee.toml` | 9 | reference, con `reason` marcado `[paso 4b]` |
 
-El informe original decía **208** A REVISAR pero su desglose sumaba **209**
-(189+8+8+2+1+1). Recuento real, recalculado con
-`tools/ledger_extract/partition_review.py` sobre el `atlas.tsv` vigente en el
-paso 2b (antes de T0c):
+Con eso, `partition_review.py` ya no marca esos 9: una regla con motivo
+`[paso 4b]` cuenta como revisada (antes la heurística solo miraba prefijos de
+ruta y podía marcar para siempre lo ya decidido).
 
-| grupo | ficheros |
-|---|---:|
-| `app/vendor/**` (Rust de terceros) | 189 |
-| `package/Executables` | 7 |
-| `app/licenses` | 2 |
-| `.vscode/` | 3 |
-| `.zed/` | 2 |
-| `app/build.rs`, `app/examples/…`, `app/rustfmt.toml`, `lychee.toml`, `package/atlas.json` | 5 |
-| **total** | **208** |
+**Conteos vigentes**: `extract=1082  reference=465  exclude=3`, 0 sin
+clasificar, 0 reglas muertas, 0 excludes sobre comportamiento, `VEREDICTO: OK`.
 
-El error estaba en el desglose del informe, no en el recuento: `package/Executables`
-son **7** (no 8) y `.vscode` son **3** (no 2).
+**A REVISAR = 189**, todos `app/vendor/**` (código Rust de terceros
+vendorizado, ya declarado como reference en el paso 2b). No queda ninguna
+categoría "sueltos".
 
-Tras T0c (reclasificación de `package/Executables` a `extract`), el valor vigente
-es **201**. Desglose completo por prefijo de ruta, sin categoría "sueltos"
-(recalculado en el paso 3b con `partition_review.load()` sobre el `atlas.tsv`
-actual):
-
-| prefijo | ficheros |
-|---|---:|
-| `app/vendor/` | 189 |
-| `app/licenses/` | 2 |
-| `app/build.rs` | 1 |
-| `app/examples/` | 1 |
-| `app/rustfmt.toml` | 1 |
-| `.vscode/` | 3 |
-| `.zed/` | 2 |
-| `lychee.toml` | 1 |
-| `package/atlas.json` | 1 |
-| **total** | **201** |
+Nota: al añadir `package/**/*.json` la regla más específica
+`package/Executables/**/*.json` quedó **muerta** y el checker lo detectó
+(`reglas muertas: 1`, `VEREDICTO: FALLA`); se eliminó y volvió a `OK`.

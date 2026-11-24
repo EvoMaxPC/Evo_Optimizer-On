@@ -75,7 +75,10 @@ extract cubre "todo fichero con comportamiento", y un test Pester **tiene**
 comportamiento observable (es código que se ejecuta). No contradice ADR-0001:
 contradiría leerlo como "solo código de producto".
 
-**Decisión: mantener en extract con motivo declarado, sin reclasificar.** No es
+**Decisión: mantener en extract con motivo declarado, sin reclasificar.**
+[Actualización paso 4b: el TSV ya distingue `scope=product` (210 funciones) de
+`scope=test` (204 funciones), así que "pester da 0 items" queda corregido: da
+ayudantes de test, no capacidades.] No es
 un error evidente (REQ: solo cambiar reglas ante error evidente). Además el
 `kind: test` del ledger de Atlas ya los separa del producto, así que un
 consumidor puede filtrarlos sin tocar la partición.
@@ -110,8 +113,13 @@ disco**: solo se leyó la cabecera y los nombres/tamaños.
 | NoTelemetry arm64 | 106 | 100 283 | 1 `.mum` + 1 `.cat` + 104 `.manifest` |
 | **total** | **578** | **546 035** | |
 
-Son paquetes de Windows Update (manifiestos de componente), no código de Atlas.
-La cifra anterior ("NO VERIFICADO") queda resuelta.
+**Corrección [paso 4b]** — lo anterior decía "son paquetes de Windows Update, no
+código de Atlas". Lo **medido** es: los 578 miembros son 4 `.mum`, 4 `.cat` y 570
+`.manifest`, con nombres de componente de Windows (`amd64_*`/`arm64_*`,
+`*.manifest`, GUIDs `31bf3856ad364e35`), sin `.ps1`, `.exe` ni `.cmd` dentro. Los
+nombres de fichero del `.cab` son `Z-Atlas-NoDefender-Package…` y
+`Z-Atlas-NoTelemetry-Package…`. **La autoría queda NO VERIFICADO**: no se ha
+abierto el contenido de ningún miembro ni se ha comprobado quién los empaquetó.
 
 ### f) PR
 

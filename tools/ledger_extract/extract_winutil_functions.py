@@ -2,10 +2,14 @@
 """Extractor de funciones y scripts .ps1 de WinUtil (tratamiento extract).
 
 Salida: inventory/ledger/winutil-functions.tsv
-    path  scope  lines  sha256  functions  n_functions
+    path  area  scope  lines  sha256  functions  n_functions
 
-- scope: 'public' (functions/public/), 'private' (functions/private/),
-  'scripts' (scripts/), 'other' (resto en extract).
+- area: 'public' (functions/public/), 'private' (functions/private/),
+  'scripts' (scripts/), 'other' (resto en extract); es la clasificación
+  histórica del paso 3 y se mantiene para no romper consumidores.
+- scope: 'product' (functions/ y scripts/), 'test' (pester/),
+  'tooling' (raíz, lint/, tools/). Es la lectura que separa capacidad de
+  producto de ayudantes de test.
 - functions: nombres definidos, separados por ';' y ordenados.
 - Solo rutas, nombres, hashes y conteos: NUNCA el cuerpo del script.
 
@@ -27,7 +31,16 @@ PART = ROOT / "inventory" / "partition" / "results" / "winutil.tsv"
 OUT = ROOT / "inventory" / "ledger" / "winutil-functions.tsv"
 
 FUNC_RE = re.compile(r"^\s*function\s+([\w-]+)", re.IGNORECASE | re.MULTILINE)
-COLUMNS = ("path", "scope", "lines", "sha256", "functions", "n_functions")
+COLUMNS = ("path", "area", "scope", "lines", "sha256", "functions", "n_functions")
+
+
+def scope_class(path: str) -> str:
+    """Separa producto de test y de herramientas."""
+    if path.startswith(("functions/", "scripts/")):
+        return "product"
+    if path.startswith("pester/"):
+        return "test"
+    return "tooling"
 
 
 def scope_of(path: str) -> str:
@@ -67,14 +80,15 @@ def main(argv: list[str] | None = None) -> int:
         funcs = sorted(set(FUNC_RE.findall(text)))
         out_rows.append({
             "path": path,
-            "scope": scope_of(path),
+            "area": scope_of(path),
+            "scope": scope_class(path),
             "lines": text.count("\n") + (1 if text and not text.endswith("\n") else 0),
             "sha256": hashlib.sha256(data).hexdigest(),
             "functions": ";".join(funcs),
             "n_functions": len(funcs),
         })
 
-    out_rows.sort(key=lambda x: (x["scope"], x["path"]))
+    out_rows.sort(key=lambda x: x["path"])
     args.out.parent.mkdir(parents=True, exist_ok=True)
     lines = ["\t".join(COLUMNS)]
     for r in out_rows:
@@ -83,17 +97,19 @@ def main(argv: list[str] | None = None) -> int:
 
     totals: dict[str, dict[str, int]] = {}
     for r in out_rows:
-        t = totals.setdefault(r["scope"], {"files": 0, "functions": 0, "lines": 0})
-        t["files"] += 1
-        t["functions"] += r["n_functions"]
-        t["lines"] += r["lines"]
+        for key in (("area", r["area"]), ("scope", r["scope"])):
+            t = totals.setdefault(key, {"files": 0, "functions": 0, "lines": 0})
+            t["files"] += 1
+            t["functions"] += r["n_functions"]
+            t["lines"] += r["lines"]
 
     zero = [r["path"] for r in out_rows if r["n_functions"] == 0]
 
     print(f"ficheros .ps1 en extract: {len(out_rows)}")
-    for scope in sorted(totals):
-        t = totals[scope]
-        print(f"  {scope:8} ficheros={t['files']:<4} funciones={t['functions']:<4} lineas={t['lines']}")
+    for (dim, label) in sorted(totals):
+        t = totals[(dim, label)]
+        print(f"  {dim:5} {label:8} ficheros={t['files']:<4} "
+              f"funciones={t['functions']:<4} lineas={t['lines']}")
     print(f"sin funciones definidas: {len(zero)}")
     for p in zero:
         print(f"   - {p}")

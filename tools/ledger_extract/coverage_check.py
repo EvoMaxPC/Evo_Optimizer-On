@@ -31,6 +31,11 @@ REASONS = {
     "Compile.ps1": "implementation-detail (ADR-0001): empaquetado; mapeado a la capacidad de build reproducible",
     "sign.bat": "firma de artefactos del pipeline de release: paso de build, sin items propios (implementation-detail)",
     "pester/fixtures/legacy-config.json": "fixture de test Pester (datos de entrada), no comportamiento de producto",
+    # Los .Tests.ps1 sin `function` SÍ son comportamiento ejecutable (It/Describe),
+    # pero sus funciones (cuando las hay, 204 en 65 ficheros) son ayudantes de
+    # test, no capacidades de producto. Por eso "sin items" aquí significa "sin
+    # capacidad de producto"; el conteo de funciones de test se informa aparte.
+
 }
 
 
@@ -67,13 +72,23 @@ def main(argv: list[str] | None = None) -> int:
         reason = REASONS.get(p)
         if reason is None:
             if p.startswith("pester/") or p.endswith(".Tests.ps1"):
-                reason = "test Pester (it/describe sin `function`): cubre comportamiento existente, no define API"
+                reason = ("test Pester: comportamiento ejecutable, pero sus "
+                          "funciones son ayudantes de test, no capacidades de "
+                          "producto (ver columna scope=test del TSV)")
             else:
                 reason = "NO VERIFICADO: extract sin items y sin motivo declarado"
         orphans.append({"path": p, "reason": reason})
 
+    by_scope: dict[str, dict[str, int]] = {}
+    for r in read_tsv(FUNCS):
+        k = r["scope"]
+        t = by_scope.setdefault(k, {"files": 0, "functions": 0})
+        t["files"] += 1
+        t["functions"] += int(r["n_functions"])
+
     result = {
         "extract_files": len(extracts),
+        "functions_by_scope": by_scope,
         "with_items": len(with_items),
         "without_items": len(orphans),
         "unexplained": [o["path"] for o in orphans if o["reason"].startswith("NO VERIFICADO")],
@@ -87,6 +102,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"con al menos un item  : {len(with_items)}")
         print(f"extract sin items     : {len(orphans)}")
         print(f"sin motivo declarado  : {len(result['unexplained'])}")
+        for k in sorted(by_scope):
+            t = by_scope[k]
+            print(f"funciones {k:8s}    : {t['functions']} en {t['files']} ficheros")
         print("\nextract sin items (path -> motivo):")
         for o in orphans:
             print(f"  - {o['path']}: {o['reason']}")

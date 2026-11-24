@@ -25,6 +25,29 @@ UPSTREAM = ROOT / "inventory" / "upstream"
 
 BEHAVIOUR_EXTS = {"ps1", "psm1", "psd1", "cmd", "bat", "reg", "json", "rs", "toml", "cab"}
 ALLOWED_REFERENCE_DIRS = ("tests/", ".github/", "docs/", "tools/", "services/")
+# [paso 4b] Una regla de `atlas.yml` cuyo `reason` empieza por esta marca tiene
+# la decisión de referencia ESCRITA y razonada: cuenta como revisada, aunque su
+# extensión sea de comportamiento. Evita que la heurística por prefijo marque
+# para siempre ficheros ya decididos.
+REVIEWED_MARK = "[paso 4b]"
+
+
+def reviewed_globs(yml: Path | None = None) -> set[str]:
+    """Globs de atlas.yml con motivo de referencia explícitamente razonado."""
+    yml = yml or (ROOT / "inventory" / "partition" / "atlas.yml")
+    if not yml.is_file():
+        return set()
+    out: set[str] = set()
+    cur_glob: str | None = None
+    for line in yml.read_text(encoding="utf-8").splitlines():
+        t = line.strip()
+        if t.startswith("- glob:"):
+            cur_glob = t.split("\"")[1] if "\"" in t else t.split(":", 1)[1].strip()
+        elif t.startswith("reason:") and cur_glob:
+            if REVIEWED_MARK in t:
+                out.add(cur_glob)
+            cur_glob = None
+    return out
 
 
 def read_tsv(path: Path) -> list[dict]:
@@ -59,13 +82,31 @@ def table_treatment_by_top(rows: list[dict]) -> list[str]:
     return out
 
 
+def _matches_reviewed(path: str, globs: set[str]) -> bool:
+    from fnmatch import fnmatchcase  # solo para comparar el glob ya asignado
+    for g in globs:
+        if g.endswith("/**"):
+            if path.startswith(g[:-3] + "/"):
+                return True
+        elif g.endswith("/*.json"):
+            base = g[:-6]
+            if path.startswith(base) and path.count("/") == g.count("/") + 1 \
+                    and path.endswith(".json"):
+                return True
+        elif fnmatchcase(path, g.replace("**", "*")):
+            return True
+    return False
+
+
 def behaviour_in_reference(rows: list[dict]) -> tuple[list[str], list[str], list[str]]:
     sel = [r for r in rows if r["treatment"] == "reference" and r["ext"] in BEHAVIOUR_EXTS]
     by1 = Counter(r["top_dir"] for r in sel)
     by2 = Counter(r["lvl2"] for r in sel)
+    reviewed = reviewed_globs()
     review = [
         r for r in sel
         if not any(r["path"].startswith(d) for d in ALLOWED_REFERENCE_DIRS)
+        and not (reviewed and _matches_reviewed(r["path"], reviewed))
     ]
     md = [
         f"Ficheros con extensión de comportamiento en `reference`: **{len(sel)}**",

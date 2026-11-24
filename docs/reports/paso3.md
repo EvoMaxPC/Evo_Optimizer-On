@@ -177,6 +177,13 @@ estable por `item_id`.
 `lint/PSScriptAnalyser.ps1` y 20 `pester/*.Tests.ps1` (usan `Describe`/`It`,
 no `function`).
 
+**Corrección [paso 4b]:** el TSV gana la columna `scope`, que separa
+`product` (127 ficheros, **210** funciones = 42 public + 164 private + 4
+scripts), `test` (65 ficheros, **204** funciones) y `tooling` (3 ficheros, 0).
+Decir que `pester/` "da 0 items" es impreciso: sus 204 funciones son
+**ayudantes de test**, no capacidades de producto; el test en sí sí es
+comportamiento ejecutable, por eso sigue en `extract`.
+
 ## T4 — Cobertura de extract (ADR-0001)
 
 | | |
