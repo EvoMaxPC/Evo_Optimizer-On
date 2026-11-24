@@ -33,7 +33,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: dotnet-ci-${{ github.ref }}-${{ matrix.os }}
+  group: dotnet-ci-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
