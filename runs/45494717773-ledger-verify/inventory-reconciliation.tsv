@@ -1,0 +1,589 @@
+seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
+1	4	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+1	5	winutil	Disk Cleanup — limpieza de disco.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	6	winutil	Temporary Files — eliminación de archivos temporales.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	7	winutil	Microsoft OneDrive — eliminación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	8	winutil	Microsoft Edge — eliminación.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+1	9	winutil	Widgets — eliminación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	10	winutil	Windows AI — desactivación y eliminación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	11	winutil	Consumer Features — desactivación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	12	winutil	Reserved Storage — desactivación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	13	winutil	Storage Sense — configuración.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	14	winutil	AppX Removal — eliminación de aplicaciones provisionadas.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	15	winutil	AppX Removal — desinstalación de aplicaciones para usuarios.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	16	winutil	Limpieza de restos de OneDrive.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	17	winutil	Limpieza y gestión de paquetes redundantes.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	18	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+1	19	atlas	Remove Edge.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+1	20	atlas	Remove Edge Current User Data.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+1	21	atlas	Remove OneDrive Current User Data.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	22	atlas	Remove Copilot App.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	23	atlas	Remove Microsoft Store.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	24	atlas	Remove Atlas Legacy Elevation Artifacts.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	25	atlas	Disable Reserved Storage.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	26	atlas	Configure Storage Sense.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	27	atlas	Disable Store App Archiving.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	28	atlas	Disable Content Delivery.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	29	atlas	Disable Scheduled Tasks seleccionadas.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	30	atlas	Hide Unused Security Pages.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	31	atlas	Remove Python Store Prompt.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+1	32	evo	Capacidad EVO a desarrollar: limpieza por categorías, detección de componentes, eliminación selectiva, limpieza residual y restauración cuando sea técnicamente posible.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+2	34	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+2	35	winutil	Activity History.	Mapped	winutil:tweak:WPFTweaksActivity	alta	regla R2 del paso 4e: coincide con el ledger
+2	36	winutil	Consumer Features.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	37	winutil	Windows Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	38	winutil	Widgets.	Mapped	atlas:toggle:Widgets	alta	regla R1 del paso 4e: coincide con el ledger
+2	39	winutil	Windows AI.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	40	winutil	OneDrive.	Mapped	winutil:catalog-entry:onedrive	alta	regla R1 del paso 4e: coincide con el ledger
+2	41	winutil	Microsoft Edge.	Mapped	winutil:tweak:WPFTweaksEdgeDebloat|winutil:tweak:WPFTweaksRemoveEdge	media	regla R2 del paso 4e: coincide con el ledger
+2	42	winutil	Location Tracking.	Mapped	winutil:tweak:WPFTweaksLocation	alta	regla R2 del paso 4e: coincide con el ledger
+2	43	winutil	Background Apps.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	44	winutil	File Explorer Home and Gallery.	Mapped	winutil:tweak:WPFTweaksRemoveHomeAndGallery	alta	regla R2 del paso 4e: coincide con el ledger
+2	45	winutil	Start Menu Recommendations.	Mapped	winutil:tweak:WPFToggleStartMenuRecommendations	alta	regla R1 del paso 4e: coincide con el ledger
+2	46	winutil	Store Recommended Search Results.	Mapped	winutil:tweak:WPFTweaksDisableStoreSearch	alta	regla R2 del paso 4e: coincide con el ledger
+2	47	winutil	Automatic Folder Discovery.	Mapped	winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery	alta	regla R2 del paso 4e: coincide con el ledger
+2	48	winutil	WPBT.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	49	winutil	Prevent Device Companion Apps.	Mapped	winutil:tweak:WPFTweaksPreventDeviceMetadataFromNetwork	alta	regla R1 del paso 4e: coincide con el ledger
+2	50	winutil	Razer Software Auto-Install.	Mapped	winutil:tweak:WPFTweaksRazerBlock	alta	regla R2 del paso 4e: coincide con el ledger
+2	51	winutil	Logitech Download Assistant Auto-Install.	Mapped	winutil:tweak:WPFTweaksLogiBlock	alta	regla R2 del paso 4e: coincide con el ledger
+2	52	winutil	Adobe URL Block List.	Mapped	winutil:tweak:WPFTweaksBlockAdobeNet	alta	regla R2 del paso 4e: coincide con el ledger
+2	53	winutil	Brave Browser Debloat.	Mapped	winutil:tweak:WPFTweaksBraveDebloat	alta	regla R1 del paso 4e: coincide con el ledger
+2	54	winutil	Edge Debloat.	Mapped	winutil:tweak:WPFTweaksEdgeDebloat	alta	regla R2 del paso 4e: coincide con el ledger
+2	55	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+2	56	atlas	Disable Activity Feed.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	57	atlas	Disable App Launch Tracking.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	58	atlas	Disable Windows Consumer Content.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	59	atlas	Disable Windows Tips.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	60	atlas	Disable Windows Suggestions.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	61	atlas	Disable Advertising Information.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	62	atlas	Disable Tailored Experiences.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	63	atlas	Disable Copilot.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	64	atlas	Disable Recall.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	65	atlas	Disable Click To Do.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	66	atlas	Disable Widgets.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	67	atlas	Disable News and Interests.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	68	atlas	Disable Spotlight.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	69	atlas	Disable Windows Feedback.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	70	atlas	Disable Automatic App Archiving.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	71	atlas	Disable Background Apps.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	72	atlas	Disable Cloud Optimized Content.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	73	atlas	Disable App Recommendations.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+2	74	atlas	Configure Start Menu.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0	media	regla R3 del paso 4e: coincide con el ledger
+2	75	atlas	Configure Windows Explorer.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+3	77	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+3	78	winutil	Telemetry — desactivación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	79	winutil	Activity History — desactivación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	80	winutil	Location Tracking — desactivación.	Mapped	winutil:tweak-op:WPFTweaksLocation:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+3	81	winutil	Consumer Features — desactivación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	82	winutil	Delivery Optimization — desactivación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	83	winutil	Edge Telemetry.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+3	84	winutil	Brave Telemetry.	Mapped	winutil:tweak-op:WPFTweaksBraveDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+3	85	winutil	Windows AI.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	86	winutil	Adobe URL Block List.	Mapped	winutil:tweak:WPFTweaksBlockAdobeNet	alta	regla R2 del paso 4e: coincide con el ledger
+3	87	winutil	O&O ShutUp10++ — integración.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	88	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+3	89	atlas	Disable Activation Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	90	atlas	Disable CEIP.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	91	atlas	Disable Diagnostic Tracing.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	92	atlas	Disable .NET CLI Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	93	atlas	Disable Input Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	94	atlas	Disable MSRT Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	95	atlas	Disable User Tracking.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	96	atlas	Disable Device Monitoring.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	97	atlas	Disable Performance Tracking.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	98	atlas	Disable Privacy Experience.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	99	atlas	Disable Activity Feed.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	100	atlas	Disable User Activity Upload.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	101	atlas	Disable Settings Agent.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	102	atlas	Disable Speech Auto Updates.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	103	atlas	Disable Online Speech Recognition.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	104	atlas	Disable Windows Error Reporting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	105	atlas	Disable Diagnostic Data Collection.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	106	atlas	Disable NVIDIA Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	107	atlas	Disable Office Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	108	atlas	Disable Notepad AI.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	109	atlas	Disable Paint AI.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	110	atlas	Disable Advertising Information.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	111	atlas	Disable Sync Provider Notifications.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	112	atlas	Disable Setting Sync.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	113	atlas	Disable Clipboard Cloud Sync.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	114	atlas	Disable Message Cloud Sync.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	115	atlas	Disable Find My Device.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	116	atlas	Configure Application Permissions.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+3	117	atlas	Configure Privacy Defaults.	Mapped	winutil:tweak-op:WPFTweaksTelemetry:registry:1	media	regla R3 del paso 4e: coincide con el ledger
+3	118	atlas	Configure Windows Search Privacy.	Mapped	winutil:tweak-op:WPFToggleBingSearch:registry:0|winutil:tweak-op:WPFTweaksTelemetry:registry:1	media	regla R3 del paso 4e: coincide con el ledger
+4	120	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+4	121	winutil	Services — configuración de inicio Manual.	Mapped	atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+4	122	winutil	DiagTrack.	Mapped	winutil:tweak-op:WPFTweaksServices:service:1	alta	nombre de servicio presente en las operaciones del ledger
+4	123	winutil	MapsBroker.	Mapped	winutil:tweak-op:WPFTweaksServices:service:2	alta	nombre de servicio presente en las operaciones del ledger
+4	124	winutil	StorSvc.	Mapped	winutil:tweak-op:WPFTweaksServices:service:3	alta	nombre de servicio presente en las operaciones del ledger
+4	125	winutil	SharedAccess.	Mapped	winutil:tweak-op:WPFTweaksServices:service:4	alta	nombre de servicio presente en las operaciones del ledger
+4	126	winutil	CscService.	Mapped	winutil:tweak-op:WPFTweaksServices:service:0	alta	nombre de servicio presente en las operaciones del ledger
+4	127	winutil	Service Host Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	128	winutil	Configuración de servicios mediante Set-WinUtilService.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	129	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+4	130	atlas	Bluetooth.	Mapped	atlas:toggle:Bluetooth	alta	regla R1 del paso 4e: coincide con el ledger
+4	131	atlas	Lanman Workstation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	132	atlas	Network Discovery.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	133	atlas	NVIDIA Display Container.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	134	atlas	Printing.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	135	atlas	SuperFetch / SysMain.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	136	atlas	Windows Update Services.	Mapped	atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+4	137	atlas	Servicios relacionados con Game Bar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	138	atlas	Servicios de indexación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	139	atlas	Servicios de localización.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	140	atlas	Servicios de compartición de archivos.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	141	atlas	Configuración de servicios predeterminados.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	142	atlas	Backup Services.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	143	atlas	Restore Atlas Service Defaults.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	144	atlas	Reset Services.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Domain/Defaults.ps1::Invoke-AtlasWindowsNetworkDefault#0|atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+4	145	general	Atlas dispone de operaciones para respaldar y restablecer configuraciones de servicios, además de sus controles individuales.	Informative-Header		alta	nota metodologica (regla d del conteo)
+5	147	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+5	148	winutil	Service Host Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	149	winutil	Ultimate Performance Profile — activar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	150	winutil	Ultimate Performance Profile — desactivar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	151	winutil	Game Mode.	Mapped	winutil:tweak:WPFToggleGameMode	alta	regla R1 del paso 4e: coincide con el ledger
+5	152	winutil	Multiplane Overlay (MPO).	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	153	winutil	Visual Effects — Best Performance.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	154	winutil	Power Settings.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	155	winutil	End Task With Right Click.	Mapped	winutil:tweak:WPFTweaksEndTaskOnTaskbar	alta	regla R2 del paso 4e: coincide con el ledger
+5	156	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+5	157	atlas	CPU Idle — activar/desactivar.	Mapped	atlas:effect:tests/Atlas.InstallState.Tests.ps1::<top>#10	media	regla R3 del paso 4e: coincide con el ledger
+5	158	atlas	Power Saving — configuración.	Mapped	winutil:tweak-op:WPFToggleS3Sleep:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+5	159	atlas	MMCSS Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	160	atlas	Win32 Priority Separation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	161	atlas	Service Host Split — configuración.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	162	atlas	NTFS Optimization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	163	atlas	Automatic Maintenance Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	164	atlas	Disable Fault Tolerant Heap.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	165	atlas	Disable Sleep Study.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	166	atlas	Timer Resolution.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	167	atlas	Process Priority Launcher.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	168	atlas	Disable Background Apps.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	169	atlas	Disable Game Bar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	170	atlas	Fullscreen Optimizations / Game Bar Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+5	171	atlas	Power Plan Configuration.	Mapped	winutil:tweak-op:WPFToggleS3Sleep:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+5	172	atlas	Power Mode Search Configuration.	Mapped	winutil:tweak-op:WPFToggleBingSearch:registry:0|winutil:tweak-op:WPFToggleS3Sleep:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+5	173	atlas	Disable Automatic Folder Discovery.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Preparation/Update-Windows.ps1::Save-PreparationAppInstaller#0	media	regla R3 del paso 4e: coincide con el ledger
+5	174	general	Importante: algunas de estas modificaciones son dependientes del hardware y de la versión de Windows. No se deben aplicar indiscriminadamente.	Informative-Header		alta	nota metodologica (regla d del conteo)
+6	176	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+6	177	winutil	Game Mode.	Mapped	winutil:tweak:WPFToggleGameMode	alta	regla R1 del paso 4e: coincide con el ledger
+6	178	winutil	MPO.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	179	winutil	Ultimate Performance.	Mapped	winutil:tweak:WPFAddUltPerf|winutil:tweak:WPFRemoveUltPerf	media	regla R2 del paso 4e: coincide con el ledger
+6	180	winutil	Visual Effects.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	181	winutil	Service Host Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	182	winutil	End Task With Right Click.	Mapped	winutil:tweak:WPFTweaksEndTaskOnTaskbar	alta	regla R2 del paso 4e: coincide con el ledger
+6	183	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+6	184	atlas	Fullscreen Optimizations.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	185	atlas	Game Bar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	186	atlas	Game DVR.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	187	atlas	CPU Idle.	Mapped	atlas:effect:tests/Atlas.InstallState.Tests.ps1::<top>#10	media	regla R3 del paso 4e: coincide con el ledger
+6	188	atlas	Timer Resolution.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	189	atlas	MMCSS.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	190	atlas	Process Priority.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	191	atlas	Power Saving.	Mapped	winutil:tweak-op:WPFToggleS3Sleep:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+6	192	atlas	Windows Background Apps.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	193	atlas	Driver Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	194	atlas	NVIDIA Display Container.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+6	195	atlas	Process Explorer.	Mapped	winutil:catalog-entry:processexplorer	alta	regla R1 del paso 4e: coincide con el ledger
+6	196	evo	EVO CLEAN deberá incorporar además	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	197	evo	Preparación automática para gaming.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	198	evo	Perfil Gaming ON/OFF.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	199	evo	Detección del juego en ejecución.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	200	evo	Reducción temporal de aplicaciones secundarias.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	201	evo	Control de procesos en segundo plano.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	202	evo	Suspensión temporal de servicios seleccionados.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	203	evo	Recuperación del estado anterior al salir del juego.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	204	evo	Perfil personalizado por juego.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	205	evo	Registro de FPS, frametime y 1% lows.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	206	evo	Comparación antes/después.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+6	207	general	Estas últimas capacidades son requisitos de EVO, no afirmaciones de que ambos proyectos las implementen todas.	Informative-Header		alta	nota metodologica (regla d del conteo)
+7	209	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+7	210	winutil	Background Apps — Disable.	Mapped	winutil:tweak:WPFTweaksDisableBGapps	alta	regla R1 del paso 4e: coincide con el ledger
+7	211	winutil	Widgets — Remove.	Mapped	winutil:tweak:WPFTweaksWidget	alta	regla R1 del paso 4e: coincide con el ledger
+7	212	winutil	Consumer Features — Disable.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	213	winutil	Windows AI — Disable and Remove.	Mapped	winutil:tweak:WPFTweaksWindowsAI	alta	regla R1 del paso 4e: coincide con el ledger
+7	214	winutil	svchost.exe Splitting — Disable.	Mapped	winutil:tweak:WPFTweaksSvcHostSplitting	alta	regla R1 del paso 4e: coincide con el ledger
+7	215	winutil	Service Management.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	216	winutil	Startup-related system configuration.	Mapped	winutil:tweak-op:WPFToggleLoginBlur:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+7	217	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+7	218	atlas	Background Apps.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	219	atlas	CPU Idle.	Mapped	atlas:effect:tests/Atlas.InstallState.Tests.ps1::<top>#10	media	regla R3 del paso 4e: coincide con el ledger
+7	220	atlas	Sleep Study.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	221	atlas	App Store Archiving.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	222	atlas	Automatic Maintenance.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	223	atlas	Windows Search Indexing.	Mapped	winutil:tweak:WPFTweaksDisableSearchIndexing	alta	regla R2 del paso 4e: coincide con el ledger
+7	224	atlas	Service Host Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	225	atlas	Scheduled Tasks seleccionadas.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	226	atlas	Startup Delay.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	227	atlas	Application Startup Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+7	228	evo	EVO CLEAN	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	229	evo	Escaneo de consumo de RAM.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	230	evo	Ranking de aplicaciones por memoria.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	231	evo	Detección de procesos innecesarios.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	232	evo	Detección de aplicaciones residentes.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	233	evo	Gestión de aplicaciones de inicio.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	234	evo	Gestión de aplicaciones en segundo plano.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	235	evo	Liberación de memoria mediante mecanismos apropiados.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	236	evo	Preparación de RAM para gaming.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+7	237	evo	Restauración de procesos y configuraciones temporales.	EVO-Exclusive		alta	bloque 'EVO CLEAN' del inventario: requisito propio
+8	239	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+8	240	winutil	Ultimate Performance Profile.	Mapped	winutil:tweak:WPFAddUltPerf|winutil:tweak:WPFRemoveUltPerf	media	regla R2 del paso 4e: coincide con el ledger
+8	241	winutil	AutoLogon.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	242	winutil	Num Lock on Startup.	Mapped	winutil:tweak:WPFToggleNumLock	alta	regla R1 del paso 4e: coincide con el ledger
+8	243	winutil	Startup-related Windows configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	244	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+8	245	atlas	Disable Startup Delay.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	246	atlas	Decrease Shutdown Time.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	247	atlas	Enable Verbose Messages.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	248	atlas	Force End Shutdown Apps.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	249	atlas	Advanced Boot Options.	Mapped	winutil:tweak-op:WPFToggleBatteryPercentage:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+8	250	atlas	Automatic Repair.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	251	atlas	Boot Logo.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	252	atlas	Highest Mode.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	253	atlas	Kernel Parameters.	Mapped	winutil:tweak-op:WPFTweaksDisableIPv6:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+8	254	atlas	New Boot Menu.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	255	atlas	Spinning Animations.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	256	atlas	View Current Boot Values.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	257	atlas	Initialize New User.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	258	atlas	User Upgrade.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+8	259	atlas	User Shell Refresh.	Absent-At-Pin		media	'shell refresh' no existe como codigo ejecutable en el pin
+9	261	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+9	262	winutil	Activity History.	Mapped	winutil:tweak:WPFTweaksActivity	alta	regla R2 del paso 4e: coincide con el ledger
+9	263	winutil	Hibernation.	Mapped	atlas:toggle:Hibernation	alta	regla R1 del paso 4e: coincide con el ledger
+9	264	winutil	Location.	Mapped	atlas:toggle:Location	alta	regla R1 del paso 4e: coincide con el ledger
+9	265	winutil	Services.	Mapped	winutil:tweak:WPFTweaksServices	alta	mapeo erroneo del paso 4e: la linea dice 'Services.' y en el pin el unico efecto de servicios de esa familia es WPFTweaksServices (config/tweaks.json: CscService, DiagTrack, MapsBroker, StorSvc, SharedAccess). La regla R3 habia casado el texto con un artefacto de las pruebas de Atlas (tests/Atlas.Toggles.Tests.ps1), que no es producto
+9	266	winutil	svchost Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	267	winutil	Consumer Features.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	268	winutil	Delivery Optimization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	269	winutil	WPBT.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	270	winutil	Storage Sense.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	271	winutil	Reserved Storage.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	272	winutil	Game Mode.	Mapped	winutil:tweak:WPFToggleGameMode	alta	regla R1 del paso 4e: coincide con el ledger
+9	273	winutil	Mouse Acceleration.	Mapped	winutil:tweak:WPFToggleMouseAcceleration	alta	regla R1 del paso 4e: coincide con el ledger
+9	274	winutil	Num Lock.	Mapped	winutil:tweak:WPFToggleNumLock	alta	regla R2 del paso 4e: coincide con el ledger
+9	275	winutil	Window Snapping.	Mapped	winutil:tweak:WPFToggleWindowSnapping	alta	regla R1 del paso 4e: coincide con el ledger
+9	276	winutil	S0 Sleep Network Connectivity.	Mapped	winutil:tweak:WPFToggleStandbyFix	alta	regla R1 del paso 4e: coincide con el ledger
+9	277	winutil	S3 Sleep.	Mapped	winutil:tweak:WPFToggleS3Sleep	alta	regla R1 del paso 4e: coincide con el ledger
+9	278	winutil	System Tray Configuration.	Absent-At-Pin		alta	medido en el paso 10: el pin de WinUtil no tiene ningun ajuste de configuracion de la bandeja del sistema. `config/tweaks.json` solo declara 'System Tray Notifications & Calendar - Disable' (WPFTweaksDisableNotifications) y 'System Tray Battery Percentage' (WPFToggleBatteryPercentage), que son dos ajustes concretos y no una 'configuracion de la bandeja'; `xaml/` no tiene ninguna pagina de bandeja.
+9	279	winutil	Start Menu Bing Search.	Mapped	winutil:tweak:WPFToggleBingSearch	alta	regla R1 del paso 4e: coincide con el ledger
+9	280	winutil	Start Menu Recommendations.	Mapped	winutil:tweak:WPFToggleStartMenuRecommendations	alta	regla R1 del paso 4e: coincide con el ledger
+9	281	winutil	Taskbar Search.	Mapped	winutil:tweak:WPFToggleTaskbarSearch	alta	regla R2 del paso 4e: coincide con el ledger
+9	282	winutil	Taskbar Task View.	Mapped	winutil:tweak:WPFToggleTaskView	alta	regla R2 del paso 4e: coincide con el ledger
+9	283	winutil	Lock Screen.	Mapped	winutil:tweak:WPFToggleDisableLockscreen	alta	regla R2 del paso 4e: coincide con el ledger
+9	284	winutil	Acrylic Blur.	Mapped	winutil:tweak:WPFToggleLoginBlur	alta	regla R2 del paso 4e: coincide con el ledger
+9	285	winutil	Dark Theme.	Mapped	winutil:tweak:WPFToggleDarkMode	alta	regla R2 del paso 4e: coincide con el ledger
+9	286	winutil	Scrollbars.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	287	winutil	Long Paths.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	288	winutil	File Extensions.	Mapped	winutil:tweak:WPFToggleShowExt	alta	regla R2 del paso 4e: coincide con el ledger
+9	289	winutil	Hidden Files.	Mapped	winutil:tweak:WPFToggleHiddenFiles	alta	regla R2 del paso 4e: coincide con el ledger
+9	290	winutil	Settings Home Page.	Mapped	winutil:tweak:WPFToggleHideSettingsHome	alta	regla R1 del paso 4e: coincide con el ledger
+9	291	winutil	Right-Click Menu.	Mapped	winutil:tweak:WPFTweaksRightClickMenu	alta	regla R2 del paso 4e: coincide con el ledger
+9	292	winutil	DNS Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	293	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+9	294	atlas	Config VBS.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	295	atlas	Mitigations.	Mapped	atlas:toggle:Mitigations	alta	regla R1 del paso 4e: coincide con el ledger
+9	296	atlas	Fault Tolerant Heap.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	297	atlas	UAC Secure Desktop.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	298	atlas	BCD Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	299	atlas	Power Settings.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	300	atlas	File Associations.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	301	atlas	Profile Pictures.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	302	atlas	OEM Information.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	303	atlas	Start Menu.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0	media	regla R3 del paso 4e: coincide con el ledger
+9	304	atlas	Taskbar Pins.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	305	atlas	Windows Explorer.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+9	306	atlas	Context Menus.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	307	atlas	Keyboard Switching.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	308	atlas	Keyboard Shortcuts.	Mapped	atlas:toggle:KeyboardShortcuts	alta	mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas SI expone Toggles/Interface/KeyboardShortcuts.psd1, que escribe Hotkey, Language Hotkey y Layout Hotkey en HKCU\Keyboard Layout\Toggle; el paso 4e la habia casado con el NumLock de WinUtil, que es otro ajuste
+9	309	atlas	Lock Screen.	Mapped	winutil:tweak:WPFToggleDisableLockscreen	alta	regla R2 del paso 4e: coincide con el ledger
+9	310	atlas	Visual Effects.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	311	atlas	Modern Battery Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	312	atlas	Modern Date and Time.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	313	atlas	Modern Volume Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	314	atlas	Snap Layouts.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	315	atlas	Windows Spotlight.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	316	atlas	Settings Page Visibility.	Mapped	atlas:manifest:qol/set-hidden-settings-pages	alta	mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas escribe SettingsPageVisibility en Scripts/Tweaks/qol/set-hidden-settings-pages.ps1; el paso 4e la habia casado con WPFTweaksTelemetry:registry:7, que es AcceptedPrivacyPolicy y no la visibilidad de paginas
+9	317	atlas	Registry File Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+9	318	atlas	Default User Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	320	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+10	321	winutil	File Explorer Home and Gallery.	Mapped	winutil:tweak:WPFTweaksRemoveHomeAndGallery	alta	regla R2 del paso 4e: coincide con el ledger
+10	322	winutil	Automatic Folder Discovery.	Mapped	winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery	alta	regla R2 del paso 4e: coincide con el ledger
+10	323	winutil	File Extensions.	Mapped	winutil:tweak:WPFToggleShowExt	alta	regla R2 del paso 4e: coincide con el ledger
+10	324	winutil	Hidden Files.	Mapped	winutil:tweak:WPFToggleHiddenFiles	alta	regla R2 del paso 4e: coincide con el ledger
+10	325	winutil	Previous Start Menu Layout.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0	media	regla R3 del paso 4e: coincide con el ledger
+10	326	winutil	Previous Right-Click Menu.	Mapped	winutil:tweak:WPFTweaksRightClickMenu	alta	falso negativo del paso 4e: WinUtil aplica el menu contextual clasico (functions/private/Set-WinUtilClassicContextMenu, invocado por WPFTweaksRightClickMenu) y Atlas tiene el mismo efecto en OldContextMenu.psd1
+10	327	winutil	Dark Theme.	Mapped	winutil:tweak:WPFToggleDarkMode	alta	regla R2 del paso 4e: coincide con el ledger
+10	328	winutil	Scrollbars Always Visible.	Mapped	winutil:tweak:WPFToggleScrollbars	alta	regla R1 del paso 4e: coincide con el ledger
+10	329	winutil	Taskbar Centered Icons.	Mapped	winutil:tweak:WPFToggleTaskbarAlignment	alta	regla R1 del paso 4e: coincide con el ledger
+10	330	winutil	Taskbar Search Icon.	Mapped	winutil:tweak:WPFToggleTaskbarSearch	alta	regla R1 del paso 4e: coincide con el ledger
+10	331	winutil	Taskbar Task View Icon.	Mapped	winutil:tweak:WPFToggleTaskView	alta	regla R1 del paso 4e: coincide con el ledger
+10	332	winutil	Window Snapping.	Mapped	winutil:tweak:WPFToggleWindowSnapping	alta	regla R1 del paso 4e: coincide con el ledger
+10	333	winutil	Logon Screen Acrylic Blur.	Mapped	winutil:tweak:WPFToggleLoginBlur	alta	regla R1 del paso 4e: coincide con el ledger
+10	334	winutil	System Tray Notifications and Calendar.	Mapped	winutil:tweak-op:WPFToggleLoginBlur:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+10	335	winutil	End Task With Right Click.	Mapped	winutil:tweak:WPFTweaksEndTaskOnTaskbar	alta	regla R2 del paso 4e: coincide con el ledger
+10	336	winutil	Settings Home Page.	Mapped	winutil:tweak:WPFToggleHideSettingsHome	alta	regla R1 del paso 4e: coincide con el ledger
+10	337	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+10	338	atlas	Animation.	Mapped	atlas:toggle:Animation	alta	regla R1 del paso 4e: coincide con el ledger
+10	339	atlas	App Icon Thumbnail.	Mapped	atlas:toggle:AppIconThumbnail	alta	falso negativo del paso 4e: Atlas lo expone como toggle (Toggles/Interface/AppIconThumbnail.psd1, ShowTypeOverlay)
+10	340	atlas	Automatic Folder Discovery.	Mapped	winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery	alta	regla R2 del paso 4e: coincide con el ledger
+10	341	atlas	Compact View.	Mapped	atlas:toggle:CompactView	alta	falso negativo del paso 4e: Atlas lo expone como toggle (Toggles/Interface/CompactView.psd1, UseCompactMode)
+10	342	atlas	Context Menu Terminals.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	343	atlas	Edge Swipe.	Mapped	winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	alta	falso negativo del paso 4e: el efecto real esta en el debloat de Edge, que ya estaba mapeado como Mapped en la linea 9:291
+10	344	atlas	Extract Context Menu.	Mapped	atlas:toggle:ExtractContextMenu	alta	falso negativo del paso 4e: Atlas lo expone como toggle (Toggles/Interface/ExtractContextMenu.psd1)
+10	345	atlas	Gallery.	Mapped	atlas:toggle:Gallery	alta	regla R1 del paso 4e: coincide con el ledger
+10	346	atlas	Home.	Mapped	atlas:toggle:Home	alta	regla R1 del paso 4e: coincide con el ledger
+10	347	atlas	Keyboard Shortcuts.	Mapped	winutil:tweak-op:WPFToggleNumLock:registry:0	alta	falso negativo del paso 4e: la linea del inventario agrupa los atajos de teclado; en el pin el unico efecto de esa familia es NumLock al iniciar
+10	348	atlas	Lock Screen.	Mapped	winutil:tweak:WPFToggleDisableLockscreen	alta	regla R2 del paso 4e: coincide con el ledger
+10	349	atlas	Modern Battery Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	350	atlas	Modern Date and Time.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	351	atlas	Modern Volume Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	352	atlas	Old Context Menu.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	353	atlas	Quick Access.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	354	atlas	Recent Items.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	355	atlas	Removable Drives in Sidebar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	356	atlas	Restart Explorer.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+10	357	atlas	Run With Priority.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	358	atlas	Send To Context Menu.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	359	atlas	Shortcut Icon.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	360	atlas	Shortcut Text.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	361	atlas	Snap Layouts.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	362	atlas	Take Ownership.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	363	atlas	Verbose Messages.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	364	atlas	Taskbar Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+10	365	atlas	Start Menu Configuration.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0	media	regla R3 del paso 4e: coincide con el ledger
+10	366	atlas	Explorer Context Menu Configuration.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+10	367	atlas	Shell Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	369	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+11	370	winutil	DNS Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	371	winutil	DNS Benchmark.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	372	winutil	IPv6 — Prefer IPv4.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	373	winutil	IPv6 — Disable.	Mapped	winutil:tweak:WPFTweaksDisableIPv6	alta	regla R1 del paso 4e: coincide con el ledger
+11	374	winutil	Teredo — Disable.	Mapped	winutil:tweak:WPFTweaksTeredo	alta	regla R1 del paso 4e: coincide con el ledger
+11	375	winutil	Network Reset.	Mapped	winutil:feature:WPFFixesNetwork	alta	regla R1 del paso 4e: coincide con el ledger
+11	376	winutil	NTP Server Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	377	winutil	Winget Network Fixes.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	378	winutil	Network Troubleshooting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	379	winutil	Network Connections Panel.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	380	winutil	OpenSSH Server.	Mapped	winutil:feature:WPFWinUtilSSHServer	alta	regla R2 del paso 4e: coincide con el ledger
+11	381	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+11	382	atlas	Atlas Network Settings.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	383	atlas	Disable LLMNR.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	384	atlas	Disable SMB Bandwidth Throttling.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	385	atlas	Restrict Anonymous Access.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	386	atlas	Restrict Anonymous Enumeration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	387	atlas	File Sharing Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	388	atlas	Network Discovery.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	389	atlas	Lanman Workstation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	390	atlas	Default Atlas Network.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	391	atlas	Windows Default Network.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	392	atlas	Update Network Drivers.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	393	atlas	DNS and Network Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+11	394	atlas	Mobile Hotspot Compatibility.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	396	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+12	397	winutil	Windows Update Reset.	Mapped	winutil:feature:WPFFixesUpdate	alta	regla R1 del paso 4e: coincide con el ledger
+12	398	winutil	Windows Update Disable.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	399	winutil	Windows Update Security.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	400	winutil	Windows Update Default.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	401	winutil	Windows Update Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	402	winutil	Delivery Optimization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	403	winutil	Update Troubleshooting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	404	winutil	Feature Installation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	405	winutil	Registry Backup.	Mapped	winutil:feature:WPFFeatureRegBackup	alta	regla R2 del paso 4e: coincide con el ledger
+12	406	winutil	System Restore Point.	Mapped	winutil:tweak-op:WPFToggleLoginBlur:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+12	407	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+12	408	atlas	Automatic Updates.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	409	atlas	Pause Updates.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	410	atlas	Toggle Windows Updates.	Mapped	atlas:effect:tests/Atlas.Verify.Tests.ps1::<top>#9	media	regla R3 del paso 4e: coincide con el ledger
+12	411	atlas	Disable Automatic Reboot.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	412	atlas	Disable Automatic Updates Option.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	413	atlas	Disable Feature Updates.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	414	atlas	Disable Insider Updates.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	415	atlas	Disable Update Nagging.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	416	atlas	Disable Delivery Optimization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	417	atlas	Disable MSRT Telemetry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	418	atlas	Update Drivers.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	419	atlas	Update Client CBS.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	420	atlas	Update Windows Preparation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	421	atlas	Windows Transition.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	422	atlas	CBS Retry.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+12	423	atlas	Windows Component Servicing.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1::Remove-AtlasCbsRepairSourcePolicy#0	media	regla R3 del paso 4e: coincide con el ledger
+13	425	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+13	426	winutil	BitLocker — Disable.	Mapped	winutil:tweak:WPFTweaksDisableBitLocker	alta	regla R1 del paso 4e: coincide con el ledger
+13	427	winutil	Windows Defender Firewall.	Mapped	winutil:feature:WPFPanelFirewall	alta	regla R1 del paso 4e: coincide con el ledger
+13	428	winutil	Security and Maintenance.	Mapped	winutil:feature:WPFPanelSecurity	alta	regla R1 del paso 4e: coincide con el ledger
+13	429	winutil	System Restore.	Mapped	winutil:tweak-op:WPFToggleLoginBlur:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+13	430	winutil	Registry Backup.	Mapped	winutil:feature:WPFFeatureRegBackup	alta	regla R2 del paso 4e: coincide con el ledger
+13	431	winutil	Windows Recovery.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	432	winutil	RDP Unsigned File Warnings.	Mapped	winutil:tweak:WPFTweaksDisableWarningForUnsignedRdp	alta	regla R2 del paso 4e: coincide con el ledger
+13	433	winutil	Adobe URL Block List.	Mapped	winutil:tweak:WPFTweaksBlockAdobeNet	alta	regla R2 del paso 4e: coincide con el ledger
+13	434	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+13	435	atlas	Defender Toggle.	Mapped	atlas:effect:tests/Atlas.Verify.Tests.ps1::<top>#9	media	regla R3 del paso 4e: coincide con el ledger
+13	436	atlas	VBS Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	437	atlas	Core Isolation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	438	atlas	Security Mitigations.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	439	atlas	Fault Tolerant Heap.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	440	atlas	Security Health Tray.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	441	atlas	Hide App Browser Control.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	442	atlas	Disable Remote Assistance.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	443	atlas	Block Anonymous SAM Enumeration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	444	atlas	Disable Automatic Restart Sign-on.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	445	atlas	UAC Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	446	atlas	Windows Recovery Environment.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Operations/Remove-OneDriveCurrentUserData.ps1::<top>#3	media	regla R3 del paso 4e: coincide con el ledger
+13	447	atlas	Safe Mode.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	448	atlas	Windows Security Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+13	449	general	Observación: Atlas ofrece opciones que reducen determinadas protecciones de Windows. No debemos confundirlas con mejoras de seguridad. EVO deberá poder identificarlas y clasificarlas por impacto.	Informative-Header		alta	nota metodologica (regla d del conteo)
+14	451	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+14	452	winutil	System Corruption Scan.	Mapped	winutil:feature:WPFPanelDISM	alta	regla R2 del paso 4e: coincide con el ledger
+14	453	winutil	DISM Repair.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	454	winutil	SFC Repair.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	455	winutil	Windows Update Reset.	Mapped	winutil:feature:WPFFixesUpdate	alta	regla R1 del paso 4e: coincide con el ledger
+14	456	winutil	Network Reset.	Mapped	winutil:feature:WPFFixesNetwork	alta	regla R1 del paso 4e: coincide con el ledger
+14	457	winutil	Winget Reinstall.	Mapped	winutil:feature:WPFFixesWinget	alta	regla R1 del paso 4e: coincide con el ledger
+14	458	winutil	NTP Fix.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	459	winutil	Environment Report.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Operations/Remove-OneDriveCurrentUserData.ps1::<top>#3	media	regla R3 del paso 4e: coincide con el ledger
+14	460	winutil	Export Environment Report.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Operations/Remove-OneDriveCurrentUserData.ps1::<top>#3	media	regla R3 del paso 4e: coincide con el ledger
+14	461	winutil	Installed APPX Detection.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	462	winutil	Tweak State Detection.	Mapped	atlas:effect:app/resources/iso/Desktop.ps1::<top>#0|atlas:effect:tests/Atlas.Verify.Tests.ps1::<top>#11	media	regla R3 del paso 4e: coincide con el ledger
+14	463	winutil	DNS Benchmark.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	464	winutil	Package Log Summary.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Removal.ps1::Invoke-AtlasAppxPerUserRemoval#0	media	regla R3 del paso 4e: coincide con el ledger
+14	465	winutil	Recent Logs.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	466	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+14	467	atlas	Atlas Health Check.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	468	atlas	Default Atlas Network.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	469	atlas	Fix Errors 2502 and 2503.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	470	atlas	Fix Explorer Runtime Error.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+14	471	atlas	Fix Microsoft Store Issues.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	472	atlas	Repair Windows Components.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	473	atlas	Safe Mode.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	474	atlas	Telemetry Components.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	475	atlas	Process Explorer Installation and Removal.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+14	476	atlas	Edge State Detection.	Mapped	atlas:effect:app/resources/iso/Desktop.ps1::<top>#0|winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+14	477	atlas	Winget Trust Verification.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+14	478	atlas	Service State Backup.	Mapped	atlas:effect:app/resources/iso/Desktop.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+14	479	atlas	Service State Restoration.	Mapped	atlas:effect:app/resources/iso/Desktop.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+15	481	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+15	482	winutil	Instalación mediante WinGet.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	483	winutil	Instalación mediante Chocolatey.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	484	winutil	Actualización de aplicaciones.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	485	winutil	Actualización masiva.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	486	winutil	Desinstalación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	487	winutil	Selección por categorías.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	488	winutil	Filtros de aplicaciones.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	489	winutil	Aplicaciones portables cuando el paquete lo admite.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	490	winutil	Instalación de aplicaciones APPX.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	491	winutil	Eliminación de aplicaciones APPX.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	492	winutil	Gestión de paquetes provisionados.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	493	winutil	Importación y exportación de selecciones.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	494	winutil	Instalación de herramientas de desarrollo.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	495	winutil	Instalación de utilidades.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	496	winutil	Instalación de navegadores.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	497	winutil	Instalación de herramientas de gaming.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	498	general	WinUtil contiene además un catálogo de aplicaciones muy amplio en applications.json. No lo estoy contando como si cada aplicación fuera una mejora de Windows.	Informative-Header		alta	nota metodologica (regla d del conteo)
+15	499	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+15	500	atlas	Install Software.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	501	atlas	Remove Edge.	Mapped-To-App	winutil:catalog-entry:edge	alta	entrada de applications.json (R3)
+15	502	atlas	Install OpenShell.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	503	atlas	Install OpenShell Theme.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	504	atlas	Install Process Explorer.	Mapped-To-App	winutil:catalog-entry:processexplorer	alta	entrada de applications.json (R3)
+15	505	atlas	Uninstall Process Explorer.	Mapped-To-App	winutil:catalog-entry:processexplorer	alta	entrada de applications.json (R3)
+15	506	atlas	Install Atlas Toolbox.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	507	atlas	Install NVCleanstall.	Mapped-To-App	winutil:catalog-entry:nvclean	alta	entrada de applications.json (R4)
+15	508	atlas	Install Microsoft Copilot cuando se habilita.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	509	atlas	Install Microsoft Store cuando se restaura.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	510	atlas	Winget Trust Verification.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+15	511	atlas	Initialize LibreWolf User.	Mapped-To-App	winutil:catalog-entry:librewolf	alta	entrada de applications.json (R4)
+15	512	atlas	Package Management.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Removal.ps1::Invoke-AtlasAppxPerUserRemoval#0	media	regla R3 del paso 4e: coincide con el ledger
+16	514	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+16	515	winutil	Compilación de scripts mediante Compile.ps1.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	516	winutil	Inicialización de interfaz WPF.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	517	winutil	Ejecución de tareas en Runspaces.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	518	winutil	Gestión de trabajos en segundo plano.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	519	winutil	Control de ejecución concurrente.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	520	winutil	Aplicación de presets.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	521	winutil	Importación y exportación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	522	winutil	Seguimiento de operaciones.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	523	winutil	Deshacer ajustes.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	524	winutil	Detección de cambios revertidos.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	525	winutil	Gestión de errores.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	526	winutil	Registro de ejecución.	Absent-At-Pin		media	sonda 'registro de ejecución': atlas=48, winutil=99, patron dudoso
+16	527	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
+16	528	atlas	Atlas Manager.	Absent-At-Pin		media	'atlas manager' no existe como codigo ejecutable en el pin
+16	529	atlas	Atlas Playbook.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	530	atlas	Instalación mediante AME Wizard.	Absent-At-Pin		media	'ame wizard' no existe como codigo ejecutable en el pin
+16	531	atlas	Instalación mediante TrustedInstaller.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	532	atlas	TrustedInstaller Broker.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	533	atlas	Install Plan.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	534	atlas	Install Session.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	535	atlas	Installation Phases.	Absent-At-Pin		media	sonda 'Installation Phases': atlas=143, winutil=3, patron dudoso
+16	536	atlas	Pre-Install.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	537	atlas	Environment Phase.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Operations/Remove-OneDriveCurrentUserData.ps1::<top>#3	media	regla R3 del paso 4e: coincide con el ledger
+16	538	atlas	Choices Phase.	Absent-At-Pin		media	sonda 'Choices Phase': atlas=160, winutil=4, patron dudoso
+16	539	atlas	Features Phase.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	540	atlas	Services Phase.	Mapped	atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+16	541	atlas	Tweaks Phase.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	542	atlas	Components Phase.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	543	atlas	Software Phase.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	544	atlas	Shell Refresh Phase.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	545	atlas	AppX Support Phase.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	546	atlas	Windows Transition.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	547	atlas	ISO Creation.	Absent-At-Pin		media	sonda 'ISO Creation': atlas=38, winutil=3, patron dudoso
+16	548	atlas	ISO Injection.	Absent-At-Pin		media	sonda 'ISO Injection': atlas=0, winutil=6, patron dudoso
+16	549	atlas	Upgrade System.	Absent-At-Pin		media	sonda 'Upgrade System': atlas=1, winutil=0, patron dudoso
+16	550	atlas	New User Initialization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	551	atlas	Atlas Health.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	552	atlas	Toggle State Persistence.	Mapped	atlas:effect:app/resources/iso/Desktop.ps1::<top>#0|atlas:effect:tests/Atlas.Verify.Tests.ps1::<top>#9	media	regla R3 del paso 4e: coincide con el ledger
+16	553	atlas	Package Verification.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Removal.ps1::Invoke-AtlasAppxPerUserRemoval#0	media	regla R3 del paso 4e: coincide con el ledger
+16	554	atlas	Component Servicing.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1::Remove-AtlasCbsRepairSourcePolicy#0	media	regla R3 del paso 4e: coincide con el ledger
+16	555	atlas	PowerShell Module Initialization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+16	556	general	Fuentes de arquitectura y código: Atlas Architecture y WinUtil Specification.	Informative-Header		alta	nota metodologica (regla d del conteo)
+16	557	general	GitHub+1	Informative-Header		alta	nota metodologica (regla d del conteo)
+17	559	general	También hay funcionalidades que no son optimizaciones directas, pero forman parte de las herramientas que debemos estudiar.	Informative-Header		alta	cabecera o nota de la tabla aplanada de la seccion 17
+17	560	general	Funcionalidad	Informative-Header		alta	cabecera o nota de la tabla aplanada de la seccion 17
+17	561	general	WinUtil	Informative-Header		alta	cabecera o nota de la tabla aplanada de la seccion 17
+17	562	general	AtlasOS	Informative-Header		alta	cabecera o nota de la tabla aplanada de la seccion 17
+17	563	general	Perfiles y presets	Absent-At-Pin		media	celda 'Funcionalidad' de la tabla: el pin no tiene creador de USB ni motor de ISO propio; EVO lo implementa de forma nativa
+17	564	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	565	general	Opciones de instalación	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	566	general	Restauración de ajustes	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	567	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	568	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	569	general	Registro de estados	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	570	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	571	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	572	general	Detección de cambios externos	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	573	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	574	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	575	general	Informes de entorno	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	576	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	577	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	578	general	Instalación de ISO	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	579	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	580	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	581	general	Creación de USB	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	582	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	583	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	584	general	Reparación de Windows	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	585	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	586	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	587	general	Control de privilegios	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	588	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	589	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	590	general	Operaciones TrustedInstaller	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	591	general	No como motor propio	Absent-At-Pin		alta	fila 'Perfiles y presets': Atlas declara TrustedInstaller, pero en el pin no hay motor propio reutilizable
+17	592	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	593	general	Controles individuales	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	594	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	595	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	596	general	Actualización del programa	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	597	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	598	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	599	general	Diagnóstico de instalación	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	600	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	601	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	602	general	Compatibilidad por versiones	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	603	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	604	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	605	general	Automatización	EVO-Exclusive		baja	fila de la tabla de la seccion 17 sin implementacion en el pin: la asume EVO
+17	606	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
+17	607	general	Sí	Informative-Header		alta	celda de columna (WinUtil/AtlasOS) de la fila 'Perfiles y presets'; no es una operacion atomica
