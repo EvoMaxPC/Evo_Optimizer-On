@@ -1,0 +1,993 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="a4e3f217-d711-449f-8e67-043323972d9f" name="runneradmin@runnervmjtlf1 2026-11-24 12:16:08" runUser="runnervmjtlf1\runneradmin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-24T12:16:08.5641114-08:00" queuing="2026-11-24T12:16:08.5641116-08:00" start="2026-11-24T12:16:07.5373049-08:00" finish="2026-11-24T12:16:08.6870736-08:00" />
+  <TestSettings name="default" id="860f9337-30ec-4e3b-b00a-b234fe513817">
+    <Deployment runDeploymentRoot="runneradmin_runnervmjtlf1_2026-11-24_12_16_08" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="912b5bc0-f54f-42a7-9b31-650cbcfc85d3" testId="538b2e2d-8563-6657-f44b-679f80b2f225" testName="Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback" computerName="runnervmjtlf1" duration="00:00:00.0029683" startTime="2026-11-24T12:16:08.6196213-08:00" endTime="2026-11-24T12:16:08.6196214-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="912b5bc0-f54f-42a7-9b31-650cbcfc85d3" />
+    <UnitTestResult executionId="0e6a113c-5297-42fe-9332-44ebab247798" testId="2514550d-5da5-f13e-2caa-b53c0d5ccef7" testName="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly" computerName="runnervmjtlf1" duration="00:00:00.0013551" startTime="2026-11-24T12:16:08.5848352-08:00" endTime="2026-11-24T12:16:08.5848356-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0e6a113c-5297-42fe-9332-44ebab247798">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 229&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9fa40d9c-a908-40b5-ace4-787ca8a0cc0d" testId="83346a32-e633-64b1-21c1-85b60c1e13d9" testName="Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement" computerName="runnervmjtlf1" duration="00:00:00.0273721" startTime="2026-11-24T12:16:08.4623438-08:00" endTime="2026-11-24T12:16:08.4623440-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9fa40d9c-a908-40b5-ace4-787ca8a0cc0d" />
+    <UnitTestResult executionId="75ebf688-39ab-452f-beca-53e43cf229b1" testId="968d087f-319b-7e38-a9ae-a4012443a6ce" testName="Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback" computerName="runnervmjtlf1" duration="00:00:00.0045049" startTime="2026-11-24T12:16:08.5324929-08:00" endTime="2026-11-24T12:16:08.5324930-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="75ebf688-39ab-452f-beca-53e43cf229b1" />
+    <UnitTestResult executionId="597255ca-e3d2-4028-9447-58c737afd48d" testId="fcbac8db-9f57-30ee-119c-808cdc9861f0" testName="Evo.Engine.Tests.RestorePointGateTests.DryRun_NoCreaPuntoNiPideConfirmacion" computerName="runnervmjtlf1" duration="00:00:00.0009637" startTime="2026-11-24T12:16:08.5795165-08:00" endTime="2026-11-24T12:16:08.5795166-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="597255ca-e3d2-4028-9447-58c737afd48d" />
+    <UnitTestResult executionId="a0478544-0138-4c52-ab32-3ffaeed23d82" testId="bafae97e-eb23-4819-bac4-6a5430e278fb" testName="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin" computerName="runnervmjtlf1" duration="00:00:00.0015040" startTime="2026-11-24T12:16:08.5948964-08:00" endTime="2026-11-24T12:16:08.5948965-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a0478544-0138-4c52-ab32-3ffaeed23d82">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 261&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7bf88295-d4d2-4180-8f1d-d3be20756cee" testId="c3751cb3-d210-662d-8585-3659057cadbd" testName="Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada" computerName="runnervmjtlf1" duration="00:00:00.0010785" startTime="2026-11-24T12:16:08.6201015-08:00" endTime="2026-11-24T12:16:08.6201015-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7bf88295-d4d2-4180-8f1d-d3be20756cee" />
+    <UnitTestResult executionId="fcf87073-dffa-464d-b2bf-d45a6b99a639" testId="5a4d1378-b217-6374-c749-862a46b598c9" testName="Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup" computerName="runnervmjtlf1" duration="00:00:00.0011391" startTime="2026-11-24T12:16:08.6194797-08:00" endTime="2026-11-24T12:16:08.6194798-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fcf87073-dffa-464d-b2bf-d45a6b99a639" />
+    <UnitTestResult executionId="2894984c-084c-4cda-8eae-2e8f865e562b" testId="9dc66088-8a5d-c917-16d7-6eea65d675a9" testName="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing" computerName="runnervmjtlf1" duration="00:00:00.0013227" startTime="2026-11-24T12:16:08.5732815-08:00" endTime="2026-11-24T12:16:08.5732816-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2894984c-084c-4cda-8eae-2e8f865e562b">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 265&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="40a0ff1e-60b1-4415-850d-34a1cbcd822a" testId="e068a676-cd0e-336b-784b-beb6a15a94c3" testName="Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar" computerName="runnervmjtlf1" duration="00:00:00.0018557" startTime="2026-11-24T12:16:08.6195670-08:00" endTime="2026-11-24T12:16:08.6195670-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="40a0ff1e-60b1-4415-850d-34a1cbcd822a" />
+    <UnitTestResult executionId="74265eaf-1fe9-4640-82d8-1c057d099725" testId="b7a05d4e-66ca-0ce0-33c1-4780be7ec9a2" testName="Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun" computerName="runnervmjtlf1" duration="00:00:00.0011788" startTime="2026-11-24T12:16:08.6200440-08:00" endTime="2026-11-24T12:16:08.6200441-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="74265eaf-1fe9-4640-82d8-1c057d099725" />
+    <UnitTestResult executionId="4855d770-5935-44e6-85d8-6e9c53cd2225" testId="b11373a2-d6f1-01cc-fe22-3a52946c3e98" testName="Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto" computerName="runnervmjtlf1" duration="00:00:00.0060544" startTime="2026-11-24T12:16:08.6195076-08:00" endTime="2026-11-24T12:16:08.6195077-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4855d770-5935-44e6-85d8-6e9c53cd2225" />
+    <UnitTestResult executionId="97cbe4ff-e1d3-4dcf-a115-13ed57cdafb1" testId="17e99a2f-c3c2-5fc9-eead-553c5fb4c62c" testName="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating" computerName="runnervmjtlf1" duration="00:00:00.0014028" startTime="2026-11-24T12:16:08.6075254-08:00" endTime="2026-11-24T12:16:08.6075256-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="97cbe4ff-e1d3-4dcf-a115-13ed57cdafb1">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 195&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5f3c90fb-4093-4145-8688-3ddc4ce152e3" testId="dd596066-edd8-ffc3-43e6-e6d8803dbb7b" testName="Evo.Engine.Tests.RestorePointGateTests.CapacidadSinRequisitoDePunto_NoLoCrea" computerName="runnervmjtlf1" duration="00:00:00.0012847" startTime="2026-11-24T12:16:08.5734178-08:00" endTime="2026-11-24T12:16:08.5734178-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5f3c90fb-4093-4145-8688-3ddc4ce152e3" />
+    <UnitTestResult executionId="61984553-224b-44e2-8d01-338b31490b07" testId="ae513e87-c05c-0e2d-d565-10188132a520" testName="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation" computerName="runnervmjtlf1" duration="00:00:00.0015328" startTime="2026-11-24T12:16:08.6121789-08:00" endTime="2026-11-24T12:16:08.6121791-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="61984553-224b-44e2-8d01-338b31490b07">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 81&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="48a25ee5-5559-4310-bbf9-64a0631eb0ff" testId="e7f78715-bb66-14df-c8a9-ac8851826be6" testName="Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias" computerName="runnervmjtlf1" duration="00:00:00.0001659" startTime="2026-11-24T12:16:08.6195937-08:00" endTime="2026-11-24T12:16:08.6195937-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="48a25ee5-5559-4310-bbf9-64a0631eb0ff" />
+    <UnitTestResult executionId="e35c749a-32d7-4398-bc61-c9877769e2e7" testId="9fa664c5-c1bd-9045-d5dc-1f8925a4d4f6" testName="Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion" computerName="runnervmjtlf1" duration="00:00:00.0009661" startTime="2026-11-24T12:16:08.6123619-08:00" endTime="2026-11-24T12:16:08.6123619-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e35c749a-32d7-4398-bc61-c9877769e2e7" />
+    <UnitTestResult executionId="b1766fe1-8483-4231-8aa2-dab4e1c6da66" testId="fe353b16-394f-f829-6ab2-675a4018af10" testName="Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating" computerName="runnervmjtlf1" duration="00:00:00.0037757" startTime="2026-11-24T12:16:08.4890187-08:00" endTime="2026-11-24T12:16:08.4890189-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b1766fe1-8483-4231-8aa2-dab4e1c6da66" />
+    <UnitTestResult executionId="612687a6-771f-4479-8d0e-3393bd20063a" testId="be20c29d-7db3-dab0-c19d-23691b779e17" testName="Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible" computerName="runnervmjtlf1" duration="00:00:00.0013470" startTime="2026-11-24T12:16:08.5683425-08:00" endTime="2026-11-24T12:16:08.5683426-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="612687a6-771f-4479-8d0e-3393bd20063a" />
+    <UnitTestResult executionId="7e956f2e-487b-434d-8a9b-225d2916a0b1" testId="4c810860-2e73-2639-4c1e-28708284fffe" testName="Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos" computerName="runnervmjtlf1" duration="00:00:00.0095666" startTime="2026-11-24T12:16:08.6123214-08:00" endTime="2026-11-24T12:16:08.6123215-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7e956f2e-487b-434d-8a9b-225d2916a0b1" />
+    <UnitTestResult executionId="d5026ca7-b0ce-46bc-acea-fc4d81088fb7" testId="e46f09b1-ac2a-ebdd-567f-2a2fab10eb40" testName="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState" computerName="runnervmjtlf1" duration="00:00:00.0016748" startTime="2026-11-24T12:16:08.6185686-08:00" endTime="2026-11-24T12:16:08.6185688-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d5026ca7-b0ce-46bc-acea-fc4d81088fb7">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 57&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 112&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ac7f1d39-989c-4c56-8050-fa896501fd48" testId="dbb700b7-c57d-0466-1669-b13a53fdcc82" testName="Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem" computerName="runnervmjtlf1" duration="00:00:00.0018331" startTime="2026-11-24T12:16:08.4930332-08:00" endTime="2026-11-24T12:16:08.4930335-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ac7f1d39-989c-4c56-8050-fa896501fd48" />
+    <UnitTestResult executionId="da708291-37ee-4c73-9ea2-70d5ccdfb1f0" testId="0f40ac31-3426-0aec-82fc-5d2b02d4fa13" testName="Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution" computerName="runnervmjtlf1" duration="00:00:00.0698119" startTime="2026-11-24T12:16:08.4357769-08:00" endTime="2026-11-24T12:16:08.4358108-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da708291-37ee-4c73-9ea2-70d5ccdfb1f0" />
+    <UnitTestResult executionId="6257fcbc-7719-4df1-be95-80bee5e5aae8" testId="ae735ef1-d639-7094-0105-107349f8a199" testName="Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes" computerName="runnervmjtlf1" duration="00:00:00.0037091" startTime="2026-11-24T12:16:08.6202088-08:00" endTime="2026-11-24T12:16:08.6202088-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6257fcbc-7719-4df1-be95-80bee5e5aae8" />
+    <UnitTestResult executionId="65fa0044-c721-411e-b924-110b76ea473d" testId="d672e005-a5a6-83d0-16d4-f28911a88d20" testName="Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion" computerName="runnervmjtlf1" duration="00:00:00.0088440" startTime="2026-11-24T12:16:08.5653260-08:00" endTime="2026-11-24T12:16:08.5653261-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="65fa0044-c721-411e-b924-110b76ea473d" />
+    <UnitTestResult executionId="d7b02597-bd50-4fb2-bfe3-0279aba74b08" testId="bf5d8112-2216-0323-f731-622a5e6be0c8" testName="Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto" computerName="runnervmjtlf1" duration="00:00:00.0018136" startTime="2026-11-24T12:16:08.6201331-08:00" endTime="2026-11-24T12:16:08.6201331-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d7b02597-bd50-4fb2-bfe3-0279aba74b08" />
+    <UnitTestResult executionId="681793f9-d4c2-4ef3-a323-77523fb7c62b" testId="32a354c0-35f3-8795-6c8f-5f30fb7a36c6" testName="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation" computerName="runnervmjtlf1" duration="00:00:00.1388628" startTime="2026-11-24T12:16:08.5650267-08:00" endTime="2026-11-24T12:16:08.5650271-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="681793f9-d4c2-4ef3-a323-77523fb7c62b">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 125&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fd21aeec-6b5b-415f-abc2-672805de2b35" testId="db2ef450-a29f-fb0f-b8c2-96633838ef94" testName="Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts" computerName="runnervmjtlf1" duration="00:00:00.0019949" startTime="2026-11-24T12:16:08.4911065-08:00" endTime="2026-11-24T12:16:08.4911067-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd21aeec-6b5b-415f-abc2-672805de2b35" />
+    <UnitTestResult executionId="b1ca53ce-b20d-4901-9ae6-b6dcd0143997" testId="2b9a5ca8-e4c6-56be-0829-e6a2c9e6abc9" testName="Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada" computerName="runnervmjtlf1" duration="00:00:00.0032201" startTime="2026-11-24T12:16:08.6187366-08:00" endTime="2026-11-24T12:16:08.6187367-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b1ca53ce-b20d-4901-9ae6-b6dcd0143997" />
+    <UnitTestResult executionId="40d3cc95-14be-4f7e-a3cf-bc662e7ca8fb" testId="e8c67710-5338-7496-cc49-649bac75c69a" testName="Evo.Engine.Tests.RestorePointGateTests.AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen" computerName="runnervmjtlf1" duration="00:00:00.0011214" startTime="2026-11-24T12:16:08.5653692-08:00" endTime="2026-11-24T12:16:08.5653693-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="40d3cc95-14be-4f7e-a3cf-bc662e7ca8fb" />
+    <UnitTestResult executionId="b01a12ee-22fc-487f-8cf0-c7d30a482cda" testId="b390eb3f-e78a-af34-20e7-575e4d2f0682" testName="Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly" computerName="runnervmjtlf1" duration="00:00:00.0150000" startTime="2026-11-24T12:16:08.4774320-08:00" endTime="2026-11-24T12:16:08.4774321-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b01a12ee-22fc-487f-8cf0-c7d30a482cda" />
+    <UnitTestResult executionId="a343e317-0a0e-4a0a-906b-01e20c1dda02" testId="02abb734-08bf-c3ca-457e-11b1aeb3d750" testName="Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo" computerName="runnervmjtlf1" duration="00:00:00.0075634" startTime="2026-11-24T12:16:08.4851326-08:00" endTime="2026-11-24T12:16:08.4851328-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a343e317-0a0e-4a0a-906b-01e20c1dda02" />
+    <UnitTestResult executionId="98f8a486-0981-4a4c-b00e-46f605318e9c" testId="4bfb7576-4384-11ec-58df-4f5215b890ae" testName="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate" computerName="runnervmjtlf1" duration="00:00:00.0020337" startTime="2026-11-24T12:16:08.5682414-08:00" endTime="2026-11-24T12:16:08.5682414-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="98f8a486-0981-4a4c-b00e-46f605318e9c">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.Definition(String id) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 36&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 301&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b6e17fd2-66e6-4964-b48c-98fbb0280c26" testId="a4b37899-4b1b-67bc-fef7-cc8239d680fd" testName="Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning" computerName="runnervmjtlf1" duration="00:00:00.0007792" startTime="2026-11-24T12:16:08.6201811-08:00" endTime="2026-11-24T12:16:08.6201811-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b6e17fd2-66e6-4964-b48c-98fbb0280c26" />
+    <UnitTestResult executionId="9f9fe0db-1219-45ac-8df7-c1c207f26354" testId="6941745e-2977-7fd6-a577-05055ddd2ee8" testName="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState" computerName="runnervmjtlf1" duration="00:00:00.0015464" startTime="2026-11-24T12:16:08.5793863-08:00" endTime="2026-11-24T12:16:08.5793865-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9f9fe0db-1219-45ac-8df7-c1c207f26354">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.LoadWave1() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 32&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build) in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 58&#xD;
+   at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 159&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="634fa988-a19b-4d02-9496-972fd1bef2d3" testId="0fda6e1c-2261-7d5e-1301-fe5f6dd898c6" testName="Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores" computerName="runnervmjtlf1" duration="00:00:00.0080836" startTime="2026-11-24T12:16:08.6194059-08:00" endTime="2026-11-24T12:16:08.6194060-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="634fa988-a19b-4d02-9496-972fd1bef2d3" />
+    <UnitTestResult executionId="eb690b13-04ed-49ff-b954-d44cfe6d5614" testId="3f87251f-83a0-5e08-c4d3-b81933c39b23" testName="Evo.Engine.Tests.RestorePointGateTests.UnPuntoPorPlan_NoUnoPorAccion" computerName="runnervmjtlf1" duration="00:00:00.0012047" startTime="2026-11-24T12:16:08.5794798-08:00" endTime="2026-11-24T12:16:08.5794799-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eb690b13-04ed-49ff-b954-d44cfe6d5614" />
+    <UnitTestResult executionId="efc1e337-ce59-4cbd-987c-b327e662195b" testId="89bd1c9f-7203-1b84-4662-79db8c5814a0" testName="Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes" computerName="runnervmjtlf1" duration="00:00:00.0034904" startTime="2026-11-24T12:16:08.6201531-08:00" endTime="2026-11-24T12:16:08.6201532-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="efc1e337-ce59-4cbd-987c-b327e662195b" />
+    <UnitTestResult executionId="14641007-327c-41cc-be02-101bfc7e98f7" testId="4624ac57-dfc4-c1c2-90a3-f662fcb7b127" testName="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation" computerName="runnervmjtlf1" duration="00:00:00.0012602" startTime="2026-11-24T12:16:08.5989730-08:00" endTime="2026-11-24T12:16:08.5989734-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="14641007-327c-41cc-be02-101bfc7e98f7">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.Definition(String id) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 38&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 231&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4c7be846-23b3-4be6-aa9c-8164a06db5b2" testId="213d1912-8934-bf90-4785-b760d83f88d1" testName="Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs" computerName="runnervmjtlf1" duration="00:00:00.0143306" startTime="2026-11-24T12:16:08.6187747-08:00" endTime="2026-11-24T12:16:08.6187748-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4c7be846-23b3-4be6-aa9c-8164a06db5b2" />
+    <UnitTestResult executionId="96e956e5-678b-4a69-babf-78e2a84cd981" testId="c5b78816-cfb3-e27f-5eba-9e08a763b95c" testName="Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion" computerName="runnervmjtlf1" duration="00:00:00.0084407" startTime="2026-11-24T12:16:08.6188062-08:00" endTime="2026-11-24T12:16:08.6188062-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="96e956e5-678b-4a69-babf-78e2a84cd981" />
+    <UnitTestResult executionId="00366182-ee5e-4fb8-8952-f0364c52f374" testId="d82adcff-83ff-392d-b50f-467103caef88" testName="Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto" computerName="runnervmjtlf1" duration="00:00:00.0019811" startTime="2026-11-24T12:16:08.6200036-08:00" endTime="2026-11-24T12:16:08.6200036-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="00366182-ee5e-4fb8-8952-f0364c52f374" />
+    <UnitTestResult executionId="21cc99ce-cdab-457e-9407-bc6e4380aed8" testId="4a98dc6f-640d-5b90-1493-4765d33ad7bb" testName="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips" computerName="runnervmjtlf1" duration="00:00:00.1388774" startTime="2026-11-24T12:16:08.5899551-08:00" endTime="2026-11-24T12:16:08.5899554-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="21cc99ce-cdab-457e-9407-bc6e4380aed8">
+      <Output>
+        <ErrorInfo>
+          <Message>System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.</Message>
+          <StackTrace>   at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+   at Evo.Catalog.CatalogLoader.Load(Stream stream) in /_/src/Evo.Catalog/CatalogLoader.cs:line 75&#xD;
+   at Evo.Catalog.CatalogLoader.LoadFile(String path) in /_/src/Evo.Catalog/CatalogLoader.cs:line 64&#xD;
+   at Evo.Catalog.CatalogLoader.LoadDirectory(String directory) in /_/src/Evo.Catalog/CatalogLoader.cs:line 49&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.LoadAll() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 31&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.Definition(String id) in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 38&#xD;
+   at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips() in /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs:line 170&#xD;
+--- End of stack trace from previous location ---&#xD;
+----- Inner Stack Trace -----&#xD;
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e94633e6-2933-498e-91f1-d12793f4170b" testId="7c6079f3-e385-9558-8baa-4c67f39fc42a" testName="Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError" computerName="runnervmjtlf1" duration="00:00:00.0012532" startTime="2026-11-24T12:16:08.6194500-08:00" endTime="2026-11-24T12:16:08.6194500-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e94633e6-2933-498e-91f1-d12793f4170b" />
+    <UnitTestResult executionId="0fd2ffe0-17ec-4727-b29c-98a4695c8989" testId="c1e295e5-6dbf-1157-6824-3f77223247de" testName="Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask" computerName="runnervmjtlf1" duration="00:00:00.0027656" startTime="2026-11-24T12:16:08.6195380-08:00" endTime="2026-11-24T12:16:08.6195380-08:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0fd2ffe0-17ec-4727-b29c-98a4695c8989" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="bf5d8112-2216-0323-f731-622a5e6be0c8">
+      <Execution id="d7b02597-bd50-4fb2-bfe3-0279aba74b08" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="TypeOperationName_ExigeElNombreExacto" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="2b9a5ca8-e4c6-56be-0829-e6a2c9e6abc9">
+      <Execution id="b1ca53ce-b20d-4901-9ae6-b6dcd0143997" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="FailClosed_SiLaCreacionFalla_NoMutaNada" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="5a4d1378-b217-6374-c749-862a46b598c9">
+      <Execution id="fcf87073-dffa-464d-b2bf-d45a6b99a639" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="ServiceExecutorRestoresStatusAndStartup" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="dbb700b7-c57d-0466-1669-b13a53fdcc82">
+      <Execution id="ac7f1d39-989c-4c56-8050-fa896501fd48" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="TestDryRun_DoesNotMutateSystem" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="a4b37899-4b1b-67bc-fef7-cc8239d680fd">
+      <Execution id="b6e17fd2-66e6-4964-b48c-98fbb0280c26" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="ProcessExecutorSkipsWhenNotRunning" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.CapacidadSinRequisitoDePunto_NoLoCrea" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="dd596066-edd8-ffc3-43e6-e6d8803dbb7b">
+      <Execution id="5f3c90fb-4093-4145-8688-3ddc4ce152e3" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="CapacidadSinRequisitoDePunto_NoLoCrea" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="fe353b16-394f-f829-6ab2-675a4018af10">
+      <Execution id="b1766fe1-8483-4231-8aa2-dab4e1c6da66" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="AuditModeReportsStateWithoutMutating" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="83346a32-e633-64b1-21c1-85b60c1e13d9">
+      <Execution id="9fa40d9c-a908-40b5-ace4-787ca8a0cc0d" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="TestPrivilegeEnforcement" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="7c6079f3-e385-9558-8baa-4c67f39fc42a">
+      <Execution id="e94633e6-2933-498e-91f1-d12793f4170b" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="RollbackIsLifoAndContinuesAfterError" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="538b2e2d-8563-6657-f44b-679f80b2f225">
+      <Execution id="912b5bc0-f54f-42a7-9b31-650cbcfc85d3" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="RegistryExecutorRecordsNewValueAsDeleteOnRollback" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="ae735ef1-d639-7094-0105-107349f8a199">
+      <Execution id="6257fcbc-7719-4df1-be95-80bee5e5aae8" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="RegistryExecutorSupportsAllValueTypes" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.UnPuntoPorPlan_NoUnoPorAccion" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="3f87251f-83a0-5e08-c4d3-b81933c39b23">
+      <Execution id="eb690b13-04ed-49ff-b954-d44cfe6d5614" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="UnPuntoPorPlan_NoUnoPorAccion" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="89bd1c9f-7203-1b84-4662-79db8c5814a0">
+      <Execution id="efc1e337-ce59-4cbd-987c-b327e662195b" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="CommandExecutorRespectsAllowedExitCodes" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="4c810860-2e73-2639-4c1e-28708284fffe">
+      <Execution id="7e956f2e-487b-434d-8a9b-225d2916a0b1" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="ConfirmacionRechazada_CeroMutacionesYCeroPuntos" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="17e99a2f-c3c2-5fc9-eead-553c5fb4c62c">
+      <Execution id="97cbe4ff-e1d3-4dcf-a115-13ed57cdafb1" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave2EngineTests" name="TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="0fda6e1c-2261-7d5e-1301-fe5f6dd898c6">
+      <Execution id="634fa988-a19b-4d02-9496-972fd1bef2d3" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="TaskExecutorTogglesAndRestores" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.DryRun_NoCreaPuntoNiPideConfirmacion" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="fcbac8db-9f57-30ee-119c-808cdc9861f0">
+      <Execution id="597255ca-e3d2-4028-9447-58c737afd48d" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="DryRun_NoCreaPuntoNiPideConfirmacion" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="02abb734-08bf-c3ca-457e-11b1aeb3d750">
+      <Execution id="a343e317-0a0e-4a0a-906b-01e20c1dda02" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="TestExecute_MutatesSystemAndCreatesUndo" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="9dc66088-8a5d-c917-16d7-6eea65d675a9">
+      <Execution id="2894984c-084c-4cda-8eae-2e8f865e562b" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave1EngineTests" name="TestWave1Catalog_WebSearchCapability_ReallyDisablesBing" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="213d1912-8934-bf90-4785-b760d83f88d1">
+      <Execution id="4c7be846-23b3-4be6-aa9c-8164a06db5b2" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="ProcessExecutorTerminatesAndLogs" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="4bfb7576-4384-11ec-58df-4f5215b890ae">
+      <Execution id="98f8a486-0981-4a4c-b00e-46f605318e9c" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave1EngineTests" name="TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="968d087f-319b-7e38-a9ae-a4012443a6ce">
+      <Execution id="75ebf688-39ab-452f-beca-53e43cf229b1" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="TestPartialFailure_TriggersRollback" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="d672e005-a5a6-83d0-16d4-f28911a88d20">
+      <Execution id="65fa0044-c721-411e-b924-110b76ea473d" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="Execute_CreaElPuntoAntesDeLaPrimeraMutacion" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="be20c29d-7db3-dab0-c19d-23691b779e17">
+      <Execution id="612687a6-771f-4479-8d0e-3393bd20063a" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="c5b78816-cfb3-e27f-5eba-9e08a763b95c">
+      <Execution id="96e956e5-678b-4a69-babf-78e2a84cd981" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="RestorePointAvailable_LlegaALaConfirmacion" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="c3751cb3-d210-662d-8585-3659057cadbd">
+      <Execution id="7bf88295-d4d2-4180-8f1d-d3be20756cee" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="9fa664c5-c1bd-9045-d5dc-1f8925a4d4f6">
+      <Execution id="e35c749a-32d7-4398-bc61-c9877769e2e7" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="Audit_NoCreaPuntoNiPideConfirmacion" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="0f40ac31-3426-0aec-82fc-5d2b02d4fa13">
+      <Execution id="da708291-37ee-4c73-9ea2-70d5ccdfb1f0" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="IncompatibleSystemBlocksExecution" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="d82adcff-83ff-392d-b50f-467103caef88">
+      <Execution id="00366182-ee5e-4fb8-8952-f0364c52f374" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="RollbackAutomaticoSigueFuncionandoConPunto" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="2514550d-5da5-f13e-2caa-b53c0d5ccef7">
+      <Execution id="0e6a113c-5297-42fe-9332-44ebab247798" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave1EngineTests" name="TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="6941745e-2977-7fd6-a577-05055ddd2ee8">
+      <Execution id="9f9fe0db-1219-45ac-8df7-c1c207f26354" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave1EngineTests" name="TestWave1Catalog_ExecuteAndRollback_RestoresState" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="4a98dc6f-640d-5b90-1493-4765d33ad7bb">
+      <Execution id="21cc99ce-cdab-457e-9407-bc6e4380aed8" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave2EngineTests" name="TestWave2Catalog_LargestCapability_RoundTrips" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="32a354c0-35f3-8795-6c8f-5f30fb7a36c6">
+      <Execution id="681793f9-d4c2-4ef3-a323-77523fb7c62b" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave1EngineTests" name="TestWave1Catalog_DryRun_NoSystemMutation" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="b7a05d4e-66ca-0ce0-33c1-4780be7ec9a2">
+      <Execution id="74265eaf-1fe9-4640-82d8-1c057d099725" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="CommandExecutorDoesNotRunInDryRun" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="4624ac57-dfc4-c1c2-90a3-f662fcb7b127">
+      <Execution id="14641007-327c-41cc-be02-101bfc7e98f7" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave2EngineTests" name="TestWave2Catalog_AdminCapabilityRequiresElevation" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="e7f78715-bb66-14df-c8a9-ac8851826be6">
+      <Execution id="48a25ee5-5559-4310-bbf9-64a0631eb0ff" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="RequiresRestorePoint_CubreLasDosVias" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="bafae97e-eb23-4819-bac4-6a5430e278fb">
+      <Execution id="a0478544-0138-4c52-ab32-3ffaeed23d82" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave2EngineTests" name="TestWave2Catalog_ToggleSemanticsMatchThePin" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="b11373a2-d6f1-01cc-fe22-3a52946c3e98">
+      <Execution id="4855d770-5935-44e6-85d8-6e9c53cd2225" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="ConfirmacionSePideAntesDeCrearElPunto" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="ae513e87-c05c-0e2d-d565-10188132a520">
+      <Execution id="61984553-224b-44e2-8d01-338b31490b07" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave2EngineTests" name="TestWave2Catalog_DryRun_NoSystemMutation" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="e46f09b1-ac2a-ebdd-567f-2a2fab10eb40">
+      <Execution id="d5026ca7-b0ce-46bc-acea-fc4d81088fb7" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.Wave2EngineTests" name="TestWave2Catalog_ExecuteAndRollback_RestoresState" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="c1e295e5-6dbf-1157-6824-3f77223247de">
+      <Execution id="0fd2ffe0-17ec-4727-b29c-98a4695c8989" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.ExecutorTests" name="TaskExecutorFailsOnMissingTask" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="e8c67710-5338-7496-cc49-649bac75c69a">
+      <Execution id="40d3cc95-14be-4f7e-a3cf-bc662e7ca8fb" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="b390eb3f-e78a-af34-20e7-575e4d2f0682">
+      <Execution id="b01a12ee-22fc-487f-8cf0-c7d30a482cda" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="TestRollback_RestoresOriginalStateExactly" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="e068a676-cd0e-336b-784b-beb6a15a94c3">
+      <Execution id="40a0ff1e-60b1-4415-850d-34a1cbcd822a" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.RestorePointGateTests" name="SinProveedorDeConfirmacion_SeAbortaSinMutar" />
+    </UnitTest>
+    <UnitTest name="Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts" storage="c:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.engine.tests\bin\release\net10.0-windows\evo.engine.tests.dll" id="db2ef450-a29f-fb0f-b8c2-96633838ef94">
+      <Execution id="fd21aeec-6b5b-415f-abc2-672805de2b35" />
+      <TestMethod codeBase="C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Engine.Tests.EngineCoordinatorTests" name="PreflightChecksDependenciesAndConflicts" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="538b2e2d-8563-6657-f44b-679f80b2f225" executionId="912b5bc0-f54f-42a7-9b31-650cbcfc85d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2514550d-5da5-f13e-2caa-b53c0d5ccef7" executionId="0e6a113c-5297-42fe-9332-44ebab247798" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="83346a32-e633-64b1-21c1-85b60c1e13d9" executionId="9fa40d9c-a908-40b5-ace4-787ca8a0cc0d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="968d087f-319b-7e38-a9ae-a4012443a6ce" executionId="75ebf688-39ab-452f-beca-53e43cf229b1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fcbac8db-9f57-30ee-119c-808cdc9861f0" executionId="597255ca-e3d2-4028-9447-58c737afd48d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bafae97e-eb23-4819-bac4-6a5430e278fb" executionId="a0478544-0138-4c52-ab32-3ffaeed23d82" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c3751cb3-d210-662d-8585-3659057cadbd" executionId="7bf88295-d4d2-4180-8f1d-d3be20756cee" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5a4d1378-b217-6374-c749-862a46b598c9" executionId="fcf87073-dffa-464d-b2bf-d45a6b99a639" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9dc66088-8a5d-c917-16d7-6eea65d675a9" executionId="2894984c-084c-4cda-8eae-2e8f865e562b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e068a676-cd0e-336b-784b-beb6a15a94c3" executionId="40a0ff1e-60b1-4415-850d-34a1cbcd822a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b7a05d4e-66ca-0ce0-33c1-4780be7ec9a2" executionId="74265eaf-1fe9-4640-82d8-1c057d099725" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b11373a2-d6f1-01cc-fe22-3a52946c3e98" executionId="4855d770-5935-44e6-85d8-6e9c53cd2225" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="17e99a2f-c3c2-5fc9-eead-553c5fb4c62c" executionId="97cbe4ff-e1d3-4dcf-a115-13ed57cdafb1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd596066-edd8-ffc3-43e6-e6d8803dbb7b" executionId="5f3c90fb-4093-4145-8688-3ddc4ce152e3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ae513e87-c05c-0e2d-d565-10188132a520" executionId="61984553-224b-44e2-8d01-338b31490b07" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e7f78715-bb66-14df-c8a9-ac8851826be6" executionId="48a25ee5-5559-4310-bbf9-64a0631eb0ff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9fa664c5-c1bd-9045-d5dc-1f8925a4d4f6" executionId="e35c749a-32d7-4398-bc61-c9877769e2e7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fe353b16-394f-f829-6ab2-675a4018af10" executionId="b1766fe1-8483-4231-8aa2-dab4e1c6da66" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="be20c29d-7db3-dab0-c19d-23691b779e17" executionId="612687a6-771f-4479-8d0e-3393bd20063a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4c810860-2e73-2639-4c1e-28708284fffe" executionId="7e956f2e-487b-434d-8a9b-225d2916a0b1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e46f09b1-ac2a-ebdd-567f-2a2fab10eb40" executionId="d5026ca7-b0ce-46bc-acea-fc4d81088fb7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dbb700b7-c57d-0466-1669-b13a53fdcc82" executionId="ac7f1d39-989c-4c56-8050-fa896501fd48" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0f40ac31-3426-0aec-82fc-5d2b02d4fa13" executionId="da708291-37ee-4c73-9ea2-70d5ccdfb1f0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ae735ef1-d639-7094-0105-107349f8a199" executionId="6257fcbc-7719-4df1-be95-80bee5e5aae8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d672e005-a5a6-83d0-16d4-f28911a88d20" executionId="65fa0044-c721-411e-b924-110b76ea473d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bf5d8112-2216-0323-f731-622a5e6be0c8" executionId="d7b02597-bd50-4fb2-bfe3-0279aba74b08" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="32a354c0-35f3-8795-6c8f-5f30fb7a36c6" executionId="681793f9-d4c2-4ef3-a323-77523fb7c62b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="db2ef450-a29f-fb0f-b8c2-96633838ef94" executionId="fd21aeec-6b5b-415f-abc2-672805de2b35" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2b9a5ca8-e4c6-56be-0829-e6a2c9e6abc9" executionId="b1ca53ce-b20d-4901-9ae6-b6dcd0143997" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e8c67710-5338-7496-cc49-649bac75c69a" executionId="40d3cc95-14be-4f7e-a3cf-bc662e7ca8fb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b390eb3f-e78a-af34-20e7-575e4d2f0682" executionId="b01a12ee-22fc-487f-8cf0-c7d30a482cda" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02abb734-08bf-c3ca-457e-11b1aeb3d750" executionId="a343e317-0a0e-4a0a-906b-01e20c1dda02" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4bfb7576-4384-11ec-58df-4f5215b890ae" executionId="98f8a486-0981-4a4c-b00e-46f605318e9c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a4b37899-4b1b-67bc-fef7-cc8239d680fd" executionId="b6e17fd2-66e6-4964-b48c-98fbb0280c26" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="6941745e-2977-7fd6-a577-05055ddd2ee8" executionId="9f9fe0db-1219-45ac-8df7-c1c207f26354" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0fda6e1c-2261-7d5e-1301-fe5f6dd898c6" executionId="634fa988-a19b-4d02-9496-972fd1bef2d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3f87251f-83a0-5e08-c4d3-b81933c39b23" executionId="eb690b13-04ed-49ff-b954-d44cfe6d5614" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="89bd1c9f-7203-1b84-4662-79db8c5814a0" executionId="efc1e337-ce59-4cbd-987c-b327e662195b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4624ac57-dfc4-c1c2-90a3-f662fcb7b127" executionId="14641007-327c-41cc-be02-101bfc7e98f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="213d1912-8934-bf90-4785-b760d83f88d1" executionId="4c7be846-23b3-4be6-aa9c-8164a06db5b2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c5b78816-cfb3-e27f-5eba-9e08a763b95c" executionId="96e956e5-678b-4a69-babf-78e2a84cd981" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d82adcff-83ff-392d-b50f-467103caef88" executionId="00366182-ee5e-4fb8-8952-f0364c52f374" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4a98dc6f-640d-5b90-1493-4765d33ad7bb" executionId="21cc99ce-cdab-457e-9407-bc6e4380aed8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c6079f3-e385-9558-8baa-4c67f39fc42a" executionId="e94633e6-2933-498e-91f1-d12793f4170b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c1e295e5-6dbf-1157-6824-3f77223247de" executionId="0fd2ffe0-17ec-4727-b29c-98a4695c8989" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="45" executed="45" passed="34" failed="11" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)&#xD;
+[xUnit.net 00:00:00.27]   Discovering: Evo.Engine.Tests&#xD;
+[xUnit.net 00:00:00.31]   Discovered:  Evo.Engine.Tests&#xD;
+[xUnit.net 00:00:00.32]   Starting:    Evo.Engine.Tests&#xD;
+[xUnit.net 00:00:00.56]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.56]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.56]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.56]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.56]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.56]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.56]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.56]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()&#xD;
+[xUnit.net 00:00:00.56]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.56]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(125,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation()&#xD;
+[xUnit.net 00:00:00.56]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.56]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.56]         &#xD;
+[xUnit.net 00:00:00.57]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.57]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.57]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.57]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.57]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.57]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.57]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()&#xD;
+[xUnit.net 00:00:00.57]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(36,0): at Evo.Engine.Tests.Wave1EngineTests.Definition(String id)&#xD;
+[xUnit.net 00:00:00.57]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(301,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate()&#xD;
+[xUnit.net 00:00:00.57]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.57]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.57]         &#xD;
+[xUnit.net 00:00:00.57]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.57]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.57]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.57]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.57]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.57]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.57]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.57]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()&#xD;
+[xUnit.net 00:00:00.57]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.57]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(265,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing()&#xD;
+[xUnit.net 00:00:00.57]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.57]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.57]         &#xD;
+[xUnit.net 00:00:00.58]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.58]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.58]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.58]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.58]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.58]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.58]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()&#xD;
+[xUnit.net 00:00:00.58]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.58]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(159,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState()&#xD;
+[xUnit.net 00:00:00.58]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.58]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.58]         &#xD;
+[xUnit.net 00:00:00.58]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.58]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.58]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.58]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.58]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.58]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.58]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.58]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(32,0): at Evo.Engine.Tests.Wave1EngineTests.LoadWave1()&#xD;
+[xUnit.net 00:00:00.58]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(58,0): at Evo.Engine.Tests.Wave1EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.58]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(229,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly()&#xD;
+[xUnit.net 00:00:00.58]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.58]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.58]         &#xD;
+[xUnit.net 00:00:00.58]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.58]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.58]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.59]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.59]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.59]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.59]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()&#xD;
+[xUnit.net 00:00:00.59]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(38,0): at Evo.Engine.Tests.Wave2EngineTests.Definition(String id)&#xD;
+[xUnit.net 00:00:00.59]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(170,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips()&#xD;
+[xUnit.net 00:00:00.59]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.59]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.59]         &#xD;
+[xUnit.net 00:00:00.59]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.59]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.59]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.59]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.59]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.59]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.59]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()&#xD;
+[xUnit.net 00:00:00.59]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.59]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(261,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin()&#xD;
+[xUnit.net 00:00:00.59]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.59]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.59]         &#xD;
+[xUnit.net 00:00:00.59]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.59]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.59]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.59]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.60]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.60]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.60]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.60]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()&#xD;
+[xUnit.net 00:00:00.60]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(38,0): at Evo.Engine.Tests.Wave2EngineTests.Definition(String id)&#xD;
+[xUnit.net 00:00:00.60]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(231,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation()&#xD;
+[xUnit.net 00:00:00.60]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.60]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.60]         &#xD;
+[xUnit.net 00:00:00.60]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.60]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.60]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.60]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.61]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.61]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.61]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.61]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()&#xD;
+[xUnit.net 00:00:00.61]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.61]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(195,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating()&#xD;
+[xUnit.net 00:00:00.61]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.61]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.61]         &#xD;
+[xUnit.net 00:00:00.61]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.61]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.61]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.61]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.61]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.61]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.61]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()&#xD;
+[xUnit.net 00:00:00.61]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.61]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(81,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation()&#xD;
+[xUnit.net 00:00:00.61]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.61]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.61]         &#xD;
+[xUnit.net 00:00:00.61]       System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator. Path: $.capabilities[0].actions[0] | LineNumber: 35 | BytePositionInLine: 23.&#xD;
+[xUnit.net 00:00:00.61]       ---- System.NotSupportedException : The JSON payload for polymorphic interface or abstract type 'Evo.Core.Actions.CapabilityAction' must specify a type discriminator.&#xD;
+[xUnit.net 00:00:00.61]       Stack Trace:&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.ThrowHelper.ThrowNotSupportedException(ReadStack&amp; state, Utf8JsonReader&amp; reader, Exception innerException)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.61]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.JsonCollectionConverter`2.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, TCollection&amp; value)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.Metadata.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack&amp; state, Utf8JsonReader&amp; reader)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader&amp; reader, Type typeToConvert, JsonSerializerOptions options, ReadStack&amp; state, T&amp; value, Boolean&amp; isPopulatedValue)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader&amp; reader, T&amp; value, JsonSerializerOptions options, ReadStack&amp; state)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.ContinueDeserialize[TReadBufferState,TStream](TReadBufferState&amp; bufferState, JsonReaderState&amp; jsonReaderState, ReadStack&amp; readStack, T&amp; value)&#xD;
+[xUnit.net 00:00:00.62]            at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Stream utf8Json)&#xD;
+[xUnit.net 00:00:00.62]         /_/src/Evo.Catalog/CatalogLoader.cs(75,0): at Evo.Catalog.CatalogLoader.Load(Stream stream)&#xD;
+[xUnit.net 00:00:00.62]         /_/src/Evo.Catalog/CatalogLoader.cs(64,0): at Evo.Catalog.CatalogLoader.LoadFile(String path)&#xD;
+[xUnit.net 00:00:00.62]         /_/src/Evo.Catalog/CatalogLoader.cs(49,0): at Evo.Catalog.CatalogLoader.LoadDirectory(String directory)&#xD;
+[xUnit.net 00:00:00.62]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(31,0): at Evo.Engine.Tests.Wave2EngineTests.LoadAll()&#xD;
+[xUnit.net 00:00:00.62]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(57,0): at Evo.Engine.Tests.Wave2EngineTests.Harness(Int32 build)&#xD;
+[xUnit.net 00:00:00.62]         /_/tests/Evo.Engine.Tests/Wave2EngineTests.cs(112,0): at Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState()&#xD;
+[xUnit.net 00:00:00.62]         --- End of stack trace from previous location ---&#xD;
+[xUnit.net 00:00:00.62]         ----- Inner Stack Trace -----&#xD;
+[xUnit.net 00:00:00.62]         &#xD;
+[xUnit.net 00:00:00.62]   Finished:    Evo.Engine.Tests&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5704042-08:00">
+        <Text>[xUnit.net 00:00:00.56]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5713615-08:00">
+        <Text>[xUnit.net 00:00:00.56]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5721402-08:00">
+        <Text>[xUnit.net 00:00:00.57]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5807055-08:00">
+        <Text>[xUnit.net 00:00:00.57]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5814792-08:00">
+        <Text>[xUnit.net 00:00:00.58]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5853464-08:00">
+        <Text>[xUnit.net 00:00:00.58]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5904653-08:00">
+        <Text>[xUnit.net 00:00:00.59]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.5953555-08:00">
+        <Text>[xUnit.net 00:00:00.59]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.6054581-08:00">
+        <Text>[xUnit.net 00:00:00.60]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.6081748-08:00">
+        <Text>[xUnit.net 00:00:00.61]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [FAIL]</Text>
+      </RunInfo>
+      <RunInfo computerName="runnervmjtlf1" outcome="Error" timestamp="2026-11-24T12:16:08.6142559-08:00">
+        <Text>[xUnit.net 00:00:00.61]     Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>
