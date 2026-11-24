@@ -152,9 +152,16 @@ total=109 passed=109 failed=0
 
 `ledger-verify` run `45316207352`: `353 passed` · `pytest_exit=0`.
 
-SHA final con el informe: `a32e1ea` — `dotnet-ci` run `45316592984` success
+Con el informe ya escrito (`a32e1ea`): `dotnet-ci` run `45316592984` success
 (windows-2025 y windows-11-arm, `total=109 passed=109 failed=0` en los dos) y
 `ledger-verify` run `45316586774` success (`353 passed`, `pytest_exit=0`).
+
+**SHA final de la rama: `6260f92`** — `dotnet-ci` run `45317032429` **success**
+en `windows-2025` y en `windows-11-arm` (`total=109 passed=109 failed=0`) y
+`ledger-verify` run `45317025041` **success** (`353 passed`, `pytest_exit=0`).
+
+PR #1: `state=open`, `draft=true`, cuerpo de 13 192 caracteres con la seccion
+del paso 8. Inventario sin tocar: `sha256 = 0b6aeaef0aa2142bce342f0cbed6bcd2c19030555ff3a38c3699c8d1dad2f709`.
 
 ## Incidencias reales detectadas por CI
 
