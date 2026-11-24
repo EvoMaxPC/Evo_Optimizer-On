@@ -465,7 +465,7 @@ U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
 - **El CI de .NET es el único que compila.** Los 26 xUnit nuevos se han
   revisado a mano contra las APIs reales, pero un fallo de compilación sólo lo
   verá `dotnet-ci`; el job «Paso 10» de `ledger-verify` no compila.
-- **`inventory-reconciliation.tsv` cambia de sha** (`c35c1791` → `bc188fdc`):
+- **`inventory-reconciliation.tsv` cambia de sha** (`c35c1791` → `876521e2`):
   cualquier documento que citara el sha anterior queda desfasado. Se ha
   regenerado la matriz y la conciliación; los informes de pasos anteriores se
   dejan como acta y citan el sha que había entonces.
