@@ -30,18 +30,22 @@ La Sección 9 (REGISTRO DE WINDOWS Y CONFIGURACIÓN DEL SISTEMA) queda catalogad
 los dos pins por `tools/ledger_extract/build_section9_catalog.py` — ningún literal
 escrito a mano, ningún JSON editado a mano.
 
-El verificador de cobertura pasa de **55/55** a **82/82** líneas `Mapped`
-cubiertas (3 de §1 + 17 de §2 + 6 de §3 + **27 de §9** + 29 de §10), con **0
+El verificador de cobertura pasa de **55/55** a **85/85** líneas `Mapped`
+cubiertas (3 de §1 + 17 de §2 + 6 de §3 + **30 de §9** + 29 de §10), con **0
 huecos no declarados** y **0 huecos declarados**. Las 28 líneas `Mapped` de
 partida se resolvieron así: 15 ya estaban cubiertas por capacidades de §2/§3/§10
 (no se duplican), **12 se cubren con capacidad nueva** y **1 (`Services.`) se
 remide a `Mapped` con otro `mapped_id`**. Además **3 líneas que el paso 4e había
-mapeado mal se corrigen** y **1 pasa a `Absent-At-Pin`** por medición del pin:
+mapeado mal se corrigen**, **3 falsos negativos** (`Absent-At-Pin` que el pin sí
+implementa) **pasan a `Mapped`** y **1 pasa a `Absent-At-Pin`** por medición:
 
 ```
 linea | texto                            | antes            | ahora
 ------+----------------------------------+------------------+----------------------------------------
 265   | Services.                        | Mapped (test)    | Mapped → winutil:tweak:WPFTweaksServices
+269   | WPBT.                            | Absent-At-Pin    | Mapped → atlas:manifest:qol/system/disable-wpbt
+302   | OEM Information.                 | Absent-At-Pin    | Mapped → atlas:manifest:misc/config-oem-information
+307   | Keyboard Switching.              | Absent-At-Pin    | Mapped → atlas:toggle:KeyboardShortcuts
 278   | System Tray Configuration.       | Mapped           | Absent-At-Pin (el pin no tiene esa función)
 308   | Keyboard Shortcuts.              | Mapped (NumLock) | Mapped → atlas:toggle:KeyboardShortcuts
 316   | Settings Page Visibility.         | Mapped (telemetría) | Mapped → atlas:manifest:qol/set-hidden-settings-pages
@@ -52,10 +56,10 @@ Cifras al cierre, todas medidas:
 ```
 capacidades del catálogo | 86 (39 de las secciones 1-3 + 29 de la 10 + 18 de la 9)
 acciones de la sección 9 | 39 en 18 capacidades (máx. 5 en crash-control, servicios y mitigaciones)
-verificador de cobertura | 82 Mapped, 82 cubiertas, 0 huecos, veredicto OK
+verificador de cobertura | 85 Mapped, 85 cubiertas, 0 huecos, veredicto OK
 auditoría de valores     | 194 filas, 168 equals-apply / 19 equals-on / 1 equals-off / 1 differs / 5 no-source, 0 ambiguous, 0 sin justificar
 pytest                   | 518 passed (línea base 502; +16 de tests/test_paso10.py)
-xUnit                    | 161 → 187 previstos (+15 de catálogo, +11 de motor), pendiente del CI
+xUnit                    | 187 (+15 de catálogo, +11 de motor) en verde en los dos runners
 ```
 
 ## T0-bis — Cómo se trabajó (y un aviso de honestidad)
@@ -77,22 +81,67 @@ capacidades de HKLM con `Risk=Medium`/`High`, y ADR-0003 exige
 obliga a que el motor cree punto de restauración antes de escribir. Está probado
 en `TestWave3Catalog_RestorePointIsRequiredBeforeTouchingHklm`.
 
+## T0-e — Revisión de las 28 líneas de §9 que no son Mapped (26 Absent + 2 cabeceras)
+
+Cada una, con su etiqueta y su motivo. Ninguna se ha tocado a la ligera: las que
+podían implementarse están ahora en `Mapped` (269, 302, 307) y el resto se queda
+`Absent-At-Pin` con la medición hecha en el pin.
+
+```
+linea | texto                          | etiqueta                  | motivo / evidencia
+------+--------------------------------+---------------------------+---------------------------------------------------------
+261   | WinUtil                        | correcta como está (Header) | cabecera de columna del inventario
+266   | svchost Splitting.             | Absent confirmada         | sólo hay disable-service-host-split.psd1 (script), sin valores de registro estables
+267   | Consumer Features.             | Absent confirmada         | ya cubierta por debloat.appx.consumer (§2); aquí no se duplica
+268   | Delivery Optimization.         | Absent confirmada         | cubierta por debloat.content.delivery (§2); no se duplica
+270   | Storage Sense.                 | Absent confirmada         | config-storage-sense.psd1 existe pero su efecto es una política por build no verificada (NO VERIFICADO)
+271   | Reserved Storage.              | Absent confirmada         | disable-reserved-storage.psd1: script DISM, no valores de registro
+278   | System Tray Configuration.     | Absent confirmada         | medido: el pin no tiene esa función (ver corrección 278)
+286   | Scrollbars.                    | Absent confirmada         | ya cubierta por ui.scrollbars.always-visible (§10)
+287   | Long Paths.                    | Absent confirmada         | ya cubierta por explorer.long-paths.enable (§10)
+292   | DNS Configuration.             | Absent confirmada         | el pin no tiene ajuste de DNS (sólo disable-llmnr, otro efecto)
+293   | AtlasOS                        | correcta como está (Header) | cabecera de bloque
+294   | Config VBS.                    | Absent confirmada         | NO VERIFICADO: sin .psd1 de VBS en el pin
+296   | Fault Tolerant Heap.           | Absent confirmada         | Toggles/Security/FaultTolerantHeap.psd1 existe; su efecto es por build y no se midió aquí (queda para §13)
+297   | UAC Secure Desktop.            | Absent confirmada         | disable-uac-secure-desktop.psd1 existe; el efecto reduce seguridad y su riesgo no está medido en §9
+298   | BCD Configuration.             | Absent confirmada         | bcdedit-tweaks.psd1 usa bcdedit (comando), no valores de registro
+299   | Power Settings.                | Absent confirmada         | import-power-plan.psd1 es un .pow importado: no expresable con acciones actuales
+300   | File Associations.             | Absent confirmada         | set-file-associations.psd1: asociaciones por usuario, sin valor único reproducible
+301   | Profile Pictures.              | Absent confirmada         | set-profile-pictures.psd1: escribe imágenes de cuenta, no ajustes
+304   | Taskbar Pins.                  | Absent confirmada         | config-pins.psd1: estado por usuario dependiente de la sesión
+306   | Context Menus.                 | Absent confirmada         | add-context-menus/* son altas de menú (ficheros), no valores
+310   | Visual Effects.                | Absent confirmada         | ya cubierta por ui.visual-effects.minimal (§10)
+311   | Modern Battery Flyout.         | Absent confirmada         | NO VERIFICADO: sin fichero en el pin
+312   | Modern Date and Time.          | Absent confirmada         | NO VERIFICADO: sin fichero en el pin
+313   | Modern Volume Flyout.          | Absent confirmada         | NO VERIFICADO: sin fichero en el pin
+314   | Snap Layouts.                  | Absent confirmada         | ya cubierta por ui.snap-layouts.disable (§10)
+315   | Windows Spotlight.             | Absent confirmada         | disable-windows-spotlight.psd1 existe pero su política no tiene valor único medido aquí
+317   | Registry File Configuration.   | Absent confirmada         | NO VERIFICADO: no existe el psd1 en el pin
+318   | Default User Configuration.    | Absent confirmada         | NO VERIFICADO: no existe el psd1 en el pin
+```
+
+`Storage Sense`, `Fault Tolerant Heap`, `UAC Secure Desktop`, `Windows
+Spotlight`, `Config VBS` y los tres «Modern …» son candidatos reales para
+oleadas posteriores (§13 seguridad, §12/§14 sistema): **existen en el pin pero su
+efecto no es un valor de registro fijo y verificable**, así que no se declaran
+capacidades a medias. Está en Preguntas abiertas.
+
 ## Ficheros
 
 ```
 catalog/capabilities/section9_system_registry.json    | nuevo: 18 capacidades / 39 acciones (generado)
 tools/ledger_extract/build_section9_catalog.py        | nuevo: generador; lee los literales del pin, --check
-tools/ledger_extract/build_final_reconciliation.py    | 3 correcciones de mapeo (§9: 265, 308, 316) + ABSENT_OVERRIDES (§9: 278)
+tools/ledger_extract/build_final_reconciliation.py    | 6 correcciones de mapeo (§9: 265, 269, 302, 307, 308, 316) + ABSENT_OVERRIDES (§9: 278)
 tools/ledger_extract/verify_catalog_coverage.py       | COMPLETED_SECTIONS=("1","2","3","9","10")
 tools/ledger_extract/build_wave_plan.py               | §9 marcada cerrada con las cifras medidas (no escritas a mano)
 catalog/exceptions/value-deviations.json              | 2ª desviación: system.settings-page-visibility.hide (value)
-inventory/ledger/inventory-reconciliation.tsv         | §9: 27 Mapped / 29 Absent-At-Pin / 2 Header (era 28/28/2)
+inventory/ledger/inventory-reconciliation.tsv         | §9: 30 Mapped / 26 Absent-At-Pin / 2 Header (era 28/28/2)
 inventory/ledger/catalog-value-audit.tsv              | regenerado: 194 filas (antes 161)
 inventory/ledger/upstream-capability-map.tsv          | regenerado: §9 con 8 covered / 3 pending
-docs/reports/plan-oleadas.md                          | regenerado: §9 con 27/27 Mapped cubiertas
+docs/reports/plan-oleadas.md                          | regenerado: §9 con 30/30 Mapped cubiertas
 docs/reports/rangos-build.md                          | regenerado: 86 caps, 8 recortadas (+ system.hibernation.hide)
 docs/reports/matriz-cobertura.md                      | regenerado con la conciliación nueva
-docs/requirements/CONCILIACION_INVENTARIO.md          | regenerado (Mapped 152, Absent-At-Pin 323)
+docs/requirements/CONCILIACION_INVENTARIO.md          | regenerado (Mapped 155, Absent-At-Pin 320)
 tests/Evo.Catalog.Tests/Wave3CatalogTests.cs          | nuevo: 15 xUnit de catálogo
 tests/Evo.Engine.Tests/Wave3EngineTests.cs            | nuevo: 11 xUnit de motor contra fakes
 tests/test_paso10.py                                  | nuevo: 16 pruebas Python
@@ -119,13 +168,13 @@ Cobertura del inventario:
 ```
 $ python3 tools/ledger_extract/verify_catalog_coverage.py
 capacidades del catalogo : 86
-lineas Mapped 1+2+3+9+10 : 82
-  cubiertas             : 82
+lineas Mapped 1+2+3+9+10 : 85
+  cubiertas             : 85
   huecos declarados     : 0 (de 0 declarados)
   seccion 1: 3 Mapped, 3 cubiertas, 0 huecos
   seccion 2: 17 Mapped, 17 cubiertas, 0 huecos
   seccion 3: 6 Mapped, 6 cubiertas, 0 huecos
-  seccion 9: 27 Mapped, 27 cubiertas, 0 huecos
+  seccion 9: 30 Mapped, 30 cubiertas, 0 huecos
   seccion 10: 29 Mapped, 29 cubiertas, 0 huecos
 
 veredicto: OK
@@ -153,14 +202,14 @@ $ python3 tools/ledger_extract/build_build_ranges_report.py --check
 rangos-build.md reproducible: OK
 $ python3 tools/ledger_extract/generate_coverage_matrix.py
 filas  : 588  estados: 5  secciones: 17
-  Mapped 152 / Mapped-To-App 5 / EVO-Exclusive 37 / Absent-At-Pin 323 / Informative-Header 71
+  Mapped 155 / Mapped-To-App 5 / EVO-Exclusive 37 / Absent-At-Pin 320 / Informative-Header 71
 ```
 
 Fila de la Sección 9 en el plan de oleadas (medida, no estimada):
 
 ```
 | § | Título | Líneas | Mapped | Mapped-To-App | EVO-Exclusive | Absent-At-Pin | Informative | Mapped cubiertas | Mapped sin cubrir | Trabajo (medido) | Pending upstream |
-| 9 | Registro de Windows y configuración del sistema | 58 | 27 | 0 | 0 | 29 | 2 | 27 | 0 | 29 | 3 |
+| 9 | Registro de Windows y configuración del sistema | 58 | 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |
 ```
 
 Doble ejecución de los generadores y `diff` de sha256 (simulado en local con el
@@ -183,6 +232,23 @@ Suites completas:
 $ python3 -m pytest tools/ledger_extract/tests tests -q
 518 passed
 ```
+
+CI en verde sobre el head `473eada` (los dos runners de `dotnet-ci` y el job
+`ledger-verify` con el job «Paso 10» dentro):
+
+```
+gh run 45495926401 | dotnet-ci      | success | 187/187 xUnit (windows-2025 y windows-11-arm)
+                   |                |         |   Evo.Catalog.Tests 62 · Evo.Core.Tests 34
+                   |                |         |   Evo.Detection.Tests 35 · Evo.Engine.Tests 56
+gh run 45495913740 | dotnet-ci      | success | reintento del mismo head (idéntico resultado)
+gh run 45495913132 | ledger-verify  | success | pytest 518 passed · determinismo paso 10: OK
+```
+
+Historial honesto de este paso en CI: los dos primeros runs de `dotnet-ci` sobre
+`88259a4` y `b163c95` fallaron por **dos asserts históricos** que fijaban el
+tamaño del catálogo en 68 (`Wave1CatalogTests`, `Wave2CatalogTests`) y por la
+lista de ids de §1-3 en `Wave1CatalogTests`. Los tres defectos se corrigieron y
+están descritos en Desviaciones (punto 10).
 
 ## Las 18 capacidades (medido del JSON)
 
@@ -213,24 +279,57 @@ Las 16 de Atlas llevan `Variants=[Evo, Atlas]`; las 8 de WinUtil,
 `Variants=[Evo, WinUtil]` (una capacidad puede citar ambos orígenes cuando el pin
 los tiene, y aquí no ocurre).
 
-## Las 4 correcciones de la conciliación de §9
+## Las 6 correcciones de la conciliación de §9
 
 ```
 linea | antes                             | ahora                                    | evidencia
 ------+-----------------------------------+------------------------------------------+-----------------------------------------------
 265   | Mapped → atlas:effect:…Tests.ps1  | Mapped → winutil:tweak:WPFTweaksServices | config/tweaks.json: CscService, DiagTrack, MapsBroker, StorSvc, SharedAccess
+269   | Absent-At-Pin                     | Mapped → atlas:manifest:qol/system/disable-wpbt | Tweaks/qol/system/disable-wpbt.psd1 (DisableWpbtExecution=1)
+302   | Absent-At-Pin                     | Mapped → atlas:manifest:misc/config-oem-information | Tweaks/misc/config-oem-information.psd1 (Manufacturer/SupportURL/SupportPhone)
+307   | Absent-At-Pin                     | Mapped → atlas:toggle:KeyboardShortcuts | set-keyboard-switching.ps1 aplica el estado del toggle (mismo efecto que 308)
 278   | Mapped → WPFToggleLoginBlur       | Absent-At-Pin                            | tweaks.json sólo tiene "System Tray Notifications" y "System Tray Battery Percentage"; xaml/ sin página de bandeja
 308   | Mapped → WPFToggleNumLock         | Mapped → atlas:toggle:KeyboardShortcuts  | Toggles/Interface/KeyboardShortcuts.psd1 (Hotkey/Language Hotkey/Layout Hotkey)
 316   | Mapped → WPFTweaksTelemetry:7     | Mapped → atlas:manifest:qol/set-hidden-settings-pages | Scripts/Tweaks/qol/set-hidden-settings-pages.ps1 ($key + $value)
 ```
 
 Se aplican por `(seccion, linea)` en `build_final_reconciliation.py`
-(`MAPPED_OVERRIDES` para las tres que pasan a un mapeo medido y
+(`MAPPED_OVERRIDES` para las seis que pasan a un mapeo medido y
 `ABSENT_OVERRIDES` para la que deja de estar implementada), sin relajar ninguna
 regla ni tocar el texto del inventario. `265` no es un `Absent`: su `mapped_id`
 anterior citaba un artefacto de las **pruebas** de Atlas
 (`tests/Atlas.Toggles.Tests.ps1`), que no es producto; la línea dice «Services.»
 y el pin tiene `WPFTweaksServices` con cinco servicios medidos.
+
+## Huecos de expresividad
+
+Operaciones del pin de §9 que **no** se pueden expresar con las acciones
+actuales del motor. No se omiten en silencio: cada una está escrita en la
+`description` y en la `provenance` de la capacidad afectada.
+
+```
+item / capacidad                       | operación del pin                          | motivo                                       | declarado en
+---------------------------------------+--------------------------------------------+----------------------------------------------+----------------------------------------
+qol/system/disable-wpbt                | —                                          | expresable (Registry Set)                    | —
+misc/config-oem-information            | Script config-oem-information.ps1 (rellena  | el .ps1 escribe valores DINÁMICOS (versión y  | provenance de system.oem-information.identify
+                                       | versión/modelo Atlas)                      | modelo) que no son literales del pin: no se   |
+                                       |                                            | inventa un valor fijo                         |
+misc/config-time                       | Services: Start w32time; Run: w32tm        | el motor SÍ tiene ServiceAction/CommandAction,| provenance de system.time.ntp-servers
+                                       | /config /update, w32tm /resync (IgnoreErrors)| pero esta capacidad se limita al registro:    |
+                                       |                                            | declarar el arranque sería un efecto extra    |
+qol/system/crash-control-qol           | —                                          | expresable (5 Registry Set)                   | —
+qol/set-keyboard-switching             | Invoke-AtlasToggleMachineState             | es un aplicador del toggle, no un valor:      | provenance de system.keyboard-shortcuts.disable
+                                       |                                            | se declara el toggle (Hotkey/Language/Layout) |
+qol/set-hidden-settings-pages          | Set-ItemProperty con $value (lista completa)| expresable; sobrescribe la lista previa       | descripción de system.settings-page-visibility.hide
+General/Location (Disable)             | MachineAction Disable-AtlasLocation        | apaga lfsvc y MapsBroker: servicios, no registro | descripción de system.location.consent-deny
+General/Hibernation (Disable)          | MachineAction Disable-AtlasHibernation     | powercfg /h off: no hay acción de energía     | descripción de system.hibernation.hide
+Toggles/**  con Operation=DeleteKey    | DeleteKey / AddKey                         | el motor sólo borra VALORES; en §9 no aparece | —
+WPFFeatureRegBackup                    | Register-ScheduledTask AutoRegBackup       | crear una tarea no es TaskAction (sólo habilita)| provenance de system.registry-backup.enable
+```
+
+Ninguna capacidad de §9 necesita `DeleteKey`; el hueco real de §9 es **crear**
+cosas (tarea, arranque de servicio) y **ejecutar** un comando, y los tres casos
+están en capacidades `Specified` o declarados en la descripción.
 
 ## Criterios U0–U6
 
@@ -240,11 +339,11 @@ U0 | Estado de partida impreso y verificable                 | CUMPLIDO
 U1 | Generador reproducible (nada a mano, --check byte a byte) | CUMPLIDO
    |   build_section9_catalog.py lee los literales de los pins; `--check` OK; doble ejecución con sha256 idéntico en 7 artefactos
 U2 | Cobertura 100% de las líneas Mapped de §9                | CUMPLIDO
-   |   27/27 cubiertas, 0 huecos no declarados, veredicto OK; 15 ya cubiertas por §2/§3/§10 no se duplican
+   |   30/30 cubiertas, 0 huecos no declarados, veredicto OK; 15 ya cubiertas por §2/§3/§10 no se duplican
 U3 | Ledgers sin ambigüedad                                  | CUMPLIDO
    |   auditoría 194 filas, 0 ambiguous, 0 sin justificar; 2 desviaciones declaradas con evidencia; upstream-capability-map §9 con 8 covered / 3 pending explicados
-U4 | xUnit nuevos y suite por encima de la base              | PENDIENTE DEL CI
-   |   26 xUnit nuevos (15 catálogo + 11 motor); total previsto 187 > 161, a confirmar en windows-2025 y windows-11-arm
+U4 | xUnit nuevos y suite por encima de la base              | CUMPLIDO
+   |   26 xUnit nuevos (15 catálogo + 11 motor); 187/187 en windows-2025 y windows-11-arm (runs 45495926401/45495913740)
 U5 | tests/test_paso10.py >= 15 y suite completa > 502       | CUMPLIDO
    |   16 pruebas nuevas; 518 passed en el sandbox
 U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
@@ -305,10 +404,26 @@ U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
    `test_paso9` (secciones terminadas, 68→86 caps, 55→82 líneas, 1→2
    desviaciones, informe de rangos 78/8). Ninguno se relajó en lo que protegía:
    cada uno lleva el comentario de qué cambió y por qué.
-9. **El job «Paso 9» se ha vuelto tolerante en una sola comparación.** Su gate
+9. **Tres asserts históricos de .NET corregidos tras verlos fallar en CI.** El
+   `dotnet-ci` de `88259a4` compiló sin errores (0 Error(s)) pero dio **185/187**:
+   `Wave1CatalogTests` y `Wave2CatalogTests` fijaban `catalog.Count == 68`, y el
+   primero además enumeraba los ids de §1-3 como «todo lo que no es §10». Se
+   corrigieron las cifras (86), se excluyó §9 de esa enumeración (tiene su propio
+   fichero de tests) y la lista de impactos permitidos pasó a admitir `Reduces`
+   **sólo** con `Risk >= Medium` y `Restore >= RestorePoint`, que es la regla del
+   motor y lo que hacen las dos capacidades de §9. Ninguno se relajó: el assert de
+   `Reduces` sigue prohibiendo el caso peligroso (`Reduces` con `Low`).
+10. **Seis correcciones en la conciliación, no cuatro.** Al hacer T0-e
+   (revisión exhaustiva de las 30 líneas no `Mapped` de §9) aparecieron **tres
+   falsos negativos** más que el paso 4e había dejado en `Absent-At-Pin` y que el
+   pin sí implementa: `269 WPBT`, `302 OEM Information` y `307 Keyboard
+   Switching`. Las tres tienen capacidad propia o compartida en §9 y se
+   remidieron con `MAPPED_OVERRIDES` y su evidencia `ruta:línea`. §9 queda en
+   **30 Mapped / 26 Absent-At-Pin** (era 28/28).
+11. **El job «Paso 9» se ha vuelto tolerante en una sola comparación.** Su gate
    comparaba `cov["capacidades"] == 68`; ahora comprueba `>= 68` (ese job mide la
    sección 10, no el tamaño del catálogo) y el gate estricto de las cifras vive en
-   el job nuevo «Paso 10», que sí fija 86 y 27/27.
+   el job nuevo «Paso 10», que sí fija 86 y 30/30.
 
 ## Supuestos
 
@@ -379,14 +494,28 @@ U6 | Determinismo y mensaje de commit convencional           | CUMPLIDO
 
 ## Commit
 
-Rama `arena/ab2d6de7-evo-optimizer-on`, un commit (el PR #1 sigue **en draft**):
+Rama `arena/ab2d6de7-evo-optimizer-on`, cuatro commits (el PR #1 sigue **en draft**):
 
 ```
-feat: paso 10 - oleada 3 catalogo seccion 9 registro y sistema
+473eada fix(tests): Wave1 no enumera las secciones 9/10 y admite Reduces con su puerta
+b163c95 fix(tests): cifra del catalogo 68 -> 86 en Wave1/Wave2 (oleada 3)
+88259a4 feat: paso 10 - oleada 3 catalogo seccion 9 registro y sistema
 ```
+
+El árbol del catálogo y sus ledgers queda cerrado en el commit `feat`; los dos
+posteriores sólo tocan tests .NET (los defectos que vio el CI) y este informe.
 
 PR #1 (`gh api -X PATCH …/pulls/1`): título «Paso 10 — Oleada 3: catálogo de la
 Sección 9 (Registro y configuración del sistema), 18 capacidades / 39 acciones»,
-`state=OPEN`, `isDraft=true`. El estado del CI de este paso se anota al final del
-informe en cuanto `dotnet-ci` y `ledger-verify` terminan; hasta entonces los
-criterios U4 queda declarado como pendiente y no como cumplido.
+`state=OPEN`, `isDraft=true`, `head=473eada`.
+
+CI verificado sobre ese head:
+
+```
+dotnet-ci run 45495926401     | success | 187/187 · windows-2025 y windows-11-arm
+dotnet-ci run 45495913740     | success | mismo head, reintento idéntico
+ledger-verify run 45495913132 | success | pytest 518 passed · determinismo paso 10: OK
+```
+
+El `sha` que reporta el informe de `dotnet-ci` (`b562783`) es el del **merge del
+PR**, no el del head de rama: es el mismo árbol de `473eada`.

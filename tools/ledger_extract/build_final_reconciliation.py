@@ -133,6 +133,27 @@ MAPPED_OVERRIDES: dict[tuple[int, str], tuple[str, str]] = {
                  "expone Toggles/Interface/KeyboardShortcuts.psd1, que escribe Hotkey, "
                  "Language Hotkey y Layout Hotkey en HKCU\\Keyboard Layout\\Toggle; el "
                  "paso 4e la habia casado con el NumLock de WinUtil, que es otro ajuste"),
+    # Falsos negativos del paso 4e medidos en el paso 10: la regla R3 no cruzó el
+    # texto con el item del ledger, pero el pin lo implementa y ahora hay
+    # capacidad que lo cubre. Evidencia en docs/reports/paso10.md (T0-e).
+    (9, "269"): ("atlas:manifest:qol/system/disable-wpbt",
+                 "falso negativo del paso 4e: la linea esta en el bloque AtlasOS y el "
+                 "pin implementa WPBT en Scripts/Tweaks/qol/system/disable-wpbt.psd1 "
+                 "(DisableWpbtExecution=1 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\"
+                 "Session Manager); la capacidad system.error-reporting.wpbt-disable lo "
+                 "declara"),
+    (9, "302"): ("atlas:manifest:misc/config-oem-information",
+                 "falso negativo del paso 4e: el pin implementa OEM Information en "
+                 "Scripts/Tweaks/misc/config-oem-information.psd1 (Manufacturer, "
+                 "SupportURL y SupportPhone en HKLM\\SOFTWARE\\Microsoft\\Windows\\"
+                 "CurrentVersion\\OEMInformation); la capacidad "
+                 "system.oem-information.identify lo declara"),
+    (9, "307"): ("atlas:toggle:KeyboardShortcuts",
+                 "falso negativo del paso 4e: la linea 'Keyboard Switching' del bloque "
+                 "AtlasOS es el manifiesto qol/set-keyboard-switching, cuyo script "
+                 "(set-keyboard-switching.ps1) no escribe valores propios: aplica el "
+                 "estado del toggle KeyboardShortcuts, que es el mismo efecto que la "
+                 "linea 308 y que declara system.keyboard-shortcuts.disable"),
     (9, "316"): ("atlas:manifest:qol/set-hidden-settings-pages",
                  "mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas "
                  "escribe SettingsPageVisibility en "

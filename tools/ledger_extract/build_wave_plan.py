@@ -47,7 +47,7 @@ PROPOSAL = [
     (10, "Explorador e interfaz: oleada 2, cerrada en el catálogo (29 de 29 "
          "líneas Mapped cubiertas). Sigue siendo la sección con más ítems de upstream "
          "pendientes: el trabajo que queda es de upstream, no del inventario."),
-    (9, "Registro y configuración: oleada 3, cerrada en el catálogo (27 de 27 líneas "
+    (9, "Registro y configuración: oleada 3, cerrada en el catálogo (30 de 30 líneas "
         "Mapped cubiertas con 18 capacidades). Quedan 3 ítems de upstream pendientes y "
         "ninguno es un valor de registro fijo: la indización se aplica como acción de "
         "TrustedInstaller, la página de «workplace» se edita de forma incremental "

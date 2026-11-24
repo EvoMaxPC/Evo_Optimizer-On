@@ -3,17 +3,17 @@
 Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a mano.
 
 - Filas de la conciliacion: **588**
-- `inventory/ledger/inventory-reconciliation.tsv` sha256 `bc188fdc0abe5e1931de3d847b6585a4c47506242f849981f21af17e0e910880`
+- `inventory/ledger/inventory-reconciliation.tsv` sha256 `876521e22780d898d48c8b8a16e3b25e744a0b694ccf42ab659a08f0cd7f2565`
 - Pins: Atlas `ec3c4058`, WinUtil `70c23c80`
 
 ## 1. Totales por estado
 
 | Estado | Filas | % |
 |---|---:|---:|
-| `Mapped` | 152 | 25.9 % |
+| `Mapped` | 155 | 26.4 % |
 | `Mapped-To-App` | 5 | 0.9 % |
 | `EVO-Exclusive` | 37 | 6.3 % |
-| `Absent-At-Pin` | 323 | 54.9 % |
+| `Absent-At-Pin` | 320 | 54.4 % |
 | `Informative-Header` | 71 | 12.1 % |
 | **Total** | **588** | 100.0 % |
 
@@ -29,7 +29,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 6 | 6 | 0 | 11 | 12 | 3 | 32 |
 | 7 | 7 | 0 | 10 | 10 | 2 | 29 |
 | 8 | 4 | 0 | 0 | 15 | 2 | 21 |
-| 9 | 27 | 0 | 0 | 29 | 2 | 58 |
+| 9 | 30 | 0 | 0 | 26 | 2 | 58 |
 | 10 | 29 | 0 | 0 | 17 | 2 | 48 |
 | 11 | 4 | 0 | 0 | 20 | 2 | 26 |
 | 12 | 5 | 0 | 0 | 21 | 2 | 28 |
@@ -38,7 +38,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 15 | 1 | 5 | 0 | 23 | 3 | 32 |
 | 16 | 5 | 0 | 0 | 35 | 4 | 44 |
 | 17 | 0 | 0 | 15 | 2 | 32 | 49 |
-| **Total** | **152** | **5** | **37** | **323** | **71** | **588** |
+| **Total** | **155** | **5** | **37** | **320** | **71** | **588** |
 
 ## 3. Cobertura WinUtil
 
@@ -55,7 +55,7 @@ Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; lo
 | Conjunto | Total | Mapeados | Cobertura |
 |---|---:|---:|---:|
 | Toggles | 91 | 12 | 13.2 % |
-| Entradas de manifiesto | 182 (177 habilitadas) | 1 | 0.5 % |
+| Entradas de manifiesto | 182 (177 habilitadas) | 3 | 1.6 % |
 | Valores `.reg` (`atlas-reg-entries.tsv`) | 327 | 0 | 0.0 % |
 | Ficheros `.reg` | 11 | — | n/d |
 | Efectos de script (`atlas-effects.tsv`) | 986 | 11 | 1.1 % |
@@ -65,11 +65,11 @@ Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; lo
 
 | Concepto | Valor |
 |---|---:|
-| `mapped_ids` distintos en toda la conciliacion | 97 |
+| `mapped_ids` distintos en toda la conciliacion | 99 |
 | De ellos, apps de WinUtil | 5 |
 | De ellos, items de WinUtil | 52 |
 | De ellos, toggles Atlas | 12 |
-| De ellos, entradas de manifiesto Atlas | 1 |
+| De ellos, entradas de manifiesto Atlas | 3 |
 | De ellos, operaciones de tweak de WinUtil | 16 |
 | De ellos, efectos de script de Atlas | 11 |
 | De ellos, valores `.reg` de Atlas | 0 |

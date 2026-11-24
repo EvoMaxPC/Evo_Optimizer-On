@@ -563,8 +563,8 @@ jobs:
           sec9 = cov["por_seccion"]["9"]
           ok = (cov["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
                 and cov["capacidades"] == 86
-                and sec9["lineas_mapped"] == 27
-                and sec9["cubiertas"] == 27
+                and sec9["lineas_mapped"] == 30
+                and sec9["cubiertas"] == 30
                 and sec9["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
                 and aud["sin_excepcion"] == 0

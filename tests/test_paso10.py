@@ -213,26 +213,30 @@ def test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9() -> None:
     assert vcc.main([]) == 0
     report = coverage_json()
     assert "9" in report["secciones_terminadas"]
-    assert report["por_seccion"]["9"] == {"lineas_mapped": 27, "cubiertas": 27,
+    assert report["por_seccion"]["9"] == {"lineas_mapped": 30, "cubiertas": 30,
                                          "huecos": 0}
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
     assert report["capacidades"] == 86
 
 
-def test_las_tres_correcciones_medidas_del_paso_10_estan_en_el_ledger() -> None:
+def test_las_correcciones_medidas_del_paso_10_estan_en_el_ledger() -> None:
     rows = {r["linea"]: r for r in section9_rows()}
     # 265 y 308 y 316 pasan de un mapeo equivocado a un mapeo medido.
     assert rows["265"]["status"] == "Mapped"
     assert rows["265"]["mapped_ids"] == "winutil:tweak:WPFTweaksServices"
     assert rows["308"]["mapped_ids"] == "atlas:toggle:KeyboardShortcuts"
     assert rows["316"]["mapped_ids"] == "atlas:manifest:qol/set-hidden-settings-pages"
+    # Tres falsos negativos del paso 4e que el pin sí implementa.
+    assert rows["269"]["mapped_ids"] == "atlas:manifest:qol/system/disable-wpbt"
+    assert rows["302"]["mapped_ids"] == "atlas:manifest:misc/config-oem-information"
+    assert rows["307"]["mapped_ids"] == "atlas:toggle:KeyboardShortcuts"
     # 278 sale de Mapped: el pin no tiene esa función (medido, con motivo).
     assert rows["278"]["status"] == "Absent-At-Pin"
     assert "System Tray Configuration" in rows["278"]["texto"]
     assert "bandeja" in rows["278"]["rationale"]
     mapped = [r for r in section9_rows() if r["status"] == "Mapped"]
-    assert len(mapped) == 27
+    assert len(mapped) == 30
     assert len(section9_rows()) == 58
 
 
@@ -266,8 +270,8 @@ def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> No
             capture_output=True, text=True, check=False)
         assert result.returncode == 0, (script, result.stderr)
     plan = PLAN.read_text(encoding="utf-8")
-    assert "oleada 3, cerrada en el catálogo (27 de 27" in plan
-    assert "27 | 0 | 0 | 29" in plan            # fila de la sección 9
+    assert "oleada 3, cerrada en el catálogo (30 de 30" in plan
+    assert "| 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |" in plan   # fila de §9
     ranges = RANGES.read_text(encoding="utf-8")
     assert "**86** capacidades" in ranges
     assert "`system.hibernation.hide`" in ranges

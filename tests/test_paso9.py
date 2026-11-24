@@ -277,7 +277,7 @@ def test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10() -> None:
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
     assert report["capacidades"] == 86
-    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 27 + 29
+    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 30 + 29
 
 
 def test_la_seccion_10_del_ledger_tiene_29_mapped_y_ninguna_queda_absente() -> None:

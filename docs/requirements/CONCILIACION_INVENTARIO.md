@@ -10,10 +10,10 @@ Total: **588** líneas no vacías.
 
 | estado | líneas | qué significa |
 |---|---:|---|
-| `Mapped` | 152 | existe como tweak/toggle/servicio/clave en el pin, con id |
+| `Mapped` | 155 | existe como tweak/toggle/servicio/clave en el pin, con id |
 | `Mapped-To-App` | 5 | entrada de `winutil-apps.tsv` (sección 15) |
 | `EVO-Exclusive` | 37 | requisito propio de EVO |
-| `Absent-At-Pin` | 323 | nombrado en el inventario, no existe en el pin |
+| `Absent-At-Pin` | 320 | nombrado en el inventario, no existe en el pin |
 | `Informative-Header` | 71 | encabezado, nota o cabecera de tabla |
 
 ## Tabla 17 × 5
@@ -28,7 +28,7 @@ Total: **588** líneas no vacías.
 | 6 | OPTIMIZACIÓN GAMING | 6 | 0 | 11 | 12 | 3 | 32 |
 | 7 | MEMORIA Y APLICACIONES EN SEGUNDO PLANO | 7 | 0 | 10 | 10 | 2 | 29 |
 | 8 | ADMINISTRACIÓN DE INICIO Y APAGADO | 4 | 0 | 0 | 15 | 2 | 21 |
-| 9 | REGISTRO DE WINDOWS Y CONFIGURACIÓN DEL SIST | 27 | 0 | 0 | 29 | 2 | 58 |
+| 9 | REGISTRO DE WINDOWS Y CONFIGURACIÓN DEL SIST | 30 | 0 | 0 | 26 | 2 | 58 |
 | 10 | EXPLORADOR DE ARCHIVOS E INTERFAZ | 29 | 0 | 0 | 17 | 2 | 48 |
 | 11 | RED Y CONECTIVIDAD | 4 | 0 | 0 | 20 | 2 | 26 |
 | 12 | WINDOWS UPDATE Y MANTENIMIENTO | 5 | 0 | 0 | 21 | 2 | 28 |
@@ -37,7 +37,7 @@ Total: **588** líneas no vacías.
 | 15 | ADMINISTRACIÓN DE APLICACIONES | 1 | 5 | 0 | 23 | 3 | 32 |
 | 16 | FUNCIONES DE INSTALACIÓN Y ADMINISTRACIÓN AV | 5 | 0 | 0 | 35 | 4 | 44 |
 | 17 | CAPACIDADES ADICIONALES QUE NO DEBEMOS PERDE | 0 | 0 | 15 | 2 | 32 | 49 |
-| **Σ** | | 152 | 5 | 37 | 323 | 71 | **588** |
+| **Σ** | | 155 | 5 | 37 | 320 | 71 | **588** |
 
 ## Reglas aplicadas
 
