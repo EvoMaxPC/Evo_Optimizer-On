@@ -1,12 +1,12 @@
-Build started 11/24/2026 10:24:13 PM.
+Build started 11/24/2026 10:29:35 PM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\bin\Release\net10.0-windows\Evo.Catalog.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.21]   Discovering: Evo.Catalog.Tests
-[xUnit.net 00:00:00.29]   Discovered:  Evo.Catalog.Tests
-[xUnit.net 00:00:00.30]   Starting:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [139 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [< 1 ms]
+[xUnit.net 00:00:00.14]   Discovering: Evo.Catalog.Tests
+[xUnit.net 00:00:00.23]   Discovered:  Evo.Catalog.Tests
+[xUnit.net 00:00:00.24]   Starting:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [181 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry.") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry/DiagTrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: ".privacy.telemetry") [< 1 ms]
@@ -14,69 +14,69 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy telemetry") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry_diagtrack") [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [8 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SymmetricConflictPassesValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [2 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoDanglingReferences [201 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SelfDependencyIsACycle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.DuplicateIdsFailValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [4 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForReversibleRiskFails [2 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ValidIdWithDashesPassesThePattern [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.IrreversibleHighWithNoneIsValidUnderAdr0003 [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.IrreversibleHighWithNoneIsValidUnderAdr0003 [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.CriticalRiskWithTypeOperationNamePasses [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.AcyclicDependencyChainPassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestAsymmetricConflict_FailsValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.MissingReversibilityFailsValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [164 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [3 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [1 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [238 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [15 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ValuesAreCopiedFromThePinLiterally [63 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_LoadsAndValidates [10 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [22 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [5 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_LoadsAndValidates [62 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [1 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [176 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [3 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_LoadsAndValidates [18 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [11 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoDanglingReferences [14 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_PrivilegeMatchesTheHivesItWrites [27 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk [10 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EveryActionTouchesExactlyOneValue [14 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ValuesAreCopiedFromThePinLiterally [46 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ClassicContextMenuIsWindows11Only [11 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_LoadsAndValidates [6 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EngineContractIsClean [4 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_IdsFollowTheContract [8 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_UndoRestoresPreviousValuesExactly [13 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_AtlasCapabilitiesQuoteTheirState [10 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ValueDeviationsAreDeclared [2 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ProvenanceQuotesPinAndToggleState [12 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_UndoRestoresPreviousValuesExactly [9 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SpecifiedCapabilitiesSayWhatIsMissing [9 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EveryRegistryActionTouchesExactlyOneValue [3 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EngineContractIsClean [3 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SecurityReductionIsDeclaredAndBounded [10 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SupportedBuildsAreExplicitAndJustified [20 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceActionsCarryTheStartupType [12 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_PrivilegeMatchesWhatItTouches [6 ms]
-[xUnit.net 00:00:00.69]   Finished:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceUndoRestoresTheStartupType [6 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SettingsPageVisibilityIsTheWholePinList [2 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SupportedBuildsAreExplicitAndJustified [10 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_IdsFollowTheContract [4 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_PrivilegeMatchesTheHivesItWrites [23 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_UndoRestoresPreviousValuesExactly [39 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk [18 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ProvenanceQuotesPinAndToggleState [14 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EveryActionTouchesExactlyOneValue [18 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SpecifiedCapabilitiesSayWhatIsMissing [27 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EveryRegistryActionTouchesExactlyOneValue [5 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ClassicContextMenuIsWindows11Only [18 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EngineContractIsClean [7 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EngineContractIsClean [6 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_IdsFollowTheContract [10 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_AtlasCapabilitiesQuoteTheirState [5 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SecurityReductionIsDeclaredAndBounded [21 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ValueDeviationsAreDeclared [5 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_UndoRestoresPreviousValuesExactly [13 ms]
+[xUnit.net 00:00:00.79]   Finished:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceActionsCarryTheStartupType [25 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_PrivilegeMatchesWhatItTouches [16 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceUndoRestoresTheStartupType [9 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SettingsPageVisibilityIsTheWholePinList [4 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SupportedBuildsAreExplicitAndJustified [55 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SupportedBuildsAreExplicitAndJustified [23 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_IdsFollowTheContract [9 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Catalog.Tests\Evo.Catalog.Tests.trx
 
 Test Run Successful.
 Total tests: 62
      Passed: 62
- Total time: 1.1782 Seconds
+ Total time: 1.3360 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.59
+Time Elapsed 00:00:02.62
