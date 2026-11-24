@@ -51,6 +51,17 @@ public sealed class WindowsReleaseCatalogTests
     }
 
     [Fact]
+    public void ElTopeDeLaPoliticaAcotaElRangoAbierto()
+    {
+        var catalog = WindowsReleaseCatalog.LoadFromFile(CatalogPath);
+
+        Assert.Equal(27999, catalog.MaxSupportedBuild);
+        Assert.NotNull(catalog.Find(27999));
+        Assert.Null(catalog.Find(28000));
+        Assert.Null(catalog.Find(0));
+    }
+
+    [Fact]
     public void InstallationTypeServerNoEsValidoEnElCatalogo()
     {
         var json = File.ReadAllText(CatalogPath)

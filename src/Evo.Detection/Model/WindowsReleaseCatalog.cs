@@ -204,9 +204,25 @@ public sealed class WindowsReleaseCatalog
         return release.BuildMax is int max && max > policyMax;
     }
 
-    /// <summary>Entrada cuyo rango contiene el build, o null.</summary>
-    public WindowsRelease? Find(int build) =>
-        Releases.FirstOrDefault(r => r.MatchesBuild(build));
+    /// <summary>
+    /// Entrada cuyo rango contiene el build, o null. Aplica el tope
+    /// <see cref="MaxSupportedBuild"/> también a los rangos abiertos
+    /// (fail-closed: por encima del tope el build es desconocido).
+    /// </summary>
+    public WindowsRelease? Find(int build)
+    {
+        if (build <= 0)
+        {
+            return null;
+        }
+
+        if (MaxSupportedBuild > 0 && build > MaxSupportedBuild)
+        {
+            return null;
+        }
+
+        return Releases.FirstOrDefault(r => r.MatchesBuild(build));
+    }
 
     /// <summary>Tope de builds aceptados; 0 = sin tope.</summary>
     public int MaxSupportedBuild => Policy.MaxSupportedBuild;

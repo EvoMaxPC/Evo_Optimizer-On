@@ -121,7 +121,9 @@ public sealed class WindowsDetectorTests
     [InlineData(22000)]
     [InlineData(22621)]
     [InlineData(26120)]
+    [InlineData(28000)]
     [InlineData(30000)]
+    [InlineData(99999)]
     public void BuildsFueraDeRangoSonRechazadas(int build)
     {
         var result = Detect(build);
