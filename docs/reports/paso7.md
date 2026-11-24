@@ -60,17 +60,29 @@ edición, InstallationType, arquitectura y privilegios mutables).
 coloración, informa la ruta del ciclo), `R-RISK`, `R-BUILD`, `R-REF`,
 `R-ACTION` y `R-STATE`.
 
-## CI (SHA final)
+## CI (SHA final `a404aff`)
 
 ```
-$ gh api "repos/.../actions/runs?head_sha=24ddbda…"
-id=45310547680 dotnet-ci      event=pull_request conclusion=success
-id=45310542428 dotnet-ci      event=push         conclusion=success
-id=45310542412 ledger-verify  event=push         conclusion=success
-$ (ci-report) pytest.txt → 239 passed · pytest_exit=0
+$ gh api "repos/.../actions/runs?head_sha=a404aff…"
+id=45311553108 dotnet-ci      event=pull_request conclusion=success
+id=45311545687 dotnet-ci      event=push         conclusion=success
+id=45311545753 ledger-verify  event=push         conclusion=success
+$ gh api .../actions/runs/45311545687/jobs
+dotnet (windows-2025): success
+dotnet (windows-11-arm): success
 ```
 
-Cuentas xUnit medidas en el código: 19 + 35 + 18 + 32 = **104 casos** (≥60).
+`ci-report` (run `45311545687`), idéntico en los dos runners:
+
+```
+Evo.Catalog.Tests:   total=32 passed=32 failed=0
+Evo.Core.Tests:      total=19 passed=19 failed=0
+Evo.Detection.Tests: total=35 passed=35 failed=0
+Evo.Engine.Tests:    total=18 passed=18 failed=0
+total=104 passed=104 failed=0
+```
+
+`ledger-verify` run `45311545753`: `239 passed` · `pytest_exit=0`.
 
 ## Incidencias reales detectadas por CI
 
@@ -81,7 +93,9 @@ Cuentas xUnit medidas en el código: 19 + 35 + 18 + 32 = **104 casos** (≥60).
 3. `TestValidCatalog_PassesValidation` declaraba un conflicto asimétrico → el
    validador tenía razón; se corrigió el fixture.
 4. El resumen de tests se pisaba entre proyectos (`results.trx` compartido) →
-   un directorio y un `.trx` por proyecto + `test-per-project.txt`.
+   un directorio y un `.trx` por proyecto; y el `Get-ChildItem` del resumen no
+   recursaba, así que seguía leyendo 0 ficheros → `-Recurse` y
+   `test-per-project.txt` (arreglado y verificado con 104/104).
 
 ## Desviaciones
 
