@@ -88,15 +88,20 @@ def test_cada_excepcion_tiene_motivo_y_evidencia_con_ruta_del_pin() -> None:
                          deviation["evidence"]), deviation["evidence"]
 
 
-def test_el_caso_bingsearch_no_se_copia_porque_activa_bing() -> None:
-    """BingSearchEnabled: catálogo no lo escribe; la política de Atlas sí."""
-    caps = catalog_capabilities()
-    assert not any(
-        action.get("valueName") == "BingSearchEnabled"
-        for cap in caps
+def test_el_caso_bingsearch_escribe_el_estado_apagado_del_toggle() -> None:
+    """Paso 8c: BingSearchEnabled=0 es el estado APAGADO de WPFToggleBingSearch.
+
+    En el pin, `Value=1` es la casilla ENCENDIDA (activa Bing) y `OriginalValue=0`
+    la apagada; copiar el `Value` invertiría el efecto, así que el catálogo
+    escribe 0 y lo declara como desviación de significado de interruptor.
+    """
+    values = {
+        action.get("value")
+        for cap in catalog_capabilities()
         for action in cap["actions"]
-        if action.get("type") == "registry"
-    ), "el catálogo no debe escribir BingSearchEnabled (en el pin aplica 1 = activar)"
+        if action.get("type") == "registry" and action.get("valueName") == "BingSearchEnabled"
+    }
+    assert values == {"0"}, values
 
 
 def test_EnableActivityFeed_del_catalogo_es_0_y_la_fuente_discrepa() -> None:
@@ -189,7 +194,7 @@ def test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada() -
     assert caps["privacy.telemetry.dmwappush"]["state"] == "Specified"
     assert "NO VERIFICADO" in caps["privacy.telemetry.dmwappush"]["provenance"]
     # Las que solo existen como script en el pin -> Specified.
-    for capability_id in ("cleanup.winsxs.resetbase", "debloat.edge.remove",
+    for capability_id in ("cleanup.winsxs.resetbase", "debloat.windows.ai.recall", "debloat.edge.remove",
                           "debloat.store.search", "debloat.explorer.auto-folder-discovery",
                           "debloat.drivers.razer", "debloat.drivers.logitech",
                           "debloat.network.adobe-blocklist", "debloat.start.layout"):
@@ -197,7 +202,7 @@ def test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada() -
 
     implemented = [c for c in caps.values() if c["state"] == "Implemented"]
     specified = [c for c in caps.values() if c["state"] == "Specified"]
-    assert len(implemented) + len(specified) == len(caps) == 38
+    assert len(implemented) + len(specified) == len(caps) == 39
 
 
 def test_winsxs_resetbase_es_irreversible_y_conflicta_con_la_variante_sin_resetbase() -> None:

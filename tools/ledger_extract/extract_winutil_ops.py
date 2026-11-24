@@ -40,8 +40,18 @@ LEDGER = ROOT / "inventory" / "ledger"
 
 from extract_atlas_effects import detect  # noqa: E402  (mismas reglas)
 
-COLUMNS = ("item_id", "tweak_id", "kind", "direction", "target", "name",
+COLUMNS = ("item_id", "tweak_id", "tweak_type", "kind", "direction", "target", "name",
            "value", "original_value", "type", "effect_types", "sha256")
+
+# `Type` de la entrada en tweaks.json: gobierna el widget de la UI y, con él,
+# cuál de los dos valores del registro es el estado ENCENDIDO (ver
+# docs/reports/paso8c.md, T1a). Se normaliza aquí para no propagar variantes.
+TWEAK_TYPES = ("Toggle", "Button", "Combobox")
+
+
+def tweak_type(body: dict) -> str:
+    declared = str(body.get("Type") or "").strip()
+    return declared if declared in TWEAK_TYPES else "none"
 
 APPS_COLUMNS = ("item_id", "source", "source_ref", "label", "kind", "sha256",
                 "category", "winget", "choco")
@@ -80,12 +90,13 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
     with_undo = 0
     script_only = 0
     for tid, body in sorted(data.items()):
+        ttype = tweak_type(body)
         structured = 0
         # registry (solo apply: el undo vive en OriginalValue)
         for reg in body.get("registry") or []:
             payload = f"{reg.get('Path')}|{reg.get('Name')}|{reg.get('Value')}|{reg.get('Type')}"
             rows.append({
-                "tweak_id": tid, "kind": "registry", "direction": "apply",
+                "tweak_id": tid, "tweak_type": ttype, "kind": "registry", "direction": "apply",
                 "target": reg.get("Path", ""), "name": reg.get("Name", ""),
                 "value": str(reg.get("Value", "")),
                 "original_value": str(reg.get("OriginalValue", "")),
@@ -98,7 +109,7 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
         for svc in body.get("service") or []:
             payload = f"{svc.get('Name')}|{svc.get('StartupType')}"
             rows.append({
-                "tweak_id": tid, "kind": "service", "direction": "apply",
+                "tweak_id": tid, "tweak_type": ttype, "kind": "service", "direction": "apply",
                 "target": "", "name": svc.get("Name", ""),
                 "value": svc.get("StartupType", ""),
                 "original_value": svc.get("OriginalType", ""),
@@ -111,7 +122,7 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
         # `function` el nombre de la funcion que las instala.
         for feat in body.get("feature") or []:
             rows.append({
-                "tweak_id": tid, "kind": "feature", "direction": "apply",
+                "tweak_id": tid, "tweak_type": ttype, "kind": "feature", "direction": "apply",
                 "target": "", "name": str(feat), "value": "",
                 "original_value": "", "type": "", "effect_types": "",
                 "sha256": sha_text(f"feature|{feat}"),
@@ -122,7 +133,7 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
         for item in body.get("appx") or []:
             name = item.get("Name") or item.get("PackageName") or ""
             rows.append({
-                "tweak_id": tid, "kind": "appx", "direction": "apply",
+                "tweak_id": tid, "tweak_type": ttype, "kind": "appx", "direction": "apply",
                 "target": "", "name": name, "value": "",
                 "original_value": "", "type": "", "effect_types": "",
                 "sha256": sha_text(f"appx|{name}"),
@@ -134,7 +145,7 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
         # codigo de WinUtil, aqui solo se declara el identificador).
         for name in ([body["PackageId"]] if body.get("PackageId") else []):
             rows.append({
-                "tweak_id": tid, "kind": "appx-package", "direction": "apply",
+                "tweak_id": tid, "tweak_type": ttype, "kind": "appx-package", "direction": "apply",
                 "target": body.get("StoreId", ""), "name": name, "value": "",
                 "original_value": "", "type": "", "effect_types": "",
                 "sha256": sha_text(f"appx-package|{name}|{body.get('StoreId','')}"),
@@ -147,7 +158,7 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
                 name = item.get("Name") or item.get("PackageName") or ""
                 payload = f"{kind}|{name}|{json.dumps(item, sort_keys=True)}"
                 rows.append({
-                    "tweak_id": tid, "kind": kind, "direction": "apply",
+                    "tweak_id": tid, "tweak_type": ttype, "kind": kind, "direction": "apply",
                     "target": item.get("Path", "") or item.get("Path", ""),
                     "name": name, "value": str(item.get("Value", "")),
                     "original_value": str(item.get("OriginalValue", "")),
@@ -167,7 +178,7 @@ def tweak_ops(data: dict) -> tuple[list[dict], dict]:
             nlines, types = script_effects(code)
             payload = f"{tid}|{field}|{nlines}"
             rows.append({
-                "tweak_id": tid, "kind": "script", "direction": direction,
+                "tweak_id": tid, "tweak_type": ttype, "kind": "script", "direction": direction,
                 "target": "", "name": field, "value": str(nlines),
                 "original_value": "", "type": "", "effect_types": "|".join(types),
                 "sha256": sha_text(code),

@@ -159,7 +159,8 @@ distinta, requeriría un fichero de licencia propio y no lo tiene.
 | encabezado | `GNU GENERAL PUBLIC LICENSE` / `Version 3, 29 June 2007` (texto oficial, sin añadidos) |
 | licencia declarada | **GPL-3.0-only** |
 
-**Pendiente de confirmación del responsable.** La decisión se escribió en el
+**Confirmado por el responsable** el 2026-11-24 (reloj del agente, UTC). La decisión se escribió en el
 paso 4d por indicación del encargo (ADR-0002: los datos de Atlas entran en el
-catálogo y Atlas es `GPL-3.0-only`). No hay `THIRD_PARTY_NOTICES.md` todavía:
+catálogo y Atlas es `GPL-3.0-only`) y el responsable la ratificó de forma
+explícita en el paso 8c. No hay `THIRD_PARTY_NOTICES.md` todavía:
 se creará en la base .NET.

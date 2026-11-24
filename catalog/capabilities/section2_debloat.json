@@ -348,7 +348,7 @@
     {
       "id": "debloat.start.websearch",
       "name": "Quitar la búsqueda web del menú Inicio",
-      "description": "Aplica las 10 claves de Atlas privacy/search-settings: sin búsqueda en la nube ni historial de búsqueda, sin resultados web (DisableSearchBoxSuggestions=1, la única que obedece cualquier edición), sin sugerencias dinámicas y la búsqueda como icono en la barra de tareas. NO se usa el valor BingSearchEnabled de WinUtil: en el pin WPFToggleBingSearch aplica 1 (activar), lo contrario de lo que anuncia su etiqueta (desviacion 4). Reversible.",
+      "description": "Aplica las 10 claves de Atlas privacy/search-settings (sin búsqueda en la nube ni historial, sin resultados web con DisableSearchBoxSuggestions=1, sin sugerencias dinámicas, búsqueda como icono) MÁS BingSearchEnabled=0, que en el pin de WinUtil es el estado APAGADO de WPFToggleBingSearch (Toggle: Value=1 = casilla encendida, OriginalValue=0 = apagada; Invoke-WinUtilTweaks.ps1:34-46 y Get-WinUtilToggleStatus.ps1:44). Se copia el estado apagado, no el encendido: el encendido deja la búsqueda web activa. Reversible con el diario.",
       "sectionId": 2,
       "risk": "Low",
       "securityImpact": "Neutral",
@@ -369,7 +369,7 @@
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1 (10 valores) + inventory/ledger/atlas-tweak-ops.tsv (10 ops de privacy/search-settings) + inventory/ledger/inventory-reconciliation.tsv linea 118 (Configure Windows Search Privacy). Nota: la linea 118 del inventario se mapea a WPFToggleBingSearch:registry:0 y a WPFTweaksTelemetry:registry:1. EVO cubre la linea con la politica de Atlas; el valor BingSearchEnabled del pin (apply=1) NO se copia porque activa la busqueda web, al contrario de lo que anuncia su etiqueta (desviacion 4); el otro mapped_id lo cubre privacy.diagnostic.data.level. ledger_refs: winutil:tweak-op:WPFToggleBingSearch:registry:0. Reversibilidad (ADR-0003): Reversible — 10 valores de busqueda; el diario restaura cada previo",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1 (10 valores) + inventory/ledger/atlas-tweak-ops.tsv (10 ops de privacy/search-settings) + inventory/ledger/inventory-reconciliation.tsv linea 118 (Configure Windows Search Privacy). Nota: la linea 118 del inventario se mapea a WPFToggleBingSearch:registry:0 y a WPFTweaksTelemetry:registry:1. EVO cubre la linea con la politica de Atlas; el valor BingSearchEnabled del pin (apply=1) NO se copia porque activa la busqueda web, al contrario de lo que anuncia su etiqueta (desviacion 4); el otro mapped_id lo cubre privacy.diagnostic.data.level. ledger_refs: winutil:tweak-op:WPFToggleBingSearch:registry:0 | winutil:tweak:WPFToggleBingSearch. Paso 8c: se añade BingSearchEnabled=0 desde el estado APAGADO del Toggle winutil:tweak:WPFToggleBingSearch (config/tweaks.json:1759-1770; Value=1 encendido, OriginalValue=0 apagado). Es una desviación de significado de interruptor declarada en catalog/exceptions/value-deviations.json. Reversibilidad (ADR-0003): Reversible — 10 valores de busqueda; el diario restaura cada previo",
       "actions": [
         {
           "type": "registry",
@@ -480,21 +480,32 @@
           "operation": "Set",
           "valueType": "DWord",
           "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 11,
+          "description": "BingSearchEnabled=0 (estado APAGADO de WPFToggleBingSearch)",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+          "valueName": "BingSearchEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
         }
       ]
     },
     {
-      "id": "debloat.windows.ai",
-      "name": "Desactivar y quitar las funciones de IA",
-      "description": "Desactiva Recall (DisableAIDataAnalysis=1, AllowRecallEnablement=0), el agente de Configuración, Click To Do, el Copilot de la barra de tareas (RemoveMicrosoftCopilotApp=1) y las funciones de IA del Bloc de notas, y oculta la página de componentes de IA. Quitar el paquete Copilot es irreversible; el resto es reversible con el diario. Limitación: RemoveMicrosoftCopilotApp sólo lo honran Enterprise y Education (lo dice Atlas).",
+      "id": "debloat.windows.ai.recall",
+      "name": "Desactivar Recall y las funciones de IA de Windows",
+      "description": "Desactiva el análisis de datos de IA (Recall) con DisableAIDataAnalysis=1 y AllowRecallEnablement=0, el agente de IA de Configuración, Click To Do, las funciones de IA del Bloc de notas y oculta la página de componentes de IA. Todo son políticas: se deshace con el diario. Alcance: las políticas WindowsAI sólo existen desde 24H2 (build 26100); en 23H2 no hay nada que desactivar, por eso no se declara 22631. El rango exacto de Click To Do y del agente de Configuración NO ESTÁ VERIFICADO en el pin (no hay guardas de build en sus .psd1): se declaran 26100/26200 por la política que las contiene, no por evidencia propia.",
       "sectionId": 2,
-      "risk": "High",
+      "risk": "Low",
       "securityImpact": "Neutral",
       "privilege": "Admin",
-      "restore": "None",
-      "reversibility": "Irreversible",
-      "confirmation": "SummaryAndRestorePoint",
-      "state": "Implemented",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Specified",
       "variants": [
         "Evo",
         "WinUtil",
@@ -503,11 +514,10 @@
       "conflictsWith": [],
       "dependsOn": [],
       "supportedBuilds": [
-        22631,
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/privacy/disable-recall-snap.psd1, privacy/disable-settings-agent.psd1, privacy/disable-click-to-do.psd1, qol/taskbar/disable-copilot.psd1 + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (SettingsPageVisibility=hide:aicomponents, WindowsNotepad\\DisableAIFeatures=1, Remove-AppxPackage *Copilot*) + inventory/ledger/atlas-tweak-ops.tsv. Reversibilidad (ADR-0003): Irreversible — quita el paquete Copilot de todos los usuarios; manda la parte irreversible",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/privacy/disable-recall-snap.psd1 (2 valores), privacy/disable-settings-agent.psd1 (1), privacy/disable-click-to-do.psd1 (2, uno de ellos delete en HKCU), Toggles/General/Recall.psd1:14-16 (comentario del pin: '0 = Recall cannot be enabled ... (24H2 26100.3915+)') + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (SettingsPageVisibility=hide:aicomponents, WindowsNotepad\\DisableAIFeatures=1). Rango: 24H2+ por la política WindowsAI; el rango de ClickToDo y SettingsAgent es NO VERIFICADO (sin MinBuild/MaxBuild ni guardas en el pin), de ahí State=Specified. Separada de debloat.copilot.remove en el paso 8c: aquí no se quita ningún paquete, sólo se configuran políticas, así que es Reversible (ADR-0003). ledger_refs: atlas:tweak:privacy/disable-recall-snap | atlas:tweak:privacy/disable-settings-agent | atlas:tweak:privacy/disable-click-to-do | winutil:tweak:WPFTweaksWindowsAI",
       "actions": [
         {
           "type": "registry",
@@ -556,7 +566,46 @@
         {
           "type": "registry",
           "order": 5,
-          "description": "Quitar la app Copilot (política)",
+          "description": "Desactivar las funciones de IA del Bloc de notas",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\WindowsNotepad",
+          "valueName": "DisableAIFeatures",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "debloat.copilot.remove",
+      "name": "Quitar Microsoft Copilot",
+      "description": "Aplica la política RemoveMicrosoftCopilotApp=1, quita el paquete Copilot de todos los usuarios y oculta su botón de la barra de tareas. Quitar el paquete es irreversible (ni el diario ni un punto de restauración lo devuelven: habría que reinstalarlo desde la Store), por eso la capacidad entera se declara Irreversible. Alcance medido: la política RemoveMicrosoftCopilotApp sólo la honran Enterprise y Education y Atlas la documenta como 25H2+ (qol/taskbar/disable-copilot.psd1:6); en builds < 26100 Copilot es un botón de la barra de tareas y el equivalente de Atlas es ShowCopilotButton=0 (Toggles/General/Copilot.ps1:48-52). Se declaran 22631/26100/26200 porque el paso cubierto por cada acción cambia con la build; el detalle por acción es NO VERIFICADO en el pin.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/qol/taskbar/disable-copilot.psd1 (RemoveMicrosoftCopilotApp=1; comentario '25H2+ ... only Enterprise and Education honour it') + Toggles/General/Copilot.psd1 (estado Disable: RemoveMicrosoftCopilotApp=1, ShowCopilotButton=0) + Toggles/General/Copilot.ps1:48-52 ('When the taskbar Copilot button is unavailable (24H2+), Copilot is a separate app'; $legacyTaskbarAvailable = WindowsBuild -lt 26100) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (InvokeScript con Get-AppxPackage -AllUsers *Copilot* y Remove-AppxPackage). Reversibilidad (ADR-0003): Irreversible — quitar el paquete de todos los usuarios no lo devuelve el diario. ledger_refs: atlas:toggle:Copilot | winutil:tweak:WPFTweaksWindowsAI",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Quitar la app Copilot (política de paquete)",
           "hive": "LocalMachine",
           "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
           "valueName": "RemoveMicrosoftCopilotApp",
@@ -565,30 +614,8 @@
           "value": "1"
         },
         {
-          "type": "registry",
-          "order": 6,
-          "description": "Desactivar las funciones de IA del Bloc de notas",
-          "hive": "LocalMachine",
-          "keyPath": "SOFTWARE\\Policies\\WindowsNotepad",
-          "valueName": "DisableAIFeatures",
-          "operation": "Set",
-          "valueType": "DWord",
-          "value": "1"
-        },
-        {
-          "type": "registry",
-          "order": 7,
-          "description": "Ocultar la página de componentes de IA en Configuración",
-          "hive": "LocalMachine",
-          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-          "valueName": "SettingsPageVisibility",
-          "operation": "Set",
-          "valueType": "String",
-          "value": "hide:aicomponents"
-        },
-        {
           "type": "command",
-          "order": 8,
+          "order": 2,
           "description": "Quitar el paquete Copilot de todos los usuarios",
           "fileName": "powershell.exe",
           "arguments": [
@@ -598,6 +625,17 @@
             "Get-AppxPackage -AllUsers *Copilot* | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue"
           ],
           "ignoreExitCode": true
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Ocultar el botón de Copilot en la barra de tareas",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+          "valueName": "ShowCopilotButton",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
         }
       ]
     },

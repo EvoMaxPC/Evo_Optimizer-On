@@ -13,12 +13,23 @@ Para cada `RegistryAction` de `catalog/capabilities/*.json`:
      `tools/ledger_extract/fetch_upstream.py`; el literal se lee del pin y NO se
      escribe al ledger (se guarda solo el valor comparado en el TSV de salida).
 
+Significado de estado (T1a del paso 8c, medido en el pin):
+- WinUtil `Invoke-WinUtilTweaks.ps1:34-46` escribe `Value` al aplicar y
+  `OriginalValue` al deshacer; `Get-WinUtilToggleStatus.ps1:44` marca la casilla
+  como encendida cuando el registro vale exactamente `Value`. Por tanto, en una
+  entrada con `Type: Toggle`, **`Value` es el estado ENCENDIDO** de la casilla y
+  `OriginalValue` el APAGADO. En una entrada sin `Type` (botón de "aplicar") no
+  hay casilla que interpretar: `Value` es lo que se escribe y `OriginalValue` lo
+  que se restaura al deshacer.
+
 Relación de cada fila:
-    equals-apply    el valor del catálogo coincide con el que aplica la fuente
-    equals-original coincide con el `OriginalValue` de la fuente (sospechoso)
+    equals-apply    coincide con `Value` de una fuente sin `Type` (botón)
+    equals-on       coincide con `Value` de un Toggle, que es el estado ENCENDIDO
+    equals-off      coincide con `OriginalValue` de un Toggle (estado APAGADO)
+    equals-original coincide con `OriginalValue` de una fuente sin `Type`
     differs         no coincide con ninguno de los dos
     no-source       ninguna fuente toca esa tupla
-    ambiguous       dos fuentes tocan la tupla y no coinciden entre sí
+    ambiguous       varias fuentes la tocan y no coinciden entre sí
 
 Cualquier fila `equals-original` o `differs` exige una excepción razonada en
 `catalog/exceptions/value-deviations.json`; si falta, el script sale con 1.
@@ -49,8 +60,12 @@ UPSTREAM = Path("/tmp/upstream")
 ATLAS_TWEAKS = "package/Executables/AtlasModules/Scripts/Tweaks"
 
 COLUMNS = ("capability_id", "hive", "key", "name", "catalog_value", "source",
-           "source_ref", "source_apply_value", "source_original_value", "relation")
-RELATIONS = ("equals-apply", "equals-original", "differs", "no-source", "ambiguous")
+           "source_ref", "source_apply_value", "source_original_value",
+           "source_tweak_type", "relation")
+RELATIONS = ("equals-apply", "equals-on", "equals-off", "equals-original",
+             "differs", "no-source", "ambiguous")
+# Relaciones que exigen una excepción razonada en value-deviations.json.
+NEEDS_EXCEPTION = ("equals-off", "equals-original", "differs")
 MAX_CELL = 400
 
 HIVE_ALIASES = {
@@ -134,6 +149,9 @@ def load_winutil() -> dict[tuple[str, str, str], list[dict]]:
             entry = {
                 "source": "winutil",
                 "source_ref": row["item_id"],
+                # `tweak_type` es la columna nueva del paso 8c: distingue un
+                # Toggle (Value = casilla encendida) de un boton de aplicar.
+                "tweak_type": row.get("tweak_type", "") or "none",
                 "apply": norm_value(row["value"]),
                 "original": norm_value(row["original_value"]),
             }
@@ -232,27 +250,32 @@ def load_atlas() -> dict[tuple[str, str, str], list[dict]]:
 def classify(catalog_value: str, candidates: list[dict]) -> tuple[str, str, str, str, str]:
     """Devuelve (relation, source, source_ref, apply, original)."""
     if not candidates:
-        return ("no-source", "", "", "", "")
+        return ("no-source", "", "", "", "", "")
 
-    distinct = {(c["source"], c["source_ref"], c["apply"]) for c in candidates}
+    distinct = {(c["source"], c["source_ref"], c["apply"], c.get("tweak_type", ""))
+                for c in candidates}
     applies = {c["apply"] for c in candidates}
     if len(applies) > 1:
         first = sorted(candidates, key=lambda c: (c["source"], c["source_ref"]))[0]
         return ("ambiguous", first["source"], first["source_ref"],
-                "|".join(sorted(applies)), "")
+                "|".join(sorted(applies)), "", first.get("tweak_type", ""))
 
     first = sorted(candidates, key=lambda c: (c["source"], c["source_ref"]))[0]
     apply_value = first["apply"]
     original = first["original"]
+    tweak_type = first.get("tweak_type", "")
+    is_toggle = tweak_type == "Toggle"
 
     if catalog_value == apply_value:
-        relation = "equals-apply"
+        # En un Toggle, Value es la casilla ENCENDIDA; en un boton, lo que aplica.
+        relation = "equals-on" if is_toggle else "equals-apply"
     elif original and catalog_value == original:
-        relation = "equals-original"
+        relation = "equals-off" if is_toggle else "equals-original"
     else:
         relation = "differs"
     _ = distinct
-    return (relation, first["source"], first["source_ref"], apply_value, original)
+    return (relation, first["source"], first["source_ref"], apply_value, original,
+            tweak_type)
 
 
 def load_exceptions() -> set[tuple[str, str, str, str]]:
@@ -273,7 +296,7 @@ def build_rows() -> list[dict]:
     for action in catalog_registry_actions():
         key = (action["hive"], action["key"], action["name"].lower())
         candidates = winutil.get(key, []) + atlas.get(key, [])
-        relation, source, source_ref, apply_value, original = classify(
+        relation, source, source_ref, apply_value, original, tweak_type = classify(
             action["catalog_value"], candidates)
         rows.append(
             {
@@ -286,6 +309,7 @@ def build_rows() -> list[dict]:
                 "source_ref": source_ref,
                 "source_apply_value": apply_value,
                 "source_original_value": original,
+                "source_tweak_type": tweak_type,
                 "relation": relation,
             }
         )
@@ -310,14 +334,14 @@ def main(argv: list[str] | None = None) -> int:
     distribution = Counter(r["relation"] for r in rows)
     unsafe = [
         r for r in rows
-        if r["relation"] in ("equals-original", "differs")
+        if r["relation"] in NEEDS_EXCEPTION
         and (r["capability_id"], r["hive"], norm_key(r["key"]), r["name"]) not in exceptions
     ]
     stale = [
         key for key in sorted(exceptions)
         if not any(
             (r["capability_id"], r["hive"], norm_key(r["key"]), r["name"]) == key
-            and r["relation"] in ("equals-original", "differs")
+            and r["relation"] in NEEDS_EXCEPTION
             for r in rows
         )
     ]
@@ -337,7 +361,7 @@ def main(argv: list[str] | None = None) -> int:
         "excepciones": len(exceptions),
         "sin_excepcion": len(unsafe),
         "excepciones_obsoletas": [list(k) for k in stale],
-        "seguras": len(rows) - distribution.get("equals-original", 0) - distribution.get("differs", 0),
+        "seguras": len(rows) - sum(distribution.get(r, 0) for r in NEEDS_EXCEPTION),
     }
 
     ok = not unsafe and not stale

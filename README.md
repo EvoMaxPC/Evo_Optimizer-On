@@ -3,7 +3,7 @@
 Optimizador **exclusivo para Windows** (10 22H2 · 11 23H2/24H2/25H2/26H2),
 C# / .NET 10 LTS (`net10.0-windows`) con UI WPF. Licencia **GPL-3.0-only**
 (ver `LICENSE`; motivo: AtlasOS es `GPL-3.0-only` y sus datos entran en el
-catálogo — **decisión pendiente de confirmación del responsable**,
+catálogo — **confirmado por el responsable** el 2026-11-24 (reloj del agente, UTC),
 `docs/legal/upstream-licenses.md`).
 
 > Estado: **Paso 1** — estructura, contrato, licencias, fijación de upstream y

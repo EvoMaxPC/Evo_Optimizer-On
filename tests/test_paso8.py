@@ -115,16 +115,21 @@ def test_los_tres_ficheros_existen_y_declaran_metadatos(section: int) -> None:
 
 @pytest.mark.parametrize("section", [1, 2, 3])
 def test_ids_del_paso_8_siguen_presentes(section: int) -> None:
-    # La oleada 1b añade capacidades: los 24 ids del paso 8 se mantienen.
-    ids = [cap["id"] for cap in load(section)["capabilities"]]
-    assert set(EXPECTED_IDS[section]) <= set(ids), "falta algún id del paso 8"
+    # La oleada 1b añade capacidades y el 8c parte debloat.windows.ai en dos.
+    ids = set(cap["id"] for cap in load(section)["capabilities"])
+    for expected in EXPECTED_IDS[section]:
+        if expected == "debloat.windows.ai":
+            # Partida en el paso 8c: las dos mitades cubren la misma funcion.
+            assert {"debloat.windows.ai.recall", "debloat.copilot.remove"} <= ids
+        else:
+            assert expected in ids, f"falta {expected} del paso 8"
 
 
-def test_hay_38_capacidades_y_ningun_id_repetido() -> None:
-    # 24 de la oleada 1 (paso 8) + 14 de la oleada 1b (paso 8b).
+def test_hay_39_capacidades_y_ningun_id_repetido() -> None:
+    # 24 del paso 8 + 14 del paso 8b + 1 neta del 8c (windows.ai -> .recall y .remove).
     ids = [cap["id"] for cap in all_capabilities()]
-    assert len(ids) == 38
-    assert len(set(ids)) == 38
+    assert len(ids) == 39
+    assert len(set(ids)) == 39
     for capability_id in ids:
         assert ID_PATTERN.match(capability_id), capability_id
 

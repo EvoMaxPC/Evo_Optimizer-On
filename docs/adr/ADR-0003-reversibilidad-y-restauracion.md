@@ -80,3 +80,41 @@ test; el validador nunca ve el valor por defecto.
 - Cambios de `Risk`/`Restore`/`Confirmation` respecto al paso 8: ver
   `docs/reports/paso8b.md`, tabla T2. Ningún cambio sube el riesgo sin bajar el
   `Restore` correspondiente.
+
+## Anexo (paso 8c) — las 13 capacidades `Irreversible`, una a una
+
+Tabla **documental**: no reclasifica nada. «Vía de recuperación» dice qué haría
+falta para volver al estado anterior, no si EVO puede hacerlo (el motor sólo
+revierte lo que tiene en el diario). Cuando el pin no dice nada, la celda dice
+**NO VERIFICADO**.
+
+| Capacidad | Por qué es irreversible | ¿Vía de recuperación? | Reversibilidad si se reclasificara |
+| --- | --- | --- | --- |
+| `cleanup.recycle.bin` | Vacía la papelera (`StateFlags0064=2`): los ficheros borrados no están en ningún otro sitio. | No hay. Sólo recuperación forense del volumen. | Se queda `Irreversible`. |
+| `cleanup.winsxs.component` | `dism /StartComponentCleanup` elimina las versiones sustituidas de los componentes; Windows no las reconstruye sin volver a aplicar actualizaciones. | Parcial: Windows Update puede volver a descargar los paquetes, pero la copia local no se regenera. | Se queda `Irreversible`. |
+| `cleanup.winsxs.resetbase` | Igual que la anterior **más** `/ResetBase`: marca la línea base y las actualizaciones ya instaladas dejan de poder desinstalarse. | Sólo reinstalar el sistema o restaurar una imagen. | Se queda `Irreversible`. |
+| `debloat.appx.consumer` | Desinstala paquetes provisionados y de usuario; los datos locales del usuario se pierden. | Sí para el paquete (Store/winget), **no** para los datos. | Se queda `Irreversible` (la pérdida de datos manda). |
+| `debloat.cortana.remove` | Desinstala Cortana; Microsoft la retiró del Store para Windows 11. | Parcial: en Windows 10 vuelve desde el Store; en Windows 11 el paquete ya no está publicado. **NO VERIFICADO** para cada build del rango. | `Reversible` sólo si se acota a las builds donde el paquete sigue disponible. |
+| `debloat.onedrive.uninstall` | Ejecuta el desinstalador de OneDrive y deniega el acceso al binario con `icacls /deny`. | Sí: OneDrive se reinstala desde su instalador oficial. El `deny` lo tendría que quitar el usuario (el diario no lo deshace). | Candidata a `Reversible` **si** se modela el `icacls /grant` inverso; hoy no existe. |
+| `debloat.copilot.remove` | `Remove-AppxPackage -AllUsers *Copilot*`: el paquete desaparece para todos los usuarios. | Sí en builds ≥ 26100: se reinstala desde la Store (`9NHT9RB2F4HD`, como hace Atlas en `Toggles/General/Copilot.ps1`). En 23H2 el equivalente es un botón de la barra de tareas (`ShowCopilotButton`). | Candidata a `Reversible` con un `UndoAction` que reinstale el paquete; hoy no existe. |
+| `debloat.telemetry.appx` | Desinstala paquetes AppX de telemetría de usuario. | Sí: Store/winget, si el paquete sigue publicado. **NO VERIFICADO** cuáles siguen. | Candidata a `Reversible` por la misma razón que Copilot. |
+| `debloat.edge.remove` | Borra el binario de Edge. | Sí: `winget install Microsoft.Edge` (es justo el `UndoScript` del pin). | Candidata clara a `Reversible` si se modela la reinstalación. |
+| `debloat.explorer.auto-folder-discovery` | Borra las vistas de carpeta guardadas (`Shell\Bags` y `BagMRU`). | No hay copia previa: Windows las vuelve a generar al navegar, no las restaura. | Se queda `Irreversible` (regenerable ≠ restaurable). |
+| `debloat.drivers.razer` | Dos valores de política (`SearchOrderConfig=0`, `DisableCoInstallers=1`) **y** un `Remove-Item` sobre `%SystemRoot%\Installer\Razer\*`: borra los instaladores en caché del fabricante. | Los valores de registro se revierten con el diario; los ficheros borrados **no**. Recuperar el instalador exige descargarlo de nuevo. | Se queda `Irreversible` por el borrado de ficheros. Si se quitara el `Remove-Item`, sería `Reversible`. |
+| `debloat.drivers.logitech` | `Stop-Process` del asistente de Logitech **y** borrado de su directorio bajo `Program Files`. | No: el directorio borrado no se restaura; habría que reinstalar el software del fabricante. | Se queda `Irreversible` (borrado de ficheros, no sólo políticas). |
+| `debloat.network.adobe-blocklist` | Añade (`Add-Content`) la lista de bloqueo de Adobe al fichero `hosts`, descargada de un repositorio de terceros en tiempo de ejecución; el contenido añadido no queda registrado en el diario. | Parcial: se pueden borrar las líneas añadidas, pero la lista del repositorio cambia con el tiempo y el pin no guarda cuáles se añadieron. | **NO VERIFICADO**: con un `UndoAction` que registre las líneas añadidas sería `Reversible`; hoy no existe. |
+
+### Qué sale de esta tabla
+
+- **6 de las 13** son irreversibles sin discusión (papelera, WinSxS ×2, AppX de
+  consumidor, vistas de carpeta y —con reservas de build— Cortana).
+- **4** tienen una vía de recuperación clara (Edge, Copilot, telemetría AppX,
+  OneDrive) y podrían bajar a `Reversible` **cuando exista la acción inversa**
+  en el motor. No se hace aquí: sin `UndoAction` implementada, declararlas
+  reversibles sería mentir sobre lo que EVO puede hacer.
+- **3** (Razer, Logitech, Adobe) se quedan `Irreversible` pero por motivos
+  distintos de los que apuntaba el nombre: las dos primeras **borran ficheros**
+  (caché de instaladores del fabricante) además de escribir políticas, y la
+  tercera añade contenido a `hosts` que nadie registra. Quedan como **NO
+  VERIFICADO** en cuanto a qué haría falta para recuperarlas (el pin no lo dice)
+  y son las primeras a revisar cuando se prueben en una VM.

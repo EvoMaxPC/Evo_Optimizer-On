@@ -34,7 +34,8 @@ public sealed class Wave1CatalogTests
         "debloat.onedrive.uninstall",
         "debloat.edge.policies",
         "debloat.start.websearch",
-        "debloat.windows.ai",
+        "debloat.windows.ai.recall",
+        "debloat.copilot.remove",
         "debloat.content.delivery",
         "debloat.telemetry.appx",
         "debloat.edge.remove",
@@ -88,8 +89,9 @@ public sealed class Wave1CatalogTests
     {
         var catalog = LoadWave1();
 
-        // 24 de la oleada 1 + 14 de la oleada 1b (paso 8b).
-        Assert.Equal(38, catalog.Count);
+        // 24 de la oleada 1 + 14 de la oleada 1b (paso 8b)
+        // + 1 neta del 8c (debloat.windows.ai se parte en .recall y .remove).
+        Assert.Equal(39, catalog.Count);
         Assert.Equal(Section1.Concat(Section2).Concat(Section3).OrderBy(i => i, StringComparer.Ordinal),
             catalog.Ids.OrderBy(i => i, StringComparer.Ordinal));
 

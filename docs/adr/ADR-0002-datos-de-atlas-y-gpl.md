@@ -1,7 +1,7 @@
 # ADR-0002 — Datos de Atlas y GPL-3.0 en el catálogo de EVO
 
 - **Estado**: **Aceptado — opción C**
-- **Fecha**: 2026-11-23 (propuesto) · **aceptado 2026-11-24**
+- **Fecha**: 2026-11-23 (propuesto) · **aceptado 2026-11-24** · **licencia GPL-3.0-only confirmada por el responsable 2026-11-24** (reloj del agente, UTC)
 - **Contexto**: el Paso 3b/4a midió la semántica de Atlas sin copiar contenido:
   91 toggles en `Toggles/catalog.json` (grupo, elevación, estados, reinicio) y
   183 `.psd1` en `Scripts/Tweaks` (definiciones de cambio: registro, servicios,
@@ -81,6 +81,8 @@ hashes) y **C como destino** si el producto necesita datos completos, dejando
 ## Decisión
 
 **ACEPTADA — OPCIÓN C** (2026-11-24, decisión del responsable en esta sesión).
+La licencia **GPL-3.0-only** de EVO CLEAN queda **confirmada por el responsable**
+el 2026-11-24 (reloj del agente, UTC); deja de estar "pendiente de confirmación".
 
 > EVO CLEAN será siempre código abierto bajo GPLv3 y **puede incorporar datos de
 > Atlas** (claves de registro, valores, nombres) **con atribución** y el commit

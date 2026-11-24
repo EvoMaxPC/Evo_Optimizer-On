@@ -37,6 +37,12 @@ RECONCILIATION = ROOT / "inventory" / "ledger" / "inventory-reconciliation.tsv"
 # Item_id del ledger: prefijo:clase:...:sufijo. Se extraen del texto de provenance.
 LEDGER_ID = re.compile(r"\b(?:winutil|atlas):[A-Za-z0-9_.:\-/*{}]+")
 SECTIONS = ("1", "2", "3")
+# Las 17 secciones del inventario, para el plan de oleadas (paso 8c). El
+# veredicto y los huecos siguen calculandose SOLO sobre SECTIONS, de modo que
+# esta lista amplia el informe pero no cambia el comportamiento en 1-3.
+ALL_SECTIONS = tuple(str(n) for n in range(1, 18))
+RECONCILIATION_STATES = ("Mapped", "Mapped-To-App", "EVO-Exclusive",
+                         "Absent-At-Pin", "Informative-Header")
 
 # Huecos conocidos y aceptados: líneas Mapped del inventario que NO pueden
 # apoyarse en ninguna de las 24 capacidades de la oleada 1 porque la línea no
@@ -158,6 +164,33 @@ def main(argv: list[str] | None = None) -> int:
         if not hits:
             without_mapped_line.append(cap["id"])
 
+    # Informe por las 17 secciones: lineas por estado, Mapped cubiertas/huecos y
+    # trabajo pendiente (Mapped sin cubrir + EVO-Exclusive + Absent-At-Pin).
+    all_mapped = [r for r in rows if r["status"].startswith("Mapped")]
+    per_all_section: dict[str, dict] = {}
+    for section in ALL_SECTIONS:
+        section_rows = [r for r in rows if r["seccion"] == section]
+        states = {state: sum(1 for r in section_rows if r["status"] == state)
+                  for state in RECONCILIATION_STATES}
+        section_mapped = [r for r in section_rows if r["status"].startswith("Mapped")]
+        covered_here = 0
+        for row in section_mapped:
+            if any(
+                prefix_matches(m, cap["prefixes"])
+                for cap in capabilities for m in row["mapped_ids"]
+            ):
+                covered_here += 1
+        per_all_section[section] = {
+            "estados": states,
+            "lineas": len(section_rows),
+            "mapped": len(section_mapped),
+            "mapped_cubiertas": covered_here,
+            "mapped_sin_cubrir": len(section_mapped) - covered_here,
+            "trabajo": (len(section_mapped) - covered_here
+                        + states["EVO-Exclusive"] + states["Absent-At-Pin"]),
+        }
+    _ = all_mapped
+
     per_section = {}
     for section in SECTIONS:
         per_section[section] = {
@@ -176,6 +209,7 @@ def main(argv: list[str] | None = None) -> int:
         "declaraciones_obsoletas": sorted(f"{s}:{l}" for s, l in stale),
         "capacidades_sin_linea_mapped": sorted(without_mapped_line),
         "por_seccion": per_section,
+        "por_seccion_17": per_all_section,
         "detalle_huecos": sorted(
             ({"seccion": g["seccion"], "linea": g["linea"], "texto": g["texto"]} for g in undeclared),
             key=lambda d: (d["seccion"], int(d["linea"])),

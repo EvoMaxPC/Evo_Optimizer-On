@@ -18,9 +18,17 @@ Columnas:
     source          winutil | atlas-toggle | atlas-manifest
     label           etiqueta legible del item
     section_guess   1-17 o vacio si no hay evidencia
+    section_basis   category | text-rule | none (de donde sale section_guess)
     capability_id   id de la capacidad del catalogo que lo cubre (vacio si no hay)
     status          covered | pending | variant-of | not-a-capability
     reason          por que tiene ese estado
+
+Orden de `section_guess` (paso 8c):
+    1. categoria del item segun inventory/partition/category-section-map.tsv, si
+       esa categoria tiene una seccion 1-17 (no vale si es mixed/unassigned);
+    2. si no, la capacidad que lo cubre o la seccion ya medida en
+       inventory-reconciliation.tsv (regla `text-rule`);
+    3. si no hay nada, vacio (`none`).
 
 `covered`  algun `ledger_refs:` de una capacidad del catalogo cita el item.
 `pending`  ningun item del catalogo lo cita.
@@ -51,12 +59,13 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import verify_catalog_coverage as vcc  # noqa: E402
+import build_category_section_map as csm  # noqa: E402
 LEDGER = ROOT / "inventory" / "ledger"
 CATALOG_DIR = ROOT / "catalog" / "capabilities"
 OUT = LEDGER / "upstream-capability-map.tsv"
 
-COLUMNS = ("upstream_id", "source", "label", "section_guess", "capability_id",
-           "status", "reason")
+COLUMNS = ("upstream_id", "source", "label", "section_guess", "section_basis",
+           "capability_id", "status", "reason")
 STATUSES = ("covered", "pending", "variant-of", "not-a-capability")
 MAX_CELL = 400
 
@@ -171,6 +180,16 @@ def guess_section(capability: str | None, sections: dict[str, int], label: str,
     return ""
 
 
+# upstream_id -> (seccion propuesta por categoria, categoria). Se calcula una vez.
+CATEGORY_SECTION = csm.index()
+
+
+def section_from_category(item_id: str) -> str:
+    """Seccion propuesta por la categoria del item, si no es mixed/unassigned."""
+    section, _category = CATEGORY_SECTION.get(item_id, ("", ""))
+    return section if section.isdigit() else ""
+
+
 def load_rows() -> list[dict]:
     rows: list[dict] = []
 
@@ -222,11 +241,21 @@ def build() -> list[dict]:
             status = "pending"
             reason = "ninguna capacidad del catalogo la cita todavia"
 
+        # 1) categoria; 2) reglas de siempre (capacidad / conciliacion); 3) vacio.
+        by_category = section_from_category(row["upstream_id"])
+        if by_category:
+            section_guess, section_basis = by_category, "category"
+        else:
+            section_guess = guess_section(capability, sections, row["upstream_id"],
+                                          row["source"])
+            section_basis = "text-rule" if section_guess else "none"
+
         out.append({
             "upstream_id": row["upstream_id"],
             "source": row["source"],
             "label": row["label"][:MAX_CELL],
-            "section_guess": guess_section(capability, sections, row["upstream_id"], row["source"]),
+            "section_guess": section_guess,
+            "section_basis": section_basis,
             "capability_id": capability or "",
             "status": status,
             "reason": reason[:MAX_CELL],
@@ -256,6 +285,11 @@ def main(argv: list[str] | None = None) -> int:
 
     pending_by_section = Counter(
         (r["section_guess"] or "(sin seccion)") for r in rows if r["status"] == "pending")
+    source_x_section = Counter(
+        (r["source"], r["section_guess"] or "(sin seccion)") for r in rows)
+    pending_by_basis = Counter(
+        r["section_basis"] for r in rows if r["status"] == "pending")
+    by_basis = Counter(r["section_basis"] for r in rows)
 
     summary = {
         "filas": len(rows),
@@ -263,6 +297,9 @@ def main(argv: list[str] | None = None) -> int:
         "source_x_status": {f"{s}|{st}": cross[(s, st)]
                             for s in sorted(by_source) for st in STATUSES},
         "pending_por_seccion": dict(sorted(pending_by_section.items())),
+        "por_basis": dict(sorted(by_basis.items())),
+        "pending_por_basis": dict(sorted(pending_by_basis.items())),
+        "source_x_section": {f"{s}|{sec}": n for (s, sec), n in sorted(source_x_section.items())},
         "cobertura": {
             "covered": sum(1 for r in rows if r["status"] == "covered"),
             "total": len(rows),
@@ -282,6 +319,9 @@ def main(argv: list[str] | None = None) -> int:
     for source in sorted(by_source):
         cells = " ".join(f"{st}={cross[(source, st)]}" for st in STATUSES)
         print(f"  {source:15s} {cells}")
+    print("\nsection_basis (todas las filas):")
+    for basis, count in sorted(by_basis.items()):
+        print(f"  {basis:10s} {count}")
     print("\npending por section_guess:")
     for section, count in sorted(pending_by_section.items()):
         print(f"  {section:14s} {count}")

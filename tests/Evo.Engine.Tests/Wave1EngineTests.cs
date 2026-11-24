@@ -251,6 +251,90 @@ public sealed class Wave1EngineTests
         Assert.Contains("/ResetBase", harness.Commands.Executed[0].Arguments);
     }
 
+
+    /// <summary>Paso 8c (T1d): la busqueda web se desactiva DE VERDAD.
+    ///
+    /// `BingSearchEnabled=0` es el estado APAGADO de `WPFToggleBingSearch` en el
+    /// pin (Value=1 es la casilla encendida). El test comprueba el valor final en
+    /// el registro falso, que `DisableSearchBoxSuggestions` sigue en 1 y que el
+    /// rollback devuelve el valor previo.
+    /// </summary>
+    [Fact]
+    public async Task TestWave1Catalog_WebSearchCapability_ReallyDisablesBing()
+    {
+        var harness = Harness();
+        const string searchKey = @"Software\Microsoft\Windows\CurrentVersion\Search";
+        const string explorerPolicies = @"SOFTWARE\Policies\Microsoft\Windows\Explorer";
+        harness.Registry.Seed(RegistryHive.CurrentUser, searchKey, "BingSearchEnabled", 1);
+        harness.Registry.Seed(
+            RegistryHive.LocalMachine, explorerPolicies, "DisableSearchBoxSuggestions", 0);
+
+        var plan = Plan("debloat.start.websearch");
+        var summary = await harness.Coordinator.ExecuteAsync(
+            plan, ExecutionMode.Execute, harness.Context(ExecutionMode.Execute));
+
+        Assert.Equal(0, summary.Failed);
+        Assert.Equal(11, summary.Succeeded);
+        Assert.Equal(0, (int?)harness.Registry.GetValue(
+            RegistryHive.CurrentUser, searchKey, "BingSearchEnabled")!);
+        Assert.Equal(1, (int?)harness.Registry.GetValue(
+            RegistryHive.LocalMachine, explorerPolicies, "DisableSearchBoxSuggestions")!);
+
+        var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.Equal(1, (int?)harness.Registry.GetValue(
+            RegistryHive.CurrentUser, searchKey, "BingSearchEnabled")!);
+        Assert.Equal(0, (int?)harness.Registry.GetValue(
+            RegistryHive.LocalMachine, explorerPolicies, "DisableSearchBoxSuggestions")!);
+    }
+
+    /// <summary>Paso 8c (T2a): `debloat.windows.ai` se parte en dos capacidades.
+    ///
+    /// La de Recall sólo escribe políticas (reversible); la de Copilot quita el
+    /// paquete (irreversible) y por eso declara `Restore=None` y aviso reforzado.
+    /// Se comprueba que ninguna de las dos toca lo de la otra y que la de Recall
+    /// está acotada a 24H2+ (la política WindowsAI no existe en 23H2).
+    /// </summary>
+    [Fact]
+    public async Task TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate()
+    {
+        var recall = Definition("debloat.windows.ai.recall");
+        var copilot = Definition("debloat.copilot.remove");
+
+        // Rangos propios y reversibilidad propia.
+        Assert.Equal(new[] { 26100, 26200 }, recall.SupportedBuilds.OrderBy(b => b));
+        Assert.Equal(new[] { 22631, 26100, 26200 }, copilot.SupportedBuilds.OrderBy(b => b));
+        Assert.Equal(Reversibility.Reversible, recall.Reversibility);
+        Assert.Equal(Reversibility.Irreversible, copilot.Reversibility);
+        Assert.Equal(RestoreLevel.SessionUndo, recall.Restore);
+        Assert.Equal(RestoreLevel.None, copilot.Restore);
+
+        // Ninguna acción se solapa entre las dos.
+        var recallKeys = recall.Actions
+            .Select(a => $"{a.Kind}:{(a as RegistryAction)?.KeyPath}:{(a as RegistryAction)?.ValueName}")
+            .ToHashSet(StringComparer.Ordinal);
+        var copilotKeys = copilot.Actions
+            .Select(a => $"{a.Kind}:{(a as RegistryAction)?.KeyPath}:{(a as RegistryAction)?.ValueName}")
+            .ToHashSet(StringComparer.Ordinal);
+        Assert.Empty(recallKeys.Intersect(copilotKeys, StringComparer.Ordinal));
+        Assert.DoesNotContain(recall.Actions, a =>
+            a is RegistryAction r && r.ValueName == "RemoveMicrosoftCopilotApp");
+        Assert.Contains(copilot.Actions, a =>
+            a is RegistryAction r && r.ValueName == "RemoveMicrosoftCopilotApp");
+
+        // Ejecución contra fakes: la de Recall no dispara ningún comando.
+        var harness = Harness();
+        var summary = await harness.Coordinator.ExecuteAsync(
+            Plan("debloat.windows.ai.recall"), ExecutionMode.Execute,
+            harness.Context(ExecutionMode.Execute));
+        Assert.Equal(0, summary.Failed);
+        Assert.Empty(harness.Commands.Executed);
+        Assert.Equal(1, (int?)harness.Registry.GetValue(
+            RegistryHive.LocalMachine,
+            @"SOFTWARE\Policies\Microsoft\Windows\WindowsAI",
+            "DisableAIDataAnalysis")!);
+    }
+
     private static void AssertSameState(
         IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> expected,
         IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> actual)

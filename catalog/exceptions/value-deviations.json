@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "description": "Desviaciones de valor aceptadas: cada fila de inventory/ledger/catalog-value-audit.tsv con relation=equals-original o differs debe estar aqui con motivo y evidencia. Lo comprueba tools/ledger_extract/audit_catalog_values.py (exit 1 si falta).",
+  "description": "Desviaciones de valor aceptadas: cada fila de inventory/ledger/catalog-value-audit.tsv con relation=equals-off, equals-original o differs debe estar aqui con motivo, evidencia y tipo (deviation_kind: value | switch-meaning). Lo comprueba tools/ledger_extract/audit_catalog_values.py (exit 1 si falta).",
   "deviations": [
     {
       "capability_id": "debloat.settings.home",
@@ -13,7 +13,23 @@
       "source_original_value": "hide:home",
       "relation": "equals-original",
       "evidence": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1741-1755 (WPFToggleHideSettingsHome: Value='show:home', OriginalValue='hide:home', DefaultState='true'); inventory/ledger/winutil-tweak-ops.tsv winutil:tweak-op:WPFToggleHideSettingsHome:registry:0",
-      "reason": "WinUtil declara un toggle cuya etiqueta dice 'Settings Home Page' con DefaultState=true: el valor que aplica (show:home) es el estado por defecto y el que revierte (hide:home) es el que oculta la pagina. La capacidad de EVO se llama 'Ocultar la pagina de Inicio de Configuracion' y escribe hide:home a proposito: es el valor de OriginalValue de WinUtil porque en WinUtil es la rama que oculta. Copiar show:home habria dejado la pagina visible contradiciendo el nombre de la capacidad. Se prefiere el efecto declarado sobre el literal de upstream y se deja constancia aqui."
+      "reason": "Desviacion de SIGNIFICADO DE INTERRUPTOR, no de valor: la casilla encendida de WinUtil deja la pagina de Inicio visible (Value='show:home'); el valor que produce el efecto que anuncia la capacidad de EVO es el estado apagado ('hide:home'). Se copia el estado apagado y se deja constancia. Si el titular confirma que quiere replicar la casilla tal cual, hay que invertir este literal.",
+      "deviation_kind": "switch-meaning",
+      "switch_meaning": "WPFToggleHideSettingsHome es un Toggle (config/tweaks.json:1746) con Value='show:home' y OriginalValue='hide:home'. Por Invoke-WinUtilTweaks.ps1:34-46, Value es el estado ENCENDIDO de la casilla y OriginalValue el APAGADO (Get-WinUtilToggleStatus.ps1:44 compara contra Value). El catalogo escribe el estado APAGADO a proposito: su nombre es 'ocultar la pagina de Inicio'."
+    },
+    {
+      "capability_id": "debloat.start.websearch",
+      "hive": "HKCU",
+      "key": "Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+      "name": "BingSearchEnabled",
+      "catalog_value": "0",
+      "source": "winutil",
+      "source_apply_value": "1",
+      "source_original_value": "0",
+      "relation": "equals-off",
+      "deviation_kind": "switch-meaning",
+      "evidence": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1759-1770 (WPFToggleBingSearch, Type=Toggle, BingSearchEnabled: Value='1', OriginalValue='0', DefaultState='true'); functions/private/Invoke-WinUtilTweaks.ps1:34-46; functions/private/Get-WinUtilToggleStatus.ps1:44",
+      "reason": "Desviacion de SIGNIFICADO DE INTERRUPTOR. WPFToggleBingSearch es un Toggle cuya casilla ENCENDIDA escribe Value=1, es decir ACTIVA la busqueda web de Bing, al contrario de lo que sugiere su etiqueta 'Start Menu Bing Search' leida como 'quitar'. El catalogo escribe BingSearchEnabled=0, el estado APAGADO del Toggle, que es el efecto que anuncia la capacidad 'Quitar la busqueda web del menu Inicio'. Se documenta para que nadie 'arregle' el 0 copiando el Value del pin."
     }
   ]
 }

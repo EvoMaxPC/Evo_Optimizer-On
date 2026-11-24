@@ -330,8 +330,62 @@ jobs:
           print("desviaciones sin excepcion:", a["sin_excepcion"])
           print("mapa:", m["filas"], "| cobertura:", m["cobertura"])
           print("source x status:", m["source_x_status"])
-          ok = (a["sin_excepcion"] == 0 and a["filas"] == 104
-                and m["filas"] == 435 and m["cobertura"]["covered"] == 37)
+          # Las cifras suben con el catalogo: 105 acciones de registro y 39
+          # capacidades en el paso 8c (antes 104 y 37). No se fijan a la baja.
+          ok = (a["sin_excepcion"] == 0 and a["filas"] >= 104
+                and m["filas"] == 435 and m["cobertura"]["covered"] >= 37)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Paso 8c (interruptores, seccion por categoria y plan de oleadas)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_winutil_ops.py | tee "ci-out/paso8c-ops-run${i}.txt"
+            python3 tools/ledger_extract/build_category_section_map.py | tee "ci-out/paso8c-cat-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py | tee "ci-out/paso8c-audit-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py > "ci-out/paso8c-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py > "ci-out/paso8c-plan-run${i}.txt"
+            sha256sum inventory/ledger/winutil-tweak-ops.tsv \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      inventory/partition/category-section-map.tsv \
+                      docs/reports/plan-oleadas.md \
+              > "ci-out/paso8c-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso8c-sha-run1.txt ci-out/paso8c-sha-run2.txt; then
+            echo "DETERMINISMO PASO 8C ROTO" | tee ci-out/paso8c-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 8c: OK" | tee ci-out/paso8c-determinism.txt
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          cp inventory/ledger/winutil-tweak-ops.tsv ci-out/
+          cp inventory/ledger/catalog-value-audit.tsv ci-out/
+          cp inventory/ledger/upstream-capability-map.tsv ci-out/
+          cp inventory/partition/category-section-map.tsv ci-out/
+          cp docs/reports/plan-oleadas.md ci-out/
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso8c-audit.json
+          python3 tools/ledger_extract/build_upstream_capability_map.py --json \
+            > ci-out/paso8c-map.json
+          python3 tools/ledger_extract/build_category_section_map.py --json \
+            > ci-out/paso8c-cat.json
+          python3 - <<'PYEOF'
+          import json, sys
+          a = json.load(open("ci-out/paso8c-audit.json", encoding="utf-8"))
+          m = json.load(open("ci-out/paso8c-map.json", encoding="utf-8"))
+          c = json.load(open("ci-out/paso8c-cat.json", encoding="utf-8"))
+          print("audit:", a["filas"], "acciones |", a["distribucion"])
+          print("sin excepcion:", a["sin_excepcion"], "| excepciones:", a["excepciones"])
+          print("mapa:", m["filas"], "| basis:", m["por_basis"])
+          print("categorias:", c["categorias"], "| items:", c["items"],
+                "| con seccion:", c["asignadas"], "| mixed:", c["mixed"])
+          # 140 es el valor medido con las 49 categorias del pin; lo que no se
+          # admite es volver al 361 del paso 8b (ni dejar categorias sin asignar).
+          ok = (a["sin_excepcion"] == 0 and m["filas"] == 435
+                and m["por_basis"].get("none", 0) < 361
+                and c["unassigned"] == 0 and c["categorias"] == 49)
           sys.exit(0 if ok else 1)
           PYEOF
 
