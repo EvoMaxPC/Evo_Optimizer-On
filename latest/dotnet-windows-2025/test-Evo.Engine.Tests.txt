@@ -1,60 +1,41 @@
-Build started 11/24/2026 2:56:05 AM.
+Build started 11/24/2026 2:59:27 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
 [xUnit.net 00:00:00.09]   Discovering: Evo.Engine.Tests
-[xUnit.net 00:00:00.14]   Discovered:  Evo.Engine.Tests
-[xUnit.net 00:00:00.14]   Starting:    Evo.Engine.Tests
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [95 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [99 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [11 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [8 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [32 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [17 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [7 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [4 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [7 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [13 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [9 ms]
+[xUnit.net 00:00:00.13]   Discovered:  Evo.Engine.Tests
+[xUnit.net 00:00:00.13]   Starting:    Evo.Engine.Tests
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [97 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [102 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [7 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [13 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [35 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [16 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [6 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [5 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [10 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [9 ms]
   Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [6 ms]
   Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [2 ms]
   Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [2 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [2 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [8 ms]
-[xUnit.net 00:00:00.49]     Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [FAIL]
-[xUnit.net 00:00:00.49]       Assert.Equal() Failure: Values differ
-[xUnit.net 00:00:00.49]       Expected: 1
-[xUnit.net 00:00:00.49]       Actual:   0
-[xUnit.net 00:00:00.49]       Stack Trace:
-[xUnit.net 00:00:00.50]         /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs(184,0): at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState()
-[xUnit.net 00:00:00.50]         --- End of stack trace from previous location ---
-[xUnit.net 00:00:00.50]   Finished:    Evo.Engine.Tests
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [13 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [4 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [2 ms]
+[xUnit.net 00:00:00.48]   Finished:    Evo.Engine.Tests
   Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [13 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [262 ms]
-  Failed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [9 ms]
-  Error Message:
-   Assert.Equal() Failure: Values differ
-Expected: 1
-Actual:   0
-  Stack Trace:
-     at Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState() in /_/tests/Evo.Engine.Tests/Wave1EngineTests.cs:line 184
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [7 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [12 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [264 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [11 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [5 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Engine.Tests\Evo.Engine.Tests.trx
 
-Test Run Failed.
+Test Run Successful.
 Total tests: 21
-     Passed: 20
-     Failed: 1
- Total time: 1.0581 Seconds
-     1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" on node 1 (VSTest target(s)).
-     1>_VSTestConsole:
-         MSB4181: The "VSTestTask" task returned false but did not log an error.
-     1>Done Building Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" (VSTest target(s)) -- FAILED.
+     Passed: 21
+ Total time: 1.0126 Seconds
 
-Build FAILED.
+Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.80
+Time Elapsed 00:00:01.74
