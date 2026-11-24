@@ -121,11 +121,22 @@ jobs:
       - name: dotnet test
         shell: pwsh
         run: |
-          dotnet test Evo.sln --no-build --configuration Release --verbosity normal `
-            --logger "trx;LogFileName=results.trx" `
-            --results-directory ci-out/test-results 2>&1 |
-            Tee-Object -FilePath ci-out/test.txt
-          if ($LASTEXITCODE -ne 0) { throw "dotnet test fallo ($LASTEXITCODE)" }
+          # Un directorio de resultados POR PROYECTO: si todos escriben
+          # results.trx en la misma carpeta, el ultimo pisa a los anteriores y
+          # el recuento del resumen sale corto (bug detectado en el run 45310542428).
+          $failed = 0
+          foreach ($proj in Get-ChildItem -Path tests -Filter *.csproj -Recurse | Sort-Object FullName) {
+            $name = $proj.BaseName
+            $out = "ci-out/test-results/$name"
+            New-Item -ItemType Directory -Force -Path $out | Out-Null
+            Write-Host "=== $name ==="
+            dotnet test $proj.FullName --no-build --configuration Release --verbosity normal `
+              --logger "trx;LogFileName=$name.trx" `
+              --results-directory $out 2>&1 |
+              Tee-Object -FilePath "ci-out/test-$name.txt" -Append
+            if ($LASTEXITCODE -ne 0) { $failed++ }
+          }
+          if ($failed -ne 0) { throw "dotnet test fallo en $failed proyecto(s)" }
 
       - name: Resumen de tests (.trx)
         if: always()
@@ -134,11 +145,15 @@ jobs:
           $files = Get-ChildItem -Path ci-out/test-results -Filter *.trx -ErrorAction SilentlyContinue
           if (-not $files) { Write-Host "sin ficheros .trx"; exit 0 }
           $total = 0; $passed = 0; $failed = 0
+          $perProject = @()
           foreach ($f in $files) {
             [xml]$trx = Get-Content -Raw $f.FullName
             $c = $trx.TestRun.ResultSummary.Counters
             $total += [int]$c.total; $passed += [int]$c.passed; $failed += [int]$c.failed
+            $perProject += ("{0}: total={1} passed={2} failed={3}" -f `
+              $f.BaseName, $c.total, $c.passed, $c.failed)
           }
+          $perProject | Tee-Object -FilePath ci-out/test-per-project.txt
           $line = "total=$total passed=$passed failed=$failed"
           $line | Tee-Object -FilePath ci-out/test-summary.txt
           if ($failed -ne 0) { throw "tests fallidos: $failed" }
