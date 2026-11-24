@@ -1,25 +1,25 @@
-Build started 11/23/2026 5:41:29 PM.
+Build started 11/23/2026 5:41:38 PM.
      1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" on node 1 (VSTest target(s)).
      1>ValidateSolutionConfiguration:
          Building solution configuration "Release|Any CPU".
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Detection.Tests\bin\Release\net10.0-windows\Evo.Detection.Tests.dll (.NETCoreApp,Version=v10.0)
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Core.Tests\bin\Release\net10.0-windows\Evo.Core.Tests.dll (.NETCoreApp,Version=v10.0)
-A total of 1 test files matched the specified pattern.
-A total of 1 test files matched the specified pattern.
+A total of 1 test files matched the specified pattern.A total of 1 test files matched the specified pattern.
+
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.11]   Discovering: Evo.Detection.Tests
-[xUnit.net 00:00:00.10]   Discovering: Evo.Core.Tests
-[xUnit.net 00:00:00.17]   Discovered:  Evo.Core.Tests
-[xUnit.net 00:00:00.17]   Discovered:  Evo.Detection.Tests
-[xUnit.net 00:00:00.17]   Starting:    Evo.Core.Tests
-[xUnit.net 00:00:00.18]   Starting:    Evo.Detection.Tests
-  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [9 ms]
+[xUnit.net 00:00:00.13]   Discovering: Evo.Core.Tests
+[xUnit.net 00:00:00.13]   Discovering: Evo.Detection.Tests
+[xUnit.net 00:00:00.20]   Discovered:  Evo.Detection.Tests
+[xUnit.net 00:00:00.19]   Discovered:  Evo.Core.Tests
+[xUnit.net 00:00:00.20]   Starting:    Evo.Detection.Tests
+[xUnit.net 00:00:00.19]   Starting:    Evo.Core.Tests
+  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [12 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Safe, confirmation: None, restore: None) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Critical, confirmation: TypeOperationName, restore: FullBackup) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: High, confirmation: SummaryAndRestorePoint, restore: RestorePoint) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Medium, confirmation: Summary, restore: RestorePoint) [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.VariantsVacioFalla [4 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.VariantsVacioFalla [6 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.IdEnConflictoYDependenciaFalla [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.RestoreNoneEsIncompatibleConRiesgoAlto(risk: Critical) [1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.RestoreNoneEsIncompatibleConRiesgoAlto(risk: High) [< 1 ms]
@@ -32,11 +32,9 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Core.Tests.CapabilityContractTests.CriticalConTypeOperationNameYFullBackupEsValido [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.AutoConflictoYAutoDependenciaFAllan [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReducirSeguridadConRiesgoBajoFalla [< 1 ms]
-[xUnit.net 00:00:00.26]   Finished:    Evo.Core.Tests
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [49 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [50 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26100, id: "win11-24h2", esu: False) [< 1 ms]
+[xUnit.net 00:00:00.29]   Finished:    Evo.Core.Tests
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [61 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [62 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 19044) [< 1 ms]
@@ -44,49 +42,51 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 28000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 30000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 99999) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 19045, id: "win10-22h2", esu: True) [6 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26100, id: "win11-24h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 19045, id: "win10-22h2", esu: True) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 22631, id: "win11-23h2", esu: False) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27600, id: "win11-26h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [5 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.SchemaVersionDistintaSeRechaza [1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.ArquitecturaNoDeclaradaSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 28000) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.InstallationTypeVacioSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 99999) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 19044) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 19045, architecture: "arm64", expected: SupportedWithWarning) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 19044) [1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [7 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.RangoSolapadoSeRechaza [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.ArquitecturaNoDeclaradaSeRechaza [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.InstallationTypeVacioSeRechaza [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 19045, architecture: "arm64", expected: SupportedWithWarning) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26200, architecture: "ARM64", expected: Supported) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26100, architecture: "arm64", expected: Supported) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildSeLeeDelRegistroAunqueElEntornoDigaOtraCosa [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [2 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [2 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [9 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
-[xUnit.net 00:00:00.32]   Finished:    Evo.Detection.Tests
+[xUnit.net 00:00:00.35]   Finished:    Evo.Detection.Tests
   Passed Evo.Core.Tests.CapabilityContractTests.CriticalExigeTypeOperationName [< 1 ms]
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [5 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.WindowsServer2025_Datacenter_EsRechazado [< 1 ms]
-Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-
-Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-
 Test Run Successful.
+  Passed Evo.Detection.Tests.WindowsDetectorTests.WindowsServer2025_Datacenter_EsRechazado [< 1 ms]
 Total tests: 19
      Passed: 19
- Total time: 0.8325 Seconds
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [2 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [3 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
+ Total time: 0.8828 Seconds
+WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+
 Test Run Successful.
 Total tests: 35
      Passed: 35
- Total time: 0.8339 Seconds
+ Total time: 0.9075 Seconds
      1>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" (VSTest target(s)).
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:03.40
+Time Elapsed 00:00:02.67
