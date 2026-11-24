@@ -206,6 +206,53 @@ jobs:
             echo "$f: $(($(wc -l < inventory/ledger/$f.tsv) - 1)) filas"
           done | tee ci-out/paso4c-counts.txt
 
+      - name: Extractores de 4d (determinismo + cifras)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_effects.py
+            python3 tools/ledger_extract/extract_atlas_toggle_effects.py
+            python3 tools/ledger_extract/extract_winutil_ops.py
+            sha256sum inventory/ledger/atlas-effects.tsv \
+                      inventory/ledger/atlas-toggle-effects.tsv \
+                      inventory/ledger/atlas-psd1-refs.tsv \
+                      inventory/ledger/winutil-tweak-ops.tsv \
+                      inventory/ledger/winutil-feature-ops.tsv \
+                      inventory/ledger/winutil-appx-ops.tsv \
+              > "ci-out/paso4d-sha-run${i}.txt"
+            for f in atlas-effects atlas-toggle-effects atlas-psd1-refs \
+                     winutil-tweak-ops winutil-feature-ops winutil-appx-ops; do
+              cp "inventory/ledger/$f.tsv" "ci-out/$f.tsv"
+            done
+          done
+          if ! diff -u ci-out/paso4d-sha-run1.txt ci-out/paso4d-sha-run2.txt; then
+            echo "DETERMINISMO 4D ROTO" | tee ci-out/paso4d-determinism.txt
+            exit 1
+          fi
+          echo "determinismo 4d: OK" | tee ci-out/paso4d-determinism.txt
+          python3 tools/ledger_extract/extract_atlas_effects.py --json \
+            > ci-out/paso4d-effects.json
+          python3 tools/ledger_extract/extract_atlas_toggle_effects.py --json \
+            > ci-out/paso4d-toggle-effects.json
+          python3 tools/ledger_extract/extract_winutil_ops.py --json \
+            > ci-out/paso4d-winutil-ops.json
+          python3 - <<'PYEOF'
+          import json, sys
+          eff = json.load(open("ci-out/paso4d-effects.json", encoding="utf-8"))
+          tog = json.load(open("ci-out/paso4d-toggle-effects.json", encoding="utf-8"))
+          win = json.load(open("ci-out/paso4d-winutil-ops.json", encoding="utf-8"))
+          print("efectos atlas:", eff["efectos"], "| por tipo:", len(eff["por_tipo"]))
+          print("filas toggle-effects:", tog["filas"], "| sin efecto:", tog["filas_sin_efecto"])
+          print("psd1 sin referencia:", tog["psd1"]["sin_ninguna"])
+          print("winutil tweak-ops:", win["tweaks"]["filas"],
+                "| feature:", win["features"]["filas"],
+                "| appx:", win["appx"]["filas"])
+          ok = (eff["efectos"] > 0 and tog["filas"] == 92
+                and win["tweaks"]["filas"] > 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
       - name: Sonda de coincidencia con el inventario
         if: always()
         shell: bash

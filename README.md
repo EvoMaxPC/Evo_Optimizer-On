@@ -1,7 +1,10 @@
 # EVO CLEAN
 
 Optimizador **exclusivo para Windows** (10 22H2 · 11 23H2/24H2/25H2/26H2),
-C# / .NET 10 LTS (`net10.0-windows`) con UI WPF. Licencia **GPL-3.0**.
+C# / .NET 10 LTS (`net10.0-windows`) con UI WPF. Licencia **GPL-3.0-only**
+(ver `LICENSE`; motivo: AtlasOS es `GPL-3.0-only` y sus datos entran en el
+catálogo — **decisión pendiente de confirmación del responsable**,
+`docs/legal/upstream-licenses.md`).
 
 > Estado: **Paso 1** — estructura, contrato, licencias, fijación de upstream y
 > canal de informes CI. Todavía no hay código de producto.

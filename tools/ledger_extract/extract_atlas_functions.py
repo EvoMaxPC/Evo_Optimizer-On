@@ -38,7 +38,11 @@ OUT_DIR = ROOT / "inventory" / "ledger"
 COLUMNS = ("item_id", "path", "name", "line_start", "line_end", "scope",
            "sha256_body")
 
-FUNC_RE = re.compile(r"^\s*function\s+([\w-]+)", re.IGNORECASE)
+# El nombre puede traer calificador de ambito: `function script:Foo`,
+# `function global:Foo`. Sin contemplarlo se registraba la funcion como
+# "script"/"global" (6 casos en Atlas, todos en tests/).
+FUNC_RE = re.compile(
+    r"^\s*function\s+(?:(?:script|global|local|private):)?([\w-]+)", re.IGNORECASE)
 OPEN_RE = re.compile(r"\{")
 
 
@@ -50,12 +54,35 @@ def scope_class(path: str) -> str:
     return "tooling"
 
 
+def block_comment_mask(lines: list[str]) -> list[bool]:
+    """marca[i] = True si la linea i esta FUERA de un bloque <# ... #>.
+
+    Sin esto, la frase "function definitions" dentro de un comentario de ayuda
+    cuenta como definicion (1 caso real en Atlas, Definition.ps1:104).
+    """
+    mask = []
+    in_block = False
+    for line in lines:
+        starts = line.count("<#")
+        ends = line.count("#>")
+        mask.append(not in_block and starts == 0)
+        if starts > ends:
+            in_block = True
+        elif ends > starts:
+            in_block = False
+    return mask
+
+
 def find_functions(text: str) -> list[tuple[str, int, int, str]]:
     """Devuelve (nombre, linea_inicio, linea_fin, cuerpo). Índices 1-based."""
     lines = text.splitlines()
     out: list[tuple[str, int, int, str]] = []
+    mask = block_comment_mask(lines)
     i = 0
     while i < len(lines):
+        if not mask[i]:
+            i += 1
+            continue
         m = FUNC_RE.match(lines[i])
         if not m:
             i += 1

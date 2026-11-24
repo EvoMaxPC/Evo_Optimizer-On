@@ -126,26 +126,30 @@ Apache-2.0 13, BSD-3-Clause 8, resto menores.
 
 | métrica | valor |
 |---|---:|
-| funciones | **1 563** |
+| funciones | **1 562** (el paso 4d corrigió el parser; aquí decía 1 563) |
 | ficheros con funciones | 254 |
-| `scope=product` | 1 173 |
+| `scope=product` | 1 172 |
 | `scope=test` | 390 |
 | `scope=tooling` | 0 |
-| de `package/` | 1 100 |
+| de `package/` | 1 099 |
 | de `app/` | 73 |
 | de `tests/` | 390 |
-| en `Scripts/` | 985 (909 `.ps1` + 76 `.psm1`) |
-| nombres repetidos en ficheros distintos | 117 |
+| en `Scripts/` | 984 (908 `.ps1` + 76 `.psm1`) |
+| nombres repetidos en ficheros distintos | 118 |
 | pares (ruta, nombre) redefinidos | 14 → 29 filas con sufijo `#<línea>` |
 
-sha256 `3cb09176e777dcb118b1e0a04112a74b832a511efee819f7be8125b05389f199`.
+sha256 `1d1f5e7defa168c43f3f222317e6bbcbe424dc5f84315ab226c91c17064f93da`.
 
-Conciliación con el paso 3b ("909 funciones en 169 `.ps1`"): exacta. Las 909
-son solo `.ps1`; los otros 76 vienen de 4 `.psm1`; de los 169 `.ps1` solo 112
+Conciliación con el paso 3b ("909 funciones en 169 `.ps1`"). Las 909
+del paso 3b son el **conteo bruto** de `^\s*function` en los `.ps1` de
+`Scripts/` (comando reproducible, ver 4d); con el parser corregido quedan **908**
+reales en `.ps1` (una era la frase "function definitions" dentro de un
+comentario de bloque) más **76** en `.psm1`; de los 169 `.ps1` solo 112
 definen funciones. Los 376 ficheros de partida (357 `.ps1` + 19 `.psm1`) se
 reparten en app 22, package 245, tests 109.
 
-**Método.** Parser por líneas con conteo de llaves. Dos correcciones reales:
+**Método.** Parser por líneas con conteo de llaves. Correcciones reales
+(dos en el 4c, dos más en el 4d — ver `docs/reports/paso4d.md`):
 (a) avanzar `i = end` tras cada función perdía las **16 funciones anidadas**;
 se cambia a `i += 1`. (b) 14 pares (ruta, nombre) aparecen definidos dos veces
 en el mismo fichero (mocks de Pester que redefinen la función); para mantener 0

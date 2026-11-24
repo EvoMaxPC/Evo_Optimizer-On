@@ -88,11 +88,13 @@ def test_scope_class_clasifica():
 
 def test_functions_tsv_cifras():
     rows = _tsv(LEDGER / "atlas-functions.tsv")
-    assert len(rows) == 1563
+    # 4d corrigio el parser (calificador de ambito + comentario de bloque):
+    # 1563 -> 1562 y product 1173 -> 1172. Ver docs/reports/paso4d.md.
+    assert len(rows) == 1562
     assert len({r["path"] for r in rows}) == 254
     assert {r["scope"] for r in rows} == {"product", "test"}
     assert sum(r["scope"] == "test" for r in rows) == 390
-    assert sum(r["scope"] == "product" for r in rows) == 1173
+    assert sum(r["scope"] == "product" for r in rows) == 1172
     assert all(re.fullmatch(r"[0-9a-f]{64}", r["sha256_body"]) for r in rows)
 
 
