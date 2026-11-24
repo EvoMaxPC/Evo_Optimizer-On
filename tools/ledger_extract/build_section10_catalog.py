@@ -465,6 +465,9 @@ def atlas_actions(relative: str, state: str | None) -> tuple[list[dict], list[st
                 f"{entry['path']} sin Data ni Operation: no se inventa un literal")
         actions.append(
             {
+                # Discriminador polimorfico que exige `CapabilityAction`
+                # ([JsonDerivedType(typeof(RegistryAction), "registry")]).
+                "type": "registry",
                 "order": len(actions) + 1,
                 "hive": {"HKLM": "LocalMachine", "HKCU": "CurrentUser",
                          "HKCR": "ClassesRoot", "HKU": "Users"}[hive],

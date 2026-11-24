@@ -33,6 +33,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/AppIconThumbnail.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: ShowTypeOverlay=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:AppIconThumbnail",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -71,6 +72,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-check-boxes.psd1:5. Valores tomados del bloque Registry del pin: AutoCheckSelect=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:manifest:qol/explorer/disable-check-boxes",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -109,6 +111,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/CompactView.psd1:11 (estado 'Enable'). Valores tomados del bloque Registry del pin: UseCompactMode=1. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:CompactView",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -147,6 +150,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/ExtractContextMenu.psd1:11 (estado 'Enable'). Valores tomados del bloque Registry del pin: {b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af}=(cadena vacia); {BD472F60-27FA-11cf-B8B4-444553540000}=(cadena vacia); {EE07CEF5-3441-4CFB-870A-4002C724783A}=(cadena vacia); {D12E3394-DE4B-4777-93E9-DF0AC88F8584}=(cadena vacia). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:ExtractContextMenu",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
@@ -157,6 +161,7 @@
                "description": "{b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af} en HKLM"
             },
             {
+               "type": "registry",
                "order": 2,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
@@ -167,6 +172,7 @@
                "description": "{BD472F60-27FA-11cf-B8B4-444553540000} en HKLM"
             },
             {
+               "type": "registry",
                "order": 3,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
@@ -177,6 +183,7 @@
                "description": "{EE07CEF5-3441-4CFB-870A-4002C724783A} en HKLM"
             },
             {
+               "type": "registry",
                "order": 4,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked",
@@ -253,6 +260,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/Gallery.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: System.IsPinnedToNameSpaceTree=0.Builds: la Galería del Explorador es una carpeta de Windows 11 (su CLSID {e88865ea-...} no existe en 19045).  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:Gallery",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
@@ -329,6 +337,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/Home.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: System.IsPinnedToNameSpaceTree=0; LaunchTo=1.Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de Windows 11; 19045 no se declara.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:Home",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
@@ -339,6 +348,7 @@
                "description": "System.IsPinnedToNameSpaceTree en HKCU"
             },
             {
+               "type": "registry",
                "order": 2,
                "hive": "CurrentUser",
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -377,6 +387,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/enable-long-paths.psd1:5. Valores tomados del bloque Registry del pin: LongPathsEnabled=1. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:manifest:qol/explorer/enable-long-paths",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SYSTEM\\CurrentControlSet\\Control\\FileSystem",
@@ -415,6 +426,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/QuickAccess.psd1:12 (estado 'Disable'). Valores tomados del bloque Registry del pin: HubMode=1. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:QuickAccess",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer",
@@ -453,6 +465,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/RecentItems.psd1:13 (estado 'Disable'). Valores tomados del bloque Registry del pin: NoStartMenuMFUprogramsList=1; NoInstrumentation=1; ClearRecentDocsOnExit=1; NoRecentDocsHistory=1; ShowOrHideMostUsedApps=2; HideRecentlyAddedApps=1; NoRemoteDestinations=1; Start_TrackProgs=0; Start_TrackDocs=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:RecentItems",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
@@ -463,6 +476,7 @@
                "description": "NoStartMenuMFUprogramsList en HKLM"
             },
             {
+               "type": "registry",
                "order": 2,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
@@ -473,6 +487,7 @@
                "description": "NoInstrumentation en HKLM"
             },
             {
+               "type": "registry",
                "order": 3,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
@@ -483,6 +498,7 @@
                "description": "ClearRecentDocsOnExit en HKLM"
             },
             {
+               "type": "registry",
                "order": 4,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
@@ -493,6 +509,7 @@
                "description": "NoRecentDocsHistory en HKLM"
             },
             {
+               "type": "registry",
                "order": 5,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
@@ -503,6 +520,7 @@
                "description": "ShowOrHideMostUsedApps en HKLM"
             },
             {
+               "type": "registry",
                "order": 6,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
@@ -513,6 +531,7 @@
                "description": "HideRecentlyAddedApps en HKLM"
             },
             {
+               "type": "registry",
                "order": 7,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
@@ -523,6 +542,7 @@
                "description": "NoRemoteDestinations en HKLM"
             },
             {
+               "type": "registry",
                "order": 8,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -533,6 +553,7 @@
                "description": "Start_TrackProgs en HKCU"
             },
             {
+               "type": "registry",
                "order": 9,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -571,6 +592,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/RemovableDrivesInSidebar.psd1:11 (estado 'Enable'). Valores tomados del bloque Registry del pin: (predeterminado)=Removable Drives; (predeterminado)=Removable Drives. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:RemovableDrivesInSidebar",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\DelegateFolders\\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}",
@@ -581,6 +603,7 @@
                "description": "(predeterminado) en HKLM"
             },
             {
+               "type": "registry",
                "order": 2,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\DelegateFolders\\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}",
@@ -619,6 +642,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/ShortcutIcon.psd1:11 (estado 'Classic'). Valores tomados del bloque Registry del pin: 29=%SystemRoot%\\AtlasModules\\Other\\Classic.ico,0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:ShortcutIcon",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Icons",
@@ -657,6 +681,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-shortcut-text.psd1:5. Valores tomados del bloque Registry del pin: ShortcutNameTemplate=\"%s.lnk\". Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:manifest:qol/explorer/remove-shortcut-text",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\NamingTemplates",
@@ -695,6 +720,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/OldContextMenu.psd1:13 (estado 'Enable'). Valores tomados del bloque Registry del pin: (predeterminado)=(cadena vacia). El mismo efecto existe en WinUtil: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1172 invoca functions/private/Set-WinUtilClassicContextMenu.ps1, que escribe el mismo CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. Ledger: winutil:tweak:WPFTweaksRightClickMenu (linea 10:326 del inventario, 'Previous Right-Click Menu').Builds: el CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2} es el del menú contextual de Windows 11; Windows 10 no lo usa.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:OldContextMenu",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32",
@@ -950,6 +976,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/SnapLayouts.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: EnableSnapAssistFlyout=0; EnableSnapBar=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:SnapLayouts",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -960,6 +987,7 @@
                "description": "EnableSnapAssistFlyout en HKCU"
             },
             {
+               "type": "registry",
                "order": 2,
                "hive": "CurrentUser",
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -1241,6 +1269,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/VerboseMessages.psd1:11 (estado 'Enable'). Valores tomados del bloque Registry del pin: verbosestatus=1. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:VerboseMessages",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "LocalMachine",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
@@ -1279,6 +1308,7 @@
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/Animation.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: FontSmoothing=2; UserPreferencesMask=kBIDgBAAAAA=; DragFullWindows=1; MinAnimate=0; ListviewAlphaSelect=1; IconsOnly=0; TaskbarAnimations=0; ListviewShadow=1; VisualFXSetting=3; EnableAeroPeek=0; AlwaysHibernateThumbnails=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:Animation",
          "actions": [
             {
+               "type": "registry",
                "order": 1,
                "hive": "CurrentUser",
                "keyPath": "Control Panel\\Desktop",
@@ -1289,6 +1319,7 @@
                "description": "FontSmoothing en HKCU"
             },
             {
+               "type": "registry",
                "order": 2,
                "hive": "CurrentUser",
                "keyPath": "Control Panel\\Desktop",
@@ -1299,6 +1330,7 @@
                "description": "UserPreferencesMask en HKCU"
             },
             {
+               "type": "registry",
                "order": 3,
                "hive": "CurrentUser",
                "keyPath": "Control Panel\\Desktop",
@@ -1309,6 +1341,7 @@
                "description": "DragFullWindows en HKCU"
             },
             {
+               "type": "registry",
                "order": 4,
                "hive": "CurrentUser",
                "keyPath": "Control Panel\\Desktop\\WindowMetrics",
@@ -1319,6 +1352,7 @@
                "description": "MinAnimate en HKCU"
             },
             {
+               "type": "registry",
                "order": 5,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -1329,6 +1363,7 @@
                "description": "ListviewAlphaSelect en HKCU"
             },
             {
+               "type": "registry",
                "order": 6,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -1339,6 +1374,7 @@
                "description": "IconsOnly en HKCU"
             },
             {
+               "type": "registry",
                "order": 7,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -1349,6 +1385,7 @@
                "description": "TaskbarAnimations en HKCU"
             },
             {
+               "type": "registry",
                "order": 8,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
@@ -1359,6 +1396,7 @@
                "description": "ListviewShadow en HKCU"
             },
             {
+               "type": "registry",
                "order": 9,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
@@ -1369,6 +1407,7 @@
                "description": "VisualFXSetting en HKCU"
             },
             {
+               "type": "registry",
                "order": 10,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\DWM",
@@ -1379,6 +1418,7 @@
                "description": "EnableAeroPeek en HKCU"
             },
             {
+               "type": "registry",
                "order": 11,
                "hive": "CurrentUser",
                "keyPath": "SOFTWARE\\Microsoft\\Windows\\DWM",
