@@ -152,6 +152,10 @@ total=109 passed=109 failed=0
 
 `ledger-verify` run `45316207352`: `353 passed` · `pytest_exit=0`.
 
+SHA final con el informe: `a32e1ea` — `dotnet-ci` run `45316592984` success
+(windows-2025 y windows-11-arm, `total=109 passed=109 failed=0` en los dos) y
+`ledger-verify` run `45316586774` success (`353 passed`, `pytest_exit=0`).
+
 ## Incidencias reales detectadas por CI
 
 1. **Primer run (`450aee8`) en rojo**: `TestWave1Catalog_ExecuteAndRollback_RestoresState`
