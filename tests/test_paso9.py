@@ -252,7 +252,10 @@ def test_las_operaciones_no_expresables_se_declaran_en_la_procedencia() -> None:
 
 def test_las_desviaciones_declaradas_siguen_siendo_las_que_hay() -> None:
     deviations = json.loads(EXCEPTIONS.read_text(encoding="utf-8"))["deviations"]
-    assert [d["capability_id"] for d in deviations] == ["debloat.settings.home"]
+    # Paso 10: la sección 9 añade una desviación de VALOR, no de significado
+    # (SettingsPageVisibility la escriben Atlas y WinUtil con listas distintas).
+    assert [d["capability_id"] for d in deviations] == [
+        "debloat.settings.home", "system.settings-page-visibility.hide"]
     kinds = {d["deviation_kind"] for d in deviations}
     assert kinds <= {"value", "switch-meaning"}
     assert all(d["reason"].strip() for d in deviations)
@@ -266,14 +269,15 @@ def test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10() -> None:
     report = json.loads(subprocess.run(
         [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
          "--json"], capture_output=True, text=True, check=False).stdout)
-    assert report["secciones_terminadas"] == ["1", "2", "3", "10"]
+    # Paso 10 suma la sección 9 y sus 18 capacidades al mismo verificador.
+    assert report["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
     assert report["por_seccion"]["10"]["lineas_mapped"] == 29
     assert report["por_seccion"]["10"]["cubiertas"] == 29
     assert report["por_seccion"]["10"]["huecos"] == 0
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
-    assert report["capacidades"] == 68
-    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 29
+    assert report["capacidades"] == 86
+    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 27 + 29
 
 
 def test_la_seccion_10_del_ledger_tiene_29_mapped_y_ninguna_queda_absente() -> None:
@@ -356,8 +360,10 @@ def test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido() -> None:
         capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
     text = (ROOT / "docs" / "reports" / "rangos-build.md").read_text(encoding="utf-8")
-    assert "**68** capacidades" in text
-    assert "**61**" in text and "**7**" in text
+    assert "**86** capacidades" in text
+    # Paso 10: 78 con las cuatro builds y 8 con rango recortado (la sección 9
+    # añade system.hibernation.hide al grupo de Windows 11 y 18 capacidades).
+    assert "**78**" in text and "**8**" in text
     # Las cinco de la sección 10 con rango recortado aparecen cada una.
     for cap_id in ("explorer.gallery.hide", "explorer.home.hide",
                    "ui.context-menu.classic", "ui.taskbar.end-task",

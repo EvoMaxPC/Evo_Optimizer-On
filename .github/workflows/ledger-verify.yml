@@ -495,7 +495,7 @@ jobs:
           print("seccion 10:", cov["por_seccion"]["10"])
           print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
           sec10 = cov["por_seccion"]["10"]
-          ok = (cov["capacidades"] == 68
+          ok = (cov["capacidades"] >= 68
                 and sec10["lineas_mapped"] == 29
                 and sec10["cubiertas"] == 29
                 and sec10["huecos"] == 0
@@ -503,6 +503,73 @@ jobs:
                 and aud["sin_excepcion"] == 0
                 and aud["distribucion"].get("ambiguous", 0) == 0
                 and aud["distribucion"].get("unhandled", 0) == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Paso 10 (catalogo de la seccion 9, cobertura y doble ejecucion)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section9_catalog.py \
+              | tee "ci-out/paso10-catalog-run${i}.txt"
+            python3 tools/ledger_extract/generate_coverage_matrix.py \
+              > "ci-out/paso10-matrix-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py \
+              > "ci-out/paso10-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py \
+              > "ci-out/paso10-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py \
+              > "ci-out/paso10-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso10-plan-run${i}.txt"
+            python3 tools/ledger_extract/build_build_ranges_report.py \
+              > "ci-out/paso10-ranges-run${i}.txt"
+            sha256sum catalog/capabilities/section9_system_registry.json \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      inventory/ledger/inventory-reconciliation.tsv \
+                      docs/reports/matriz-cobertura.md \
+                      docs/reports/plan-oleadas.md \
+                      docs/reports/rangos-build.md \
+              > "ci-out/paso10-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso10-sha-run1.txt ci-out/paso10-sha-run2.txt; then
+            echo "DETERMINISMO PASO 10 ROTO" | tee ci-out/paso10-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 10: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso10-determinism.txt
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          python3 tools/ledger_extract/build_build_ranges_report.py --check
+          cp catalog/capabilities/section9_system_registry.json ci-out/
+          cp ci-out/paso10-sha-run1.txt ci-out/paso10-sha.txt
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso10-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso10-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          cov = json.load(open("ci-out/paso10-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso10-audit.json", encoding="utf-8"))
+          print("capacidades:", cov["capacidades"],
+                "| secciones:", cov["secciones_terminadas"],
+                "| mapped:", cov["lineas_mapped_1_3"],
+                "| cubiertas:", cov["cubiertas"],
+                "| huecos:", cov["huecos"])
+          print("seccion 9:", cov["por_seccion"]["9"])
+          print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
+          sec9 = cov["por_seccion"]["9"]
+          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
+                and cov["capacidades"] == 86
+                and sec9["lineas_mapped"] == 27
+                and sec9["cubiertas"] == 27
+                and sec9["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and aud["sin_excepcion"] == 0
+                and aud["distribucion"].get("ambiguous", 0) == 0
+                and aud["por_seccion"].get("9") == 33)
           sys.exit(0 if ok else 1)
           PYEOF
 

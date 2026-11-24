@@ -16,6 +16,20 @@
       "reason": "Desviacion de SIGNIFICADO DE INTERRUPTOR, no de valor: la casilla encendida de WinUtil deja la pagina de Inicio visible (Value='show:home'); el valor que produce el efecto que anuncia la capacidad de EVO es el estado apagado ('hide:home'). Se copia el estado apagado y se deja constancia. Si el titular confirma que quiere replicar la casilla tal cual, hay que invertir este literal.",
       "deviation_kind": "switch-meaning",
       "switch_meaning": "WPFToggleHideSettingsHome es un Toggle (config/tweaks.json:1746) con Value='show:home' y OriginalValue='hide:home'. Por Invoke-WinUtilTweaks.ps1:34-46, Value es el estado ENCENDIDO de la casilla y OriginalValue el APAGADO (Get-WinUtilToggleStatus.ps1:44 compara contra Value). El catalogo escribe el estado APAGADO a proposito: su nombre es 'ocultar la pagina de Inicio'."
+    },
+    {
+      "capability_id": "system.settings-page-visibility.hide",
+      "hive": "HKLM",
+      "key": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "name": "SettingsPageVisibility",
+      "catalog_value": "hide:recovery;maps;maps-downloadmaps;privacy;privacy-feedback;privacy-activityhistory;search-permissions;privacy-general;sync;mobile-devices;mobile-devices-addphone;workplace;family-group;deviceusage;home",
+      "source": "winutil",
+      "source_apply_value": "hide:aicomponents",
+      "source_original_value": "<RemoveEntry>",
+      "relation": "differs",
+      "evidence": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5 ($value literal) y :8 ($key literal); el valor de WinUtil que aparece en la auditoria es WPFTweaksWindowsAI (hide:aicomponents), que toca la MISMA clave pero escondiendo otra pagina; inventory/ledger/atlas-manifest.tsv linea 137 (atlas:manifest:qol/set-hidden-settings-pages)",
+      "reason": "La auditoria casa por (hive, clave, nombre) y la misma clave SettingsPageVisibility la escribe tambien WinUtil con otro valor. El valor del catalogo NO sale de WinUtil: es el literal $value completo del script de Atlas, copiado byte a byte. Se declara la desviacion para que la fila deje de ser `differs` sin excepcion y quede escrito de donde sale cada uno.",
+      "deviation_kind": "value"
     }
   ]
 }

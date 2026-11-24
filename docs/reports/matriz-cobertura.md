@@ -3,17 +3,17 @@
 Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a mano.
 
 - Filas de la conciliacion: **588**
-- `inventory/ledger/inventory-reconciliation.tsv` sha256 `c35c1791056f4348a664b91f1299d56f0df0cfd2c2209412cfe712e8b1f8a46a`
+- `inventory/ledger/inventory-reconciliation.tsv` sha256 `bc188fdc0abe5e1931de3d847b6585a4c47506242f849981f21af17e0e910880`
 - Pins: Atlas `ec3c4058`, WinUtil `70c23c80`
 
 ## 1. Totales por estado
 
 | Estado | Filas | % |
 |---|---:|---:|
-| `Mapped` | 153 | 26.0 % |
+| `Mapped` | 152 | 25.9 % |
 | `Mapped-To-App` | 5 | 0.9 % |
 | `EVO-Exclusive` | 37 | 6.3 % |
-| `Absent-At-Pin` | 322 | 54.8 % |
+| `Absent-At-Pin` | 323 | 54.9 % |
 | `Informative-Header` | 71 | 12.1 % |
 | **Total** | **588** | 100.0 % |
 
@@ -29,7 +29,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 6 | 6 | 0 | 11 | 12 | 3 | 32 |
 | 7 | 7 | 0 | 10 | 10 | 2 | 29 |
 | 8 | 4 | 0 | 0 | 15 | 2 | 21 |
-| 9 | 28 | 0 | 0 | 28 | 2 | 58 |
+| 9 | 27 | 0 | 0 | 29 | 2 | 58 |
 | 10 | 29 | 0 | 0 | 17 | 2 | 48 |
 | 11 | 4 | 0 | 0 | 20 | 2 | 26 |
 | 12 | 5 | 0 | 0 | 21 | 2 | 28 |
@@ -38,14 +38,14 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 15 | 1 | 5 | 0 | 23 | 3 | 32 |
 | 16 | 5 | 0 | 0 | 35 | 4 | 44 |
 | 17 | 0 | 0 | 15 | 2 | 32 | 49 |
-| **Total** | **153** | **5** | **37** | **322** | **71** | **588** |
+| **Total** | **152** | **5** | **37** | **323** | **71** | **588** |
 
 ## 3. Cobertura WinUtil
 
 | Conjunto | Total | Mapeados | Cobertura |
 |---|---:|---:|---:|
-| Items de WinUtil | 162 | 51 | 31.5 % |
-| Operaciones de tweak de WinUtil | 179 | 17 | 9.5 % |
+| Items de WinUtil | 162 | 52 | 32.1 % |
+| Operaciones de tweak de WinUtil | 179 | 16 | 8.9 % |
 | Apps de WinUtil | 239 | 5 | 2.1 % |
 
 Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; los items con `winutil:item:*` / `winutil:tweak-op:*` / `winutil:feature:*`.
@@ -54,8 +54,8 @@ Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; lo
 
 | Conjunto | Total | Mapeados | Cobertura |
 |---|---:|---:|---:|
-| Toggles | 91 | 11 | 12.1 % |
-| Entradas de manifiesto | 182 (177 habilitadas) | 0 | 0.0 % |
+| Toggles | 91 | 12 | 13.2 % |
+| Entradas de manifiesto | 182 (177 habilitadas) | 1 | 0.5 % |
 | Valores `.reg` (`atlas-reg-entries.tsv`) | 327 | 0 | 0.0 % |
 | Ficheros `.reg` | 11 | — | n/d |
 | Efectos de script (`atlas-effects.tsv`) | 986 | 11 | 1.1 % |
@@ -65,12 +65,12 @@ Las apps se referencian con `winutil:catalog-entry:<id>` desde la seccion 15; lo
 
 | Concepto | Valor |
 |---|---:|
-| `mapped_ids` distintos en toda la conciliacion | 95 |
+| `mapped_ids` distintos en toda la conciliacion | 97 |
 | De ellos, apps de WinUtil | 5 |
-| De ellos, items de WinUtil | 51 |
-| De ellos, toggles Atlas | 11 |
-| De ellos, entradas de manifiesto Atlas | 0 |
-| De ellos, operaciones de tweak de WinUtil | 17 |
+| De ellos, items de WinUtil | 52 |
+| De ellos, toggles Atlas | 12 |
+| De ellos, entradas de manifiesto Atlas | 1 |
+| De ellos, operaciones de tweak de WinUtil | 16 |
 | De ellos, efectos de script de Atlas | 11 |
 | De ellos, valores `.reg` de Atlas | 0 |
 | De ellos, sin ledger de origen reconocido | 0 |

@@ -40,7 +40,7 @@ LEDGER_ID = re.compile(r"\b(?:winutil|atlas):[A-Za-z0-9_.:\-/*{}]+")
 SECTIONS = ("1", "2", "3")
 # Secciones con catalogo construido y con el mismo criterio estricto (0 huecos).
 # La 10 entra en el paso 9 (oleada 2). Las demas siguen solo informativas.
-COMPLETED_SECTIONS = ("1", "2", "3", "10")
+COMPLETED_SECTIONS = ("1", "2", "3", "9", "10")
 # Las 17 secciones del inventario, para el plan de oleadas (paso 8c). El
 # veredicto y los huecos siguen calculandose SOLO sobre SECTIONS, de modo que
 # esta lista amplia el informe pero no cambia el comportamiento en 1-3.

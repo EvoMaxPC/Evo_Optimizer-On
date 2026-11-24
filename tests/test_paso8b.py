@@ -207,10 +207,11 @@ def test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada() -
     assert caps["debloat.copilot.remove"]["state"] == "Specified"
     assert "RANGO NO VERIFICADO" in caps["debloat.copilot.remove"]["provenance"]
 
-    # Paso 9 (oleada 2): el catálogo crece de 39 a 68 capacidades al entrar la
-    # sección 10 (29 capacidades). El resto de la comprobación no cambia: toda
-    # capacidad está en Implemented o en Specified, y ninguna en otro estado.
-    assert len(implemented) + len(specified) == len(caps) == 68
+    # Paso 9 (oleada 2) llevó el catálogo de 39 a 68 capacidades con la sección 10
+    # y el paso 10 (oleada 3) a 86 con las 18 de la sección 9. El resto de la
+    # comprobación no cambia: toda capacidad está en Implemented o en Specified,
+    # y ninguna en otro estado.
+    assert len(implemented) + len(specified) == len(caps) == 86
 
 
 def test_winsxs_resetbase_es_irreversible_y_conflicta_con_la_variante_sin_resetbase() -> None:

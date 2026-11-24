@@ -44,11 +44,15 @@ PROPOSAL = [
     (1, "Base de limpieza: 24 unidades de trabajo y ya tiene 3/3 Mapped cubiertas. "
         "Va primero porque las demás oleadas reutilizan su motor de borrado."),
     (2, "Debloat es el núcleo del producto y ya está 17/17. Continúa con 10 y 9."),
-    (10, "Explorador e interfaz: oleada 2, ya cerrada en el catálogo (29 de 29 "
-         "líneas Mapped cubiertas). Ahora es la sección con más ítems de upstream "
-         "todavía pendientes: el trabajo que queda es de upstream, no del inventario."),
-    (9, "Registro y configuración: 28 Mapped, casi el mismo tamaño que 10 y sin "
-        "dependencias; buen candidato a oleada paralela."),
+    (10, "Explorador e interfaz: oleada 2, cerrada en el catálogo (29 de 29 "
+         "líneas Mapped cubiertas). Sigue siendo la sección con más ítems de upstream "
+         "pendientes: el trabajo que queda es de upstream, no del inventario."),
+    (9, "Registro y configuración: oleada 3, cerrada en el catálogo (27 de 27 líneas "
+        "Mapped cubiertas con 18 capacidades). Quedan 3 ítems de upstream pendientes y "
+        "ninguno es un valor de registro fijo: la indización se aplica como acción de "
+        "TrustedInstaller, la página de «workplace» se edita de forma incremental "
+        "(conservando las demás páginas) y el panel de fecha y hora sólo abre "
+        "timedate.cpl."),
     (3, "Telemetría: 6/6 Mapped cubiertas; el resto (34 Absent-At-Pin) son los "
         "ajustes de privacidad finos, que necesitan el motor de 2."),
     (4, "Servicios: alto riesgo por servicio, 9 Mapped. Después de 3 para no "

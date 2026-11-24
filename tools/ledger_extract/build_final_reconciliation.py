@@ -121,6 +121,39 @@ MAPPED_OVERRIDES: dict[tuple[int, str], tuple[str, str]] = {
     (10, "347"): ("winutil:tweak-op:WPFToggleNumLock:registry:0",
                   "falso negativo del paso 4e: la linea del inventario agrupa los atajos de "
                   "teclado; en el pin el unico efecto de esa familia es NumLock al iniciar"),
+    # Correcciones medidas en el paso 10 (oleada 3, seccion 9).
+    (9, "265"): ("winutil:tweak:WPFTweaksServices",
+                 "mapeo erroneo del paso 4e: la linea dice 'Services.' y en el pin el unico "
+                 "efecto de servicios de esa familia es WPFTweaksServices "
+                 "(config/tweaks.json: CscService, DiagTrack, MapsBroker, StorSvc, "
+                 "SharedAccess). La regla R3 habia casado el texto con un artefacto de las "
+                 "pruebas de Atlas (tests/Atlas.Toggles.Tests.ps1), que no es producto"),
+    (9, "308"): ("atlas:toggle:KeyboardShortcuts",
+                 "mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas SI "
+                 "expone Toggles/Interface/KeyboardShortcuts.psd1, que escribe Hotkey, "
+                 "Language Hotkey y Layout Hotkey en HKCU\\Keyboard Layout\\Toggle; el "
+                 "paso 4e la habia casado con el NumLock de WinUtil, que es otro ajuste"),
+    (9, "316"): ("atlas:manifest:qol/set-hidden-settings-pages",
+                 "mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas "
+                 "escribe SettingsPageVisibility en "
+                 "Scripts/Tweaks/qol/set-hidden-settings-pages.ps1; el paso 4e la habia "
+                 "casado con WPFTweaksTelemetry:registry:7, que es AcceptedPrivacyPolicy y "
+                 "no la visibilidad de paginas"),
+}
+
+# Lineas que el paso 4e dejo en `Mapped` por la regla R3 y que en el pin NO tienen
+# el efecto que anuncia la linea. Se corrigen a `Absent-At-Pin`, con la medicion.
+ABSENT_OVERRIDES: dict[tuple[int, str], str] = {
+    # Seccion 9, linea 278 "System Tray Configuration." (bloque WinUtil).
+    (9, "278"): ("medido en el paso 10: el pin de WinUtil no tiene ningun ajuste de "
+                 "configuracion de la bandeja del sistema. `config/tweaks.json` solo "
+                 "declara 'System Tray Notifications & Calendar - Disable' "
+                 "(WPFTweaksDisableNotifications) y 'System Tray Battery Percentage' "
+                 "(WPFToggleBatteryPercentage), que son dos ajustes concretos y no una "
+                 "'configuracion de la bandeja'; `xaml/` no tiene ninguna pagina de "
+                 "bandeja. El `mapped_id` que puso el paso 4e "
+                 "(winutil:tweak-op:WPFToggleLoginBlur:registry:0) es el desenfoque del "
+                 "inicio de sesion, sin relacion con la bandeja"),
 }
 
 
@@ -383,6 +416,16 @@ def main(argv: list[str] | None = None) -> int:
                 "rationale": (s17_why if s17_ids else
                               "fila de la tabla de la seccion 17 sin implementacion "
                               "en el pin: la asume EVO"),
+            })
+            continue
+
+        # --- E0 correcciones medidas del paso 10 (lineas que el pin NO implementa)
+        rejected = ABSENT_OVERRIDES.get((cur_sec, str(idx)))
+        if rejected:
+            rows.append({
+                "seccion": cur_sec, "linea": idx, "fuente_declarada": fuente,
+                "texto": texto[:bc.TEXTO_MAX], "status": "Absent-At-Pin",
+                "mapped_ids": "", "confidence": "alta", "rationale": rejected,
             })
             continue
 
