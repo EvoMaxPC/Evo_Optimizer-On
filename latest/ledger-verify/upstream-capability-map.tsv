@@ -102,14 +102,14 @@ atlas:manifest:qol/explorer/add-context-menus/new-reg	atlas-manifest	qol/explore
 atlas:manifest:qol/explorer/always-more-details-transfer	atlas-manifest	qol/explorer/always-more-details-transfer	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/classic-search	atlas-manifest	qol/explorer/classic-search	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/debloat-send-to	atlas-manifest	qol/explorer/debloat-send-to	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:manifest:qol/explorer/disable-check-boxes	atlas-manifest	qol/explorer/disable-check-boxes	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-check-boxes	atlas-manifest	qol/explorer/disable-check-boxes	10	category	explorer.check-boxes.disable	covered	cubierta por explorer.check-boxes.disable (ledger_refs de su provenance)
 atlas:manifest:qol/explorer/disable-folders-this-pc	atlas-manifest	qol/explorer/disable-folders-this-pc	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/disable-gallery	atlas-manifest	qol/explorer/disable-gallery	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/disable-home	atlas-manifest	qol/explorer/disable-home	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/disable-invalid-shortcuts-search	atlas-manifest	qol/explorer/disable-invalid-shortcuts-search	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/disable-network-navigation-pane	atlas-manifest	qol/explorer/disable-network-navigation-pane	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/dont-show-office-files	atlas-manifest	qol/explorer/dont-show-office-files	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:manifest:qol/explorer/enable-long-paths	atlas-manifest	qol/explorer/enable-long-paths	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/enable-long-paths	atlas-manifest	qol/explorer/enable-long-paths	10	category	explorer.long-paths.enable	covered	cubierta por explorer.long-paths.enable (ledger_refs de su provenance)
 atlas:manifest:qol/explorer/full-context-on-more-than-15-items	atlas-manifest	qol/explorer/full-context-on-more-than-15-items	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/hide-frequently-used-items	atlas-manifest	qol/explorer/hide-frequently-used-items	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/import-power-plan	atlas-manifest	qol/explorer/import-power-plan	10	category		pending	ninguna capacidad del catalogo la cita todavia
@@ -128,7 +128,7 @@ atlas:manifest:qol/explorer/remove-context-menus/printing-windows-11	atlas-manif
 atlas:manifest:qol/explorer/remove-context-menus/share	atlas-manifest	qol/explorer/remove-context-menus/share	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/remove-context-menus/troubleshooting-compat	atlas-manifest	qol/explorer/remove-context-menus/troubleshooting-compat	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/remove-previous-versions	atlas-manifest	qol/explorer/remove-previous-versions	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:manifest:qol/explorer/remove-shortcut-text	atlas-manifest	qol/explorer/remove-shortcut-text	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-shortcut-text	atlas-manifest	qol/explorer/remove-shortcut-text	10	category	explorer.shortcut-text.hide	covered	cubierta por explorer.shortcut-text.hide (ledger_refs de su provenance)
 atlas:manifest:qol/explorer/show-files	atlas-manifest	qol/explorer/show-files	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/explorer/use-compact-mode	atlas-manifest	qol/explorer/use-compact-mode	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:qol/hide-disabled-disconnected-sounds	atlas-manifest	qol/hide-disabled-disconnected-sounds	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
@@ -182,8 +182,8 @@ atlas:manifest:security/block-anonymous-enum-sam	atlas-manifest	security/block-a
 atlas:manifest:security/disable-automatic-restart-signon	atlas-manifest	security/disable-automatic-restart-signon	13	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:manifest:security/disable-remote-assistance	atlas-manifest	security/disable-remote-assistance	13	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:AdvancedBootOptions	atlas-toggle	AdvancedBootOptions	8	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:Animation	atlas-toggle	Animation	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:AppIconThumbnail	atlas-toggle	AppIconThumbnail	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Animation	atlas-toggle	Animation	10	category	ui.visual-effects.minimal	covered	cubierta por ui.visual-effects.minimal (ledger_refs de su provenance)
+atlas:toggle:AppIconThumbnail	atlas-toggle	AppIconThumbnail	10	category	explorer.app-icon-thumbnails.hide	covered	cubierta por explorer.app-icon-thumbnails.hide (ledger_refs de su provenance)
 atlas:toggle:AppStoreArchiving	atlas-toggle	AppStoreArchiving	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:AtlasHealth	atlas-toggle	AtlasHealth	14	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:AutomaticFolderDiscovery	atlas-toggle	AutomaticFolderDiscovery	10	category		pending	ninguna capacidad del catalogo la cita todavia
@@ -193,7 +193,7 @@ atlas:toggle:BackgroundApps	atlas-toggle	BackgroundApps	10	item-effect		pending	
 atlas:toggle:Bluetooth	atlas-toggle	Bluetooth	4	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:BootLogo	atlas-toggle	BootLogo	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:ClickToDo	atlas-toggle	ClickToDo	2	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:CompactView	atlas-toggle	CompactView	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:CompactView	atlas-toggle	CompactView	10	category	explorer.compact-view.enable	covered	cubierta por explorer.compact-view.enable (ledger_refs de su provenance)
 atlas:toggle:ConfigVBS	atlas-toggle	ConfigVBS	13	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:ContextMenuTerminals	atlas-toggle	ContextMenuTerminals	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:Copilot	atlas-toggle	Copilot	2	item-name-rule	debloat.copilot.remove	covered	cubierta por debloat.copilot.remove (ledger_refs de su provenance)
@@ -202,19 +202,19 @@ atlas:toggle:CpuIdleContextMenu	atlas-toggle	CpuIdleContextMenu	5	item-name-rule
 atlas:toggle:DefaultAtlasNetwork	atlas-toggle	DefaultAtlasNetwork	14	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:DeliveryOptimisation	atlas-toggle	DeliveryOptimisation	12	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:EdgeSwipe	atlas-toggle	EdgeSwipe	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:ExtractContextMenu	atlas-toggle	ExtractContextMenu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ExtractContextMenu	atlas-toggle	ExtractContextMenu	10	category	explorer.extract-context-menu.add	covered	cubierta por explorer.extract-context-menu.add (ledger_refs de su provenance)
 atlas:toggle:FSOGameBar	atlas-toggle	FSOGameBar	6	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:FaultTolerantHeap	atlas-toggle	FaultTolerantHeap	13	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:FileSharing	atlas-toggle	FileSharing	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:FixErrors2502and2503	atlas-toggle	FixErrors2502and2503	14	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:FixExplorerRuntimeError	atlas-toggle	FixExplorerRuntimeError	14	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:FixMSStoreIssues	atlas-toggle	FixMSStoreIssues	14	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:Gallery	atlas-toggle	Gallery	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Gallery	atlas-toggle	Gallery	10	category	explorer.gallery.hide	covered	cubierta por explorer.gallery.hide (ledger_refs de su provenance)
 atlas:toggle:GiveAccessToMenu	atlas-toggle	GiveAccessToMenu		none		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:Hibernation	atlas-toggle	Hibernation	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:HideAppBrowserControl	atlas-toggle	HideAppBrowserControl	13	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:HighestMode	atlas-toggle	HighestMode	8	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:Home	atlas-toggle	Home	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Home	atlas-toggle	Home	10	category	explorer.home.hide	covered	cubierta por explorer.home.hide (ledger_refs de su provenance)
 atlas:toggle:Indexing	atlas-toggle	Indexing	9	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:InstallSoftware	atlas-toggle	InstallSoftware	15	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:KernelParameters	atlas-toggle	KernelParameters	8	category		pending	ninguna capacidad del catalogo la cita todavia
@@ -232,16 +232,16 @@ atlas:toggle:NVidiaDisplayContainerContextMenu	atlas-toggle	NVidiaDisplayContain
 atlas:toggle:NetworkDiscovery	atlas-toggle	NetworkDiscovery	4	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:NetworkNavigationPane	atlas-toggle	NetworkNavigationPane	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:NewBootMenu	atlas-toggle	NewBootMenu	8	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:OldContextMenu	atlas-toggle	OldContextMenu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:OldContextMenu	atlas-toggle	OldContextMenu	10	category	ui.context-menu.classic	covered	cubierta por ui.context-menu.classic (ledger_refs de su provenance)
 atlas:toggle:PauseUpdates	atlas-toggle	PauseUpdates	12	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:PhoneLink	atlas-toggle	PhoneLink	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:PowerSaving	atlas-toggle	PowerSaving	5	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:Printing	atlas-toggle	Printing	4	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:ProcessExplorer	atlas-toggle	ProcessExplorer	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:QuickAccess	atlas-toggle	QuickAccess	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:QuickAccess	atlas-toggle	QuickAccess	10	category	explorer.quick-access.hide	covered	cubierta por explorer.quick-access.hide (ledger_refs de su provenance)
 atlas:toggle:Recall	atlas-toggle	Recall	2	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:RecentItems	atlas-toggle	RecentItems	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:RemovableDrivesInSidebar	atlas-toggle	RemovableDrivesInSidebar	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RecentItems	atlas-toggle	RecentItems	10	category	explorer.recent-items.disable	covered	cubierta por explorer.recent-items.disable (ledger_refs de su provenance)
+atlas:toggle:RemovableDrivesInSidebar	atlas-toggle	RemovableDrivesInSidebar	10	category	explorer.removable-drives.sidebar	covered	cubierta por explorer.removable-drives.sidebar (ledger_refs de su provenance)
 atlas:toggle:RemoveEdge	atlas-toggle	RemoveEdge	15	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:RemovePythonStorePrompt	atlas-toggle	RemovePythonStorePrompt	15	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:RepairWindowsComponents	atlas-toggle	RepairWindowsComponents	14	category		pending	ninguna capacidad del catalogo la cita todavia
@@ -250,11 +250,11 @@ atlas:toggle:RunWithPriority	atlas-toggle	RunWithPriority	10	category		pending	n
 atlas:toggle:SafeMode	atlas-toggle	SafeMode	14	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:SecurityHealthTray	atlas-toggle	SecurityHealthTray	13	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:SendToContextMenu	atlas-toggle	SendToContextMenu	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:ShortcutIcon	atlas-toggle	ShortcutIcon	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ShortcutIcon	atlas-toggle	ShortcutIcon	10	category	explorer.shortcut-icon.classic	covered	cubierta por explorer.shortcut-icon.classic (ledger_refs de su provenance)
 atlas:toggle:ShortcutText	atlas-toggle	ShortcutText	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:Sleep	atlas-toggle	Sleep	7	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:SleepStudy	atlas-toggle	SleepStudy	7	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:SnapLayouts	atlas-toggle	SnapLayouts	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SnapLayouts	atlas-toggle	SnapLayouts	10	category	ui.snap-layouts.disable	covered	cubierta por ui.snap-layouts.disable (ledger_refs de su provenance)
 atlas:toggle:SpinningAnimations	atlas-toggle	SpinningAnimations	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:SuperFetch	atlas-toggle	SuperFetch	4	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:SystemRestore	atlas-toggle	SystemRestore	14	item-effect		pending	ninguna capacidad del catalogo la cita todavia
@@ -266,7 +266,7 @@ atlas:toggle:ToggleWindowsUpdates	atlas-toggle	ToggleWindowsUpdates	12	item-name
 atlas:toggle:UpdateDrivers	atlas-toggle	UpdateDrivers	12	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:UpdateNotifications	atlas-toggle	UpdateNotifications	12	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:VbsState	atlas-toggle	VbsState	13	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:VerboseMessages	atlas-toggle	VerboseMessages	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:VerboseMessages	atlas-toggle	VerboseMessages	10	category	ui.verbose-messages.enable	covered	cubierta por ui.verbose-messages.enable (ledger_refs de su provenance)
 atlas:toggle:ViewCurrentValues	atlas-toggle	ViewCurrentValues	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:WebSearch	atlas-toggle	WebSearch	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:Widgets	atlas-toggle	Widgets	10	item-name-rule	debloat.widgets.disable	covered	cubierta por debloat.widgets.disable (ledger_refs de su provenance)
@@ -371,28 +371,28 @@ winutil:tweak:WPFOOSUbutton	winutil	O&O ShutUp10++ - Run		none		pending	ninguna 
 winutil:tweak:WPFRemoveUltPerf	winutil	Ultimate Performance Profile - Disable	5	category		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFToggleBatteryPercentage	winutil	System Tray Battery Percentage	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFToggleBingSearch	winutil	Start Menu Bing Search	10	item-effect	debloat.start.websearch	covered	cubierta por debloat.start.websearch (ledger_refs de su provenance)
-winutil:tweak:WPFToggleDarkMode	winutil	Dark Theme for Windows	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleDarkMode	winutil	Dark Theme for Windows	10	item-name-rule	ui.theme.dark	covered	cubierta por ui.theme.dark (ledger_refs de su provenance)
 winutil:tweak:WPFToggleDetailedBSoD	winutil	BSoD Verbose Mode	14	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleDisableLockscreen	winutil	Lock Screen - Disable	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleDisableLockscreen	winutil	Lock Screen - Disable	10	item-effect	ui.lockscreen.hide	covered	cubierta por ui.lockscreen.hide (ledger_refs de su provenance)
 winutil:tweak:WPFToggleGameMode	winutil	Game Mode	6	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleHiddenFiles	winutil	File Explorer Hidden Files	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleHiddenFiles	winutil	File Explorer Hidden Files	10	item-effect	explorer.hidden-files.show	covered	cubierta por explorer.hidden-files.show (ledger_refs de su provenance)
 winutil:tweak:WPFToggleHideSettingsHome	winutil	Settings Home Page	10	item-effect	debloat.settings.home	covered	cubierta por debloat.settings.home (ledger_refs de su provenance)
-winutil:tweak:WPFToggleLoginBlur	winutil	Logon Screen Acrylic Blur	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleLoginBlur	winutil	Logon Screen Acrylic Blur	10	item-name-rule	ui.logon.acrylic-blur	covered	cubierta por ui.logon.acrylic-blur (ledger_refs de su provenance)
 winutil:tweak:WPFToggleLongPaths	winutil	Enable Long Paths	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFToggleMouseAcceleration	winutil	Mouse Acceleration	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFToggleNewOutlook	winutil	Microsoft Outlook New Version	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleNumLock	winutil	Num Lock on Startup	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleNumLock	winutil	Num Lock on Startup	10	item-effect	ui.numlock.startup	covered	cubierta por ui.numlock.startup (ledger_refs de su provenance)
 winutil:tweak:WPFToggleS3Sleep	winutil	S3 Sleep	5	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleScrollbars	winutil	Scrollbars Always Visible	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleShowExt	winutil	File Explorer File Extensions	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleScrollbars	winutil	Scrollbars Always Visible	10	item-effect	ui.scrollbars.always-visible	covered	cubierta por ui.scrollbars.always-visible (ledger_refs de su provenance)
+winutil:tweak:WPFToggleShowExt	winutil	File Explorer File Extensions	10	item-effect	explorer.file-extensions.show	covered	cubierta por explorer.file-extensions.show (ledger_refs de su provenance)
 winutil:tweak:WPFToggleStandbyFix	winutil	S0 Sleep Network Connectivity	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFToggleStartMenuRecommendations	winutil	Start Menu Recommendations	10	item-name-rule	debloat.start.recommendations	covered	cubierta por debloat.start.recommendations (ledger_refs de su provenance)
 winutil:tweak:WPFToggleStickyKeys	winutil	Sticky Keys	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleTaskView	winutil	Taskbar Task View Icon	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleTaskbarAlignment	winutil	Taskbar Centered Icons	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleTaskbarSearch	winutil	Taskbar Search Icon	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleTaskView	winutil	Taskbar Task View Icon	10	item-effect	ui.taskbar.task-view-button	covered	cubierta por ui.taskbar.task-view-button (ledger_refs de su provenance)
+winutil:tweak:WPFToggleTaskbarAlignment	winutil	Taskbar Centered Icons	10	item-effect	ui.taskbar.icons-centered	covered	cubierta por ui.taskbar.icons-centered (ledger_refs de su provenance)
+winutil:tweak:WPFToggleTaskbarSearch	winutil	Taskbar Search Icon	10	item-effect	ui.taskbar.search-icon	covered	cubierta por ui.taskbar.search-icon (ledger_refs de su provenance)
 winutil:tweak:WPFToggleVerboseLogon	winutil	Logon Verbose Mode	14	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleWindowSnapping	winutil	Window Snapping	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleWindowSnapping	winutil	Window Snapping	10	item-effect	ui.snapping.windows	covered	cubierta por ui.snapping.windows (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksActivity	winutil	Activity History - Disable	3	item-name-rule	privacy.activity.history	covered	cubierta por privacy.activity.history (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksBlockAdobeNet	winutil	Adobe URL Block List - Enable	2	item-name-rule	debloat.network.adobe-blocklist	covered	cubierta por debloat.network.adobe-blocklist (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksBraveDebloat	winutil	Brave Browser - Debloat	2	item-name-rule	privacy.browser.brave-debloat	covered	cubierta por privacy.browser.brave-debloat (ledger_refs de su provenance)
@@ -403,14 +403,14 @@ winutil:tweak:WPFTweaksDisableBGapps	winutil	Background Apps - Disable	7	item-na
 winutil:tweak:WPFTweaksDisableBitLocker	winutil	BitLocker - Disable	13	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery	winutil	File Explorer Automatic Folder Discovery - Disable	10	item-name-rule	debloat.explorer.auto-folder-discovery	covered	cubierta por debloat.explorer.auto-folder-discovery (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksDisableIPv6	winutil	IPv6 - Disable	11	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFTweaksDisableNotifications	winutil	System Tray Notifications & Calendar - Disable	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDisableNotifications	winutil	System Tray Notifications & Calendar - Disable	10	item-name-rule	ui.notifications.center-hide	covered	cubierta por ui.notifications.center-hide (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksDisableSearchIndexing	winutil	Windows Search Indexing - Disable	9	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksDisableStoreSearch	winutil	Microsoft Store Recommended Search Results - Disable	15	item-name-rule	debloat.store.search	covered	cubierta por debloat.store.search (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksDisableWarningForUnsignedRdp	winutil	RDP Unsigned File Warnings - Disable	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksDiskCleanup	winutil	Disk Cleanup - Run	1	item-name-rule	cleanup.winsxs.resetbase	covered	cubierta por cleanup.winsxs.resetbase (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksDisplay	winutil	Visual Effects - Set to Best Performance	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksEdgeDebloat	winutil	Microsoft Edge - Debloat	10	item-effect	debloat.edge.policies	covered	cubierta por debloat.edge.policies (ledger_refs de su provenance)
-winutil:tweak:WPFTweaksEndTaskOnTaskbar	winutil	End Task With Right Click - Enable	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksEndTaskOnTaskbar	winutil	End Task With Right Click - Enable	10	item-effect	ui.taskbar.end-task	covered	cubierta por ui.taskbar.end-task (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksHiber	winutil	Hibernation - Disable	5	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksIPv46	winutil	IPv6 - Set IPv4 as Preferred	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksLocation	winutil	Location Tracking - Disable	3	item-name-rule	privacy.location.sensors	covered	cubierta por privacy.location.sensors (ledger_refs de su provenance)
@@ -423,7 +423,7 @@ winutil:tweak:WPFTweaksRemoveOneDrive	winutil	Microsoft OneDrive - Remove	15	ite
 winutil:tweak:WPFTweaksReservedStorage	winutil	Disable Reserved Storage	1	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksRestorePoint	winutil	Restore Point - Create	14	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksRevertStartMenu	winutil	Start Menu Previous Layout - Enable	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFTweaksRightClickMenu	winutil	Right-Click Menu Previous Layout - Enable	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksRightClickMenu	winutil	Right-Click Menu Previous Layout - Enable	10	item-name-rule	ui.context-menu.classic	covered	cubierta por ui.context-menu.classic (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksServices	winutil	Services - Set to Manual	4	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksStorage	winutil	Storage Sense - Disable	1	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksSvcHostSplitting	winutil	svchost.exe Splitting - Disable	7	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia

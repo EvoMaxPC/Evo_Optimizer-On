@@ -22,7 +22,7 @@ debloat.content.delivery	HKCU	software\microsoft\windows\currentversion\contentd
 debloat.content.delivery	HKCU	software\microsoft\windows\currentversion\contentdeliverymanager	SystemPaneSuggestionsEnabled	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/debloat/config-content-delivery.psd1:28	0			equals-apply
 debloat.content.delivery	HKCU	software\microsoft\windows\currentversion\systemsettings\accountnotifications	EnableAccountNotifications	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/debloat/config-content-delivery.psd1:19	0			equals-apply
 debloat.content.delivery	HKLM	software\policies\microsoft\windows\cloudcontent	DisableWindowsConsumerFeatures	1	winutil	winutil:tweak-op:WPFTweaksConsumerFeatures:registry:0	1	<RemoveEntry>	none	equals-apply
-debloat.copilot.remove	HKCU	software\microsoft\windows\currentversion\explorer\advanced	ShowCopilotButton	0						no-source
+debloat.copilot.remove	HKCU	software\microsoft\windows\currentversion\explorer\advanced	ShowCopilotButton	0	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/General/Copilot.psd1:Disable	0			equals-apply
 debloat.copilot.remove	HKLM	software\policies\microsoft\windows\windowsai	RemoveMicrosoftCopilotApp	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-copilot.psd1:9	1			equals-apply
 debloat.devices.companion-apps	HKLM	software\policies\microsoft\windows\device metadata	PreventDeviceMetadataFromNetwork	1	winutil	winutil:tweak-op:WPFTweaksPreventDeviceMetadataFromNetwork:registry:0	1	<RemoveEntry>	none	equals-apply
 debloat.drivers.razer	HKLM	software\microsoft\windows\currentversion\device installer	DisableCoInstallers	1	winutil	winutil:tweak-op:WPFTweaksRazerBlock:registry:1	1	0	none	equals-apply
@@ -50,8 +50,8 @@ debloat.explorer.home-gallery	HKCU	software\microsoft\windows\currentversion\exp
 debloat.settings.home	HKCU	software\microsoft\windows\currentversion\policies\explorer	SettingsPageVisibility	hide:home	winutil	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	show:home	hide:home	Toggle	equals-off
 debloat.start.recommendations	HKLM	software\microsoft\policymanager\current\device\education	IsEducationEnvironment	0	winutil	winutil:tweak-op:WPFToggleStartMenuRecommendations:registry:1	0	1	Toggle	equals-on
 debloat.start.recommendations	HKLM	software\microsoft\policymanager\current\device\start	HideRecommendedSection	0	winutil	winutil:tweak-op:WPFToggleStartMenuRecommendations:registry:0	0	1	Toggle	equals-on
-debloat.start.recommendations	HKLM	software\policies\microsoft\windows\explorer	HideRecommendedSection	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/config-start-menu.psd1:20	0|1			ambiguous
-debloat.start.websearch	HKCU	software\microsoft\windows\currentversion\search	BingSearchEnabled	0	winutil	winutil:tweak-op:WPFToggleBingSearch:registry:0	1	0	Toggle	equals-off
+debloat.start.recommendations	HKLM	software\policies\microsoft\windows\explorer	HideRecommendedSection	0	winutil	winutil:tweak-op:WPFToggleStartMenuRecommendations:registry:2	0	1	Toggle	equals-on
+debloat.start.websearch	HKCU	software\microsoft\windows\currentversion\search	BingSearchEnabled	0	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/General/WebSearch.psd1:Disable	0			equals-apply
 debloat.start.websearch	HKCU	software\microsoft\windows\currentversion\search	SearchboxTaskbarMode	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:21	1			equals-apply
 debloat.start.websearch	HKCU	software\microsoft\windows\currentversion\search	SearchboxTaskbarModeCache	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:22	1			equals-apply
 debloat.start.websearch	HKCU	software\microsoft\windows\currentversion\searchsettings	IsAADCloudSearchEnabled	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:6	0			equals-apply
@@ -62,15 +62,17 @@ debloat.start.websearch	HKLM	software\policies\microsoft\windows\windows search	
 debloat.start.websearch	HKLM	software\policies\microsoft\windows\windows search	AllowSearchToUseLocation	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:15	0			equals-apply
 debloat.start.websearch	HKLM	software\policies\microsoft\windows\windows search	ConnectedSearchUseWeb	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:14	0			equals-apply
 debloat.start.websearch	HKLM	software\policies\microsoft\windows\windows search	EnableDynamicContentInWSB	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:16	0			equals-apply
-debloat.widgets.disable	HKLM	software\policies\microsoft\dsh	AllowNewsAndInterests	0						no-source
-debloat.widgets.disable	HKLM	software\policies\microsoft\dsh	DisableWidgetsBoard	1						no-source
-debloat.widgets.disable	HKLM	software\policies\microsoft\dsh	DisableWidgetsOnLockScreen	1						no-source
+debloat.widgets.disable	HKLM	software\policies\microsoft\dsh	AllowNewsAndInterests	0	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/General/Widgets.psd1:Disable	0			equals-apply
+debloat.widgets.disable	HKLM	software\policies\microsoft\dsh	DisableWidgetsBoard	1	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/General/Widgets.psd1:Disable	1			equals-apply
+debloat.widgets.disable	HKLM	software\policies\microsoft\dsh	DisableWidgetsOnLockScreen	1	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/General/Widgets.psd1:Disable	1			equals-apply
 debloat.windows.ai.recall	HKLM	software\policies\microsoft\windows\windowsai	AllowRecallEnablement	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-recall-snap.psd1:6	0			equals-apply
 debloat.windows.ai.recall	HKLM	software\policies\microsoft\windows\windowsai	DisableAIDataAnalysis	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-recall-snap.psd1:5	1			equals-apply
 debloat.windows.ai.recall	HKLM	software\policies\microsoft\windows\windowsai	DisableClickToDo	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-click-to-do.psd1:6	1			equals-apply
 debloat.windows.ai.recall	HKLM	software\policies\microsoft\windows\windowsai	DisableSettingsAgent	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-settings-agent.psd1:7	1			equals-apply
 debloat.windows.ai.recall	HKLM	software\policies\windowsnotepad	DisableAIFeatures	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/apps/disable-notepad-ai.psd1:6	1			equals-apply
-privacy.activity.history	HKLM	software\policies\microsoft\windows\system	EnableActivityFeed	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-activity-feed.psd1:5	0|1			ambiguous
+explorer.file-extensions.show	HKCU	software\microsoft\windows\currentversion\explorer\advanced	HideFileExt	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/show-files.psd1:6	0			equals-apply
+explorer.hidden-files.show	HKCU	software\microsoft\windows\currentversion\explorer\advanced	Hidden	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/show-files.psd1:5	1			equals-apply
+privacy.activity.history	HKLM	software\policies\microsoft\windows\system	EnableActivityFeed	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-activity-feed.psd1:5	0			equals-apply
 privacy.activity.history	HKLM	software\policies\microsoft\windows\system	PublishUserActivities	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disallow-user-activity-upload.psd1:6	0			equals-apply
 privacy.activity.history	HKLM	software\policies\microsoft\windows\system	UploadUserActivities	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disallow-user-activity-upload.psd1:5	0			equals-apply
 privacy.advertising.id	HKCU	software\microsoft\windows\currentversion\advertisinginfo	Enabled	0	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/advertising/disable-advertising-info.psd1:5	0			equals-apply
@@ -104,3 +106,17 @@ privacy.location.sensors	HKLM	software\microsoft\windows nt\currentversion\senso
 privacy.location.sensors	HKLM	software\microsoft\windows\currentversion\capabilityaccessmanager\consentstore\location	Value	Deny	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/config-app-permissions.psd1:6	Deny			equals-apply
 privacy.location.sensors	HKLM	system\maps	AutoUpdateEnabled	0	winutil	winutil:tweak-op:WPFTweaksLocation:registry:2	0	1	none	equals-apply
 privacy.telemetry.dmwappush	HKLM	system\currentcontrolset\services\dmwappushservice	Start	4						no-source
+ui.lockscreen.hide	HKLM	software\policies\microsoft\windows\personalization	NoLockScreen	1	atlas-toggle	atlas@ec3c4058:package/Executables/AtlasModules/Toggles/Interface/LockScreen.psd1:Disable	1			equals-apply
+ui.logon.acrylic-blur	HKLM	software\policies\microsoft\windows\system	DisableAcrylicBackgroundOnLogon	0	winutil	winutil:tweak-op:WPFToggleLoginBlur:registry:0	0	1	Toggle	equals-on
+ui.notifications.center-hide	HKCU	software\microsoft\windows\currentversion\pushnotifications	ToastEnabled	0	winutil	winutil:tweak-op:WPFTweaksDisableNotifications:registry:1	0	1	none	equals-apply
+ui.notifications.center-hide	HKCU	software\policies\microsoft\windows\explorer	DisableNotificationCenter	1	winutil	winutil:tweak-op:WPFTweaksDisableNotifications:registry:0	1	<RemoveEntry>	none	equals-apply
+ui.numlock.startup	HKCU	control panel\keyboard	InitialKeyboardIndicators	2	winutil	winutil:tweak-op:WPFToggleNumLock:registry:1	2	0	Toggle	equals-on
+ui.numlock.startup	HKU	.default\control panel\keyboard	InitialKeyboardIndicators	2	winutil	winutil:tweak-op:WPFToggleNumLock:registry:0	2	0	Toggle	equals-on
+ui.scrollbars.always-visible	HKCU	control panel\accessibility	DynamicScrollbars	0	winutil	winutil:tweak-op:WPFToggleScrollbars:registry:0	0	1	Toggle	equals-on
+ui.snapping.windows	HKCU	control panel\desktop	WindowArrangementActive	1	winutil	winutil:tweak-op:WPFToggleWindowSnapping:registry:0	1	0	Toggle	equals-on
+ui.taskbar.end-task	HKCU	software\microsoft\windows\currentversion\explorer\advanced\taskbardevelopersettings	TaskbarEndTask	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/end-task.psd1:5	1			equals-apply
+ui.taskbar.icons-centered	HKCU	software\microsoft\windows\currentversion\explorer\advanced	TaskbarAl	1	winutil	winutil:tweak-op:WPFToggleTaskbarAlignment:registry:0	1	0	Toggle	equals-on
+ui.taskbar.search-icon	HKCU	software\microsoft\windows\currentversion\search	SearchboxTaskbarMode	1	atlas	atlas@ec3c4058:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1:21	1			equals-apply
+ui.taskbar.task-view-button	HKCU	software\microsoft\windows\currentversion\explorer\advanced	ShowTaskViewButton	1	winutil	winutil:tweak-op:WPFToggleTaskView:registry:0	1	0	Toggle	equals-on
+ui.theme.dark	HKCU	software\microsoft\windows\currentversion\themes\personalize	AppsUseLightTheme	0	winutil	winutil:tweak-op:WPFToggleDarkMode:registry:0	0	1	Toggle	equals-on
+ui.theme.dark	HKCU	software\microsoft\windows\currentversion\themes\personalize	SystemUsesLightTheme	0	winutil	winutil:tweak-op:WPFToggleDarkMode:registry:1	0	1	Toggle	equals-on

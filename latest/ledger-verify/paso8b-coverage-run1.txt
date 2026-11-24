@@ -1,10 +1,11 @@
-capacidades del catalogo : 39
-lineas Mapped 1-3       : 26
-  cubiertas             : 26
+capacidades del catalogo : 68
+lineas Mapped 1+2+3+10   : 55
+  cubiertas             : 55
   huecos declarados     : 0 (de 0 declarados)
   seccion 1: 3 Mapped, 3 cubiertas, 0 huecos
   seccion 2: 17 Mapped, 17 cubiertas, 0 huecos
   seccion 3: 6 Mapped, 6 cubiertas, 0 huecos
+  seccion 10: 29 Mapped, 29 cubiertas, 0 huecos
 
 (cifra informativa) capacidades que no respaldan ninguna linea Mapped:
   cleanup.delivery.optimization
@@ -21,11 +22,20 @@ lineas Mapped 1-3       : 26
   debloat.cortana.remove
   debloat.telemetry.appx
   debloat.windows.ai.recall
+  explorer.check-boxes.disable
+  explorer.long-paths.enable
+  explorer.quick-access.hide
+  explorer.recent-items.disable
+  explorer.removable-drives.sidebar
+  explorer.shortcut-icon.classic
+  explorer.shortcut-text.hide
   privacy.advertising.id
   privacy.ceip.tasks
   privacy.feedback.frequency
   privacy.kms.activation.telemetry
   privacy.telemetry.diagtrack
   privacy.telemetry.dmwappush
+  ui.snap-layouts.disable
+  ui.verbose-messages.enable
 
 veredicto: OK

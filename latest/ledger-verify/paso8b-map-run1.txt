@@ -4,9 +4,9 @@ filas del mapa upstream : 435
   winutil         162
 
 source x status:
-  atlas-manifest  covered=13 pending=169 variant-of=0 not-a-capability=0
-  atlas-toggle    covered=2 pending=89 variant-of=0 not-a-capability=0
-  winutil         covered=24 pending=127 variant-of=0 not-a-capability=11
+  atlas-manifest  covered=16 pending=166 variant-of=0 not-a-capability=0
+  atlas-toggle    covered=15 pending=76 variant-of=0 not-a-capability=0
+  winutil         covered=38 pending=113 variant-of=0 not-a-capability=11
 
 section_basis (todas las filas):
   category   250
@@ -18,7 +18,7 @@ section_basis (todas las filas):
 pending por section_guess:
   (sin seccion)  18
   1              2
-  10             135
+  10             105
   11             27
   12             17
   13             17
@@ -34,4 +34,4 @@ pending por section_guess:
   8              16
   9              11
 
-cobertura real: 39/435 (9.0 %)
+cobertura real: 69/435 (15.9 %)

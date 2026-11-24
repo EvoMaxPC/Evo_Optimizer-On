@@ -1,0 +1,93 @@
+toggle_id	state	function_name	direct_effects	transitive_effects	effect_types	depth_max	has_cycle
+AdvancedBootOptions	Disable	Disable-AtlasAdvancedBootOptions	0	0		2	false
+AdvancedBootOptions	Enable	Enable-AtlasAdvancedBootOptions	0	0		1	false
+AtlasHealth	Run	Show-AtlasHealthReport	0	0		3	true
+AutomaticRepair	Disable	Disable-AtlasAutomaticRepair	0	0		1	false
+AutomaticRepair	Enable	Enable-AtlasAutomaticRepair	0	0		1	false
+Bluetooth	Disable	Disable-AtlasBluetoothDevices	0	0		5	false
+Bluetooth	Enable	Enable-AtlasBluetoothDevices	0	0		5	false
+BootLogo	Disable	Disable-AtlasBootLogo	0	0		1	false
+BootLogo	Enable	Enable-AtlasBootLogo	0	0		2	false
+ContextMenuTerminals	Add	Import-AtlasTerminalsContextMenu	0	0		3	false
+ContextMenuTerminals	AddNoWindowsTerminal	Import-AtlasTerminalsContextMenu	0	0		3	false
+ContextMenuTerminals	Remove	Import-AtlasTerminalsContextMenu	0	0		3	false
+Copilot	Disable	Remove-AtlasCopilotApp	0	1	appx	5	false
+Copilot	Enable	Enable-AtlasCopilotMachine	0	2	other-exe|ownership	5	false
+CpuIdle	Disable	Disable-AtlasCpuIdle	0	0		3	false
+CpuIdle	Enable	Enable-AtlasCpuIdle	0	0		1	false
+DefaultAtlasNetwork	Disable	Set-AtlasNetworkDefaultState	0	2	network|other-exe	5	true
+DefaultAtlasNetwork	Enable	Set-AtlasNetworkDefaultState	0	2	network|other-exe	5	true
+FSOGameBar	Disable	Remove-AtlasGameBarOverlayPackage	1	1	appx	1	false
+FileSharing	Disable	Set-AtlasFileSharingMachineState	0	5	network|other-exe|ownership|registry|service	5	true
+FileSharing	Enable	Set-AtlasFileSharingMachineState	0	5	network|other-exe|ownership|registry|service	5	true
+FixErrors2502and2503	Run	Invoke-AtlasWindowsTempPermissionsRepair	0	1	ownership	5	false
+FixMSStoreIssues	Run	Invoke-AtlasStoreFixer	1	1	other-exe	2	false
+Hibernation	Disable	Set-AtlasHibernationPowerState	1	1	power	2	false
+Hibernation	Enable	Set-AtlasHibernationPowerState	1	1	power	2	false
+HighestMode	Disable	Disable-AtlasHighestMode	0	0		2	false
+HighestMode	Enable	Enable-AtlasHighestMode	0	0		1	false
+Indexing	Disable	Disable-AtlasSearchIndexing	0	3	file|process|registry	5	false
+Indexing	Enable	Enable-AtlasSearchIndexing	0	3	file|process|registry	5	true
+Indexing	Minimal	Set-AtlasMinimalSearchIndexing	0	3	file|process|registry	5	false
+KernelParameters	Disable	Disable-AtlasKernelParameters	0	0		2	false
+KernelParameters	Enable	Enable-AtlasKernelParameters	0	0		1	false
+LanmanWorkstation	Disable	Disable-AtlasSmbDirectFeature	1	1	dism	5	true
+LanmanWorkstation	Enable	Enable-AtlasSmbDirectFeature	1	1	dism	5	true
+Location	Disable	Disable-AtlasLocation	0	4	ownership|process|registry|service	5	false
+Location	Enable	Enable-AtlasLocation	0	4	ownership|process|registry|service	5	false
+LockScreen	Enable	Assert-AtlasLockScreenPolicyRemoved	0	0		0	false
+MicrosoftStore	Disable	Remove-AtlasMicrosoftStore	1	1	appx	3	false
+Mitigations	Disable	Disable-AtlasMitigations	1	2	other-exe|ownership	5	false
+Mitigations	Enable	Enable-AtlasMitigations	0	1	ownership	5	false
+Mitigations	WindowsDefault	Set-AtlasMitigationsWindowsDefault	0	0		1	false
+NVidiaDisplayContainer	Disable	Set-AtlasNVidiaDisplayContainerState	2	2	registry|service	5	false
+NVidiaDisplayContainer	Enable	Set-AtlasNVidiaDisplayContainerState	2	2	registry|service	5	false
+NVidiaDisplayContainerContextMenu	Enable	Add-AtlasNVidiaContainerContextMenu	0	1	ownership	5	false
+NetworkDiscovery	Enable	Enable-AtlasNetworkDiscoveryServices	0	4	other-exe|ownership|registry|service	5	true
+NewBootMenu	Disable	Disable-AtlasNewBootMenu	0	0		1	false
+NewBootMenu	Enable	Enable-AtlasNewBootMenu	0	0		1	false
+PhoneLink	Disable	Disable-AtlasPhoneLinkMachine	0	4	appx|ownership|process|registry	5	false
+PhoneLink	Enable	Enable-AtlasPhoneLinkMachine	0	3	ownership|process|registry	5	false
+PowerSaving	Disable	Invoke-AtlasPowerSavingToggle	0	4	other-exe|ownership|registry|service	5	true
+PowerSaving	Enable	Invoke-AtlasPowerSavingToggle	0	4	other-exe|ownership|registry|service	5	true
+Printing	Disable	Set-AtlasPrintingMachineState	0	2	process|registry	5	true
+Printing	Enable	Set-AtlasPrintingMachineState	0	2	process|registry	5	true
+ProcessExplorer	Disable	Uninstall-AtlasProcessExplorer	0	2	other-exe|registry	5	false
+ProcessExplorer	Enable	Install-AtlasProcessExplorer	0	3	file|other-exe|registry	5	false
+RecentItems	Disable	Set-AtlasRecentItemsSettingsPage	0	2	process|registry	5	false
+RecentItems	Enable	Set-AtlasRecentItemsSettingsPage	0	2	process|registry	5	false
+RemoveEdge	Run	Invoke-AtlasEdgeRemover	1	1	other-exe	5	true
+RepairWindowsComponents	Run	Repair-AtlasWindowsComponents	1	1	other-exe	5	true
+RunWithPriority	Enable	Add-AtlasRunWithPriorityContextMenu	0	1	ownership	5	false
+SafeMode	CommandPrompt	Set-AtlasSafeModeBoot	0	0		1	false
+SafeMode	Exit	Set-AtlasSafeModeBoot	0	0		1	false
+SafeMode	Minimal	Set-AtlasSafeModeBoot	0	0		1	false
+SafeMode	Networking	Set-AtlasSafeModeBoot	0	0		1	false
+SecurityHealthTray	Disable	Set-AtlasSecurityHealthTrayStartup	0	0		3	false
+SecurityHealthTray	Enable	Set-AtlasSecurityHealthTrayStartup	0	0		3	false
+Sleep	Disable	Set-AtlasSleepState	1	5	other-exe|ownership|power|registry|service	5	true
+Sleep	Enable	Set-AtlasSleepState	1	5	other-exe|ownership|power|registry|service	5	true
+SleepStudy	Disable	Set-AtlasSleepStudyEventLogState	1	1	other-exe	1	false
+SleepStudy	Enable	Set-AtlasSleepStudyEventLogState	1	1	other-exe	1	false
+SpinningAnimations	Disable	Disable-AtlasSpinningAnimations	0	0		1	false
+SpinningAnimations	Enable	Enable-AtlasSpinningAnimations	0	0		2	false
+SuperFetch	Disable	Set-AtlasSuperFetchMachineState	0	2	ownership|registry	5	false
+SuperFetch	Enable	Set-AtlasSuperFetchMachineState	0	2	ownership|registry	5	false
+SystemRestore	Enable	Enable-AtlasWindowsVolumeProtection	0	0		3	false
+TakeOwnership	Disable	Import-AtlasTakeOwnershipContextMenu	0	0		3	false
+TakeOwnership	Enable	Import-AtlasTakeOwnershipContextMenu	0	0		3	false
+TelemetryComponents	Run	Invoke-AtlasTelemetryComponentsMenu	0	0		0	false
+TimerResolution	Disable	Unregister-AtlasTimerResolutionTask	0	0		3	false
+TimerResolution	Enable	Register-AtlasTimerResolutionTask	0	0		3	false
+ToggleDefender	Run	Invoke-AtlasDefenderToggle	0	0		0	false
+ToggleWindowsUpdates	Disable	Disable-AtlasWindowsUpdates	1	4	ownership|process|registry|service	5	false
+ToggleWindowsUpdates	Enable	Enable-AtlasWindowsUpdates	1	4	ownership|process|registry|service	5	false
+UpdateDrivers	Run	Invoke-AtlasDriverUpdate	0	0		5	true
+VbsState	Disable	Set-AtlasVbsState	0	1	ownership	5	true
+VbsState	Enable	Set-AtlasVbsState	0	1	ownership	5	true
+ViewCurrentValues	View	Show-AtlasBootValues	0	0		3	false
+WebSearch	Disable	Disable-AtlasWebSearchMachine	0	3	appx|process|registry	5	false
+WebSearch	Enable	Enable-AtlasWebSearchMachine	0	4	file|ownership|process|registry	5	false
+Widgets	Enable	Enable-AtlasWidgetsMachine	1	3	file|other-exe|ownership	5	true
+Workplace	Disable	Hide-AtlasWorkplaceSettingsPage	0	2	process|registry	5	false
+Workplace	Enable	Show-AtlasWorkplaceSettingsPage	0	2	process|registry	4	false
