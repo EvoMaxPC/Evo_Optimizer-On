@@ -207,7 +207,7 @@ public sealed class EngineCoordinatorTests
 
         Assert.Equal(1, summary.Failed);
         Assert.Equal(2, summary.Succeeded);
-        Assert.Equal(4, summary.Results.Count); // la cuarta ya no se intenta
+        Assert.Equal(3, summary.Results.Count); // la cuarta ya no se intenta
         Assert.Contains("fallo simulado", summary.Results[2].ErrorMessage, StringComparison.Ordinal);
 
         // Rollback automático: A y B vuelven a su valor inicial

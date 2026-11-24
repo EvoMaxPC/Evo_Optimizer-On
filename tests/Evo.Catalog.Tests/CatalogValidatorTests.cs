@@ -15,7 +15,9 @@ public sealed class CatalogValidatorTests
     public void TestValidCatalog_PassesValidation()
     {
         var json = CatalogJson.Document(
-            CatalogJson.Capability("privacy.telemetry.diagtrack"),
+            CatalogJson.Capability(
+                "privacy.telemetry.diagtrack",
+                conflictsWith: "\"network.dns.encrypted\""),
             CatalogJson.Capability("privacy.telemetry.diagtrack-policy"),
             CatalogJson.Capability(
                 "network.dns.encrypted",
@@ -23,8 +25,8 @@ public sealed class CatalogValidatorTests
 
         var report = Validate(json);
 
-        Assert.True(report.IsValid, report.ErrorSummary);
         Assert.Empty(report.Errors);
+        Assert.True(report.IsValid, report.ErrorSummary);
     }
 
     [Fact]
