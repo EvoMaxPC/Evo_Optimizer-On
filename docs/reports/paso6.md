@@ -178,6 +178,8 @@ las dos carpetas y publica `dotnet-structure.txt`/`.json`.
 | `dotnet-ci` | `45306798455` | pull_request | **success** |
 | `ledger-verify` | `45307155503` | push | **success** (`f8cd86b`) |
 | `dotnet-ci` | `45307162438` | pull_request | **success** (`f8cd86b`) |
+| `ledger-verify` | `45307554745` | push | **success** (`0cb4b24`) |
+| `dotnet-ci` | `45307560151` | pull_request | **success** (`0cb4b24`) |
 
 Jobs de `45306790532` y de `45307162438`: `dotnet (windows-2025)` success
 (35/35 tests) y `dotnet (windows-11-arm)` success (35/35 tests), ambos con
