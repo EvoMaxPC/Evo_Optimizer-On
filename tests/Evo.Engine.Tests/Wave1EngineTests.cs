@@ -181,9 +181,10 @@ public sealed class Wave1EngineTests
         }
 
         // --- Mutó de verdad ---
-        Assert.Equal(1, harness.Registry.GetValue(RegistryHive.LocalMachine, DataCollectionKey, "AllowTelemetry"));
+        // El catálogo escribe AllowTelemetry=0 en las DOS rutas (3 y 2 eran los valores sembrados).
+        Assert.Equal(0, harness.Registry.GetValue(RegistryHive.LocalMachine, DataCollectionKey, "AllowTelemetry"));
         Assert.Equal(
-            1,
+            0,
             harness.Registry.GetValue(
                 RegistryHive.LocalMachine,
                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection",
