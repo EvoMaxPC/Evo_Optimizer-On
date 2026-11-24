@@ -1,0 +1,436 @@
+upstream_id	source	label	section_guess	section_basis	capability_id	status	reason
+atlas:manifest:debloat/config-content-delivery	atlas-manifest	debloat/config-content-delivery	2	category	debloat.content.delivery	covered	cubierta por debloat.content.delivery (ledger_refs de su provenance)
+atlas:manifest:debloat/config-storage-sense	atlas-manifest	debloat/config-storage-sense	2	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:debloat/disable-reserved-storage	atlas-manifest	debloat/disable-reserved-storage	2	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:debloat/disable-scheduled-tasks	atlas-manifest	debloat/disable-scheduled-tasks	2	category	privacy.ceip.tasks	covered	cubierta por privacy.ceip.tasks (ledger_refs de su provenance)
+atlas:manifest:debloat/hide-unused-security-pages	atlas-manifest	debloat/hide-unused-security-pages	2	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/add-newUser-script	atlas-manifest	misc/add-newUser-script		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/config-oem-information	atlas-manifest	misc/config-oem-information		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/config-time	atlas-manifest	misc/config-time		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/create-shortcuts	atlas-manifest	misc/create-shortcuts		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/delete-windows-specific-files	atlas-manifest	misc/delete-windows-specific-files		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/make-measuresleep-admin	atlas-manifest	misc/make-measuresleep-admin		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/rebuild-perf-counters	atlas-manifest	misc/rebuild-perf-counters		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:misc/register-user-upgrade	atlas-manifest	misc/register-user-upgrade		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:networking/atlas-network-settings	atlas-manifest	networking/atlas-network-settings	11	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:networking/disable-llmnr	atlas-manifest	networking/disable-llmnr	11	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:networking/shares/disable-smb-bandwidth-throttling	atlas-manifest	networking/shares/disable-smb-bandwidth-throttling	11	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:networking/shares/restrict-anonymous-access	atlas-manifest	networking/shares/restrict-anonymous-access	11	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:networking/shares/restrict-anonymous-enumeration	atlas-manifest	networking/shares/restrict-anonymous-enumeration	11	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/config-automatic-maintenance	atlas-manifest	performance/config-automatic-maintenance	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/config-mmcss	atlas-manifest	performance/config-mmcss	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/disable-auto-folder-discovery	atlas-manifest	performance/disable-auto-folder-discovery	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/disable-background-apps	atlas-manifest	performance/disable-background-apps	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/disable-fth	atlas-manifest	performance/disable-fth	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/disable-game-bar	atlas-manifest	performance/disable-game-bar	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/disable-sleep-study	atlas-manifest	performance/disable-sleep-study	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/respect-power-modes-search	atlas-manifest	performance/respect-power-modes-search	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/system/disable-service-host-split	atlas-manifest	performance/system/disable-service-host-split	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/system/optimize-ntfs	atlas-manifest	performance/system/optimize-ntfs	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:performance/system/win32-priority-separation	atlas-manifest	performance/system/win32-priority-separation	5	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/advertising/disable-advertising-info	atlas-manifest	privacy/advertising/disable-advertising-info	3	category	privacy.advertising.id	covered	cubierta por privacy.advertising.id (ledger_refs de su provenance)
+atlas:manifest:privacy/advertising/disable-sync-provider-notifs	atlas-manifest	privacy/advertising/disable-sync-provider-notifs	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/apply-privacy-toggle-defaults	atlas-manifest	privacy/apply-privacy-toggle-defaults	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/apps/disable-notepad-ai	atlas-manifest	privacy/apps/disable-notepad-ai	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/apps/disable-nvidia-telemetry	atlas-manifest	privacy/apps/disable-nvidia-telemetry	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/apps/disable-office-telemetry	atlas-manifest	privacy/apps/disable-office-telemetry	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/apps/disable-paint-ai	atlas-manifest	privacy/apps/disable-paint-ai	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/cloud/disable-setting-sync	atlas-manifest	privacy/cloud/disable-setting-sync	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/cloud/disable-suggest-ways-to-finish-setup	atlas-manifest	privacy/cloud/disable-suggest-ways-to-finish-setup	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/cloud/disallow-clipboard-sync	atlas-manifest	privacy/cloud/disallow-clipboard-sync	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/cloud/disallow-message-cloud-sync	atlas-manifest	privacy/cloud/disallow-message-cloud-sync	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/config-app-permissions	atlas-manifest	privacy/config-app-permissions	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/config-windows-media-player	atlas-manifest	privacy/config-windows-media-player	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-activity-feed	atlas-manifest	privacy/disable-activity-feed	3	category	privacy.activity.history	covered	cubierta por privacy.activity.history (ledger_refs de su provenance)
+atlas:manifest:privacy/disable-app-launch-tracking	atlas-manifest	privacy/disable-app-launch-tracking	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-click-to-do	atlas-manifest	privacy/disable-click-to-do	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-device-monitoring	atlas-manifest	privacy/disable-device-monitoring	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-find-my-device	atlas-manifest	privacy/disable-find-my-device	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-lockscreen-camera	atlas-manifest	privacy/disable-lockscreen-camera	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-online-speech-recognition	atlas-manifest	privacy/disable-online-speech-recognition	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-pca	atlas-manifest	privacy/disable-pca	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-perf-track	atlas-manifest	privacy/disable-perf-track	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-privacy-experience	atlas-manifest	privacy/disable-privacy-experience	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-recall-snap	atlas-manifest	privacy/disable-recall-snap	3	category	debloat.windows.ai.recall	covered	cubierta por debloat.windows.ai.recall (ledger_refs de su provenance)
+atlas:manifest:privacy/disable-rsop-logging	atlas-manifest	privacy/disable-rsop-logging	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-settings-agent	atlas-manifest	privacy/disable-settings-agent	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-speech-auto-updates	atlas-manifest	privacy/disable-speech-auto-updates	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-tailored-experiences	atlas-manifest	privacy/disable-tailored-experiences	3	category	privacy.diagnostic.data.level	covered	cubierta por privacy.diagnostic.data.level (ledger_refs de su provenance)
+atlas:manifest:privacy/disable-user-tracking	atlas-manifest	privacy/disable-user-tracking	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-web-lang-list-access	atlas-manifest	privacy/disable-web-lang-list-access	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disable-win-error-reporting	atlas-manifest	privacy/disable-win-error-reporting	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disallow-ms-accounts	atlas-manifest	privacy/disallow-ms-accounts	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/disallow-user-activity-upload	atlas-manifest	privacy/disallow-user-activity-upload	3	category	privacy.activity.history	covered	cubierta por privacy.activity.history (ledger_refs de su provenance)
+atlas:manifest:privacy/search-settings	atlas-manifest	privacy/search-settings	3	category	debloat.start.websearch	covered	cubierta por debloat.start.websearch (ledger_refs de su provenance)
+atlas:manifest:privacy/telemetry/disable-activation-telemetry	atlas-manifest	privacy/telemetry/disable-activation-telemetry	3	category	privacy.kms.activation.telemetry	covered	cubierta por privacy.kms.activation.telemetry (ledger_refs de su provenance)
+atlas:manifest:privacy/telemetry/disable-ceip	atlas-manifest	privacy/telemetry/disable-ceip	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/telemetry/disable-diagnostic-tracing	atlas-manifest	privacy/telemetry/disable-diagnostic-tracing	3	category	privacy.diagnostic.data.level	covered	cubierta por privacy.diagnostic.data.level (ledger_refs de su provenance)
+atlas:manifest:privacy/telemetry/disable-dotnet-cli-telemetry	atlas-manifest	privacy/telemetry/disable-dotnet-cli-telemetry	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/telemetry/disable-input-telemetry	atlas-manifest	privacy/telemetry/disable-input-telemetry	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/telemetry/disable-phishing-protection	atlas-manifest	privacy/telemetry/disable-phishing-protection	3	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:privacy/telemetry/disallow-data-collection	atlas-manifest	privacy/telemetry/disallow-data-collection	3	category	privacy.telemetry.diagtrack	covered	cubierta por privacy.telemetry.diagtrack (ledger_refs de su provenance)
+atlas:manifest:qol/add-sharing-settings-shortcut	atlas-manifest	qol/add-sharing-settings-shortcut		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/appearance/atlas-theme	atlas-manifest	qol/appearance/atlas-theme	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/appearance/atlas-theme-upgrade	atlas-manifest	qol/appearance/atlas-theme-upgrade	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/appearance/disallow-theme-changes	atlas-manifest	qol/appearance/disallow-theme-changes	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/bcdedit-tweaks	atlas-manifest	qol/bcdedit-tweaks		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/best-wallpaper-quality	atlas-manifest	qol/best-wallpaper-quality		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/config-start-menu	atlas-manifest	qol/config-start-menu		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-auto-app-archival	atlas-manifest	qol/disable-auto-app-archival		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-dynamic-lighting	atlas-manifest	qol/disable-dynamic-lighting		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-mouse-accel	atlas-manifest	qol/disable-mouse-accel		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-screen-capture-hotkey	atlas-manifest	qol/disable-screen-capture-hotkey		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-settings-tips	atlas-manifest	qol/disable-settings-tips		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-spell-checking	atlas-manifest	qol/disable-spell-checking		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-store-auto-updates	atlas-manifest	qol/disable-store-auto-updates		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-tips	atlas-manifest	qol/disable-tips		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-touch-keyboard-features	atlas-manifest	qol/disable-touch-keyboard-features		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-touch-visual-feedback	atlas-manifest	qol/disable-touch-visual-feedback		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-usb-issues-notifications	atlas-manifest	qol/disable-usb-issues-notifications		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-win11-settings-banner	atlas-manifest	qol/disable-win11-settings-banner		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/disable-windows-feedback	atlas-manifest	qol/disable-windows-feedback	3	text-rule	privacy.feedback.frequency	covered	cubierta por privacy.feedback.frequency (ledger_refs de su provenance)
+atlas:manifest:qol/disable-windows-spotlight	atlas-manifest	qol/disable-windows-spotlight		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/do-not-reduce-sounds	atlas-manifest	qol/do-not-reduce-sounds		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/ease-of-access/disable-always-read-section	atlas-manifest	qol/ease-of-access/disable-always-read-section	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/ease-of-access/disable-annoying-features-shortcuts	atlas-manifest	qol/ease-of-access/disable-annoying-features-shortcuts	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/ease-of-access/disable-making-touch-easier	atlas-manifest	qol/ease-of-access/disable-making-touch-easier	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/ease-of-access/disable-warning-sounds	atlas-manifest	qol/ease-of-access/disable-warning-sounds	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/add-context-menus/merge-as-administrator	atlas-manifest	qol/explorer/add-context-menus/merge-as-administrator	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/add-context-menus/new-bat	atlas-manifest	qol/explorer/add-context-menus/new-bat	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/add-context-menus/new-ps1	atlas-manifest	qol/explorer/add-context-menus/new-ps1	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/add-context-menus/new-reg	atlas-manifest	qol/explorer/add-context-menus/new-reg	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/always-more-details-transfer	atlas-manifest	qol/explorer/always-more-details-transfer	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/classic-search	atlas-manifest	qol/explorer/classic-search	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/debloat-send-to	atlas-manifest	qol/explorer/debloat-send-to	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-check-boxes	atlas-manifest	qol/explorer/disable-check-boxes	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-folders-this-pc	atlas-manifest	qol/explorer/disable-folders-this-pc	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-gallery	atlas-manifest	qol/explorer/disable-gallery	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-home	atlas-manifest	qol/explorer/disable-home	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-invalid-shortcuts-search	atlas-manifest	qol/explorer/disable-invalid-shortcuts-search	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/disable-network-navigation-pane	atlas-manifest	qol/explorer/disable-network-navigation-pane	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/dont-show-office-files	atlas-manifest	qol/explorer/dont-show-office-files	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/enable-long-paths	atlas-manifest	qol/explorer/enable-long-paths	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/full-context-on-more-than-15-items	atlas-manifest	qol/explorer/full-context-on-more-than-15-items	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/hide-frequently-used-items	atlas-manifest	qol/explorer/hide-frequently-used-items	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/import-power-plan	atlas-manifest	qol/explorer/import-power-plan	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/minimize-mouse-hover-time	atlas-manifest	qol/explorer/minimize-mouse-hover-time	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/no-internet-open-with	atlas-manifest	qol/explorer/no-internet-open-with	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/open-to-this-pc	atlas-manifest	qol/explorer/open-to-this-pc	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/removable-drives-only-this-pc	atlas-manifest	qol/explorer/removable-drives-only-this-pc	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/cast-to-device	atlas-manifest	qol/explorer/remove-context-menus/cast-to-device	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/extract	atlas-manifest	qol/explorer/remove-context-menus/extract	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/include-in-library	atlas-manifest	qol/explorer/remove-context-menus/include-in-library	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/new-bitmap	atlas-manifest	qol/explorer/remove-context-menus/new-bitmap	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/new-rtf	atlas-manifest	qol/explorer/remove-context-menus/new-rtf	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/paint-3D	atlas-manifest	qol/explorer/remove-context-menus/paint-3D	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/printing	atlas-manifest	qol/explorer/remove-context-menus/printing	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/printing-windows-11	atlas-manifest	qol/explorer/remove-context-menus/printing-windows-11	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/share	atlas-manifest	qol/explorer/remove-context-menus/share	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-context-menus/troubleshooting-compat	atlas-manifest	qol/explorer/remove-context-menus/troubleshooting-compat	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-previous-versions	atlas-manifest	qol/explorer/remove-previous-versions	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/remove-shortcut-text	atlas-manifest	qol/explorer/remove-shortcut-text	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/show-files	atlas-manifest	qol/explorer/show-files	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/explorer/use-compact-mode	atlas-manifest	qol/explorer/use-compact-mode	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/hide-disabled-disconnected-sounds	atlas-manifest	qol/hide-disabled-disconnected-sounds		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/restore-start-folder-choices	atlas-manifest	qol/restore-start-folder-choices		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/security/disable-uac-secure-desktop	atlas-manifest	qol/security/disable-uac-secure-desktop	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/set-hidden-settings-pages	atlas-manifest	qol/set-hidden-settings-pages		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/set-keyboard-switching	atlas-manifest	qol/set-keyboard-switching		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/alt-tab-open-windows	atlas-manifest	qol/shell/alt-tab-open-windows	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/config-autorun	atlas-manifest	qol/shell/config-autorun	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/disable-aero-shake	atlas-manifest	qol/shell/disable-aero-shake	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/disable-low-disk-warning	atlas-manifest	qol/shell/disable-low-disk-warning	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/disable-menu-delay	atlas-manifest	qol/shell/disable-menu-delay	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/disable-nearby-sharing	atlas-manifest	qol/shell/disable-nearby-sharing	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/disable-network-location-wizard	atlas-manifest	qol/shell/disable-network-location-wizard	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/no-recommendations-start-menu	atlas-manifest	qol/shell/no-recommendations-start-menu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/restore-old-context-menu	atlas-manifest	qol/shell/restore-old-context-menu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/set-unpinned-notification-items	atlas-manifest	qol/shell/set-unpinned-notification-items	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/shell/show-more-pins	atlas-manifest	qol/shell/show-more-pins	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/show-all-tasks-control-panel	atlas-manifest	qol/show-all-tasks-control-panel		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/startup-shutdown/decrease-shutdown-time	atlas-manifest	qol/startup-shutdown/decrease-shutdown-time	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/startup-shutdown/disable-startup-delay	atlas-manifest	qol/startup-shutdown/disable-startup-delay	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/startup-shutdown/enable-verbose-messages	atlas-manifest	qol/startup-shutdown/enable-verbose-messages	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/startup-shutdown/force-end-shutdown-apps	atlas-manifest	qol/startup-shutdown/force-end-shutdown-apps	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/system/crash-control-qol	atlas-manifest	qol/system/crash-control-qol	9	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/system/disable-wpbt	atlas-manifest	qol/system/disable-wpbt	9	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/taskbar/config-pins	atlas-manifest	qol/taskbar/config-pins	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/taskbar/disable-cloud-optimized-content	atlas-manifest	qol/taskbar/disable-cloud-optimized-content	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/taskbar/disable-copilot	atlas-manifest	qol/taskbar/disable-copilot	10	category	debloat.copilot.remove	covered	cubierta por debloat.copilot.remove (ledger_refs de su provenance)
+atlas:manifest:qol/taskbar/disable-news-and-interests	atlas-manifest	qol/taskbar/disable-news-and-interests	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/taskbar/end-task	atlas-manifest	qol/taskbar/end-task	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/taskbar/hide-task-view	atlas-manifest	qol/taskbar/hide-task-view	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/taskbar/set-to-left	atlas-manifest	qol/taskbar/set-to-left	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/visual-effects	atlas-manifest	qol/visual-effects		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-auto-reboot	atlas-manifest	qol/windows-update/disable-auto-reboot	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-auto-updates	atlas-manifest	qol/windows-update/disable-auto-updates	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-auto-updates-option	atlas-manifest	qol/windows-update/disable-auto-updates-option	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-delivery-optimization	atlas-manifest	qol/windows-update/disable-delivery-optimization	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-feature-updates	atlas-manifest	qol/windows-update/disable-feature-updates	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-insider	atlas-manifest	qol/windows-update/disable-insider	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-msrt-telemetry	atlas-manifest	qol/windows-update/disable-msrt-telemetry	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:qol/windows-update/disable-nagging	atlas-manifest	qol/windows-update/disable-nagging	12	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/backup-services	atlas-manifest	scripts/backup-services		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/disable-core-isolation	atlas-manifest	scripts/disable-core-isolation		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/disable-mitigations	atlas-manifest	scripts/disable-mitigations		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/disable-pnp	atlas-manifest	scripts/disable-pnp		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/set-file-associations	atlas-manifest	scripts/set-file-associations		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/set-power-settings	atlas-manifest	scripts/set-power-settings		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/set-profile-pictures	atlas-manifest	scripts/set-profile-pictures		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:scripts/update-client-cbs	atlas-manifest	scripts/update-client-cbs		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:security/block-anonymous-enum-sam	atlas-manifest	security/block-anonymous-enum-sam	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:security/disable-automatic-restart-signon	atlas-manifest	security/disable-automatic-restart-signon	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:manifest:security/disable-remote-assistance	atlas-manifest	security/disable-remote-assistance	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AdvancedBootOptions	atlas-toggle	AdvancedBootOptions	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Animation	atlas-toggle	Animation	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AppIconThumbnail	atlas-toggle	AppIconThumbnail	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AppStoreArchiving	atlas-toggle	AppStoreArchiving		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AtlasHealth	atlas-toggle	AtlasHealth	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AutomaticFolderDiscovery	atlas-toggle	AutomaticFolderDiscovery	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AutomaticRepair	atlas-toggle	AutomaticRepair	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:AutomaticUpdates	atlas-toggle	AutomaticUpdates		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:BackgroundApps	atlas-toggle	BackgroundApps		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Bluetooth	atlas-toggle	Bluetooth	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:BootLogo	atlas-toggle	BootLogo	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ClickToDo	atlas-toggle	ClickToDo		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:CompactView	atlas-toggle	CompactView	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ConfigVBS	atlas-toggle	ConfigVBS	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ContextMenuTerminals	atlas-toggle	ContextMenuTerminals	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Copilot	atlas-toggle	Copilot	2	text-rule	debloat.copilot.remove	covered	cubierta por debloat.copilot.remove (ledger_refs de su provenance)
+atlas:toggle:CpuIdle	atlas-toggle	CpuIdle		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:CpuIdleContextMenu	atlas-toggle	CpuIdleContextMenu		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:DefaultAtlasNetwork	atlas-toggle	DefaultAtlasNetwork	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:DeliveryOptimisation	atlas-toggle	DeliveryOptimisation		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:EdgeSwipe	atlas-toggle	EdgeSwipe	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ExtractContextMenu	atlas-toggle	ExtractContextMenu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:FSOGameBar	atlas-toggle	FSOGameBar		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:FaultTolerantHeap	atlas-toggle	FaultTolerantHeap	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:FileSharing	atlas-toggle	FileSharing		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:FixErrors2502and2503	atlas-toggle	FixErrors2502and2503	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:FixExplorerRuntimeError	atlas-toggle	FixExplorerRuntimeError	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:FixMSStoreIssues	atlas-toggle	FixMSStoreIssues	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Gallery	atlas-toggle	Gallery	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:GiveAccessToMenu	atlas-toggle	GiveAccessToMenu		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Hibernation	atlas-toggle	Hibernation	9	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:HideAppBrowserControl	atlas-toggle	HideAppBrowserControl	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:HighestMode	atlas-toggle	HighestMode	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Home	atlas-toggle	Home	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Indexing	atlas-toggle	Indexing		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:InstallSoftware	atlas-toggle	InstallSoftware	15	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:KernelParameters	atlas-toggle	KernelParameters	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:KeyboardShortcuts	atlas-toggle	KeyboardShortcuts	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:LanmanWorkstation	atlas-toggle	LanmanWorkstation	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Location	atlas-toggle	Location	9	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:LockScreen	atlas-toggle	LockScreen	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:MicrosoftStore	atlas-toggle	MicrosoftStore		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Mitigations	atlas-toggle	Mitigations	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ModernBatteryFlyout	atlas-toggle	ModernBatteryFlyout	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ModernDateTime	atlas-toggle	ModernDateTime	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ModernVolumeFlyout	atlas-toggle	ModernVolumeFlyout	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:NVidiaDisplayContainer	atlas-toggle	NVidiaDisplayContainer	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:NVidiaDisplayContainerContextMenu	atlas-toggle	NVidiaDisplayContainerContextMenu	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:NetworkDiscovery	atlas-toggle	NetworkDiscovery	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:NetworkNavigationPane	atlas-toggle	NetworkNavigationPane		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:NewBootMenu	atlas-toggle	NewBootMenu	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:OldContextMenu	atlas-toggle	OldContextMenu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:PauseUpdates	atlas-toggle	PauseUpdates		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:PhoneLink	atlas-toggle	PhoneLink		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:PowerSaving	atlas-toggle	PowerSaving		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Printing	atlas-toggle	Printing	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ProcessExplorer	atlas-toggle	ProcessExplorer		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:QuickAccess	atlas-toggle	QuickAccess	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Recall	atlas-toggle	Recall		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RecentItems	atlas-toggle	RecentItems	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RemovableDrivesInSidebar	atlas-toggle	RemovableDrivesInSidebar	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RemoveEdge	atlas-toggle	RemoveEdge	15	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RemovePythonStorePrompt	atlas-toggle	RemovePythonStorePrompt	15	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RepairWindowsComponents	atlas-toggle	RepairWindowsComponents	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RestartExplorer	atlas-toggle	RestartExplorer	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:RunWithPriority	atlas-toggle	RunWithPriority	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SafeMode	atlas-toggle	SafeMode	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SecurityHealthTray	atlas-toggle	SecurityHealthTray	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SendToContextMenu	atlas-toggle	SendToContextMenu	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ShortcutIcon	atlas-toggle	ShortcutIcon	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ShortcutText	atlas-toggle	ShortcutText	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Sleep	atlas-toggle	Sleep		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SleepStudy	atlas-toggle	SleepStudy		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SnapLayouts	atlas-toggle	SnapLayouts	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SpinningAnimations	atlas-toggle	SpinningAnimations	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SuperFetch	atlas-toggle	SuperFetch	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SystemRestore	atlas-toggle	SystemRestore		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:TakeOwnership	atlas-toggle	TakeOwnership	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:TelemetryComponents	atlas-toggle	TelemetryComponents	14	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:TimerResolution	atlas-toggle	TimerResolution		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ToggleDefender	atlas-toggle	ToggleDefender	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ToggleWindowsUpdates	atlas-toggle	ToggleWindowsUpdates		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:UpdateDrivers	atlas-toggle	UpdateDrivers		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:UpdateNotifications	atlas-toggle	UpdateNotifications		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:VbsState	atlas-toggle	VbsState	13	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:VerboseMessages	atlas-toggle	VerboseMessages	10	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:ViewCurrentValues	atlas-toggle	ViewCurrentValues	8	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:WebSearch	atlas-toggle	WebSearch		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Widgets	atlas-toggle	Widgets	2	text-rule	debloat.widgets.disable	covered	cubierta por debloat.widgets.disable (ledger_refs de su provenance)
+atlas:toggle:WindowsSpotlight	atlas-toggle	WindowsSpotlight		none		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Workplace	atlas-toggle	Workplace		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxClipchamp_Clipchamp	winutil	Clipchamp	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMSTeams	winutil	Microsoft Teams	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoftCorporationII_QuickAssist	winutil	Quick Assist	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_BingNews	winutil	News	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_BingSearch	winutil	Bing Search	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_BingWeather	winutil	Weather	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_Copilot	winutil	Copilot	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_GamingApp	winutil	Xbox App	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_GetHelp	winutil	Get Help	15	category	debloat.telemetry.appx	covered	cubierta por debloat.telemetry.appx (ledger_refs de su provenance)
+winutil:appx:WPFAppxMicrosoft_MicrosoftOfficeHub	winutil	Microsoft 365	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_MicrosoftSolitaireCollection	winutil	Solitaire Collection	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_MicrosoftStickyNotes	winutil	Sticky Notes	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_OutlookForWindows	winutil	Outlook for Windows	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_Paint	winutil	Paint	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_PowerAutomateDesktop	winutil	Power Automate	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_ScreenSketch	winutil	Snipping Tool	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_StartExperiencesApp	winutil	Start Experiences App	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_Todos	winutil	To Do	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsAlarms	winutil	Clock	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsCalculator	winutil	Calculator	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsCamera	winutil	Camera	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsCrossDevice	winutil	Mobile Devices	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsDevHome	winutil	Dev Home	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsFeedbackHub	winutil	Feedback Hub	15	category	debloat.telemetry.appx	covered	cubierta por debloat.telemetry.appx (ledger_refs de su provenance)
+winutil:appx:WPFAppxMicrosoft_WindowsNotepad	winutil	Notepad	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsPhotos	winutil	Photos	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_WindowsSoundRecorder	winutil	Sound Recorder	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_XboxGamingOverlay	winutil	Xbox Game Bar	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_XboxIdentityProvider	winutil	Xbox Identity Provider	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_XboxSpeechToTextOverlay	winutil	Xbox Speech To Text Overlay	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_Xbox_TCUI	winutil	Xbox TCUI	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_YourPhone	winutil	Phone Link	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_ZuneMusic	winutil	Media Player	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:appx:WPFAppxMicrosoft_ZuneVideo	winutil	Movies & TV	15	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:AdGuard_Ads_Trackers	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:AdGuard_Ads_Trackers_Malware_Adult	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:Cloudflare	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:Cloudflare_Malware	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:Cloudflare_Malware_Adult	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:Google	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:Open_DNS	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:dns-provider:Quad9	winutil		11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeatureDisableLegacyRecovery	winutil	Legacy F8 Boot Recovery - Disable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeatureEnableLegacyRecovery	winutil	Legacy F8 Boot Recovery - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeatureInstall	winutil	Install Features		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeatureRegBackup	winutil	Registry Backup (Daily Task 12:30am) - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeaturenfs	winutil	Network File System (NFS) - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeaturesSandbox	winutil	Windows Sandbox - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeaturesdotnet	winutil	.NET Framework (Versions 2, 3, 4) - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeatureshyperv	winutil	Hyper-V - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeatureslegacymedia	winutil	Legacy Media Components (WMP, DirectPlay) - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFeaturewsl	winutil	Windows Subsystem for Linux (WSL) - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFixesNTPPool	winutil	NTP Server - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFixesNetwork	winutil	Network - Reset		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFixesUpdate	winutil	Windows Update - Reset		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFixesWinget	winutil	WinGet - Reinstall	14	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelAutologin	winutil	AutoLogon - Run		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelComputer	winutil	Computer Management		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelControl	winutil	Control Panel		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelDISM	winutil	System Corruption Scan - Run	14	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelFirewall	winutil	Windows Defender Firewall	13	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelMouse	winutil	Mouse Properties		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelNetwork	winutil	Network Connections		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelPower	winutil	Power Panel		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelPrinter	winutil	Printer Panel		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelPrograms	winutil	Programs and Features		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelRegion	winutil	Region		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelRestore	winutil	Windows Restore		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelSecurity	winutil	Security and Maintenance	13	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelSound	winutil	Sound Settings		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelSystem	winutil	System Properties		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFPanelTimedate	winutil	Time and Date		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFWinUtilInstallPSProfile	winutil	CTT PowerShell Profile - Install	16	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFWinUtilSSHServer	winutil	OpenSSH Server - Enable	11	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFWinUtilUninstallPSProfile	winutil	CTT PowerShell Profile - Remove	16	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:nav-entry:ChocoRadioButton	winutil	Chocolatey		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFClearInstallSelection	winutil	Clear Selection		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFCollapseAllCategories	winutil	Collapse All Categories		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFExpandAllCategories	winutil	Expand All Categories		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFGetInstalled	winutil	Show Installed Apps		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFInstall	winutil	Install/Upgrade Applications		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFInstallFOSSInfo	winutil	Free and Open Source Software		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFInstallUpgrade	winutil	Upgrade all Applications		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFUninstall	winutil	Uninstall Applications		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WPFselectedAppsButton	winutil	Selected Apps: 0		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:nav-entry:WingetRadioButton	winutil	WinGet		none		not-a-capability	entrada de navegacion de la UI de WinUtil (pestana/menu): no tiene efecto propio
+winutil:preset:Advanced	winutil	Advanced		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:preset:AppxDefault	winutil	AppxDefault		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:preset:Minimal	winutil	Minimal		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:preset:Standard	winutil	Standard		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:theme:Dark	winutil		10	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:theme:Light	winutil		10	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:theme:shared	winutil		10	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFAddUltPerf	winutil	Ultimate Performance Profile - Enable	5	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFMultiplaneOverlay	winutil	Multiplane Overlay		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFOOSUbutton	winutil	O&O ShutUp10++ - Run		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFRemoveUltPerf	winutil	Ultimate Performance Profile - Disable	5	category		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleBatteryPercentage	winutil	System Tray Battery Percentage		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleBingSearch	winutil	Start Menu Bing Search	2	text-rule	debloat.start.websearch	covered	cubierta por debloat.start.websearch (ledger_refs de su provenance)
+winutil:tweak:WPFToggleDarkMode	winutil	Dark Theme for Windows		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleDetailedBSoD	winutil	BSoD Verbose Mode		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleDisableLockscreen	winutil	Lock Screen - Disable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleGameMode	winutil	Game Mode		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleHiddenFiles	winutil	File Explorer Hidden Files		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleHideSettingsHome	winutil	Settings Home Page	2	text-rule	debloat.settings.home	covered	cubierta por debloat.settings.home (ledger_refs de su provenance)
+winutil:tweak:WPFToggleLoginBlur	winutil	Logon Screen Acrylic Blur		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleLongPaths	winutil	Enable Long Paths		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleMouseAcceleration	winutil	Mouse Acceleration	9	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleNewOutlook	winutil	Microsoft Outlook New Version		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleNumLock	winutil	Num Lock on Startup		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleS3Sleep	winutil	S3 Sleep	9	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleScrollbars	winutil	Scrollbars Always Visible	10	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleShowExt	winutil	File Explorer File Extensions		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleStandbyFix	winutil	S0 Sleep Network Connectivity	9	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleStartMenuRecommendations	winutil	Start Menu Recommendations	2	text-rule	debloat.start.recommendations	covered	cubierta por debloat.start.recommendations (ledger_refs de su provenance)
+winutil:tweak:WPFToggleStickyKeys	winutil	Sticky Keys		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleTaskView	winutil	Taskbar Task View Icon		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleTaskbarAlignment	winutil	Taskbar Centered Icons	10	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleTaskbarSearch	winutil	Taskbar Search Icon		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleVerboseLogon	winutil	Logon Verbose Mode		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleWindowSnapping	winutil	Window Snapping		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksActivity	winutil	Activity History - Disable	3	text-rule	privacy.activity.history	covered	cubierta por privacy.activity.history (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksBlockAdobeNet	winutil	Adobe URL Block List - Enable	2	text-rule	debloat.network.adobe-blocklist	covered	cubierta por debloat.network.adobe-blocklist (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksBraveDebloat	winutil	Brave Browser - Debloat	2	text-rule	privacy.browser.brave-debloat	covered	cubierta por privacy.browser.brave-debloat (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksConsumerFeatures	winutil	ConsumerFeatures - Disable	2	text-rule	debloat.content.delivery	covered	cubierta por debloat.content.delivery (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksDeleteTempFiles	winutil	Temporary Files - Remove	1	text-rule	cleanup.temp.user	covered	cubierta por cleanup.temp.user (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksDeliveryOptimization	winutil	Delivery Optimization - Disable	1	text-rule	cleanup.delivery.optimization	covered	cubierta por cleanup.delivery.optimization (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksDisableBGapps	winutil	Background Apps - Disable	7	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDisableBitLocker	winutil	BitLocker - Disable	13	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery	winutil	File Explorer Automatic Folder Discovery - Disable	2	text-rule	debloat.explorer.auto-folder-discovery	covered	cubierta por debloat.explorer.auto-folder-discovery (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksDisableIPv6	winutil	IPv6 - Disable	11	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDisableNotifications	winutil	System Tray Notifications & Calendar - Disable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDisableSearchIndexing	winutil	Windows Search Indexing - Disable	7	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDisableStoreSearch	winutil	Microsoft Store Recommended Search Results - Disable	2	text-rule	debloat.store.search	covered	cubierta por debloat.store.search (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksDisableWarningForUnsignedRdp	winutil	RDP Unsigned File Warnings - Disable	13	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksDiskCleanup	winutil	Disk Cleanup - Run	1	text-rule	cleanup.winsxs.resetbase	covered	cubierta por cleanup.winsxs.resetbase (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksDisplay	winutil	Visual Effects - Set to Best Performance		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksEdgeDebloat	winutil	Microsoft Edge - Debloat	2	text-rule	debloat.edge.policies	covered	cubierta por debloat.edge.policies (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksEndTaskOnTaskbar	winutil	End Task With Right Click - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksHiber	winutil	Hibernation - Disable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksIPv46	winutil	IPv6 - Set IPv4 as Preferred		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksLocation	winutil	Location Tracking - Disable	3	text-rule	privacy.location.sensors	covered	cubierta por privacy.location.sensors (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksLogiBlock	winutil	Logitech Download Assistant Auto-Install - Disable	2	text-rule	debloat.drivers.logitech	covered	cubierta por debloat.drivers.logitech (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksPreventDeviceMetadataFromNetwork	winutil	Prevent Device Companion Apps	2	text-rule	debloat.devices.companion-apps	covered	cubierta por debloat.devices.companion-apps (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksRazerBlock	winutil	Razer Software Auto-Install - Disable	2	text-rule	debloat.drivers.razer	covered	cubierta por debloat.drivers.razer (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksRemoveEdge	winutil	Microsoft Edge - Remove	2	text-rule	debloat.edge.remove	covered	cubierta por debloat.edge.remove (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksRemoveHomeAndGallery	winutil	File Explorer Home and Gallery - Disable	2	text-rule	debloat.explorer.home-gallery	covered	cubierta por debloat.explorer.home-gallery (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksRemoveOneDrive	winutil	Microsoft OneDrive - Remove	2	text-rule	debloat.onedrive.uninstall	covered	cubierta por debloat.onedrive.uninstall (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksReservedStorage	winutil	Disable Reserved Storage		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksRestorePoint	winutil	Restore Point - Create		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksRevertStartMenu	winutil	Start Menu Previous Layout - Enable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksRightClickMenu	winutil	Right-Click Menu Previous Layout - Enable	9	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksServices	winutil	Services - Set to Manual		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksStorage	winutil	Storage Sense - Disable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksSvcHostSplitting	winutil	svchost.exe Splitting - Disable	7	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksTelemetry	winutil	Telemetry - Disable	2	text-rule	debloat.start.websearch	covered	cubierta por debloat.start.websearch (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksTeredo	winutil	Teredo - Disable	11	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksUTC	winutil	Date & Time - Set Time to UTC		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksWPBT	winutil	Windows Platform Binary Table (WPBT) - Disable		none		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksWidget	winutil	Widgets - Remove	7	text-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksWindowsAI	winutil	Windows AI - Disable And Remove	2	text-rule	debloat.windows.ai.recall	covered	cubierta por debloat.windows.ai.recall (ledger_refs de su provenance)
+winutil:tweak:WPFchangedns	winutil	DNS - Set to:		none		pending	ninguna capacidad del catalogo la cita todavia
