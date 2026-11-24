@@ -1,4 +1,4 @@
-Build started 11/23/2026 6:09:55 PM.
+Build started 11/23/2026 6:09:58 PM.
      1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" on node 1 (VSTest target(s)).
      1>ValidateSolutionConfiguration:
          Building solution configuration "Release|Any CPU".
@@ -6,23 +6,23 @@ Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Core.Tests\bin\Rel
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Detection.Tests\bin\Release\net10.0-windows\Evo.Detection.Tests.dll (.NETCoreApp,Version=v10.0)
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll (.NETCoreApp,Version=v10.0)
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\bin\Release\net10.0-windows\Evo.Catalog.Tests.dll (.NETCoreApp,Version=v10.0)
-A total of 1 test files matched the specified pattern.A total of 1 test files matched the specified pattern.
-
+A total of 1 test files matched the specified pattern.
+A total of 1 test files matched the specified pattern.
 A total of 1 test files matched the specified pattern.
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.12]   Discovering: Evo.Detection.Tests
-[xUnit.net 00:00:00.12]   Discovering: Evo.Core.Tests
-[xUnit.net 00:00:00.11]   Discovering: Evo.Engine.Tests
-[xUnit.net 00:00:00.18]   Discovered:  Evo.Core.Tests
-[xUnit.net 00:00:00.18]   Discovered:  Evo.Detection.Tests
-[xUnit.net 00:00:00.19]   Starting:    Evo.Core.Tests
-[xUnit.net 00:00:00.18]   Starting:    Evo.Detection.Tests
-[xUnit.net 00:00:00.15]   Discovered:  Evo.Engine.Tests
-[xUnit.net 00:00:00.15]   Starting:    Evo.Engine.Tests
-  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [11 ms]
+[xUnit.net 00:00:00.09]   Discovering: Evo.Core.Tests
+[xUnit.net 00:00:00.13]   Discovering: Evo.Engine.Tests
+[xUnit.net 00:00:00.11]   Discovering: Evo.Catalog.Tests
+[xUnit.net 00:00:00.16]   Discovered:  Evo.Core.Tests
+[xUnit.net 00:00:00.18]   Discovered:  Evo.Engine.Tests
+[xUnit.net 00:00:00.18]   Starting:    Evo.Engine.Tests
+[xUnit.net 00:00:00.16]   Starting:    Evo.Core.Tests
+[xUnit.net 00:00:00.16]   Discovered:  Evo.Catalog.Tests
+[xUnit.net 00:00:00.16]   Starting:    Evo.Catalog.Tests
+  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [14 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Safe, confirmation: None, restore: None) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Critical, confirmation: TypeOperationName, restore: FullBackup) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: High, confirmation: SummaryAndRestorePoint, restore: RestorePoint) [< 1 ms]
@@ -36,111 +36,37 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Core.Tests.CapabilityContractTests.RestoreNoneConRiesgoMedioEsValido [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.TrustedInstallerExigeRiesgoAlto [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.SectionIdFueraDeRangoFalla [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.EnumsTienenLosValoresExigidos [14 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.EnumsTienenLosValoresExigidos [9 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.CriticalConTypeOperationNameYFullBackupEsValido [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.AutoConflictoYAutoDependenciaFAllan [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReducirSeguridadConRiesgoBajoFalla [< 1 ms]
-[xUnit.net 00:00:00.30]   Finished:    Evo.Core.Tests
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [61 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22000) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 19044) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 26120) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 28000) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 30000) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 99999) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [4 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.ArquitecturaNoDeclaradaSeRechaza [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.InstallationTypeVacioSeRechaza [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 19045, architecture: "arm64", expected: SupportedWithWarning) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26200, architecture: "ARM64", expected: Supported) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26100, architecture: "arm64", expected: Supported) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildSeLeeDelRegistroAunqueElEntornoDigaOtraCosa [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [61 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.WindowsServer2025_Datacenter_EsRechazado [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26100, id: "win11-24h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 19045, id: "win10-22h2", esu: True) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 22631, id: "win11-23h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27600, id: "win11-26h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.SchemaVersionDistintaSeRechaza [< 1 ms]
-[xUnit.net 00:00:00.37]   Finished:    Evo.Detection.Tests
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [64 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [74 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [3 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [12 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [29 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [9 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [4 ms]
+[xUnit.net 00:00:00.29]   Finished:    Evo.Core.Tests
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [75 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [89 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [18 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [31 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [8 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [14 ms]
   Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [3 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [3 ms]
   Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [6 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [3 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [12 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [3 ms]
   Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning [< 1 ms]
-[xUnit.net 00:00:00.34]     Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [FAIL]
-[xUnit.net 00:00:00.35]       Assert.Equal() Failure: Values differ
-[xUnit.net 00:00:00.35]       Expected: 4
-[xUnit.net 00:00:00.35]       Actual:   3
-[xUnit.net 00:00:00.35]       Stack Trace:
-[xUnit.net 00:00:00.35]         /_/tests/Evo.Engine.Tests/EngineCoordinatorTests.cs(210,0): at Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback()
-[xUnit.net 00:00:00.35]         --- End of stack trace from previous location ---
-[xUnit.net 00:00:00.35]   Finished:    Evo.Engine.Tests
-  Passed Evo.Core.Tests.CapabilityContractTests.CriticalExigeTypeOperationName [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 28000) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 99999) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 19044) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.RangoSolapadoSeRechaza [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [2 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [7 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
-WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-
-Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-
-Test Run Successful.
-Total tests: 19
-     Passed: 19
- Total time: 0.9782 Seconds
-Test Run Successful.
-Total tests: 35
-     Passed: 35
- Total time: 0.9823 Seconds
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [7 ms]
-  Failed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [4 ms]
-  Error Message:
-   Assert.Equal() Failure: Values differ
-Expected: 4
-Actual:   3
-  Stack Trace:
-     at Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback() in /_/tests/Evo.Engine.Tests/EngineCoordinatorTests.cs:line 210
---- End of stack trace from previous location ---
-WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
-
-Test Run Failed.
-Total tests: 18
-     Passed: 17
-     Failed: 1
- Total time: 1.0108 Seconds
-     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" (1) is building "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" (8) on node 4 (VSTest target(s)).
-     8>_VSTestConsole:
-         MSB4181: The "VSTestTask" task returned false but did not log an error.
-     8>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" (VSTest target(s)) -- FAILED.
-[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.09]   Discovering: Evo.Catalog.Tests
-[xUnit.net 00:00:00.14]   Discovered:  Evo.Catalog.Tests
-[xUnit.net 00:00:00.15]   Starting:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [132 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [< 1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [12 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [1 ms]
+[xUnit.net 00:00:00.41]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.41]       Expected: 4
+[xUnit.net 00:00:00.41]       Actual:   3
+[xUnit.net 00:00:00.41]       Stack Trace:
+[xUnit.net 00:00:00.41]         /_/tests/Evo.Engine.Tests/EngineCoordinatorTests.cs(210,0): at Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback()
+[xUnit.net 00:00:00.41]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.41]   Finished:    Evo.Engine.Tests
+[xUnit.net 00:00:00.41]     Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [FAIL]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [143 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [16 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry.") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry/DiagTrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: ".privacy.telemetry") [< 1 ms]
@@ -149,22 +75,42 @@ Total tests: 18
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy telemetry") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry_diagtrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForRiskFails [3 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForRiskFails [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SymmetricConflictPassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SelfDependencyIsACycle [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DuplicateIdsFailValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.ValidIdWithDashesPassesThePattern [4 ms]
-[xUnit.net 00:00:00.37]     Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [FAIL]
-[xUnit.net 00:00:00.37]       [R-SYMMETRY] network.dns.encrypted: Declara conflicto con 'privacy.telemetry.diagtrack' pero 'privacy.telemetry.diagtrack' no lo declara con 'network.dns.encrypted': el conflicto debe ser simétrico.
-[xUnit.net 00:00:00.37]       Stack Trace:
-[xUnit.net 00:00:00.37]         /_/tests/Evo.Catalog.Tests/CatalogValidatorTests.cs(26,0): at Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation()
-[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DuplicateIdsFailValidation [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.ValidIdWithDashesPassesThePattern [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [4 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.CriticalRiskWithTypeOperationNamePasses [< 1 ms]
-  Failed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [177 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [3 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [2 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [< 1 ms]
+[xUnit.net 00:00:00.44]     Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [FAIL]
+[xUnit.net 00:00:00.44]       [R-SYMMETRY] network.dns.encrypted: Declara conflicto con 'privacy.telemetry.diagtrack' pero 'privacy.telemetry.diagtrack' no lo declara con 'network.dns.encrypted': el conflicto debe ser simétrico.
+[xUnit.net 00:00:00.44]       Stack Trace:
+[xUnit.net 00:00:00.44]         /_/tests/Evo.Catalog.Tests/CatalogValidatorTests.cs(26,0): at Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation()
+[xUnit.net 00:00:00.44]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.44]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.44]   Finished:    Evo.Catalog.Tests
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [16 ms]
+  Failed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [2 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 4
+Actual:   3
+  Stack Trace:
+     at Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback() in /_/tests/Evo.Engine.Tests/EngineCoordinatorTests.cs:line 210
+--- End of stack trace from previous location ---
+  Passed Evo.Core.Tests.CapabilityContractTests.CriticalExigeTypeOperationName [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [4 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
+  Failed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [< 1 ms]
   Error Message:
    [R-SYMMETRY] network.dns.encrypted: Declara conflicto con 'privacy.telemetry.diagtrack' pero 'privacy.telemetry.diagtrack' no lo declara con 'network.dns.encrypted': el conflicto debe ser simétrico.
   Stack Trace:
@@ -174,32 +120,86 @@ Total tests: 18
   Passed Evo.Catalog.Tests.CatalogValidatorTests.AcyclicDependencyChainPassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestAsymmetricConflict_FailsValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [173 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [2 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
-[xUnit.net 00:00:00.38]   Finished:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [2 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [4 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
 WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+
+WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+Total tests: 18
+     Passed: 17
+     Failed: 1
+Test Run Failed.
+ Total time: 1.7209 Seconds
+Test Run Successful.
+Total tests: 19
+     Passed: 19
+ Total time: 1.7184 Seconds
 Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
 
 Test Run Failed.
 Total tests: 32
      Passed: 31
      Failed: 1
- Total time: 1.8452 Seconds
-     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" (1) is building "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\Evo.Catalog.Tests.csproj" (10) on node 1 (VSTest target(s)).
+ Total time: 1.7279 Seconds
+     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" (1) is building "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" (9) on node 2 (VSTest target(s)).
+     9>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" (1) is building "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\Evo.Catalog.Tests.csproj" (10) on node 4 (VSTest target(s)).
     10>_VSTestConsole:
          MSB4181: The "VSTestTask" task returned false but did not log an error.
+     9>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" (VSTest target(s)) -- FAILED.
     10>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\Evo.Catalog.Tests.csproj" (VSTest target(s)) -- FAILED.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.09]   Discovering: Evo.Detection.Tests
+[xUnit.net 00:00:00.15]   Discovered:  Evo.Detection.Tests
+[xUnit.net 00:00:00.15]   Starting:    Evo.Detection.Tests
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [60 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [60 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22000) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 19044) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26100, id: "win11-24h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 26120) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 19045, id: "win10-22h2", esu: True) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 28000) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 22631, id: "win11-23h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 30000) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27600, id: "win11-26h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 99999) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.SchemaVersionDistintaSeRechaza [1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 28000) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 99999) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 19044) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.RangoSolapadoSeRechaza [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [2 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [5 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.ArquitecturaNoDeclaradaSeRechaza [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.InstallationTypeVacioSeRechaza [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 19045, architecture: "arm64", expected: SupportedWithWarning) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26200, architecture: "ARM64", expected: Supported) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [2 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26100, architecture: "arm64", expected: Supported) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildSeLeeDelRegistroAunqueElEntornoDigaOtraCosa [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
+[xUnit.net 00:00:00.30]   Finished:    Evo.Detection.Tests
+  Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.WindowsServer2025_Datacenter_EsRechazado [< 1 ms]
+WARNING: Overwriting results file: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\results.trx
+
+Test Run Successful.
+Total tests: 35
+     Passed: 35
+ Total time: 1.7510 Seconds
      1>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\Evo.sln" (VSTest target(s)) -- FAILED.
 
 Build FAILED.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:03.86
+Time Elapsed 00:00:06.22
