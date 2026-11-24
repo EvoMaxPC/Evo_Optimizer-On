@@ -1,55 +1,55 @@
-Build started 11/24/2026 2:56:03 AM.
-Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Detection.Tests\bin\Release\net10.0-windows\Evo.Detection.Tests.dll (.NETCoreApp,Version=v10.0)
+Build started 11/23/2026 7:53:01 PM.
+Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Detection.Tests\bin\Release\net10.0-windows\Evo.Detection.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.09]   Discovering: Evo.Detection.Tests
-[xUnit.net 00:00:00.15]   Discovered:  Evo.Detection.Tests
-[xUnit.net 00:00:00.16]   Starting:    Evo.Detection.Tests
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [71 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [72 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [< 1 ms]
+[xUnit.net 00:00:00.08]   Discovering: Evo.Detection.Tests
+[xUnit.net 00:00:00.13]   Discovered:  Evo.Detection.Tests
+[xUnit.net 00:00:00.13]   Starting:    Evo.Detection.Tests
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [52 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [52 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22000) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26100, id: "win11-24h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 19045, id: "win10-22h2", esu: True) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 22631, id: "win11-23h2", esu: False) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 19044) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27600, id: "win11-26h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 22631, id: "win11-23h2", esu: False) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 26120) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27600, id: "win11-26h2", esu: False) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 28000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 30000) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 99999) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.SchemaVersionDistintaSeRechaza [1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 99999) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 28000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 99999) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 19044) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.RangoSolapadoSeRechaza [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [4 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [6 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [2 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [4 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.ArquitecturaNoDeclaradaSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.InstallationTypeVacioSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 19045, architecture: "arm64", expected: SupportedWithWarning) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26200, architecture: "ARM64", expected: Supported) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26100, architecture: "arm64", expected: Supported) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildSeLeeDelRegistroAunqueElEntornoDigaOtraCosa [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [4 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [1 ms]
-[xUnit.net 00:00:00.34]   Finished:    Evo.Detection.Tests
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [5 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [< 1 ms]
+[xUnit.net 00:00:00.26]   Finished:    Evo.Detection.Tests
   Passed Evo.Detection.Tests.WindowsDetectorTests.WindowsServer2025_Datacenter_EsRechazado [< 1 ms]
-Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Detection.Tests\Evo.Detection.Tests.trx
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Detection.Tests\Evo.Detection.Tests.trx
 
 Test Run Successful.
 Total tests: 35
      Passed: 35
- Total time: 0.9003 Seconds
+ Total time: 0.7451 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.65
+Time Elapsed 00:00:01.33
