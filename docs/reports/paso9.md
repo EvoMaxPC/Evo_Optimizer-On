@@ -377,9 +377,10 @@ fbbf6fd fix(audit): auditar las 56 acciones de la seccion 10 (binario base64 y D
 
 PR #1 (`gh api -X PATCH …/pulls/1`): título «Paso 9 — Oleada 2: catálogo de la
 Sección 10 (Explorador e interfaz), 29 capacidades / 56 acciones», `state=OPEN`,
-`isDraft=true`, head `62e9e69`.
+`isDraft=true`, head `239748e`.
 
-CI verificado sobre el commit `62e9e69` (árbol del catálogo cerrado):
+CI verificado sobre el head `239748e` (árbol del catálogo cerrado; los runs
+`45482182002` de dotnet-ci y `45482163954` de ledger-verify):
 
 ```
 dotnet-ci run 45481504667     | success | 161/161 xUnit · windows-2025 y windows-11-arm
