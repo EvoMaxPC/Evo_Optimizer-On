@@ -1,12 +1,12 @@
-Build started 11/23/2026 8:34:19 PM.
+Build started 11/24/2026 12:16:08 PM.
 Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Core.Tests\bin\Release\net10.0-windows\Evo.Core.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.07]   Discovering: Evo.Core.Tests
-[xUnit.net 00:00:00.12]   Discovered:  Evo.Core.Tests
-[xUnit.net 00:00:00.13]   Starting:    Evo.Core.Tests
-  Passed Evo.Core.Tests.ReversibilityTests.ReversibleConRiesgoMedioExigeRestorePoint [9 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [9 ms]
+[xUnit.net 00:00:00.09]   Discovering: Evo.Core.Tests
+[xUnit.net 00:00:00.16]   Discovered:  Evo.Core.Tests
+[xUnit.net 00:00:00.16]   Starting:    Evo.Core.Tests
+  Passed Evo.Core.Tests.ReversibilityTests.ReversibleConRiesgoMedioExigeRestorePoint [11 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [11 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Safe, confirmation: None, restore: None) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Critical, confirmation: TypeOperationName, restore: FullBackup) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: High, confirmation: SummaryAndRestorePoint, restore: RestorePoint) [< 1 ms]
@@ -20,22 +20,22 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Core.Tests.CapabilityContractTests.ReversibleNoAdmiteRestoreNone(risk: Critical) [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConConfirmacionSimpleClickEsInvalido [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreConRestoreDistintoDeNoneEsInvalido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.IdEnConflictoYDependenciaFalla [1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreSeAdmiteHastaRiesgoMedium [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.IdEnConflictoYDependenciaFalla [1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoMedioYNoneEsValido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.ConfirmacionPorDebajoDelMinimoFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConRiesgoBajoEsInvalido [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.ConfirmacionPorDebajoDelMinimoFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreConRiesgoAltoEsInvalido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.ContratoValidoNoTieneErrores [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreConNoneYRiesgoSafeEsValido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.TrustedInstallerExigeRiesgoAlto [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.ContratoValidoNoTieneErrores [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.MinimumRestoreDependeDeLaReversibilidad [< 1 ms]
-[xUnit.net 00:00:00.22]   Finished:    Evo.Core.Tests
-  Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoAltoFalla [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.TrustedInstallerExigeRiesgoAlto [< 1 ms]
+[xUnit.net 00:00:00.26]   Finished:    Evo.Core.Tests
   Passed Evo.Core.Tests.ReversibilityTests.ReversibleConSessionUndoYRiesgoBajoEsValido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.SectionIdFueraDeRangoFalla [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoAltoFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.IrreversibleCriticalSigueExigiendoTypeOperationName [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.EnumsTienenLosValoresExigidos [9 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.SectionIdFueraDeRangoFalla [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.EnumsTienenLosValoresExigidos [11 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.CriticalConTypeOperationNameYFullBackupEsValido [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.AutoConflictoYAutoDependenciaFAllan [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReducirSeguridadConRiesgoBajoFalla [< 1 ms]
@@ -45,10 +45,10 @@ Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Cor
 Test Run Successful.
 Total tests: 34
      Passed: 34
- Total time: 0.6968 Seconds
+ Total time: 0.8150 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.36
+Time Elapsed 00:00:01.57
