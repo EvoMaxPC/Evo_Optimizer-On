@@ -294,6 +294,47 @@ jobs:
           assert len(man) == 182, "el manifiesto debe tener 182 entradas"
           PYEOF
 
+      - name: Paso 8b (auditoria de valores + mapa upstream, determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/audit_catalog_values.py | tee "ci-out/paso8b-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py | tee "ci-out/paso8b-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py | tee "ci-out/paso8b-map-run${i}.txt"
+            sha256sum inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+              > "ci-out/paso8b-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso8b-sha-run1.txt ci-out/paso8b-sha-run2.txt; then
+            echo "DETERMINISMO PASO 8B ROTO" | tee ci-out/paso8b-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 8b: OK" | tee ci-out/paso8b-determinism.txt
+          cp inventory/ledger/catalog-value-audit.tsv ci-out/
+          cp inventory/ledger/upstream-capability-map.tsv ci-out/
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso8b-audit.json
+          python3 tools/ledger_extract/build_upstream_capability_map.py --json \
+            > ci-out/paso8b-map.json
+          # gate en modo informativo: el pending del mapa no bloquea la fase 0
+          python3 tools/ledger_extract/coverage_gate.py --gate phase0 \
+            | tee ci-out/paso8b-gate-phase0.txt
+          python3 tools/ledger_extract/coverage_gate.py --gate beta --informational \
+            | tee ci-out/paso8b-gate-beta.txt
+          python3 - <<'PYEOF'
+          import json, sys
+          a = json.load(open("ci-out/paso8b-audit.json", encoding="utf-8"))
+          m = json.load(open("ci-out/paso8b-map.json", encoding="utf-8"))
+          print("acciones auditadas:", a["filas"], "| distribucion:", a["distribucion"])
+          print("desviaciones sin excepcion:", a["sin_excepcion"])
+          print("mapa:", m["filas"], "| cobertura:", m["cobertura"])
+          print("source x status:", m["source_x_status"])
+          ok = (a["sin_excepcion"] == 0 and a["filas"] == 104
+                and m["filas"] == 435 and m["cobertura"]["covered"] == 37)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
       - name: Estructura .NET (validador)
         if: always()
         shell: bash

@@ -32,6 +32,114 @@ public static class CapabilityRules
     };
 
     /// <summary>
+    /// Restauración mínima exigible según la reversibilidad declarada (ADR-0003).
+    /// Sustituye a la regla "Restore=None exige Risk >= High" del paso 3, que
+    /// dejaba RestoreLevel.None inutilizable: ahora la red de seguridad que se
+    /// exige depende de qué se pierde, no solo del riesgo nominal.
+    /// </summary>
+    public static RestoreLevel MinimumRestore(Reversibility reversibility, RiskLevel risk) =>
+        reversibility switch
+        {
+            // Reversible: se exige poder deshacer, y además el mínimo por riesgo.
+            Reversibility.Reversible => MinimumRestore(risk),
+            // NothingToRestore: no hay nada que restaurar; None es legítimo hasta Medium.
+            Reversibility.NothingToRestore => RestoreLevel.None,
+            // Irreversible: None sólo con riesgo alto y confirmación reforzada.
+            Reversibility.Irreversible => RestoreLevel.None,
+            _ => MinimumRestore(risk),
+        };
+
+    /// <summary>
+    /// Reglas de la ADR-0003 sobre (reversibilidad, riesgo, restauración,
+    /// confirmación). Devuelve las violaciones (vacía = válido).
+    /// </summary>
+    public static IReadOnlyList<string> ValidateReversibility(CapabilityContract capability)
+    {
+        ArgumentNullException.ThrowIfNull(capability);
+
+        var errors = new List<string>();
+        var risk = capability.Risk;
+        var minimumConfirmation = MinimumConfirmation(risk);
+
+        switch (capability.Reversibility)
+        {
+            case Reversibility.Reversible:
+                if (capability.Restore < RestoreLevel.SessionUndo)
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=Reversible exige restauración >= " +
+                        $"SessionUndo (declarada {capability.Restore}).");
+                }
+
+                if (capability.Restore < MinimumRestore(risk))
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=Reversible con riesgo {risk} exige " +
+                        $"restauración >= {MinimumRestore(risk)} (declarada {capability.Restore}).");
+                }
+
+                break;
+
+            case Reversibility.NothingToRestore:
+                if (capability.Restore != RestoreLevel.None)
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=NothingToRestore exige Restore=None " +
+                        $"(declarada {capability.Restore}): si hay algo que restaurar, la " +
+                        "clasificación correcta es Reversible.");
+                }
+
+                if (risk > RiskLevel.Medium)
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=NothingToRestore sólo se admite con " +
+                        $"riesgo <= Medium (declarado {risk}).");
+                }
+
+                break;
+
+            case Reversibility.Irreversible:
+                if (capability.Restore != RestoreLevel.None)
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=Irreversible exige Restore=None " +
+                        $"(declarada {capability.Restore}): no se puede prometer restauración de " +
+                        "algo que no se puede deshacer.");
+                }
+
+                if (risk < RiskLevel.High)
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=Irreversible exige riesgo >= High " +
+                        $"(declarado {risk}).");
+                }
+
+                if (capability.Confirmation < ConfirmationType.Summary)
+                {
+                    errors.Add(
+                        $"'{capability.Id}': Reversibility=Irreversible exige confirmación >= " +
+                        $"Summary (declarada {capability.Confirmation}).");
+                }
+
+                break;
+
+            default:
+                errors.Add($"'{capability.Id}': reversibilidad no definida.");
+                break;
+        }
+
+        // La confirmación nunca baja del mínimo por riesgo, sea cual sea la rama.
+        if (capability.Confirmation < minimumConfirmation)
+        {
+            errors.Add(
+                $"'{capability.Id}': riesgo {risk} exige confirmación {minimumConfirmation} " +
+                $"como mínimo (declarada {capability.Confirmation}).");
+        }
+
+        return errors;
+    }
+
+    /// <summary>
     /// Valida el contrato. Devuelve la lista de violaciones (vacía = válido).
     /// </summary>
     public static IReadOnlyList<string> Validate(CapabilityContract capability)
@@ -60,28 +168,9 @@ public static class CapabilityRules
             errors.Add($"'{capability.Id}': Variants no puede estar vacío.");
         }
 
-        var minimumConfirmation = MinimumConfirmation(capability.Risk);
-        if (capability.Confirmation < minimumConfirmation)
-        {
-            errors.Add(
-                $"'{capability.Id}': riesgo {capability.Risk} exige confirmación " +
-                $"{minimumConfirmation} como mínimo (declarada {capability.Confirmation}).");
-        }
-
-        var minimumRestore = MinimumRestore(capability.Risk);
-        if (capability.Restore < minimumRestore)
-        {
-            errors.Add(
-                $"'{capability.Id}': riesgo {capability.Risk} exige restauración " +
-                $"{minimumRestore} como mínimo (declarada {capability.Restore}).");
-        }
-
-        if (capability.Restore == RestoreLevel.None && capability.Risk >= RiskLevel.High)
-        {
-            errors.Add(
-                $"'{capability.Id}': RestoreLevel.None es incompatible con riesgo " +
-                $"{capability.Risk} (>= High).");
-        }
+        // ADR-0003: la coherencia de restauración y confirmación depende de la
+        // reversibilidad declarada, no sólo del riesgo nominal.
+        errors.AddRange(ValidateReversibility(capability));
 
         if (capability.Risk == RiskLevel.Critical &&
             capability.Confirmation != ConfirmationType.TypeOperationName)

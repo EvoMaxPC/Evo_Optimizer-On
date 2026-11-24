@@ -15,6 +15,7 @@
       "securityImpact": "Neutral",
       "privilege": "User",
       "restore": "None",
+      "reversibility": "NothingToRestore",
       "confirmation": "None",
       "state": "Implemented",
       "variants": [
@@ -30,7 +31,7 @@
         26100,
         26200
       ],
-      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeleteTempFiles (Remove-Item \"$Env:Temp\\*\") + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (-Scope CurrentUser -> Invoke-AtlasTempCleanup sobre LocalAppData\\Temp)",
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeleteTempFiles (Remove-Item \"$Env:Temp\\*\") + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (-Scope CurrentUser -> Invoke-AtlasTempCleanup sobre LocalAppData\\Temp). Reversibilidad (ADR-0003): NothingToRestore — ficheros temporales del usuario: se regeneran solos; no hay valor previo que guardar",
       "actions": [
         {
           "type": "command",
@@ -58,6 +59,7 @@
       "securityImpact": "Neutral",
       "privilege": "Admin",
       "restore": "None",
+      "reversibility": "NothingToRestore",
       "confirmation": "None",
       "state": "Implemented",
       "variants": [
@@ -73,7 +75,7 @@
         26100,
         26200
       ],
-      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeleteTempFiles (Remove-Item \"$Env:SystemRoot\\Temp\\*\") + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (Invoke-AtlasTempCleanup -Path <Windows>\\Temp)",
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeleteTempFiles (Remove-Item \"$Env:SystemRoot\\Temp\\*\") + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (Invoke-AtlasTempCleanup -Path <Windows>\\Temp). Reversibilidad (ADR-0003): NothingToRestore — temporales del sistema: Windows recrea la carpeta y su contenido es descartable",
       "actions": [
         {
           "type": "command",
@@ -101,6 +103,7 @@
       "securityImpact": "Neutral",
       "privilege": "Admin",
       "restore": "SessionUndo",
+      "reversibility": "Reversible",
       "confirmation": "SimpleClick",
       "state": "Implemented",
       "variants": [
@@ -115,7 +118,7 @@
         26100,
         26200
       ],
-      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeliveryOptimization (HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization\\DODownloadMode=0, original <RemoveEntry>) + winutil@70c23c80641d7370532af2f619b2842658600842:inventory/ledger/winutil-tweak-ops.tsv",
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDeliveryOptimization (HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization\\DODownloadMode=0, original <RemoveEntry>) + winutil@70c23c80641d7370532af2f619b2842658600842:inventory/ledger/winutil-tweak-ops.tsv. Reversibilidad (ADR-0003): Reversible — un valor de registro; el diario guarda el previo o su ausencia",
       "actions": [
         {
           "type": "registry",
@@ -139,6 +142,7 @@
       "securityImpact": "Neutral",
       "privilege": "Admin",
       "restore": "None",
+      "reversibility": "NothingToRestore",
       "confirmation": "None",
       "state": "Implemented",
       "variants": [
@@ -153,7 +157,7 @@
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'Windows Error Reporting Files' = 2 y Start-Process cleanmgr /sagerun:64)",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'Windows Error Reporting Files' = 2 y Start-Process cleanmgr /sagerun:64). Reversibilidad (ADR-0003): NothingToRestore — informes de error ya emitidos y caducados: son logs, no configuracion",
       "actions": [
         {
           "type": "registry",
@@ -183,11 +187,12 @@
       "name": "Vaciar la Papelera de reciclaje",
       "description": "Selecciona la categoría 'Recycle Bin' de Liberador de espacio (nota de Atlas: por defecto viene a 0, es decir, desmarcada) y ejecuta cleanmgr /sagerun:64. Irreversible.",
       "sectionId": 1,
-      "risk": "Safe",
+      "risk": "High",
       "securityImpact": "Neutral",
       "privilege": "Admin",
       "restore": "None",
-      "confirmation": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
       "state": "Implemented",
       "variants": [
         "Evo",
@@ -201,7 +206,7 @@
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'Recycle Bin' = 0, comentario: 'Recycle Bin' = 0 en el mapa original)",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'Recycle Bin' = 0, comentario: 'Recycle Bin' = 0 en el mapa original). Reversibilidad (ADR-0003): Irreversible — borra definitivamente lo que el usuario mando a la papelera; no hay copia en ningun sitio",
       "actions": [
         {
           "type": "registry",
@@ -231,18 +236,21 @@
       "name": "Limpiar componentes de WinSxS",
       "description": "Ejecuta DISM /Online /Cleanup-Image /StartComponentCleanup, que elimina las versiones sustituidas de los componentes. EVO NO usa /ResetBase (WinUtil sí): con /ResetBase las actualizaciones instaladas dejan de poder desinstalarse. Aun sin /ResetBase la operación no tiene inversa, por eso se exige punto de restauración.",
       "sectionId": 1,
-      "risk": "Medium",
+      "risk": "High",
       "securityImpact": "Neutral",
       "privilege": "Admin",
-      "restore": "RestorePoint",
-      "confirmation": "Summary",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
       "state": "Implemented",
       "variants": [
         "Evo",
         "WinUtil",
         "Atlas"
       ],
-      "conflictsWith": [],
+      "conflictsWith": [
+        "cleanup.winsxs.resetbase"
+      ],
       "dependsOn": [],
       "supportedBuilds": [
         19045,
@@ -250,7 +258,7 @@
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-FeaturesPhase.ps1 (linea 128: '/Online','/Cleanup-Image','/StartComponentCleanup', sin /ResetBase) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDiskCleanup (anade /ResetBase; EVO lo omite: desviacion 2 del informe)",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-FeaturesPhase.ps1 (linea 128: '/Online','/Cleanup-Image','/StartComponentCleanup', sin /ResetBase) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDiskCleanup (anade /ResetBase; EVO lo omite: desviacion 2 del informe). Reversibilidad (ADR-0003): Irreversible — elimina las versiones sustituidas de componentes; Windows no las reconstruye sin Update. Conflicto declarado con cleanup.winsxs.resetbase: son la misma limpieza y /ResetBase es un superconjunto irreversible de esta",
       "actions": [
         {
           "type": "command",
@@ -274,6 +282,7 @@
       "securityImpact": "Neutral",
       "privilege": "Admin",
       "restore": "None",
+      "reversibility": "NothingToRestore",
       "confirmation": "None",
       "state": "Implemented",
       "variants": [
@@ -288,7 +297,7 @@
         26100,
         26200
       ],
-      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'System error memory dump files' y 'System error minidump files' del mapa de cleanmgr)",
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1 (categorias 'System error memory dump files' y 'System error minidump files' del mapa de cleanmgr). Reversibilidad (ADR-0003): NothingToRestore — volcados de fallos ya ocurridos: diagnostico caducado; se regenera con el siguiente fallo",
       "actions": [
         {
           "type": "command",
@@ -316,6 +325,49 @@
             "/s",
             "/q",
             "%SystemRoot%\\Minidump\\*"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "cleanup.winsxs.resetbase",
+      "name": "Compactar WinSxS con /ResetBase",
+      "description": "Ejecuta DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase, que ademas de limpiar marca la linea base de componentes: las actualizaciones ya instaladas dejan de poder desinstalarse y el punto de restauracion no las devuelve. Es la variante que usa WinUtil en WPFTweaksDiskCleanup; cleanup.winsxs.component es la misma operacion sin /ResetBase, por eso ambas se declaran en conflicto.",
+      "sectionId": 1,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [
+        "cleanup.winsxs.component"
+      ],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDiskCleanup (linea 1188: 'Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase') + inventory/ledger/winutil-tweak-ops.tsv (winutil:tweak:WPFTweaksDiskCleanup). No estructurado en el pin (solo InvokeScript): State=Specified. Reversibilidad (ADR-0003): Irreversible — /ResetBase elimina la posibilidad de desinstalar actualizaciones; no hay inversa",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Limpiar componentes y fijar la linea base",
+          "fileName": "dism.exe",
+          "arguments": [
+            "/Online",
+            "/Cleanup-Image",
+            "/StartComponentCleanup",
+            "/ResetBase"
           ],
           "ignoreExitCode": true
         }

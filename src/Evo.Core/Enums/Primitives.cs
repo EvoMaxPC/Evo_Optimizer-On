@@ -35,6 +35,24 @@ public enum RestoreLevel
     FullBackup = 3,
 }
 
+/// <summary>
+/// Reversibilidad real de la capacidad (ADR-0003). No es lo mismo que
+/// <see cref="RestoreLevel"/>, que dice qué red de seguridad se ofrece: este
+/// enum dice si el efecto se puede deshacer, si no hay nada que deshacer porque
+/// el dato es regenerable, o si es destructivo.
+/// </summary>
+public enum Reversibility
+{
+    /// <summary>El efecto se deshace con el diario o con un punto de restauración.</summary>
+    Reversible = 0,
+
+    /// <summary>No hay nada que restaurar: temporales, cachés, papelera de logs.</summary>
+    NothingToRestore = 1,
+
+    /// <summary>Destructivo y no regenerable: no hay vuelta atrás.</summary>
+    Irreversible = 2,
+}
+
 /// <summary>Confirmación exigida al usuario antes de aplicar.</summary>
 public enum ConfirmationType
 {

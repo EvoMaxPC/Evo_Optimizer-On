@@ -26,6 +26,7 @@ internal static class CatalogJson
           "securityImpact": "{{securityImpact}}",
           "privilege": "User",
           "restore": "{{restore}}",
+          "reversibility": "Reversible",
           "confirmation": "{{confirmation}}",
           "state": "Specified",
           "variants": ["Evo"],

@@ -43,23 +43,12 @@ SECTIONS = ("1", "2", "3")
 # está entre las que el enunciado del paso 8 pide construir. Se declaran aquí,
 # con su motivo, para que el hueco sea explícito y no silencioso. Si aparece un
 # hueco nuevo, el script falla: hay que decidir si es capacidad nueva o hueco.
-DECLARED_GAPS = {
-    # (seccion, linea): motivo
-    ("2", "38"): "Widgets (atlas:toggle:Widgets): la oleada 1 no trae capacidad de Widgets",
-    ("2", "44"): "File Explorer Home and Gallery: no esta en la oleada 1",
-    ("2", "45"): "Start Menu Recommendations: no esta en la oleada 1",
-    ("2", "46"): "Store Recommended Search Results: no esta en la oleada 1",
-    ("2", "47"): "Automatic Folder Discovery: no esta en la oleada 1",
-    ("2", "49"): "Prevent Device Companion Apps: no esta en la oleada 1",
-    ("2", "50"): "Razer Software Auto-Install: no esta en la oleada 1",
-    ("2", "51"): "Logitech Download Assistant: no esta en la oleada 1",
-    ("2", "52"): "Adobe URL Block List: no esta en la oleada 1",
-    ("2", "53"): "Brave Browser Debloat: no esta en la oleada 1",
-    ("2", "74"): "Configure Start Menu (atlas:effect Atlas.Shell): no esta en la oleada 1",
-    ("2", "75"): "Configure Windows Explorer (WPFToggleHideSettingsHome): no esta en la oleada 1",
-    ("3", "84"): "Brave Telemetry: no esta en la oleada 1",
-    ("3", "86"): "Adobe URL Block List (seccion 3): no esta en la oleada 1",
-}
+# Huecos aceptados. VACIO desde el paso 8b: las 26 lineas Mapped de las
+# secciones 1-3 estan cubiertas por al menos una capacidad. La mecanica se
+# mantiene porque una oleada futura puede necesitar declarar un hueco temporal
+# con motivo; el script falla si aparece uno no declarado y tambien si una
+# declaracion se queda obsoleta.
+DECLARED_GAPS: dict[tuple[str, str], str] = {}
 
 
 def load_capabilities() -> list[dict]:

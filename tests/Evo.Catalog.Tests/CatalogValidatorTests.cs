@@ -176,16 +176,45 @@ public sealed class CatalogValidatorTests
     }
 
     [Fact]
-    public void InsufficientRestoreForRiskFails()
+    public void InsufficientRestoreForReversibleRiskFails()
     {
+        // ADR-0003: Reversible nunca acepta Restore=None, sea cual sea el riesgo.
         var report = Validate(CatalogJson.Document(CatalogJson.Capability(
             "services.diagtrack.disable",
-            risk: "High",
-            confirmation: "SummaryAndRestorePoint",
+            risk: "Low",
+            confirmation: "SimpleClick",
             restore: "None")));
 
         Assert.False(report.IsValid);
-        Assert.Contains(report.Errors, e => e.Rule == "R-RISK" && e.Message.Contains("restauración"));
+        Assert.Contains(report.Errors, e => e.Rule == "R-RISK" && e.Message.Contains("SessionUndo"));
+    }
+
+    [Fact]
+    public void IrreversibleHighWithNoneIsValidUnderAdr0003()
+    {
+        var json = CatalogJson.Document(CatalogJson.Capability(
+                "cleanup.example.irreversible",
+                risk: "High",
+                confirmation: "SummaryAndRestorePoint",
+                restore: "None"))
+            .Replace("\"reversibility\": \"Reversible\"", "\"reversibility\": \"Irreversible\"");
+
+        var report = Validate(json);
+
+        Assert.True(report.IsValid, report.ErrorSummary);
+    }
+
+    [Fact]
+    public void MissingReversibilityFailsValidation()
+    {
+        var json = CatalogJson.Document(CatalogJson.Capability("privacy.telemetry.diagtrack"))
+            .Replace("\"reversibility\": \"Reversible\",", "");
+
+        var report = Validate(json);
+
+        Assert.False(report.IsValid);
+        Assert.Contains(report.Errors, e =>
+            e.Rule == "R-RISK" && e.Message.Contains("reversibility", StringComparison.Ordinal));
     }
 
     [Fact]

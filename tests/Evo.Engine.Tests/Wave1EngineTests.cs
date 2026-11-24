@@ -231,6 +231,8 @@ public sealed class Wave1EngineTests
         var summary = await harness.Coordinator.ExecuteAsync(
             plan, ExecutionMode.Execute, harness.Context(ExecutionMode.Execute));
 
+        // cleanup.winsxs.component exige punto de restauración: el contrato se
+        // relaja aquí porque el fake no ejecuta la confirmación del usuario.
         Assert.Equal(1, summary.Succeeded);
         Assert.Single(harness.Commands.Executed);
         var invocation = harness.Commands.Executed[0];
@@ -238,6 +240,15 @@ public sealed class Wave1EngineTests
         Assert.DoesNotContain("/ResetBase", invocation.Arguments);
         Assert.Contains("/StartComponentCleanup", invocation.Arguments);
         Assert.Single(summary.UndoJournalEntry);
+
+        // Y su variante /ResetBase es otra capacidad distinta (ADR-0003: la
+        // Irreversible) que sí pasa /ResetBase.
+        harness.Commands.Executed.Clear();
+        var resetBase = Plan("cleanup.winsxs.resetbase");
+        var resetSummary = await harness.Coordinator.ExecuteAsync(
+            resetBase, ExecutionMode.Execute, harness.Context(ExecutionMode.Execute));
+        Assert.Equal(0, resetSummary.Failed);
+        Assert.Contains("/ResetBase", harness.Commands.Executed[0].Arguments);
     }
 
     private static void AssertSameState(

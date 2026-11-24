@@ -24,6 +24,7 @@ public sealed class Wave1CatalogTests
         "cleanup.recycle.bin",
         "cleanup.winsxs.component",
         "cleanup.memory.dumps",
+        "cleanup.winsxs.resetbase",
     ];
 
     private static readonly string[] Section2 =
@@ -36,6 +37,19 @@ public sealed class Wave1CatalogTests
         "debloat.windows.ai",
         "debloat.content.delivery",
         "debloat.telemetry.appx",
+        "debloat.edge.remove",
+        "debloat.widgets.disable",
+        "debloat.explorer.home-gallery",
+        "debloat.start.recommendations",
+        "debloat.store.search",
+        "debloat.explorer.auto-folder-discovery",
+        "debloat.devices.companion-apps",
+        "debloat.drivers.razer",
+        "debloat.drivers.logitech",
+        "debloat.network.adobe-blocklist",
+        "privacy.browser.brave-debloat",
+        "debloat.start.layout",
+        "debloat.settings.home",
     ];
 
     private static readonly string[] Section3 =
@@ -74,7 +88,8 @@ public sealed class Wave1CatalogTests
     {
         var catalog = LoadWave1();
 
-        Assert.Equal(24, catalog.Count);
+        // 24 de la oleada 1 + 14 de la oleada 1b (paso 8b).
+        Assert.Equal(38, catalog.Count);
         Assert.Equal(Section1.Concat(Section2).Concat(Section3).OrderBy(i => i, StringComparer.Ordinal),
             catalog.Ids.OrderBy(i => i, StringComparer.Ordinal));
 
@@ -87,10 +102,16 @@ public sealed class Wave1CatalogTests
         // R-BUILD sólo puede avisar; en este catálogo tampoco debe avisar.
         Assert.Empty(report.Warnings);
 
+        // ADR-0003: toda capacidad declara reversibilidad y cumple su rama.
+        Assert.All(catalog.Definitions, d => Assert.NotNull(d.Reversibility));
+
         foreach (var definition in catalog.Definitions)
         {
             Assert.Matches(CatalogValidator.IdPattern, definition.Id);
-            Assert.Equal(CapabilityState.Implemented, definition.State);
+            // Implemented = el motor la ejecuta contra fakes con tests;
+            // Specified = declarada con acciones pero sin verificar en el pin.
+            Assert.Contains(definition.State,
+                new[] { CapabilityState.Implemented, CapabilityState.Specified });
             Assert.NotEmpty(definition.Actions);
             Assert.False(string.IsNullOrWhiteSpace(definition.Provenance));
             Assert.Equal(SecurityImpact.Neutral, definition.SecurityImpact);

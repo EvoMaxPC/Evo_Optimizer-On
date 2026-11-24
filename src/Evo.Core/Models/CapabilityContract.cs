@@ -33,6 +33,9 @@ public sealed record CapabilityContract
     /// <summary>Restauración ofrecida.</summary>
     public required RestoreLevel Restore { get; init; }
 
+    /// <summary>Reversibilidad real del efecto (ADR-0003).</summary>
+    public required Reversibility Reversibility { get; init; }
+
     /// <summary>Confirmación exigida al usuario.</summary>
     public required ConfirmationType Confirmation { get; init; }
 

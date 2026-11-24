@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "description": "Desviaciones de valor aceptadas: cada fila de inventory/ledger/catalog-value-audit.tsv con relation=equals-original o differs debe estar aqui con motivo y evidencia. Lo comprueba tools/ledger_extract/audit_catalog_values.py (exit 1 si falta).",
+  "deviations": [
+    {
+      "capability_id": "debloat.settings.home",
+      "hive": "HKCU",
+      "key": "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "name": "SettingsPageVisibility",
+      "catalog_value": "hide:home",
+      "source": "winutil",
+      "source_apply_value": "show:home",
+      "source_original_value": "hide:home",
+      "relation": "equals-original",
+      "evidence": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1741-1755 (WPFToggleHideSettingsHome: Value='show:home', OriginalValue='hide:home', DefaultState='true'); inventory/ledger/winutil-tweak-ops.tsv winutil:tweak-op:WPFToggleHideSettingsHome:registry:0",
+      "reason": "WinUtil declara un toggle cuya etiqueta dice 'Settings Home Page' con DefaultState=true: el valor que aplica (show:home) es el estado por defecto y el que revierte (hide:home) es el que oculta la pagina. La capacidad de EVO se llama 'Ocultar la pagina de Inicio de Configuracion' y escribe hide:home a proposito: es el valor de OriginalValue de WinUtil porque en WinUtil es la rama que oculta. Copiar show:home habria dejado la pagina visible contradiciendo el nombre de la capacidad. Se prefiere el efecto declarado sobre el literal de upstream y se deja constancia aqui."
+    }
+  ]
+}

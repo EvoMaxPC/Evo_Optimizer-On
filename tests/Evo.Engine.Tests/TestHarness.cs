@@ -122,6 +122,7 @@ internal sealed class TestHarness
             SecurityImpact = SecurityImpact.Neutral,
             Privilege = privilege,
             Restore = restore,
+            Reversibility = Reversibility.Reversible,
             Confirmation = CapabilityRules.MinimumConfirmation(risk),
             State = CapabilityState.Implemented,
             Variants = [Variant.Evo],

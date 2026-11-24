@@ -37,6 +37,11 @@ public sealed record CapabilityDefinition
     [JsonPropertyName("restore")]
     public RestoreLevel Restore { get; init; } = RestoreLevel.None;
 
+    /// <summary>Reversibilidad real (ADR-0003). Nullable a propósito: el
+    /// validador debe poder rechazar una definición que no la declare.</summary>
+    [JsonPropertyName("reversibility")]
+    public Reversibility? Reversibility { get; init; }
+
     [JsonPropertyName("confirmation")]
     public ConfirmationType Confirmation { get; init; } = ConfirmationType.None;
 
@@ -72,6 +77,7 @@ public sealed record CapabilityDefinition
         SecurityImpact = SecurityImpact ?? Evo.Core.Enums.SecurityImpact.Neutral,
         Privilege = Privilege,
         Restore = Restore,
+        Reversibility = Reversibility ?? Evo.Core.Enums.Reversibility.Reversible,
         Confirmation = Confirmation,
         State = State,
         Variants = Variants,

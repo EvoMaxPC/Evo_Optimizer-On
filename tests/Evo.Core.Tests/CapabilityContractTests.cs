@@ -22,6 +22,7 @@ public sealed class CapabilityContractTests
             SecurityImpact = impact,
             Privilege = privilege,
             Restore = restore,
+            Reversibility = Reversibility.Reversible,
             Confirmation = confirmation,
             State = CapabilityState.Specified,
             Variants = [Variant.Evo],
@@ -61,32 +62,45 @@ public sealed class CapabilityContractTests
         Assert.Empty(CapabilityRules.Validate(contract));
     }
 
+    // ADR-0003: Reversible nunca admite Restore=None, con cualquier riesgo.
     [Theory]
+    [InlineData(RiskLevel.Low)]
     [InlineData(RiskLevel.High)]
     [InlineData(RiskLevel.Critical)]
-    public void RestoreNoneEsIncompatibleConRiesgoAlto(RiskLevel risk)
+    public void ReversibleNoAdmiteRestoreNone(RiskLevel risk)
     {
         var contract = Sample(
             risk: risk,
-            confirmation: ConfirmationType.TypeOperationName,
+            confirmation: CapabilityRules.MinimumConfirmation(risk),
             restore: RestoreLevel.None);
 
         var errors = CapabilityRules.Validate(contract);
 
-        Assert.Contains(errors, e => e.Contains("RestoreLevel.None", StringComparison.Ordinal));
+        Assert.Contains(errors, e => e.Contains("SessionUndo", StringComparison.Ordinal));
     }
 
     [Fact]
-    public void RestoreNoneConRiesgoMedioEsValido()
+    public void NothingToRestoreConRiesgoMedioYNoneEsValido()
     {
         var contract = Sample(
             risk: RiskLevel.Medium,
             confirmation: ConfirmationType.Summary,
-            restore: RestoreLevel.None);
+            restore: RestoreLevel.None) with { Reversibility = Evo.Core.Enums.Reversibility.NothingToRestore };
 
-        Assert.DoesNotContain(
+        Assert.Empty(CapabilityRules.Validate(contract));
+    }
+
+    [Fact]
+    public void NothingToRestoreConRiesgoAltoFalla()
+    {
+        var contract = Sample(
+            risk: RiskLevel.High,
+            confirmation: ConfirmationType.SummaryAndRestorePoint,
+            restore: RestoreLevel.None) with { Reversibility = Evo.Core.Enums.Reversibility.NothingToRestore };
+
+        Assert.Contains(
             CapabilityRules.Validate(contract),
-            e => e.Contains("RestoreLevel.None", StringComparison.Ordinal));
+            e => e.Contains("NothingToRestore", StringComparison.Ordinal));
     }
 
     [Theory]
@@ -205,6 +219,9 @@ public sealed class CapabilityContractTests
         Assert.Equal(
             new[] { "Stub", "Specified", "Implemented" },
             Enum.GetNames<CapabilityState>());
+        Assert.Equal(
+            new[] { "Reversible", "NothingToRestore", "Irreversible" },
+            Enum.GetNames<Reversibility>());
         Assert.Equal(
             new[] { "Default", "WinUtil", "Atlas", "Evo" },
             Enum.GetNames<Variant>());

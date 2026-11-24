@@ -132,19 +132,24 @@ public sealed partial class CatalogValidator
                 $"(declarada {definition.Confirmation})."));
         }
 
-        // Restore=None solo se admite con riesgo bajo. La frase literal del
-        // enunciado ("Restore == None => Risk >= High") es incompatible con la
-        // regla del paso 6 (MinimumRestore(High) = RestorePoint): juntas dejan
-        // RestoreLevel.None inutilizable. Se aplica la del paso 6, que es la
-        // que razona del lado seguro. Ver docs/reports/paso7.md, desviacion 1.
-        var minimumRestore = CapabilityRules.MinimumRestore(definition.Risk);
-        if (definition.Restore < minimumRestore)
+        // ADR-0003: la regla depende de la reversibilidad declarada. Si falta,
+        // es error: el catálogo debe decir qué se pierde, no deducirlo.
+        if (definition.Reversibility is null)
         {
             issues.Add(Error(
-                "R-RISK",
-                definition.Id,
-                $"Riesgo {definition.Risk} exige restauración >= {minimumRestore} " +
-                $"(declarada {definition.Restore})."));
+                "R-RISK", definition.Id, "falta 'reversibility' (ADR-0003)."));
+        }
+        else if (!Enum.IsDefined(definition.Reversibility.Value))
+        {
+            issues.Add(Error(
+                "R-RISK", definition.Id, "'reversibility' tiene un valor no definido."));
+        }
+        else
+        {
+            foreach (var message in CapabilityRules.ValidateReversibility(definition.ToContract()))
+            {
+                issues.Add(Error("R-RISK", definition.Id, message));
+            }
         }
 
         if (definition.SectionId is < 0 or > 17)

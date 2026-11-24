@@ -110,19 +110,21 @@ def test_los_tres_ficheros_existen_y_declaran_metadatos(section: int) -> None:
     assert metadata["schemaVersion"] == 1
     assert metadata["version"]
     assert metadata["provenance"]
-    assert metadata["generatedBy"] == "paso 8 (oleada 1)"
+    assert metadata["generatedBy"] in ("paso 8 (oleada 1)", "paso 8b (oleada 1b)")
 
 
 @pytest.mark.parametrize("section", [1, 2, 3])
-def test_ids_son_exactamente_los_pedidos(section: int) -> None:
+def test_ids_del_paso_8_siguen_presentes(section: int) -> None:
+    # La oleada 1b añade capacidades: los 24 ids del paso 8 se mantienen.
     ids = [cap["id"] for cap in load(section)["capabilities"]]
-    assert ids == EXPECTED_IDS[section]
+    assert set(EXPECTED_IDS[section]) <= set(ids), "falta algún id del paso 8"
 
 
-def test_hay_24_capacidades_y_ningun_id_repetido() -> None:
+def test_hay_38_capacidades_y_ningun_id_repetido() -> None:
+    # 24 de la oleada 1 (paso 8) + 14 de la oleada 1b (paso 8b).
     ids = [cap["id"] for cap in all_capabilities()]
-    assert len(ids) == 24
-    assert len(set(ids)) == 24
+    assert len(ids) == 38
+    assert len(set(ids)) == 38
     for capability_id in ids:
         assert ID_PATTERN.match(capability_id), capability_id
 
@@ -148,11 +150,11 @@ def test_campos_obligatorios_y_enums_validos(capability: dict) -> None:
 
 
 @pytest.mark.parametrize("capability", all_capabilities(), ids=lambda c: c["id"])
-def test_invariantes_de_riesgo_del_paso_6(capability: dict) -> None:
+def test_invariantes_de_riesgo_segun_adr_0003(capability: dict) -> None:
+    # ADR-0003 sustituye la regla "None exige Risk >= High": la restauración
+    # mínima depende de la reversibilidad declarada (ver test_paso8b.py).
     risk = capability["risk"]
-    restore_index = RESTORE.index(capability["restore"])
-    assert restore_index >= RESTORE.index(MIN_RESTORE[risk]), (
-        f"{capability['id']}: riesgo {risk} exige restauración >= {MIN_RESTORE[risk]}")
+    assert capability["reversibility"] in ("Reversible", "NothingToRestore", "Irreversible")
     confirmation_index = CONFIRMATION.index(capability["confirmation"])
     assert confirmation_index >= CONFIRMATION.index(MIN_CONFIRMATION[risk]), (
         f"{capability['id']}: riesgo {risk} exige confirmación >= {MIN_CONFIRMATION[risk]}")
@@ -163,9 +165,11 @@ def test_invariantes_de_riesgo_del_paso_6(capability: dict) -> None:
 
 
 @pytest.mark.parametrize("capability", all_capabilities(), ids=lambda c: c["id"])
-def test_estado_implementado_con_acciones_bien_formadas(capability: dict) -> None:
-    assert capability["state"] == "Implemented"
-    assert capability["actions"], "State=Implemented exige acciones"
+def test_estado_declarado_con_acciones_bien_formadas(capability: dict) -> None:
+    # Paso 8b: Implemented = el motor la ejecuta contra fakes con tests;
+    # Specified = declarada con acciones pero sin verificar contra el pin.
+    assert capability["state"] in ("Implemented", "Specified")
+    assert capability["actions"], "toda capacidad declarada exige acciones"
 
     orders = [action["order"] for action in capability["actions"]]
     assert len(set(orders)) == len(orders), "Order duplicado"
