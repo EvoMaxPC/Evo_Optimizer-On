@@ -1,0 +1,167 @@
+name: dotnet-ci
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'arena/**'
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'catalog/windows-releases.json'
+      - 'Directory.Build.props'
+      - 'global.json'
+      - 'Evo.sln'
+      - 'tools/dotnet_tools/**'
+      - 'tools/ci/**'
+      - '.github/workflows/dotnet-ci.yml'
+  pull_request:
+    branches:
+      - 'arena/**'
+      - main
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'catalog/**'
+      - 'Directory.Build.props'
+      - 'global.json'
+      - 'Evo.sln'
+      - '.github/workflows/dotnet-ci.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dotnet-ci-${{ github.ref }}-${{ matrix.os }}
+  cancel-in-progress: false
+
+jobs:
+  build-and-test:
+    name: dotnet (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    continue-on-error: ${{ matrix.experimental }}
+    env:
+      DOTNET_NOLOGO: '1'
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: '1'
+      CI: 'true'
+      LABEL: dotnet-${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2025
+            experimental: false
+          # windows-11-arm es el unico runner CLIENTE real (ERRATA-EVO-003):
+          # se deja como experimental para no bloquear el PR si GitHub lo
+          # retira o no tiene SDK 10 disponible. Su resultado se publica igual.
+          - os: windows-11-arm
+            experimental: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Entorno del runner
+        shell: pwsh
+        run: |
+          Write-Host "runner=$env:RUNNER_NAME os=$env:RUNNER_OS arch=$env:RUNNER_ARCH"
+          try {
+            $cv = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+            Write-Host ("CurrentBuildNumber={0} UBR={1} EditionID={2} InstallationType={3}" -f `
+              $cv.CurrentBuildNumber, $cv.UBR, $cv.EditionID, $cv.InstallationType)
+          } catch {
+            Write-Host "no se pudo leer CurrentVersion: $_"
+          }
+
+      - name: Instalar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Version del SDK
+        shell: pwsh
+        run: |
+          dotnet --version
+          dotnet --list-sdks
+          dotnet --list-runtimes
+
+      - name: Validar estructura .NET (Python)
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path ci-out | Out-Null
+          $py = Get-Command python -ErrorAction SilentlyContinue
+          if (-not $py) { $py = Get-Command python3 -ErrorAction SilentlyContinue }
+          if (-not $py) {
+            Write-Host "python no disponible en este runner: se omite el validador de estructura"
+            "no-python" | Out-File -Encoding utf8 ci-out/structure.json
+            exit 0
+          }
+          & $py.Source tools/dotnet_tools/validate_dotnet_structure.py --json 2>&1 |
+            Tee-Object -FilePath ci-out/structure.json
+          if ($LASTEXITCODE -ne 0) { throw "validate_dotnet_structure.py fallo ($LASTEXITCODE)" }
+
+      - name: dotnet restore
+        shell: pwsh
+        run: |
+          dotnet restore Evo.sln 2>&1 | Tee-Object -FilePath ci-out/restore.txt
+          if ($LASTEXITCODE -ne 0) { throw "dotnet restore fallo ($LASTEXITCODE)" }
+
+      - name: dotnet build
+        shell: pwsh
+        run: |
+          dotnet build Evo.sln --no-restore --configuration Release --verbosity normal 2>&1 |
+            Tee-Object -FilePath ci-out/build.txt
+          if ($LASTEXITCODE -ne 0) { throw "dotnet build fallo ($LASTEXITCODE)" }
+
+      - name: dotnet test
+        shell: pwsh
+        run: |
+          dotnet test Evo.sln --no-build --configuration Release --verbosity normal `
+            --logger "trx;LogFileName=results.trx" `
+            --results-directory ci-out/test-results 2>&1 |
+            Tee-Object -FilePath ci-out/test.txt
+          if ($LASTEXITCODE -ne 0) { throw "dotnet test fallo ($LASTEXITCODE)" }
+
+      - name: Resumen de tests (.trx)
+        if: always()
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem -Path ci-out/test-results -Filter *.trx -ErrorAction SilentlyContinue
+          if (-not $files) { Write-Host "sin ficheros .trx"; exit 0 }
+          $total = 0; $passed = 0; $failed = 0
+          foreach ($f in $files) {
+            [xml]$trx = Get-Content -Raw $f.FullName
+            $c = $trx.TestRun.ResultSummary.Counters
+            $total += [int]$c.total; $passed += [int]$c.passed; $failed += [int]$c.failed
+          }
+          $line = "total=$total passed=$passed failed=$failed"
+          $line | Tee-Object -FilePath ci-out/test-summary.txt
+          if ($failed -ne 0) { throw "tests fallidos: $failed" }
+
+      - name: SHA de artefactos
+        if: always()
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path src,tests,catalog -Recurse -File |
+            Where-Object { $_.Name -match '\.(cs|csproj|json)$' } |
+            ForEach-Object {
+              $h = (Get-FileHash -Algorithm SHA256 $_.FullName).Hash.ToLower()
+              "{0}  {1}" -f $h, ($_.FullName.Substring((Get-Location).Path.Length + 1).Replace('\','/'))
+            } | Sort-Object | Tee-Object -FilePath ci-out/artifacts-sha.txt
+
+      - name: Publicar resultados en ci-report
+        if: always()
+        shell: bash
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          mkdir -p ci-out
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "${{ job.status }}" \
+            || echo "publish-report fallo (no bloquea el job)"

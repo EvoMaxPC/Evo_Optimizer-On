@@ -7,6 +7,13 @@ on:
       - 'tools/ledger_extract/**'
       - 'inventory/**'
       - 'docs/inventory-recon/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'catalog/**'
+      - 'Directory.Build.props'
+      - 'Evo.sln'
+      - 'global.json'
+      - 'tools/dotnet_tools/**'
       - 'docs/reports/**'
       - '.github/workflows/**'
     branches-ignore:
@@ -51,7 +58,7 @@ jobs:
         run: |
           mkdir -p ci-out
           set +e
-          python3 -m pytest tools/ledger_extract/tests/ -q 2>&1 | tee ci-out/pytest.txt
+          python3 -m pytest tools/ledger_extract/tests/ tests/ -q 2>&1 | tee ci-out/pytest.txt
           rc=${PIPESTATUS[0]}
           echo "pytest_exit=$rc" | tee -a ci-out/pytest.txt
           exit $rc
@@ -286,6 +293,17 @@ jobs:
           assert not bad, "prohibido Mapped en el borrador"
           assert len(man) == 182, "el manifiesto debe tener 182 entradas"
           PYEOF
+
+      - name: Estructura .NET (validador)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/dotnet_tools/validate_dotnet_structure.py 2>&1 \
+            | tee ci-out/dotnet-structure.txt
+          echo "dotnet_structure_exit=${PIPESTATUS[0]}" | tee -a ci-out/dotnet-structure.txt
+          python3 tools/dotnet_tools/validate_dotnet_structure.py --json \
+            > ci-out/dotnet-structure.json 2>/dev/null || true
 
       - name: Paso 5 (conciliacion definitiva + matriz de cobertura)
         shell: bash

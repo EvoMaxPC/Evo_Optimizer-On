@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- TargetFramework, Nullable, ImplicitUsings, TreatWarningsAsErrors,
+       AnalysisLevel, Company, Product y Copyright vienen de
+       Directory.Build.props (raiz). No redeclarar TargetFramework aqui. -->
+
+  <PropertyGroup>
+    <RootNamespace>Evo.Core</RootNamespace>
+    <AssemblyName>Evo.Core</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+</Project>

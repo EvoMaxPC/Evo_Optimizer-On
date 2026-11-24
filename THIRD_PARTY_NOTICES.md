@@ -62,3 +62,32 @@ Fichero original: `LICENSE` (sha256 `3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23
 Texto íntegro = el fichero `LICENSE` de este repositorio, byte a byte idéntico
 al de Atlas (verificado con `sha256sum` y `cmp`, ver `docs/reports/paso1.md`).
 Por tanto no se duplica aquí: **`LICENSE` ES el texto GPL-3.0 de Atlas**.
+
+---
+
+## 3. Herramientas de terceros descargables — NO redistribuidas
+
+EVO CLEAN **puede** invocar (siempre bajo control explícito del usuario y con
+descarga desde el origen oficial) herramientas de terceros. Ninguna de ellas se
+redistribuye en el paquete, ni en el instalador, ni en el repositorio: no hay
+binarios, ni copias, ni fragmentos de su código.
+
+| Herramienta | Titular | Origen de la descarga | Estado en EVO CLEAN |
+|---|---|---|---|
+| O&O ShutUp10++ | O&O Software GmbH | `https://www.oo-software.com/en/shutup10` | no redistribuida; descarga del usuario |
+| Process Explorer | Microsoft Sysinternals | `https://learn.microsoft.com/sysinternals/downloads/process-explorer` | no redistribuida; descarga del usuario |
+| NVCleanstall | TechPowerUp | `https://www.techpowerup.com/nvcleanstall/` | no redistribuida; descarga del usuario |
+
+Consecuencias:
+
+- EVO CLEAN **no** incluye estos binarios ni los sirve desde ningún espejo
+  propio. Cualquier descarga la inicia el usuario contra el sitio del titular.
+- Las licencias de esas herramientas son las de sus titulares y **no** se
+  cubren con la GPL-3.0 de este proyecto.
+- EVO CLEAN no concede sublicencia ni garantía sobre ellas; el usuario acepta
+  la licencia del titular al descargarlas.
+- Los identificadores y metadatos (nombre del paquete, URL oficial) sí viven en
+  el catálogo, porque son datos, no código.
+
+Los datos de configuración de WinUtil (MIT) y Atlas (GPL-3.0-only) que sí se
+incorporan están cubiertos por las secciones 1 y 2 y por `docs/legal/upstream-licenses.md`.
