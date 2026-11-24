@@ -236,13 +236,8 @@ public sealed class EngineCoordinator
             var undoContext = new UndoContext(
                 template.Registry, template.Services, template.Tasks,
                 template.Processes, template.Commands);
+            // Tras un rollback el diario queda vacío: el estado es el inicial.
             await journal.RollbackAsync(undoContext).ConfigureAwait(false);
-
-            foreach (var entry in Journal.Entries.ToList())
-            {
-                journal.Add(entry);
-            }
-
             stopwatch.Stop();
             return new ExecutionSummary
             {

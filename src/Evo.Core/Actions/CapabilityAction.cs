@@ -4,8 +4,8 @@ namespace Evo.Core.Actions;
 
 /// <summary>
 /// Tipo de acción atómica de una capacidad. El discriminante vive en el JSON
-/// (<c>"type": "registry"</c>) y se llama <c>kind</c> en C# para no chocar con
-/// <see cref="System.Type"/>.
+/// (<c>"type": "registry"</c>) y se llama <c>Kind</c> en C# para no chocar con
+/// el tipo <c>System.Type</c>.
 /// </summary>
 public enum ActionKind
 {
