@@ -223,7 +223,9 @@ def test_workflow_dotnet_ci_valido():
     runners = {entry["os"] for entry in matrix}
     assert runners == {"windows-2025", "windows-11-arm"}
     steps = " ".join(json.dumps(step) for step in job["steps"])
+    # `dotnet test` se ejecuta ahora proyecto a proyecto (un .trx por proyecto,
+    # ver docs/reports/paso7.md); restore y build siguen siendo sobre Evo.sln.
     for needle in ("setup-dotnet", "dotnet restore Evo.sln",
-                   "dotnet build Evo.sln", "dotnet test Evo.sln",
+                   "dotnet build Evo.sln", "dotnet test ",
                    "publish-report.sh"):
         assert needle in steps, needle
