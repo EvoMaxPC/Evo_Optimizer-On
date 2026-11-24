@@ -13,7 +13,7 @@ reconocimiento en `docs/inventory-recon/atlas-structure.md`.
 ### a) El octavo fichero
 
 Comparando `atlas.tsv` de `605d8e7` con el actual (1 550 rutas en ambos, sin
-altas ni bajas): extract 1 073 → 1 081 (+8), reference 474 → 466. **Ocho**
+altas ni bajas): extract 1 073 → 1 082 (+9), reference 474 → 466. **Ocho**
 ficheros cambiaron de tratamiento (no 7):
 
 | ruta | bytes | regla (605d8e7) | regla (actual) |
@@ -132,7 +132,7 @@ abierto el contenido de ningún miembro ni se ha comprobado quién los empaquet�
 Resumen; el detalle con todos los comandos está en
 `docs/inventory-recon/atlas-structure.md`.
 
-- **1 081** extract: `package/` 802, `app/` 152, `tests/` 124, raíz 3.
+- **1 082** extract: `package/` 803, `app/` 152, `tests/` 124, raíz 3.
   Tercer nivel: `AtlasModules/` 585, `AtlasDesktop/` 217, `app/src/services/`
   39, `app/src/model/` 32, `app/src/ui/` 23, `app/src/pages/` 17.
 - **Extensiones**: `.ps1` 357, `.psd1` 295, `.cmd` 188, `.rs` 128, `.url` 40,
@@ -161,7 +161,7 @@ correspondencia catálogo↔UI **NO VERIFICADA** (exigiría leer los `.psm1`).
 
 ## T2 — Ledger de Atlas
 
-`inventory/ledger/atlas-files.tsv` (**1 081** filas) y
+`inventory/ledger/atlas-files.tsv` (**1 082** filas) y
 `inventory/ledger/atlas-reg-entries.tsv` (**327** filas).
 
 | kind | ficheros | entradas en `functions_json` |
@@ -174,7 +174,7 @@ correspondencia catálogo↔UI **NO VERIFICADA** (exigiría leer los `.psm1`).
 | `other` | 42 | — |
 | `reg` | 11 | — |
 | `package-binary` | 9 | — |
-| **total** | **1 081** | **2 724** |
+| **total** | **1 082** | **2 724** |
 
 En `atlas-reg-entries.tsv` el dato **nunca** aparece: columnas `item_id, file,
 key, name, type, value_sha256`. Tipos: 203 `sz`, 78 `default`, 30 `dword`,
@@ -196,9 +196,9 @@ que separe hechos de configuración (rutas, nombres, tipos) de obra protegida
 
 | | |
 |---|---:|
-| ficheros extract | 1 081 |
-| en el ledger | 1 081 |
-| con hechos de contenido | 1 072 |
+| ficheros extract | 1 082 |
+| en el ledger | 1 082 |
+| con hechos de contenido | 1 073 |
 | sin hechos (binarios) | 9 |
 | **sin motivo declarado** | **0** |
 | entradas de registro | 327 |
@@ -243,8 +243,11 @@ Workflow `ledger-verify`: +2 pasos (extractor de Atlas con doble ejecución y
 ## Riesgos
 
 - **R1** La semántica de Atlas (91 toggles, 183 `.psd1`) sigue sin extraer:
-  Paso 4b.
-- **R2** `atlas-files.tsv` es grande (1 081 filas con `functions_json`); si el
+  Paso 4b. *(Actualizado en el Paso 4c: hechos estructurales extraídos —
+  1 563 funciones, 92 referencias del puente, 303 ops del catálogo, 408 ops de
+  registro en `.psd1`. La semántica sigue pendiente: ver
+  `docs/reports/paso4c.md`.)*
+- **R2** `atlas-files.tsv` es grande (1 082 filas con `functions_json`); si el
   catálogo necesita más detalle, sube el tamaño del artefacto.
 - **R3** Si se decide usar datos de registro reales, la licencia GPL-3.0 puede
   alcanzar al catálogo: requiere ADR antes, no después.

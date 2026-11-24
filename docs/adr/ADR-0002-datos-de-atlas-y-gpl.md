@@ -1,7 +1,7 @@
 # ADR-0002 — Datos de Atlas y GPL-3.0 en el catálogo de EVO
 
-- **Estado**: **Propuesto** (no aceptado; la decisión es del responsable)
-- **Fecha**: 2026-11-23
+- **Estado**: **Aceptado — opción C**
+- **Fecha**: 2026-11-23 (propuesto) · **aceptado 2026-11-24**
 - **Contexto**: el Paso 3b/4a midió la semántica de Atlas sin copiar contenido:
   91 toggles en `Toggles/catalog.json` (grupo, elevación, estados, reinicio) y
   183 `.psd1` en `Scripts/Tweaks` (definiciones de cambio: registro, servicios,
@@ -80,9 +80,39 @@ hashes) y **C como destino** si el producto necesita datos completos, dejando
 
 ## Decisión
 
-**PENDIENTE DEL RESPONSABLE.** Este ADR queda en estado **Propuesto**. No se
-modifica el ledger, no se incorporan datos de Atlas y el estado actual
-(solo hechos) se mantiene hasta que haya decisión escrita.
+**ACEPTADA — OPCIÓN C** (2026-11-24, decisión del responsable en esta sesión).
+
+> EVO CLEAN será siempre código abierto bajo GPLv3 y **puede incorporar datos de
+> Atlas** (claves de registro, valores, nombres) **con atribución** y el commit
+> fijado como origen.
+
+### Consecuencias operativas (obligatorias)
+
+1. **THIRD_PARTY_NOTICES** es obligatorio antes de publicar binarios o catálogo.
+   Aún **no creado**: va en la base .NET (ver `docs/reports/paso4c.md`).
+2. **Atribución por dato**: cada entrada incorporada lleva su origen explícito
+   `atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:<ruta>`.
+3. **Marca**: prohibido usar el nombre "AtlasOS", sus logos o sus imágenes.
+   EVO usa marca propia; en textos se escribe "Atlas" como referencia factual,
+   nunca como marca del producto.
+4. **Herramientas de terceros** (O&O ShutUp10++, Process Explorer,
+   NVCleanstall): **no se redistribuyen**. Solo se invoca el original descargado
+   por el usuario.
+5. **El ledger actual ya cumple**: `atlas-toggles.tsv`, `atlas-toggle-ops.tsv`,
+   `atlas-tweak-ops.tsv` y `atlas-functions.tsv` no llevan cuerpos de código ni
+   valores literales, solo metadatos, claves y hashes.
+6. **Si en el futuro se cambiara a una licencia no-GPL**, habría que **rehacer
+   el catálogo sin datos de Atlas** (opción B del histórico de este ADR). Es
+   coste de reescritura completa de las entradas derivadas, no un cambio de
+   fichero de licencia.
+
+### Opción elegida frente a las descartadas
+
+- **A (solo ids/hashes)**: descartada por dependencia en tiempo de ejecución del
+  checkout de Atlas.
+- **B (redacción propia)**: descartada por riesgo legal indeterminado (base de
+  datos) y coste de redacción de 274+ entradas.
+- **C (GPLv3 + atribución)**: elegida.
 
 ## Consecuencias de no decidir
 

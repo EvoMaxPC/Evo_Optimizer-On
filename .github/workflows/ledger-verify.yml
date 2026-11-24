@@ -164,6 +164,48 @@ jobs:
           sys.exit(1 if bad else 0)
           PYEOF
 
+      - name: Extractores de 4c (determinismo + cruce)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_functions.py
+            python3 tools/ledger_extract/extract_atlas_bridge.py
+            python3 tools/ledger_extract/extract_atlas_toggle_ops.py
+            python3 tools/ledger_extract/extract_atlas_tweak_ops.py
+            sha256sum inventory/ledger/atlas-functions.tsv \
+                      inventory/ledger/atlas-toggle-bridge.tsv \
+                      inventory/ledger/atlas-toggle-ops.tsv \
+                      inventory/ledger/atlas-tweak-ops.tsv \
+              > "ci-out/paso4c-sha-run${i}.txt"
+            cp inventory/ledger/atlas-functions.tsv ci-out/atlas-functions.tsv
+            cp inventory/ledger/atlas-toggle-bridge.tsv ci-out/atlas-toggle-bridge.tsv
+            cp inventory/ledger/atlas-toggle-ops.tsv ci-out/atlas-toggle-ops.tsv
+            cp inventory/ledger/atlas-tweak-ops.tsv ci-out/atlas-tweak-ops.tsv
+          done
+          if ! diff -u ci-out/paso4c-sha-run1.txt ci-out/paso4c-sha-run2.txt; then
+            echo "DETERMINISMO 4C ROTO" | tee ci-out/paso4c-determinism.txt
+            exit 1
+          fi
+          echo "determinismo 4c: OK" | tee ci-out/paso4c-determinism.txt
+          python3 tools/ledger_extract/cross_atlas_ops.py --json \
+            | tee ci-out/paso4c-cross.json
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/paso4c-cross.json", encoding="utf-8"))
+          print("ops catalogo:", d["toggle_ops_total"],
+                "| con hive+key:", d["toggle_ops_con_hive_y_key"])
+          print("ops psd1:", d["tweak_ops_total"],
+                "| claves distintas:", d["claves_normalizadas_tweak"])
+          print("veredicto:", d["veredicto"])
+          if d["toggle_ops_con_hive_y_key"] != 0:
+              print("INESPERADO: el catalogo ahora declara claves; revisar el cruce")
+              sys.exit(1)
+          PYEOF
+          for f in atlas-functions atlas-toggle-bridge atlas-toggle-ops atlas-tweak-ops; do
+            echo "$f: $(($(wc -l < inventory/ledger/$f.tsv) - 1)) filas"
+          done | tee ci-out/paso4c-counts.txt
+
       - name: Sonda de coincidencia con el inventario
         if: always()
         shell: bash
