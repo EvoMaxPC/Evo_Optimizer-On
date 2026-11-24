@@ -2,30 +2,9 @@
 ........................................................................ [ 28%]
 ........................................................................ [ 43%]
 ........................................................................ [ 57%]
-........................................................................ [ 72%]
+........................................................................ [ 71%]
 ........................................................................ [ 86%]
-...............................................................F....     [100%]
-=================================== FAILURES ===================================
-_______ test_la_auditoria_de_valores_no_tiene_ni_ambiguous_ni_unhandled ________
-
-    def test_la_auditoria_de_valores_no_tiene_ni_ambiguous_ni_unhandled() -> None:
-        result = subprocess.run(
-            [sys.executable, str(ROOT / "tools" / "ledger_extract" / "audit_catalog_values.py")],
-            capture_output=True, text=True, check=False)
-        assert result.returncode == 0, result.stdout + result.stderr
->       assert "ambiguous" not in result.stdout
-E       AssertionError: assert 'ambiguous' not in 'acciones de...edicto: OK\n'
-E         
-E         'ambiguous' is contained here:
-E                 : {'ambiguous': 1, 'equals-apply': 144, 'equals-off': 1, 'equals-on': 12, 'no-source': 3}
-E         ?           +++++++++
-E             por seccion del catalogo     : {'1': 3, '10': 56, '2': 80, '3': 22}
-E             excepciones declaradas       : 1
-E             sin excepcion (debe ser 0)   : 0
-E           
-E           veredicto: OK
-
-tests/test_paso9.py:258: AssertionError
+.....................................................................    [100%]
 =============================== warnings summary ===============================
 tools/ledger_extract/build_section10_catalog.py:214
   /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:214: SyntaxWarning: "\B" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\B"? A raw string is also an option.
@@ -40,16 +19,5 @@ tools/ledger_extract/build_section10_catalog.py:313
     - las rutas llevan llaves dentro de comillas (`CLSID\{e88865ea-…}`), así que
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-=========================== short test summary info ============================
-FAILED tests/test_paso9.py::test_la_auditoria_de_valores_no_tiene_ni_ambiguous_ni_unhandled - AssertionError: assert 'ambiguous' not in 'acciones de...edicto: OK\n'
-  
-  'ambiguous' is contained here:
-          : {'ambiguous': 1, 'equals-apply': 144, 'equals-off': 1, 'equals-on': 12, 'no-source': 3}
-  ?           +++++++++
-      por seccion del catalogo     : {'1': 3, '10': 56, '2': 80, '3': 22}
-      excepciones declaradas       : 1
-      sin excepcion (debe ser 0)   : 0
-    
-    veredicto: OK
-1 failed, 499 passed, 3 warnings in 6.17s
-pytest_exit=1
+501 passed, 3 warnings in 4.01s
+pytest_exit=0
