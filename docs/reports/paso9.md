@@ -150,11 +150,11 @@ Suites completas (sandbox y CI):
 $ python3 -m pytest tools/ledger_extract/tests tests -q
 502 passed
 
-CI run 45480164634 (sha b7a9201) — .github/workflows/dotnet-ci.yml
+CI run 45481504667 (árbol de 62e9e69) — .github/workflows/dotnet-ci.yml
   windows-2025     : total=161 passed=161 failed=0
                      Evo.Catalog.Tests 47 · Evo.Core.Tests 34 · Evo.Detection.Tests 35 · Evo.Engine.Tests 45
   windows-11-arm   : total=161 passed=161 failed=0
-CI run 45480164499 — .github/workflows/ledger-verify.yml
+CI run 45481485597 — .github/workflows/ledger-verify.yml
   pytest: 502 passed, 3 warnings  (pytest_exit=0)
   determinismo paso 9: OK
 ```
@@ -377,17 +377,20 @@ fbbf6fd fix(audit): auditar las 56 acciones de la seccion 10 (binario base64 y D
 
 PR #1 (`gh api -X PATCH …/pulls/1`): título «Paso 9 — Oleada 2: catálogo de la
 Sección 10 (Explorador e interfaz), 29 capacidades / 56 acciones», `state=OPEN`,
-`isDraft=true`, head `86bbe1f`.
+`isDraft=true`, head `62e9e69`.
 
-CI al cierre del paso (sha `86bbe1f`, el commit del informe):
+CI verificado sobre el commit `62e9e69` (árbol del catálogo cerrado):
 
 ```
-dotnet-ci run 45480914241        | success | 161/161 xUnit en windows-2025 y windows-11-arm
-ledger-verify run 45480904778    | success | pytest 502 passed · determinismo paso 9: OK
+dotnet-ci run 45481504667     | success | 161/161 xUnit · windows-2025 y windows-11-arm
+                              |         |   Evo.Catalog.Tests 47 · Evo.Core.Tests 34
+                              |         |   Evo.Detection.Tests 35 · Evo.Engine.Tests 45
+ledger-verify run 45481485597 | success | pytest 502 passed · determinismo paso 9: OK
 ```
 
-Nota de honestidad sobre el informe del CI: el commit del informe cambia el
-árbol, así que el run que lo valida (`45480914241`) tiene su propio sha de merge
-(`21f3944`); el informe de xUnit que se cita es el de ese run, no el de `b7a9201`.
-Los dos anteriores (`45480164634` dotnet-ci y `45480164499` ledger-verify) también
-terminaron en verde sobre `b7a9201`.
+El sha que reporta el informe de `dotnet-ci` (`a2e4976`) es el del merge del PR,
+no el del commit de la rama: es el mismo árbol del head `62e9e69`.
+`ledger-verify` sí reporta el sha de la rama. Los runs anteriores
+(`45480164634` dotnet-ci y `45480164499` ledger-verify) también terminaron en
+verde sobre `b7a9201`; hubo además runs en rojo durante el paso (23 y luego 4
+fallos) cuyos defectos están corregidos y descritos en Desviaciones.
