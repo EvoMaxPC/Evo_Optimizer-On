@@ -394,11 +394,45 @@ de **PROPUESTA** (orden de oleadas, marcada como no medida).
   plan reproducible, muestra semilla 42, ADR-0004 propuesto sin implementación,
   interfaces en `Evo.Core`, puerta antes del bucle, y los dos rangos.
 - Python total: **479** (454 + 25).
-- .NET: **128 + 16 = 144 esperados** (pendiente de CI; el sandbox no tiene dotnet).
+- .NET: **144 en CI, verde** (128 + 16 del paso 8d).
 - `ledger-verify.yml`: paso «Paso 8d» con doble ejecución + `diff` de sha256 de
   los cuatro artefactos, `--check` del plan, copia a `ci-out` y comprobaciones
   numéricas. Ejecutado en local con éxito antes de subir.
 - Cuerpo del PR #1 actualizado con `gh api -X PATCH`; sigue en borrador.
+
+### CI real (tres intentos, sin dorar nada)
+
+| Commit | `ledger-verify` | `dotnet-ci` | Qué pasó |
+| --- | --- | --- | --- |
+| `68f833e` | success | **failure** (2 jobs) | `CS0246: ActionContext` en `RestorePointGateTests.cs:61`: el tipo vive en `Evo.Engine.Executors` y faltaba el `using`. El sandbox no tiene dotnet, así que este error no se podía ver en local. |
+| `bd0663d` | success | **failure** (2 jobs) | Compila, y fallan 2 de 144: `Execute_CreaElPuntoAntesDeLaPrimeraMutacion` y `FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada`, ambos con `Expected: 0 / Actual: 1`. Causa: `FakeRegistryAccessor.Seed` **cuenta como mutación**; los tests comparaban contra cero absoluto en vez de contra la línea base. El motor no mutaba nada. |
+| `e88d3d3` | success | **success** (2 jobs) | 144/144 en `windows-2025` y en `windows-11-arm`. |
+
+Salida real de `ci-report` sobre `e88d3d3`:
+
+```
+Evo.Catalog.Tests: total=36 passed=36 failed=0
+Evo.Core.Tests:    total=34 passed=34 failed=0
+Evo.Detection.Tests: total=35 passed=35 failed=0
+Evo.Engine.Tests:  total=39 passed=39 failed=0
+total=144 passed=144 failed=0
+```
+
+Paso 8d en CI (`latest/ledger-verify/`):
+
+```
+determinismo paso 8d: OK
+{"asignadas": 405, "filas": 435,
+ "por_basis": {"category":250,"effect":57,"manual-review":30,"name-rule":98}}
+57a8470b...  inventory/ledger/atlas-toggle-keys.tsv
+d2628a2e...  inventory/partition/item-section-map.tsv
+ba1e2863...  inventory/ledger/upstream-capability-map.tsv
+f8246687...  docs/reports/plan-oleadas.md
+```
+
+Runs: `45333845601` y `45333839388` (`dotnet-ci`), `45333839303`
+(`ledger-verify`), los tres sobre `e88d3d3`. Los dos fallos anteriores quedan en
+el registro de runs (`45333424119`, `45333435971`); no se ocultan.
 
 ---
 
@@ -420,3 +454,11 @@ de **PROPUESTA** (orden de oleadas, marcada como no medida).
    para admitirlos sin relajar nada más.
 6. Los `unassigned` podrían bajar más con reglas más agresivas; se ha preferido
    dejarlos con motivo escrito antes que asignar por parecido débil.
+7. **El primer commit del paso 8d no compilaba** y el segundo tenía 2 tests en
+   rojo. Ninguno de los dos era un fallo de diseño del motor (`ActionContext`
+   mal importado y `Seed` contado como mutación), pero son dos correcciones
+   posteriores al commit «del paso»: quedan como `68f833e` (fallido),
+   `bd0663d` (fallido) y `e88d3d3` (verde), en vez de reescribir la historia.
+8. El sandbox no tiene dotnet: **cualquier afirmación sobre compilación antes de
+   `e88d3d3` era una suposición mía**, no una medición. A partir de ahí lo dice
+   el CI.
