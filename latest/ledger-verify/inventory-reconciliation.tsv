@@ -252,7 +252,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	262	winutil	Activity History.	Mapped	winutil:tweak:WPFTweaksActivity	alta	regla R2 del paso 4e: coincide con el ledger
 9	263	winutil	Hibernation.	Mapped	atlas:toggle:Hibernation	alta	regla R1 del paso 4e: coincide con el ledger
 9	264	winutil	Location.	Mapped	atlas:toggle:Location	alta	regla R1 del paso 4e: coincide con el ledger
-9	265	winutil	Services.	Mapped	atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+9	265	winutil	Services.	Mapped	winutil:tweak:WPFTweaksServices	alta	mapeo erroneo del paso 4e: la linea dice 'Services.' y en el pin el unico efecto de servicios de esa familia es WPFTweaksServices (config/tweaks.json: CscService, DiagTrack, MapsBroker, StorSvc, SharedAccess). La regla R3 habia casado el texto con un artefacto de las pruebas de Atlas (tests/Atlas.Toggles.Tests.ps1), que no es producto
 9	266	winutil	svchost Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	267	winutil	Consumer Features.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	268	winutil	Delivery Optimization.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
@@ -265,7 +265,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	275	winutil	Window Snapping.	Mapped	winutil:tweak:WPFToggleWindowSnapping	alta	regla R1 del paso 4e: coincide con el ledger
 9	276	winutil	S0 Sleep Network Connectivity.	Mapped	winutil:tweak:WPFToggleStandbyFix	alta	regla R1 del paso 4e: coincide con el ledger
 9	277	winutil	S3 Sleep.	Mapped	winutil:tweak:WPFToggleS3Sleep	alta	regla R1 del paso 4e: coincide con el ledger
-9	278	winutil	System Tray Configuration.	Mapped	winutil:tweak-op:WPFToggleLoginBlur:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+9	278	winutil	System Tray Configuration.	Absent-At-Pin		alta	medido en el paso 10: el pin de WinUtil no tiene ningun ajuste de configuracion de la bandeja del sistema. `config/tweaks.json` solo declara 'System Tray Notifications & Calendar - Disable' (WPFTweaksDisableNotifications) y 'System Tray Battery Percentage' (WPFToggleBatteryPercentage), que son dos ajustes concretos y no una 'configuracion de la bandeja'; `xaml/` no tiene ninguna pagina de bandeja.
 9	279	winutil	Start Menu Bing Search.	Mapped	winutil:tweak:WPFToggleBingSearch	alta	regla R1 del paso 4e: coincide con el ledger
 9	280	winutil	Start Menu Recommendations.	Mapped	winutil:tweak:WPFToggleStartMenuRecommendations	alta	regla R1 del paso 4e: coincide con el ledger
 9	281	winutil	Taskbar Search.	Mapped	winutil:tweak:WPFToggleTaskbarSearch	alta	regla R2 del paso 4e: coincide con el ledger
@@ -295,7 +295,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	305	atlas	Windows Explorer.	Mapped	winutil:tweak-op:WPFToggleHideSettingsHome:registry:0	media	regla R3 del paso 4e: coincide con el ledger
 9	306	atlas	Context Menus.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	307	atlas	Keyboard Switching.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-9	308	atlas	Keyboard Shortcuts.	Mapped	winutil:tweak-op:WPFToggleNumLock:registry:0	media	regla R3 del paso 4e: coincide con el ledger
+9	308	atlas	Keyboard Shortcuts.	Mapped	atlas:toggle:KeyboardShortcuts	alta	mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas SI expone Toggles/Interface/KeyboardShortcuts.psd1, que escribe Hotkey, Language Hotkey y Layout Hotkey en HKCU\Keyboard Layout\Toggle; el paso 4e la habia casado con el NumLock de WinUtil, que es otro ajuste
 9	309	atlas	Lock Screen.	Mapped	winutil:tweak:WPFToggleDisableLockscreen	alta	regla R2 del paso 4e: coincide con el ledger
 9	310	atlas	Visual Effects.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	311	atlas	Modern Battery Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
@@ -303,7 +303,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	313	atlas	Modern Volume Flyout.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	314	atlas	Snap Layouts.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	315	atlas	Windows Spotlight.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-9	316	atlas	Settings Page Visibility.	Mapped	winutil:tweak-op:WPFTweaksTelemetry:registry:7	media	regla R3 del paso 4e: coincide con el ledger
+9	316	atlas	Settings Page Visibility.	Mapped	atlas:manifest:qol/set-hidden-settings-pages	alta	mapeo erroneo del paso 4e: la linea esta en el bloque AtlasOS y Atlas escribe SettingsPageVisibility en Scripts/Tweaks/qol/set-hidden-settings-pages.ps1; el paso 4e la habia casado con WPFTweaksTelemetry:registry:7, que es AcceptedPrivacyPolicy y no la visibilidad de paginas
 9	317	atlas	Registry File Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 9	318	atlas	Default User Configuration.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 10	320	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
