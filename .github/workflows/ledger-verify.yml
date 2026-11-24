@@ -287,6 +287,50 @@ jobs:
           assert len(man) == 182, "el manifiesto debe tener 182 entradas"
           PYEOF
 
+      - name: Paso 5 (conciliacion definitiva + matriz de cobertura)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_final_reconciliation.py
+            sha256sum inventory/ledger/inventory-reconciliation.tsv \
+              > "ci-out/paso5-sha-run${i}.txt"
+            cp inventory/ledger/inventory-reconciliation.tsv ci-out/
+            cp docs/requirements/CONCILIACION_INVENTARIO.md ci-out/
+          done
+          if ! diff -u ci-out/paso5-sha-run1.txt ci-out/paso5-sha-run2.txt; then
+            echo "DETERMINISMO PASO 5 ROTO" | tee ci-out/paso5-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 5: OK" | tee ci-out/paso5-determinism.txt
+          python3 tools/ledger_extract/build_final_reconciliation.py --json \
+            > ci-out/paso5-recon.json
+          python3 tools/ledger_extract/generate_coverage_matrix.py \
+            --report docs/reports/matriz-cobertura.md --json \
+            > ci-out/paso5-matriz.json
+          cp docs/reports/matriz-cobertura.md ci-out/
+          python3 tools/ledger_extract/generate_coverage_matrix.py \
+            --report /tmp/matriz-cobertura-2.md > /dev/null
+          if ! diff -u docs/reports/matriz-cobertura.md /tmp/matriz-cobertura-2.md; then
+            echo "MATRIZ NO REPRODUCIBLE" | tee ci-out/paso5-matriz-diff.txt
+            exit 1
+          fi
+          echo "matriz reproducible: OK" | tee ci-out/paso5-matriz-diff.txt
+          python3 tools/ledger_extract/validate_reconciliation.py \
+            2>&1 | tee ci-out/paso5-validate.txt
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/paso5-recon.json", encoding="utf-8"))
+          m = json.load(open("ci-out/paso5-matriz.json", encoding="utf-8"))
+          est = d["por_estado"]
+          print("filas:", d["filas"], "| estados:", est)
+          print("secciones:", m["secciones"], "| atomicos:", m["cobertura"]["atomicos"])
+          ok = (d["filas"] == 588 and sum(est.values()) == 588
+                and len(est) == 5 and m["secciones"] == 17
+                and m["cobertura"]["ids_otros"] == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
       - name: Sonda de coincidencia con el inventario
         if: always()
         shell: bash
