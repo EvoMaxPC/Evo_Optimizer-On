@@ -847,6 +847,76 @@ public sealed class Wave4EngineTests
         Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, key));
     }
 
+    /// <summary>T2: en `Audit` la creación tampoco muta (es el modo que lee el
+    /// estado actual para informar), y el estado que devuelve es el REAL de la
+    /// clave, no «would-create».</summary>
+    [Fact]
+    public async Task CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate()
+    {
+        var harness = TestHarness.Create();
+        var mutationsBefore = harness.Registry.MutationCount;
+        var journal = new UndoJournal();
+        var existing = @"SOFTWARE\Evo\Wave4\Audit\Presente";
+        var missing = @"SOFTWARE\Evo\Wave4\Audit\Ausente";
+        harness.Registry.EnsureKey(@"HKLM\" + existing);
+        mutationsBefore = harness.Registry.MutationCount;
+        var executor = new RegistryCreateKeyExecutor();
+        var context = ContextFor(harness, journal, ExecutionMode.Audit);
+
+        var present = await executor.ExecuteAsync(CreateKeyAction(existing), context);
+        var absent = await executor.ExecuteAsync(CreateKeyAction(missing), context);
+
+        Assert.True(present.Success && absent.Success);
+        Assert.Equal("present", present.NewState);
+        Assert.Equal("absent", absent.NewState);
+        Assert.False(present.Applied || absent.Applied);
+        Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
+        Assert.Empty(journal.Entries);
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, missing));
+    }
+
+    /// <summary>Paso 12 (T2, de punta a punta): `explorer.home.restore` mezcla
+    /// creación de clave, borrado de valor y escritura, todo en una capacidad. Se
+    /// ejecuta por el coordinador y el rollback deja el árbol EXACTAMENTE como
+    /// estaba: la clave creada desaparece y los dos valores previos vuelven.</summary>
+    [Fact]
+    public async Task HomeRestore_RunsThroughTheCoordinatorAndRollsBackTheWholeTree()
+    {
+        var harness = Harness();
+        const string advanced = @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
+        const string clsid = @"Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}";
+        // Estado previo distinto del que aplica la capacidad, para que el deshacer
+        // tenga algo que devolver de verdad.
+        harness.Registry.Seed(RegistryHive.CurrentUser, advanced, "LaunchTo", 1,
+            RegistryValueKind.DWord);
+        harness.Registry.Seed(RegistryHive.CurrentUser, clsid, "System.IsPinnedToNameSpaceTree",
+            0, RegistryValueKind.DWord);
+        harness.Registry.ClearLog();
+        var before = harness.Registry.Snapshot();
+
+        var summary = await harness.Coordinator.ExecuteAsync(
+            Plan("explorer.home.restore"), ExecutionMode.Execute,
+            harness.Context(ExecutionMode.Execute));
+
+        Assert.Equal(0, summary.Failed);
+        Assert.Equal(3, summary.Succeeded);
+        // La clave se creó vacía y los dos valores quedaron como pide el pin.
+        const string homeKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer"
+            + @"\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}";
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, homeKey));
+        Assert.Empty(harness.Registry.GetValueNames(RegistryHive.LocalMachine, homeKey));
+        Assert.Equal(0, (int?)harness.Registry.GetValue(
+            RegistryHive.CurrentUser, advanced, "LaunchTo")!);
+        Assert.Null(harness.Registry.GetValue(
+            RegistryHive.CurrentUser, clsid, "System.IsPinnedToNameSpaceTree"));
+
+        var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
+
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, homeKey));
+        AssertSameTree(before, harness.Registry.Snapshot());
+    }
+
     // ------------------------------------------------------------- ayuda
     private static RegistryCreateKeyAction CreateKeyAction(string keyPath) => new()
     {

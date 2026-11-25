@@ -209,7 +209,7 @@ R1                  88 medidas · 0 violaciones · 13 con efectos fuera del pin
 T3                  20 medidas · 3 OK · 17 pendientes · 0 contrarios
 plan de oleadas     89/435 líneas (20.5 %)
 rangos de build     79 completos + 9 recortados
-pytest              360 passed
+pytest              559 passed  (539 al cierre del paso 11 + 20 de este paso)
 xUnit               237/237 en windows-2025 y windows-11-arm
                     (run 45683131842 / 45683158829, sobre ee4475a)
 ```
@@ -220,43 +220,76 @@ todos los tests y los jobs de CI se han actualizado a las de arriba.
 
 ## 7. Tests
 
-### 7.1 Python — `tests/test_paso12.py` (18 casos)
+### 7.1 Python — `tests/test_paso12.py` (20 casos)
 
 Cubre, reproduciendo la medida y no leyendo el TSV a ciegas: el tipo
 `registryCreateKey` y su contrato cerrado; la semántica del ejecutor
 (fail-closed, existente ⇒ no-op, diario sólo si no existía); los tres `AddKey` y
 cuál sigue fuera; el paso de `pending` a `covered` en el mapa upstream; R1 sin
 violaciones y la lista cerrada de `Specified`; R2 con motivo escrito y R3 en su
-alcance; T3 sin contrarios y los pendientes como informativos; las cifras del
-ledger y que ningún xUnit diga todavía 86; la auditoría a cero sin excepción y
-el literal de `SettingsPageVisibility` con las dos rutas; la línea 278; la
-**doble ejecución** de los dos generadores (sha256 idénticos); el informe y el
-ADR; y el job de CI.
+alcance; T3 sin contrarios y los pendientes como informativos; el **orden**
+`Stop` → `SetStartupType` en las acciones de servicio; las listas de ids de los
+xUnit contra el catálogo; las cifras del ledger; la auditoría a cero sin
+excepción y el literal de `SettingsPageVisibility` con las dos rutas; la línea
+278; la **doble ejecución** de los dos generadores (sha256 idénticos); el
+informe, el ADR y el job de CI.
 
-Los ficheros `test_paso8b/9/10/11.py` se han actualizado a las cifras nuevas
-**sin relajar ninguna comprobación**: donde decía 86/238/45/57 ahora dice
-88/243/47/60, y donde se exigía `new9 == []` ahora se compara la lista cerrada
-completa (más estricto, no menos).
+**Lectura de la cifra de pytest.** Al cierre del paso 11 el CI contaba **539**
+sobre `tools/ledger_extract/tests tests`; este paso añade 20 y quedan **559**.
+La cifra de 360 que se dio al cerrar el paso 12 era la de `tests/` **solo**
+(sin el directorio de tests de los extractores, que aporta 199 casos: 24 + 31 +
+16 + 16 + 14 + 27 + 33 + 16 + 22). No se ha perdido ningún test: el desglose
+fichero a fichero está en §7.4 y las 19 filas dan diferencia 0 salvo
+`test_paso12.py` (+20).
 
-### 7.2 xUnit — 14 casos nuevos, ejecutados en CI
+### 7.4 Conteo por fichero: `cb75abe` (cierre del paso 11) frente a ahora
 
-- `Wave4EngineTests` (8): `CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt`,
+```
+fichero                                            cb75abe   ahora   dif
+tests/test_paso10.py                                    16      16    +0
+tests/test_paso11.py                                    21      21    +0
+tests/test_paso12.py                                     0      20   +20
+tests/test_paso6.py                                     19      19    +0
+tests/test_paso7.py                                     21      21    +0
+tests/test_paso8.py                                    174     174    +0
+tests/test_paso8b.py                                    24      24    +0
+tests/test_paso8c.py                                    17      17    +0
+tests/test_paso8d.py                                    25      25    +0
+tests/test_paso9.py                                     23      23    +0
+tools/ledger_extract/tests/test_count_inventory.py      24      24    +0
+tools/ledger_extract/tests/test_paso2.py                31      31    +0
+tools/ledger_extract/tests/test_paso3.py                16      16    +0
+tools/ledger_extract/tests/test_paso3b.py               16      16    +0
+tools/ledger_extract/tests/test_paso4b.py               14      14    +0
+tools/ledger_extract/tests/test_paso4c.py               27      27    +0
+tools/ledger_extract/tests/test_paso4d.py               33      33    +0
+tools/ledger_extract/tests/test_paso4e.py               16      16    +0
+tools/ledger_extract/tests/test_paso5.py                22      22    +0
+TOTAL                                                  539     559   +20
+```
+
+### 7.2 xUnit — 15 casos nuevos
+
+- `Evo.Engine.Tests` / `Wave4EngineTests.cs` (10):
+  `CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt`,
   `CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt`,
   `CreateKey_DryRunDoesNotMutate`, `CreateKey_WithoutKeyCreatorFailsClosed`,
   `CreateKey_GoesThroughTheRestorePointGate`,
   `CreateKey_ReadCurrentStateReportsPresence`,
   `CreateKey_UndoAddsNothingToTheExistingParentSubtree`,
-  `CreateKey_TwiceInARowIsIdempotent`.
-- `Wave3EngineTests` (1): `SearchIndexing_StopsBeforeDisablingSoUndoCanRestart`.
-- `Wave4CatalogTests`: `TestWave4Catalog_ValidatorRejectsMalformedKeyCreations`,
-  `TestWave4Catalog_LoaderReadsKeyCreationActions`,
-  `TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide`,
-  `TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine`,
-  `TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified`.
-- Y el endurecimiento de los existentes: el barrido de las 88, el privilegio
-  por colmena contando también `registryCreateKey`, las listas de ids de las
-  secciones 9 y 10, las builds de Windows 11 (con `explorer.home.restore`), y la
-  parada de `WSearch` con su orden.
+  `CreateKey_TwiceInARowIsIdempotent`,
+  `CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate`,
+  `HomeRestore_RunsThroughTheCoordinatorAndRollsBackTheWholeTree`.
+- `Evo.Engine.Tests` / `Wave3EngineTests.cs` (1):
+  `SearchIndexing_StopsBeforeDisablingSoUndoCanRestart`.
+- `Evo.Catalog.Tests` / `Wave4CatalogTests.cs` (4):
+  `ValidatorRejectsMalformedKeyCreations`, `LoaderReadsKeyCreationActions`,
+  `HomeRestoreIsTheExactInverseOfHomeHide`,
+  `NetworkLocationWizardCoversItsManifestLine`.
+
+Total **15 ≥ 14**. (`TestWave4Catalog_RegistryBackupIsNowComplete` se
+**renombró** a `...DeclaresItsTaskAndStaysSpecified`, no cuenta como caso nuevo:
+sigue siendo un caso, con otras aserciones.)
 
 ### 7.3 Lo que encontró la primera pasada de CI
 
@@ -329,5 +362,5 @@ python3 tools/ledger_extract/verify_catalog_coverage.py
 python3 tools/ledger_extract/build_upstream_capability_map.py
 python3 tools/ledger_extract/build_wave_plan.py
 python3 tools/ledger_extract/build_build_ranges_report.py
-python3 -m pytest tests -q     # 357 passed
+python3 -m pytest tools/ledger_extract/tests tests -q   # 559 passed
 ```
