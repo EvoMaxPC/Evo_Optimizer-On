@@ -679,7 +679,8 @@ jobs:
                 and cov["huecos_no_declarados"] == 0
                 and len(caps9) == 19 and acts9 == 47
                 and new9 == ["system.hibernation.hide", "system.location.consent-deny",
-                             "system.mitigations.disable", "system.registry-backup.enable"]
+                             "system.mitigations.disable", "system.oem-information.identify",
+                             "system.registry-backup.enable", "system.time.ntp-servers"]
                 and acts10 == 60
                 and {"registryDeleteKey", "taskCreate", "service"} <= set(kinds)
                 and len(task) == 1 and task[0]["taskName"] == "AutoRegBackup"
