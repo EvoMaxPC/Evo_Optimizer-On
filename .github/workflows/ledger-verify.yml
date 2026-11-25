@@ -772,8 +772,11 @@ jobs:
           ok = (r1["capacidades"] == 88
                 and r1["violaciones_r1"] == []
                 and r1["implemented"] + r1["specified"] == 88
-                and t3["veredicto"] == "OK"
+                and t3["veredicto"] == "CONTRARIOS_DETECTADOS"
                 and t3["contrarios"] == ["explorer.home.hide", "explorer.home.restore", "explorer.removable-drives.sidebar"]
+                and t3["totales"]["CONTRARIO"] == 3
+                and t3["totales"]["OK"] == 2
+                and t3["totales"]["PENDIENTE"] == 15
                 and cov["capacidades"] == 88
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
