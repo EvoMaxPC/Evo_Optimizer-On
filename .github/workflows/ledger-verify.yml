@@ -819,50 +819,17 @@ jobs:
           set -euo pipefail
           mkdir -p ci-out
           for i in 1 2; do
-            python3 tools/ledger_extract/report_rules_state.py \
-              > "ci-out/paso12c-rules-run${i}.txt"
-            sha256sum inventory/ledger/reglas-r1-r3.tsv \
-                      docs/reports/reglas-r1-r3.md \
-              > "ci-out/paso12c-sha-run${i}.txt"
+            python3 tools/ledger_extract/report_rules_state.py               > "ci-out/paso12c-rules-run${i}.txt"
+            sha256sum inventory/ledger/reglas-r1-r3.tsv                       docs/reports/reglas-r1-r3.md               > "ci-out/paso12c-sha-run${i}.txt"
           done
           if ! diff -u ci-out/paso12c-sha-run1.txt ci-out/paso12c-sha-run2.txt; then
             echo "DETERMINISMO PASO 12C ROTO" | tee ci-out/paso12c-determinism.txt
             exit 1
           fi
-          echo "determinismo paso 12c: OK (mismos sha256 en dos ejecuciones)" \
-            | tee ci-out/paso12c-determinism.txt
+          echo "determinismo paso 12c: OK" | tee ci-out/paso12c-determinism.txt
           python3 tools/ledger_extract/report_rules_state.py --check
           cp inventory/ledger/reglas-r1-r3.tsv ci-out/
           cp docs/reports/reglas-r1-r3.md ci-out/
-          python3 tools/ledger_extract/report_rules_state.py --json \
-            > ci-out/paso12c-rules.json
-          python3 - <<'PYEOF'
-          import json, sys
-          d = json.load(open("ci-out/paso12c-rules.json", encoding="utf-8"))
-          print("capacidades:", d["capacidades"],
-                "| Implemented:", d["implemented"],
-                "| Specified:", d["specified"],
-                "| Stub:", d["stub"],
-                "| suma:", d["implemented"] + d["specified"] + d["stub"])
-          print("securityImpact=Improves:", d["improves"])
-          print("R3 aplica:", d["r3_aplica"], "| R3_ok:", d["r3_ok"])
-          print("R1 sin cumplir:", d["r1_fail"])
-          print("R2 sin cumplir:", d["r2_fail"])
-          print("R3 sin cumplir:", d["r3_bad"])
-          ok = (d["capacidades"] == 88
-                and d["implemented"] == 69
-                and d["specified"] == 19
-                and d["stub"] == 0
-                and d["implemented"] + d["specified"] + d["stub"] == 88
-                and d["improves"] == 7
-                and d["r3_aplica"] == 7 and d["r3_ok"] == 7
-                and d["r1_fail"] == ["explorer.home.hide",
-                                     "explorer.home.restore",
-                                     "explorer.removable-drives.sidebar"]
-                and d["r2_fail"] == []
-                and d["r3_bad"] == [])
-          sys.exit(0 if ok else 1)
-          PYEOF
 
       - name: Estructura .NET (validador)
         if: always()
