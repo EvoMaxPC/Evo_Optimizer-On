@@ -293,10 +293,13 @@ public sealed class Wave3CatalogTests
     [Fact]
     public void TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay()
     {
-        // Paso 12 (R1): las cuatro capacidades cuyo pin hace algo que el motor no
-        // tiene (powercfg, bcdedit/CFG, política de Find My Device y la diferencia
-        // de RunLevel de la tarea) vuelven a Specified. La lista es cerrada: si
-        // aparece otra, este test falla y hay que decidir.
+        // Paso 12c (R1): las seis capacidades cuyo pin hace algo que el motor no
+        // tiene (powercfg, bcdedit/CFG, política de Find My Device, diferencia
+        // de RunLevel de la tarea, w32tm /config /update + /resync y script
+        // config-oem-information.ps1) vuelven a Specified. La lista es cerrada:
+        // si aparece otra, este test falla y hay que decidir.
+        // El cambio de 12c movió a Specified: system.oem-information.identify y
+        // system.time.ntp-servers (R1: el pin hace más de lo declarado).
         var specified = Wave3().Where(d => d.State == CapabilityState.Specified)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
         Assert.Equal(
@@ -305,7 +308,9 @@ public sealed class Wave3CatalogTests
                 "system.hibernation.hide",
                 "system.location.consent-deny",
                 "system.mitigations.disable",
+                "system.oem-information.identify",
                 "system.registry-backup.enable",
+                "system.time.ntp-servers",
             },
             specified);
         foreach (var id in specified)

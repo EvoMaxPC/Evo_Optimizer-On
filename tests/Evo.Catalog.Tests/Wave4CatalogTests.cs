@@ -47,11 +47,15 @@ public sealed class Wave4CatalogTests
         Assert.True(ok.IsValid, ok.ErrorSummary);
 
         // Y el del catálogo real pasa el validador.
+        // Paso 12c: explorer.home.hide y explorer.home.restore tienen ConflictsWith
+        // simétrico, así que el validador las necesita juntas para resolver la
+        // referencia (R-REF).
         var real = Definition("explorer.home.hide").Actions.OfType<RegistryDeleteKeyAction>().Single();
         Assert.False(real.Recursive);
         Assert.StartsWith(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace",
             real.KeyPath, StringComparison.Ordinal);
-        Assert.True(new CatalogValidator(KnownBuilds).Validate(CatalogOf(Definition("explorer.home.hide"))).IsValid);
+        Assert.True(new CatalogValidator(KnownBuilds).Validate(
+            CatalogOf(new[] { Definition("explorer.home.hide"), Definition("explorer.home.restore") })).IsValid);
     }
 
     /// <summary>T4: el validador RECHAZA las tareas incompletas o con
@@ -176,13 +180,15 @@ public sealed class Wave4CatalogTests
     }
 
     /// <summary>T2: `system.time.ntp-servers` arranca w32time y declara en la
-    /// descripción lo que sigue sin declararse (w32tm), sin llamarse Specified.</summary>
+    /// descripción lo que sigue sin declararse (w32tm). Es Specified (R1 paso 12c:
+    /// el pin hace más de lo declarado: w32tm /config /update y /resync no son
+    /// acciones del motor).</summary>
     [Fact]
     public void TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut()
     {
         var definition = Definition("system.time.ntp-servers");
 
-        Assert.Equal(CapabilityState.Implemented, definition.State);
+        Assert.Equal(CapabilityState.Specified, definition.State);
         var start = Assert.Single(definition.Actions.OfType<ServiceAction>());
         Assert.Equal("w32time", start.ServiceName);
         Assert.Equal(ServiceOperation.Start, start.Operation);
