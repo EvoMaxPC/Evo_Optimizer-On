@@ -2,7 +2,7 @@
 
 Generado por `tools/ledger_extract/build_build_ranges_report.py` a partir de `catalog/capabilities/*.json`. No editar a mano: CI compara el fichero con el generado.
 
-Catálogo: **86** capacidades, 73 `Implemented` y 13 `Specified`.
+Catálogo: **86** capacidades, 75 `Implemented` y 11 `Specified`.
 
 ## Método
 

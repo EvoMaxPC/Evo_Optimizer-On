@@ -573,6 +573,99 @@ jobs:
           sys.exit(0 if ok else 1)
           PYEOF
 
+      - name: "Paso 11 (expresividad del motor: clave, tarea y servicio)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section9_catalog.py \
+              | tee "ci-out/paso11-cat9-run${i}.txt"
+            python3 tools/ledger_extract/build_section10_catalog.py \
+              | tee "ci-out/paso11-cat10-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py \
+              > "ci-out/paso11-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py \
+              > "ci-out/paso11-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py \
+              > "ci-out/paso11-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso11-plan-run${i}.txt"
+            python3 tools/ledger_extract/build_build_ranges_report.py \
+              > "ci-out/paso11-ranges-run${i}.txt"
+            sha256sum catalog/capabilities/section9_system_registry.json \
+                      catalog/capabilities/section10_explorer_ui.json \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      docs/reports/matriz-cobertura.md \
+                      docs/reports/plan-oleadas.md \
+                      docs/reports/rangos-build.md \
+                      docs/adr/ADR-0005-expresividad-del-motor.md \
+              > "ci-out/paso11-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso11-sha-run1.txt ci-out/paso11-sha-run2.txt; then
+            echo "DETERMINISMO PASO 11 ROTO" | tee ci-out/paso11-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 11: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso11-determinism.txt
+          sha256sum catalog/capabilities/section9_system_registry.json \
+                    catalog/capabilities/section10_explorer_ui.json \
+            > ci-out/paso11-sha.json.txt
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/build_section10_catalog.py --check
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          python3 tools/ledger_extract/build_build_ranges_report.py --check
+          cp ci-out/paso11-sha-run1.txt ci-out/paso11-sha.txt
+          cp catalog/capabilities/section9_system_registry.json ci-out/
+          cp catalog/capabilities/section10_explorer_ui.json ci-out/
+          cp docs/adr/ADR-0005-expresividad-del-motor.md ci-out/
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso11-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso11-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          cov = json.load(open("ci-out/paso11-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso11-audit.json", encoding="utf-8"))
+          sec9 = json.load(open("ci-out/section9_system_registry.json", encoding="utf-8"))
+          sec10 = json.load(open("ci-out/section10_explorer_ui.json", encoding="utf-8"))
+          caps9 = {c["id"]: c for c in sec9["capabilities"]}
+          caps10 = {c["id"]: c for c in sec10["capabilities"]}
+          acts9 = sum(len(c["actions"]) for c in caps9.values())
+          acts10 = sum(len(c["actions"]) for c in caps10.values())
+          new9 = [c["id"] for c in caps9.values() if c["state"] == "Specified"]
+          kinds = sorted({a["type"] for c in list(caps9.values()) + list(caps10.values())
+                          for a in c["actions"]})
+          print("capacidades:", cov["capacidades"], "| huecos:", cov["huecos"],
+                "| cubiertas:", cov["cubiertas"])
+          print("seccion 9:", len(caps9), "caps /", acts9, "acciones / specified:", new9)
+          print("seccion 10:", len(caps10), "caps /", acts10, "acciones")
+          print("tipos de accion:", kinds)
+          print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
+          task = [a for a in caps9["system.registry-backup.enable"]["actions"]
+                  if a["type"] == "taskCreate"]
+          deletes = [a for a in caps10["explorer.home.hide"]["actions"]
+                     if a["type"] == "registryDeleteKey"]
+          loc = [(a.get("serviceName"), a["operation"])
+                 for a in caps9["system.location.consent-deny"]["actions"]
+                 if a["type"] == "service"]
+          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
+                and cov["capacidades"] == 86
+                and cov["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and len(caps9) == 18 and acts9 == 45 and new9 == []
+                and acts10 == 57
+                and {"registryDeleteKey", "taskCreate", "service"} <= set(kinds)
+                and len(task) == 1 and task[0]["taskName"] == "AutoRegBackup"
+                and task[0]["overwrite"] is False
+                and len(deletes) == 1 and deletes[0]["recursive"] is False
+                and len(loc) == 4
+                and aud["filas"] == 195
+                and aud["sin_excepcion"] == 0
+                and aud["distribucion"].get("ambiguous", 0) == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
       - name: Estructura .NET (validador)
         if: always()
         shell: bash

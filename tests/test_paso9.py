@@ -58,22 +58,37 @@ def test_el_fichero_de_la_seccion_10_reproduce_byte_a_byte() -> None:
 
 
 def test_todas_las_acciones_llevan_el_discriminador_de_tipo() -> None:
-    """`CapabilityAction` es polimórfica: sin `"type": "registry"` el cargador
-    estricto de .NET rechaza el fichero entero (lo comprobó el CI del paso 9)."""
+    """`CapabilityAction` es polimórfica: sin `"type"` el cargador estricto de
+    .NET rechaza el fichero entero (lo comprobó el CI del paso 9).
+
+    Cambió en el paso 11: la sección 10 tiene DOS formas de acción desde que el
+    motor sabe borrar claves completas (`registryDeleteKey`), no una. La forma
+    se comprueba por tipo, no se relaja la comprobación.
+    """
     for cap in CAPS:
         for action in cap["actions"]:
-            assert action["type"] == "registry", (cap["id"], action["order"])
-    # Y todas las acciones tienen EXACTAMENTE las mismas claves: un campo de más
-    # en una sola capacidad sería una acción que el cargador ignora en silencio.
-    shapes = {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]}
-    assert len(shapes) == 1, shapes
-    assert shapes == {('description', 'hive', 'keyPath', 'operation', 'order',
-                       'type', 'value', 'valueName', 'valueType')}
+            assert action["type"] in ("registry", "registryDeleteKey"), (cap["id"], action)
+    # Una sola forma por discriminador: un campo de más en una sola capacidad
+    # sería una acción que el cargador ignora en silencio.
+    for kind in ("registry", "registryDeleteKey"):
+        shapes = {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]
+                  if a["type"] == kind}
+        assert len(shapes) == 1, (kind, shapes)
+    assert {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]
+            if a["type"] == "registry"} == {
+        ('description', 'hive', 'keyPath', 'operation', 'order',
+         'type', 'value', 'valueName', 'valueType')}
+    # La forma nueva es la del contrato cerrado: colmena, ruta y recursión.
+    assert {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]
+            if a["type"] == "registryDeleteKey"} == {
+        ('description', 'hive', 'keyPath', 'order', 'recursive', 'type')}
 
 
-def test_hay_29_capacidades_y_56_acciones() -> None:
+def test_hay_29_capacidades_y_57_acciones() -> None:
+    # Paso 11: la acción DeleteKey de `explorer.home.hide` ya se declara (antes se
+    # omitía porque el motor no sabía borrar claves): 56 -> 57.
     assert len(CAPS) == 29
-    assert sum(len(c["actions"]) for c in CAPS) == 56
+    assert sum(len(c["actions"]) for c in CAPS) == 57
     assert [c["id"] for c in CAPS] == sorted(c["id"] for c in CAPS), "orden estable"
     assert len({c["id"] for c in CAPS}) == 29
 
@@ -180,6 +195,13 @@ def test_toda_accion_es_una_operacion_que_el_motor_sabe_deshacer() -> None:
         orders = [a["order"] for a in cap["actions"]]
         assert orders == sorted(orders) == list(range(1, len(orders) + 1)), cap["id"]
         for action in cap["actions"]:
+            if action["type"] == "registryDeleteKey":
+                # Borrado de CLAVE completa: la inversa es la instantánea previa
+                # del subárbol que guarda el diario (paso 11).
+                assert set(action) == {"type", "order", "hive", "keyPath",
+                                       "recursive", "description"}, (cap["id"], action)
+                assert action["recursive"] is False, cap["id"]
+                continue
             assert action["operation"] in ("Set", "Delete"), cap["id"]
             # DWord y String son la mayoría; ExpandString es texto que el diario
             # devuelve tal cual. El único Binary del fichero es UserPreferencesMask
@@ -224,8 +246,12 @@ def test_las_capacidades_de_atlas_no_fusionan_estados() -> None:
     """Semántica Toggle 8c: de cada .psd1 se copia UN estado, no dos."""
     home = BY_ID["explorer.home.hide"]
     assert "estado 'Disable'" in home["provenance"]
-    values = {(a["keyPath"], a["valueName"]): a["value"] for a in home["actions"]}
-    assert len(home["actions"]) == 2
+    values = {(a["keyPath"], a["valueName"]): a["value"]
+              for a in home["actions"] if a["type"] == "registry"}
+    # Paso 11: la tercera acción es el DeleteKey del pin (ya expresable).
+    assert len(home["actions"]) == 3
+    assert [a["type"] for a in home["actions"]] == [
+        "registryDeleteKey", "registry", "registry"]
     assert values[(
         r"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "LaunchTo")] == "1"
     assert values[(
@@ -242,12 +268,23 @@ def test_las_capacidades_de_atlas_no_fusionan_estados() -> None:
     assert all(a["keyPath"].endswith("Shell Extensions\\Blocked") for a in extract["actions"])
 
 
-def test_las_operaciones_no_expresables_se_declaran_en_la_procedencia() -> None:
-    """DeleteKey (borrar una CLAVE) no cabe en una RegistryAction: se dice, no se calla."""
+def test_las_operaciones_de_clave_se_declaran_o_se_justifican() -> None:
+    """Paso 11: `DeleteKey` ya es una acción del motor (ADR-0005).
+
+    `explorer.home.hide` la DECLARA; las dos `DeleteKey` de
+    `explorer.removable-drives.sidebar` están en el estado «Disable» del pin, que
+    es el CONTRARIO al que declara la capacidad (estado «Enable»): incluirlas
+    borraría lo que la capacidad enciende, y la descripción lo dice con el
+    motivo medido en vez de callarlo.
+    """
     home = BY_ID["explorer.home.hide"]
-    assert "DeleteKey" in home["description"]
+    assert "BORRA la clave" in home["description"]
+    assert [a["type"] for a in home["actions"]].count("registryDeleteKey") == 1
+
     drums = BY_ID["explorer.removable-drives.sidebar"]
-    assert "claves" in drums["description"].lower()
+    assert not [a for a in drums["actions"] if a["type"] == "registryDeleteKey"]
+    assert "CONTRARIO" in drums["description"]
+    assert "DeleteKey" in drums["description"]
 
 
 def test_las_desviaciones_declaradas_siguen_siendo_las_que_hay() -> None:
@@ -306,8 +343,10 @@ def test_la_auditoria_de_valores_no_tiene_ni_ambiguous_ni_unhandled() -> None:
     # filtraba por `action["type"] == "registry"` y el generador no escribía el
     # discriminador en la rama de Atlas. Con el discriminador corregido entran las
     # 56 y todas coinciden con el pin (Set y Delete incluidos).
+    # Paso 11: el DeleteKey de `explorer.home.hide` entra en la auditoría como
+    # fila propia (57), casada contra el `Operation = 'DeleteKey'` del pin.
     section10 = [r for r in rows if r["capability_id"] in BY_ID]
-    assert len(section10) == 56, len(section10)
+    assert len(section10) == 57, len(section10)
     assert all(r["relation"] in ("equals-apply", "equals-on") for r in section10), [
         r for r in section10 if r["relation"] not in ("equals-apply", "equals-on")]
 

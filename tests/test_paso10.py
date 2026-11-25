@@ -85,16 +85,32 @@ def test_la_seccion_9_declara_18_capacidades_con_ids_validos_y_unicos() -> None:
 
 def test_todas_las_acciones_llevan_discriminador_y_una_sola_forma_por_tipo() -> None:
     """`CapabilityAction` es polimórfica: sin `"type"` el cargador estricto de
-    .NET rechaza el fichero entero (lección del paso 9)."""
+    .NET rechaza el fichero entero (lección del paso 9).
+
+    Cambió en el paso 11: el motor sabe crear tareas (`taskCreate`), así que la
+    sección 9 tiene tres formas de acción. Se añade la comprobación de la nueva;
+    no se relaja ninguna de las dos anteriores.
+    """
     shapes: dict[str, set] = {}
     for cap in CAPS:
         for action in cap["actions"]:
-            assert action["type"] in ("registry", "service"), (cap["id"], action)
+            assert action["type"] in ("registry", "service", "taskCreate"), (cap["id"], action)
             shapes.setdefault(action["type"], set()).add(tuple(sorted(action)))
     assert shapes["registry"] == {("description", "hive", "keyPath", "operation",
                                    "order", "type", "value", "valueName", "valueType")}
-    assert shapes["service"] == {("description", "operation", "order",
-                                 "serviceName", "startupType", "type")}
+    # El pin tiene dos clases de operación de servicio y el contrato es cerrado:
+    # `SetStartupType` lleva `startupType` y `Start`/`Stop` no lo llevan (paso 11
+    # añade el arranque de w32time y las paradas de lfsvc/MapsBroker). Son dos
+    # formas, no campos sueltos: un campo de más en una sola acción se vería aquí.
+    assert shapes["service"] == {
+        ("description", "operation", "order", "serviceName", "startupType", "type"),
+        ("description", "operation", "order", "serviceName", "type")}
+    # La forma de la tarea es la del contrato cerrado `TaskCreateAction`; el
+    # `startupType` no aparece y `triggerAt` sí (Daily a las 00:30 del pin).
+    assert shapes["taskCreate"] == {
+        ("arguments", "description", "execute", "order", "overwrite", "runLevel",
+         "taskDescription", "taskName", "taskPath", "trigger", "triggerAt", "type",
+         "userId")}
 
 
 def test_adr_0003_riesgo_restauracion_confirmacion_y_seguridad_coherentes() -> None:
@@ -126,8 +142,11 @@ def test_implemented_solo_con_acciones_y_specified_sin_perder_los_valores() -> N
             # parte del pin no se declara.
             assert cap["actions"], cap["id"]
             assert "Specified" in cap["provenance"], cap["id"]
+    # Paso 11: las dos que quedaban en Specified cierran su hueco con las
+    # acciones nuevas (tarea AutoRegBackup y arranque de w32time) y pasan a
+    # Implemented. No queda ninguna Specified en la sección 9.
     specified = sorted(c["id"] for c in CAPS if c["state"] == "Specified")
-    assert specified == ["system.registry-backup.enable", "system.time.ntp-servers"]
+    assert specified == []
 
 
 def test_las_tres_capacidades_que_reducen_seguridad_lo_dicen_sin_taparlo() -> None:

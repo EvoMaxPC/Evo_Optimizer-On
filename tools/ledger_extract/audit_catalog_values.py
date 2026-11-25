@@ -111,6 +111,57 @@ def norm_value(value: object) -> str:
 
 
 # --------------------------------------------------------------------------- catalogo
+def catalog_key_deletions() -> list[dict]:
+    """Acciones `registryDeleteKey` auditadas contra el pin (paso 11).
+
+    La auditoria de VALORES casa por (colmena, clave, nombre) y no puede juzgar
+    un borrado de clave completa. Pero dejarlas fuera en silencio seria peor: se
+    comprueba que el pin declara `Operation = 'DeleteKey'` para esa misma clave
+    y colmena. Lo que no se pueda verificar queda como `no-source` con el motivo
+    escrito en la fila, no como si estuviera comprobado.
+    """
+    index: dict[tuple[str, str], set[str]] = {}
+    toggles = UPSTREAM / "atlas" / ATLAS_TOGGLES
+    if toggles.is_dir():
+        for path in sorted(toggles.rglob("*.psd1")):
+            text = path.read_text(encoding="utf-8", errors="replace")
+            text = re.sub(r"#[^\n]*", "", text)
+            # El pin escribe cada entrada en UNA linea; no se trocea por `@{…}`
+            # porque las claves llevan llaves dentro (`{f874310e-…}`).
+            for body in text.split("\n"):
+                if "DeleteKey" not in body:
+                    continue
+                path_match = re.search(r"\bPath\s*=\s*'([^']*)'", body)
+                if not path_match:
+                    continue
+                hive, key = split_hive(path_match.group(1))
+                index.setdefault((hive, norm_key(key)), set()).add(
+                    str(path.relative_to(UPSTREAM / "atlas")))
+
+    rows: list[dict] = []
+    for path in sorted(CATALOG_DIR.glob("*.json"), key=lambda p: p.name):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        for capability in document.get("capabilities", []):
+            for action in capability.get("actions", []):
+                if action.get("type") != "registryDeleteKey":
+                    continue
+                hive = SYNC_HIVES.get(action["hive"], action["hive"])
+                sources = index.get((hive, norm_key(action["keyPath"])), set())
+                rows.append(
+                    {
+                        "capability_id": capability["id"],
+                        "hive": hive,
+                        "key": norm_key(action["keyPath"]),
+                        "name": "(clave completa: borrado de clave)",
+                        "catalog_value": "DeleteKey",
+                        "source": "atlas" if sources else "",
+                        "source_ref": ",".join(sorted(sources)),
+                        "relation": "equals-apply" if sources else "no-source",
+                    }
+                )
+    return rows
+
+
 def catalog_registry_actions() -> list[dict]:
     rows: list[dict] = []
     for path in sorted(CATALOG_DIR.glob("*.json"), key=lambda p: p.name):
@@ -470,6 +521,25 @@ def build_rows() -> list[dict]:
                 "source_original_value": original,
                 "source_tweak_type": tweak_type,
                 "relation": relation,
+            }
+        )
+    # Paso 11: los borrados de CLAVE completa entran en la misma tabla, con su
+    # propia relacion (equals-apply si el pin declara el DeleteKey; no-source si
+    # no se puede casar). No se comparan como valores: no lo son.
+    for deletion in catalog_key_deletions():
+        rows.append(
+            {
+                "capability_id": deletion["capability_id"],
+                "hive": deletion["hive"],
+                "key": deletion["key"],
+                "name": deletion["name"],
+                "catalog_value": deletion["catalog_value"],
+                "source": deletion["source"],
+                "source_ref": deletion["source_ref"],
+                "source_apply_value": "DeleteKey" if deletion["source"] else "",
+                "source_original_value": "",
+                "source_tweak_type": "DeleteKey" if deletion["source"] else "",
+                "relation": deletion["relation"],
             }
         )
     rows.sort(key=lambda r: (r["capability_id"], r["hive"], r["key"], r["name"]))

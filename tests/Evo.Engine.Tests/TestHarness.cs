@@ -108,6 +108,8 @@ internal sealed class TestHarness
                 new TaskActionExecutor(),
                 new ProcessActionExecutor(),
                 new CommandActionExecutor(),
+                new RegistryDeleteKeyExecutor(),
+                new TaskCreateExecutor(),
             },
             catalog,
             restorePoints,

@@ -14,7 +14,8 @@ public sealed record RegistryEntry(object? Value, RegistryValueKind Kind, bool E
 /// HKU; los valores se guardan normalizados (DWord/QWord como long, Binary
 /// como byte[], MultiString como string[]).
 /// </summary>
-public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReader
+public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReader,
+    IRegistryTreeReader, IRegistryKeyCreator
 {
     private readonly Dictionary<string, Dictionary<string, RegistryEntry>> _keys =
         new(StringComparer.OrdinalIgnoreCase);
@@ -114,6 +115,50 @@ public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReade
         return true;
     }
 
+    /// <summary>Nombres de las subclaves directas (necesario para DeleteKey).</summary>
+    public IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath)
+    {
+        var full = Normalize($"{HiveName(hive)}\\{keyPath}");
+        var prefix = full + "\\";
+        var names = _keys.Keys
+            .Where(k => k.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(k => k[prefix.Length..])
+            .Where(rest => rest.Length > 0 && !rest.Contains('\\'))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(n => n, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+        Log.Add($"subkeys {full}");
+        return names;
+    }
+
+    /// <summary>Nombres de los valores directos de la clave.</summary>
+    public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath)
+    {
+        var full = Normalize($"{HiveName(hive)}\\{keyPath}");
+        if (!_keys.TryGetValue(full, out var values))
+        {
+            return [];
+        }
+
+        return values.Keys.OrderBy(n => n, StringComparer.OrdinalIgnoreCase).ToList();
+    }
+
+    /// <summary>Crea la clave vacía si no existe (deshacer de un borrado).</summary>
+    public void EnsureKey(RegistryHive hive, string keyPath) =>
+        EnsureKey($"{HiveName(hive)}\\{keyPath}");
+
+    /// <summary>Cuenta como mutación: sembrar estado de prueba no debe hacerlo.</summary>
+    void IRegistryKeyCreator.EnsureKey(RegistryHive hive, string keyPath)
+    {
+        var full = Normalize($"{HiveName(hive)}\\{keyPath}");
+        if (!_keys.ContainsKey(full))
+        {
+            _keys[full] = new Dictionary<string, RegistryEntry>(StringComparer.OrdinalIgnoreCase);
+            MutationCount++;
+            Log.Add($"ensure-key {full}");
+        }
+    }
+
     public bool KeyExists(RegistryHive hive, string keyPath)
     {
         var full = Normalize($"{HiveName(hive)}\\{keyPath}");
@@ -149,6 +194,9 @@ public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReade
         Log.Clear();
         return this;
     }
+
+    /// <summary>Vacía el log de llamadas (para medir sólo lo que hace el motor).</summary>
+    public void ClearLog() => Log.Clear();
 
     private static string Normalize(string key) => key.Replace('/', '\\').TrimEnd('\\');
 

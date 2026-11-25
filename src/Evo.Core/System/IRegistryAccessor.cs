@@ -20,3 +20,28 @@ public interface IRegistryAccessor
     /// <summary>Borra una clave (sin recursión salvo que <paramref name="recursive"/>).</summary>
     bool DeleteKey(RegistryHive hive, string keyPath, bool recursive);
 }
+
+/// <summary>
+/// Lectura del árbol del registro para poder deshacer un borrado de clave
+/// completa (paso 11, ADR-0005). Un accesor que no lo implemente hace que
+/// <c>RegistryDeleteKey</c> aborte sin borrar (fail-closed): no se puede
+/// prometer un deshacer que no se sabe hacer.
+/// </summary>
+public interface IRegistryTreeReader
+{
+    /// <summary>Nombres de las subclaves directas de <paramref name="keyPath"/>.</summary>
+    IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath);
+
+    /// <summary>Nombres de los valores directos de <paramref name="keyPath"/>.</summary>
+    IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath);
+}
+
+/// <summary>
+/// Creación de una clave vacía. Hace falta para deshacer un borrado recursivo
+/// que dejó ramas sin valores: recrearlas forma parte del estado previo exacto
+/// (paso 11, ADR-0005).
+/// </summary>
+public interface IRegistryKeyCreator
+{
+    void EnsureKey(RegistryHive hive, string keyPath);
+}

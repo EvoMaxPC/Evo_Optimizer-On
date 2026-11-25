@@ -61,7 +61,17 @@ public sealed record RegistryUndoEntry : UndoJournalEntry
     }
 }
 
-/// <summary>Deshacer un cambio de servicio (arranque o estado).</summary>
+/// <summary>
+/// Deshacer un cambio de servicio (arranque y/o estado de ejecución).
+/// </summary>
+/// <remarks>
+/// Desde el paso 11 las operaciones <c>Start</c>/<c>Stop</c> existen como acción
+/// propia y también como efecto lateral de <c>SetStartupType</c> combinado. El
+/// deshacer devuelve <b>el tipo de inicio previo</b> y <b>el estado previo</b>
+/// cuando cualquiera de los dos cambió; el orden importa: primero se restaura el
+/// tipo de inicio (para que el servicio no quede deshabilitado al arrancarlo) y
+/// después el estado.
+/// </remarks>
 public sealed record ServiceUndoEntry : UndoJournalEntry
 {
     public required string ServiceName { get; init; }
@@ -83,21 +93,120 @@ public sealed record ServiceUndoEntry : UndoJournalEntry
             return;
         }
 
+        // Tipo de inicio primero: si el servicio quedó deshabilitado, arrancarlo
+        // antes de devolverle el arranque fallaría con ERROR_SERVICE_DISABLED.
         if (StartupTypeChanged)
         {
             context.Services.SetStartupType(ServiceName, PreviousStartupType);
         }
 
-        if (StatusChanged)
+        if (StatusChanged && PreviousStatus == ServiceStatus.Running)
         {
-            if (PreviousStatus == ServiceStatus.Running)
-            {
-                context.Services.StartService(ServiceName);
-            }
-            else if (PreviousStatus == ServiceStatus.Stopped)
-            {
-                context.Services.StopService(ServiceName);
-            }
+            context.Services.StartService(ServiceName);
+        }
+        else if (StatusChanged && PreviousStatus == ServiceStatus.Stopped)
+        {
+            context.Services.StopService(ServiceName);
+        }
+    }
+}
+
+/// <summary>
+/// Deshacer el borrado de una clave completa: la recrea con sus valores, sus
+/// tipos y sus subclaves tal como estaban (paso 11, ADR-0005).
+/// </summary>
+/// <remarks>
+/// Si la clave no existía cuando se ejecutó la acción, el diario nunca se crea
+/// (la acción fue un no-op) y por tanto el deshacer no crea nada. Si el borrado
+/// fue un no-op registrado (<see cref="ExistedBefore"/> = false) el deshacer
+/// vuelve a ser un no-op.
+/// </remarks>
+public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
+{
+    public required RegistryHive Hive { get; init; }
+
+    public required string KeyPath { get; init; }
+
+    public required bool Recursive { get; init; }
+
+    /// <summary>True si la clave existía (la acción sí borró algo).</summary>
+    public required bool ExistedBefore { get; init; }
+
+    /// <summary>Instantánea que se recrea al deshacer.</summary>
+    public required Executors.RegistryKeySnapshot Snapshot { get; init; }
+
+    public override void Restore(IUndoContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        if (context.DryRun || !ExistedBefore)
+        {
+            return;
+        }
+
+        RestoreNode(context.Registry, Hive, Snapshot.Root);
+    }
+
+    private static void RestoreNode(
+        Evo.Core.System.IRegistryAccessor registry, RegistryHive hive, Executors.RegistryKeyNode node)
+    {
+        // Las claves vacías también se recrean: un borrado recursivo se deshace
+        // con el árbol exacto, incluidas las ramas sin valores.
+        if (registry is Evo.Core.System.IRegistryKeyCreator creator)
+        {
+            creator.EnsureKey(hive, node.Path);
+        }
+
+        foreach (var value in node.Values)
+        {
+            registry.SetValue(hive, node.Path, value.Name, value.Value!, value.Kind);
+        }
+
+        foreach (var child in node.Children)
+        {
+            RestoreNode(registry, hive, child);
+        }
+    }
+}
+
+/// <summary>
+/// Deshacer la creación de una tarea programada (paso 11): se borra la tarea
+/// creada o se restaura el estado previo de la que ya existía.
+/// </summary>
+public sealed record TaskCreateUndoEntry : UndoJournalEntry
+{
+    public required string TaskPath { get; init; }
+
+    public required string TaskName { get; init; }
+
+    /// <summary>True si la tarea ya existía antes (se restaura, no se borra).</summary>
+    public required bool ExistedBefore { get; init; }
+
+    /// <summary>Estado previo de la tarea si ya existía.</summary>
+    public required bool WasEnabled { get; init; }
+
+    public override void Restore(IUndoContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        if (context.DryRun)
+        {
+            return;
+        }
+
+        if (!ExistedBefore)
+        {
+            context.Tasks.DeleteTask(TaskPath, TaskName);
+            return;
+        }
+
+        if (WasEnabled)
+        {
+            context.Tasks.EnableTask(TaskPath, TaskName);
+        }
+        else
+        {
+            context.Tasks.DisableTask(TaskPath, TaskName);
         }
     }
 }

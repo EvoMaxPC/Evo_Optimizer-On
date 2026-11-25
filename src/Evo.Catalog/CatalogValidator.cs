@@ -228,9 +228,72 @@ public sealed partial class CatalogValidator
 
         foreach (var action in definition.Actions)
         {
-            if (action is Evo.Core.Actions.CommandAction command && string.IsNullOrWhiteSpace(command.FileName))
+            switch (action)
             {
-                issues.Add(Error("R-ACTION", definition.Id, "CommandAction sin 'fileName'."));
+                case Evo.Core.Actions.CommandAction command
+                    when string.IsNullOrWhiteSpace(command.FileName):
+                    issues.Add(Error("R-ACTION", definition.Id, "CommandAction sin 'fileName'."));
+                    break;
+
+                // Paso 11 (ADR-0005): las acciones nuevas tienen contrato cerrado y
+                // el validador comprueba sus campos obligatorios aquí, no sólo al
+                // deserializar (un JSON con la clave vacía cargaría igual).
+                case Evo.Core.Actions.RegistryDeleteKeyAction deleteKey
+                    when string.IsNullOrWhiteSpace(deleteKey.KeyPath):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id, "RegistryDeleteKeyAction sin 'keyPath'."));
+                    break;
+
+                case Evo.Core.Actions.RegistryDeleteKeyAction deleteKey
+                    when deleteKey.KeyPath.Contains("\\*", StringComparison.Ordinal)
+                         || deleteKey.KeyPath.Contains("*", StringComparison.Ordinal):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"RegistryDeleteKeyAction con comodín en 'keyPath' ('{deleteKey.KeyPath}'): " +
+                        "el borrado de claves no admite patrones."));
+                    break;
+
+                case Evo.Core.Actions.TaskCreateAction create
+                    when string.IsNullOrWhiteSpace(create.TaskName)
+                         || string.IsNullOrWhiteSpace(create.Execute)
+                         || string.IsNullOrWhiteSpace(create.Trigger)
+                         || string.IsNullOrWhiteSpace(create.UserId)
+                         || string.IsNullOrWhiteSpace(create.RunLevel):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        "TaskCreateAction exige 'taskName', 'execute', 'trigger', 'userId' y " +
+                        "'runLevel'."));
+                    break;
+
+                case Evo.Core.Actions.TaskCreateAction create
+                    when create.Trigger is not ("Daily" or "OnLogon"):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"TaskCreateAction con desencadenante '{create.Trigger}': sólo Daily y OnLogon."));
+                    break;
+
+                case Evo.Core.Actions.TaskCreateAction create
+                    when create.Trigger == "Daily" && string.IsNullOrWhiteSpace(create.TriggerAt):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        "TaskCreateAction con trigger Daily sin 'triggerAt' (HH:mm)."));
+                    break;
+
+                case Evo.Core.Actions.TaskCreateAction create
+                    when create.TriggerAt is not null
+                         && !System.Text.RegularExpressions.Regex.IsMatch(
+                             create.TriggerAt, @"^([01]\d|2[0-3]):[0-5]\d$"):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"TaskCreateAction con 'triggerAt' inválido ('{create.TriggerAt}'): se espera HH:mm."));
+                    break;
+
+                case Evo.Core.Actions.TaskCreateAction create
+                    when create.RunLevel is not ("Highest" or "Limited"):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"TaskCreateAction con 'runLevel' '{create.RunLevel}': Highest o Limited."));
+                    break;
             }
         }
     }

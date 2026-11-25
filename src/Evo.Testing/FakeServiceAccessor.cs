@@ -43,6 +43,12 @@ public sealed class FakeServiceAccessor : IServiceAccessor
 
     public void StartService(string serviceName)
     {
+        if (FailStartWith is not null &&
+            string.Equals(FailStartWith, serviceName, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException($"No se pudo iniciar el servicio '{serviceName}'.");
+        }
+
         var current = _services.TryGetValue(serviceName, out var service)
             ? service
             : new FakeService(serviceName, ServiceStatus.Stopped, ServiceStartupType.Unknown);
@@ -53,6 +59,12 @@ public sealed class FakeServiceAccessor : IServiceAccessor
 
     public void StopService(string serviceName)
     {
+        if (FailStopWith is not null &&
+            string.Equals(FailStopWith, serviceName, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException($"No se pudo detener el servicio '{serviceName}'.");
+        }
+
         var current = _services.TryGetValue(serviceName, out var service)
             ? service
             : new FakeService(serviceName, ServiceStatus.Stopped, ServiceStartupType.Unknown);
@@ -60,6 +72,12 @@ public sealed class FakeServiceAccessor : IServiceAccessor
         MutationCount++;
         Log.Add($"stop {serviceName}");
     }
+
+    /// <summary>Si no es null, arrancar el servicio con ese nombre lanza.</summary>
+    public string? FailStartWith { get; set; }
+
+    /// <summary>Si no es null, detener el servicio con ese nombre lanza.</summary>
+    public string? FailStopWith { get; set; }
 
     /// <summary>Marca un servicio inexistente como existente pero desconocido.</summary>
     public bool Exists(string serviceName) => _services.ContainsKey(serviceName);

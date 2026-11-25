@@ -27,39 +27,64 @@ public sealed class ServiceActionExecutor : IActionExecutor
         var previousStartup = context.Services.GetStartupType(serviceAction.ServiceName);
 
         string? target;
-        switch (serviceAction.Operation)
+        bool startupChanged;
+        bool statusChanged;
+        try
         {
-            case ServiceOperation.SetStartupType:
-                target = serviceAction.StartupType;
-                if (context.Mutates)
-                {
-                    context.Services.SetStartupType(
-                        serviceAction.ServiceName, ParseStartup(serviceAction.StartupType));
-                }
+            switch (serviceAction.Operation)
+            {
+                case ServiceOperation.SetStartupType:
+                    target = serviceAction.StartupType;
+                    startupChanged = true;
+                    // Cambiar el arranque NO cambia el estado de ejecución: el
+                    // diario sólo devuelve el tipo previo.
+                    statusChanged = false;
+                    if (context.Mutates)
+                    {
+                        context.Services.SetStartupType(
+                            serviceAction.ServiceName, ParseStartup(serviceAction.StartupType));
+                    }
 
-                break;
+                    break;
 
-            case ServiceOperation.Start:
-                target = ServiceStatus.Running.ToString();
-                if (context.Mutates)
-                {
-                    context.Services.StartService(serviceAction.ServiceName);
-                }
+                case ServiceOperation.Start:
+                    target = ServiceStatus.Running.ToString();
+                    startupChanged = false;
+                    statusChanged = true;
+                    if (context.Mutates)
+                    {
+                        context.Services.StartService(serviceAction.ServiceName);
+                    }
 
-                break;
+                    break;
 
-            case ServiceOperation.Stop:
-                target = ServiceStatus.Stopped.ToString();
-                if (context.Mutates)
-                {
-                    context.Services.StopService(serviceAction.ServiceName);
-                }
+                case ServiceOperation.Stop:
+                    target = ServiceStatus.Stopped.ToString();
+                    startupChanged = false;
+                    statusChanged = true;
+                    if (context.Mutates)
+                    {
+                        context.Services.StopService(serviceAction.ServiceName);
+                    }
 
-                break;
+                    break;
 
-            default:
-                return Task.FromResult(ActionResult.Fail(
-                    action.Key, $"Operación de servicio desconocida: {serviceAction.Operation}."));
+                default:
+                    return Task.FromResult(ActionResult.Fail(
+                        action.Key, $"Operación de servicio desconocida: {serviceAction.Operation}."));
+            }
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+        {
+            // Iniciar o detener puede fallar (dependencias, permisos, servicio que
+            // ya no existe). El motor falla la acción y el coordinador revierte lo
+            // ya aplicado de la capacidad: no se deja a medias.
+            return Task.FromResult(ActionResult.Fail(
+                action.Key,
+                $"No se pudo aplicar '{serviceAction.Operation}' sobre '{serviceAction.ServiceName}': " +
+                ex.Message,
+                $"status={previousStatus};startup={previousStartup}",
+                Describe(serviceAction)));
         }
 
         var previous = $"status={previousStatus};startup={previousStartup}";
@@ -73,9 +98,9 @@ public sealed class ServiceActionExecutor : IActionExecutor
                 Description = Describe(serviceAction),
                 PreviousState = previous,
                 ServiceName = serviceAction.ServiceName,
-                StartupTypeChanged = serviceAction.Operation == ServiceOperation.SetStartupType,
+                StartupTypeChanged = startupChanged,
                 PreviousStartupType = previousStartup,
-                StatusChanged = serviceAction.Operation != ServiceOperation.SetStartupType,
+                StatusChanged = statusChanged,
                 PreviousStatus = previousStatus,
             });
         }

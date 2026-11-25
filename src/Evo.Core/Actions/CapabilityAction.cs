@@ -14,6 +14,12 @@ public enum ActionKind
     Task = 2,
     Process = 3,
     Command = 4,
+
+    /// <summary>Borrado de una clave completa con instantánea previa (paso 11).</summary>
+    RegistryDeleteKey = 5,
+
+    /// <summary>Creación de una tarea programada (paso 11).</summary>
+    TaskCreate = 6,
 }
 
 /// <summary>Acción atómica y reversible declarada por una capacidad.</summary>
@@ -23,6 +29,8 @@ public enum ActionKind
 [JsonDerivedType(typeof(TaskAction), "task")]
 [JsonDerivedType(typeof(ProcessAction), "process")]
 [JsonDerivedType(typeof(CommandAction), "command")]
+[JsonDerivedType(typeof(RegistryDeleteKeyAction), "registryDeleteKey")]
+[JsonDerivedType(typeof(TaskCreateAction), "taskCreate")]
 public abstract record CapabilityAction
 {
     /// <summary>Orden de aplicación dentro del plan (menor primero).</summary>

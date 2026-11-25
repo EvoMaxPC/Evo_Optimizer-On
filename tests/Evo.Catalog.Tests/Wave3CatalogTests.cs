@@ -171,7 +171,9 @@ public sealed class Wave3CatalogTests
             var hives = RegistryActions(definition).Select(a => a.Hive).Distinct().ToList();
             var touchesMachine = hives.Contains(RegistryHiveKind.LocalMachine)
                 || hives.Contains(RegistryHiveKind.Users)
-                || ServiceActions(definition).Any();
+                || ServiceActions(definition).Any()
+                // Paso 11: crear una tarea de sistema tambien exige elevacion.
+                || definition.Actions.OfType<TaskCreateAction>().Any();
             var expected = touchesMachine ? PrivilegeLevel.Admin : PrivilegeLevel.User;
             Assert.True(
                 expected == definition.Privilege,
@@ -275,25 +277,38 @@ public sealed class Wave3CatalogTests
         }
     }
 
-    /// <summary>T1: los dos estados Specified declaran sus valores y dicen en la
-    /// procedencia qué parte del pin NO se puede aplicar (tarea y w32tm).</summary>
+    /// <summary>T1: el paso 11 cierra los dos huecos que quedaban en `Specified`:
+    /// la tarea AutoRegBackup y el arranque de w32time ya son acciones del motor,
+    /// así que la sección 9 no deja ninguna capacidad a medias. Lo que sigue
+    /// fuera (`w32tm /config /update` y `/resync`) se declara, no se calla.</summary>
     [Fact]
-    public void TestWave3Catalog_SpecifiedCapabilitiesSayWhatIsMissing()
+    public void TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay()
     {
         var specified = Wave3().Where(d => d.State == CapabilityState.Specified)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
-        Assert.Equal(new[] { "system.registry-backup.enable", "system.time.ntp-servers" }, specified);
+        Assert.Empty(specified);
 
         var backup = Definition("system.registry-backup.enable");
-        Assert.NotEmpty(backup.Actions);
+        Assert.Equal(CapabilityState.Implemented, backup.State);
         Assert.Contains("AutoRegBackup", backup.Provenance, StringComparison.Ordinal);
-        Assert.Contains("State=Specified", backup.Provenance, StringComparison.Ordinal);
+        var task = Assert.Single(backup.Actions.OfType<TaskCreateAction>());
+        Assert.Equal("AutoRegBackup", task.TaskName);
+        Assert.Equal("schtasks", task.Execute);
+        Assert.Equal("Daily", task.Trigger);
+        Assert.Equal("00:30", task.TriggerAt);
+        Assert.Equal("System", task.UserId);
+        Assert.Equal("Highest", task.RunLevel);
+        Assert.False(task.Overwrite);
 
         var ntp = Definition("system.time.ntp-servers");
+        Assert.Equal(CapabilityState.Implemented, ntp.State);
         Assert.Contains("w32tm", ntp.Provenance, StringComparison.Ordinal);
         Assert.Equal("0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org",
             Value(ntp, "NtpServer").Value);
         Assert.Equal("NTP", Value(ntp, "Type").Value);
+        var start = Assert.Single(ntp.Actions.OfType<ServiceAction>());
+        Assert.Equal("w32time", start.ServiceName);
+        Assert.Equal(ServiceOperation.Start, start.Operation);
     }
 
     /// <summary>T1: los servicios se declaran como ServiceAction con su tipo de
@@ -317,6 +332,18 @@ public sealed class Wave3CatalogTests
         var indexing = Assert.Single(ServiceActions(Definition("system.search-indexing.disable")));
         Assert.Equal("WSearch", indexing.ServiceName);
         Assert.Equal("Disabled", indexing.StartupType);
+
+        // Paso 11: el estado 'Disable' del pin apaga lfsvc y MapsBroker con
+        // `Set-Service -StartupType Disabled` + `Stop()` (medido en
+        // Atlas.Privacy/Domain/Location.ps1:113-114): las dos cosas se declaran.
+        var location = ServiceActions(Definition("system.location.consent-deny")).ToList();
+        Assert.Equal(4, location.Count);
+        Assert.Equal(
+            new[] { ("lfsvc", ServiceOperation.SetStartupType), ("lfsvc", ServiceOperation.Stop),
+                    ("MapsBroker", ServiceOperation.SetStartupType), ("MapsBroker", ServiceOperation.Stop) },
+            location.Select(a => (a.ServiceName, a.Operation)).ToArray());
+        Assert.All(location.Where(a => a.Operation == ServiceOperation.SetStartupType),
+            a => Assert.Equal("Disabled", a.StartupType));
     }
 
     /// <summary>T1: la visibilidad de páginas escribe el literal COMPLETO del pin,

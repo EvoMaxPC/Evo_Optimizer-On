@@ -129,16 +129,16 @@ WINUTIL_SPECS = [
          risk="Low", security="Neutral",
          build_note="valor documentado y presente en 19045 y en Windows 11"),
     dict(id="system.registry-backup.enable", winutil="WPFFeatureRegBackup",
-         feature=True, state="Specified",
+         feature=True, task=True,
          name="Reactivar la copia de seguridad diaria del registro",
          desc="Pone EnablePeriodicBackup=1 y BackupCount=2 en HKLM\\SYSTEM\\"
               "CurrentControlSet\\Control\\Session Manager\\Configuration Manager, que es "
-              "lo que Microsoft desactivó por defecto en Windows 10 1803. El pin además "
-              "registra la tarea programada AutoRegBackup (schtasks /run /i /tn "
-              "\\Microsoft\\Windows\\Registry\\RegIdleBackup, diaria a las 00:30): una "
-              "tarea que no EXISTE todavía no se puede habilitar con el motor, sólo "
-              "crearla, así que la capacidad queda en Specified y los valores del "
-              "registro son los que se declaran.",
+              "lo que Microsoft desactivó por defecto en Windows 10 1803, y crea la tarea "
+              "programada AutoRegBackup que ejecuta `schtasks /run /i /tn "
+              "\\Microsoft\\Windows\\Registry\\RegIdleBackup` todos los días a las 00:30 "
+              "como SYSTEM (paso 11). Deshacer: se restauran los dos valores previos y se "
+              "BORRA la tarea creada; si ya existía, se devuelve a su estado anterior en "
+              "vez de borrarla.",
          risk="Safe", security="Improves",
          build_note="los valores son los mismos desde 1803; la tarea existe en todas"),
     dict(id="system.services.manual-profile", winutil="WPFTweaksServices", services=True,
@@ -176,12 +176,14 @@ ATLAS_TOGGLE_SPECS = [
                     "desde 22631; en 19045 Windows no la lee y la entrada del menú no "
                     "cambia, por eso NO se declara 19045"),
     dict(id="system.location.consent-deny", atlas_toggle=("General/Location.psd1", "Disable"),
+         location_services=True,
          name="Denegar el acceso a la ubicación",
          desc="Pone Value='Deny' en el ConsentStore de ubicación (HKLM) y "
-              "ShowGlobalPrompts=0 en el mismo ConsentStore del usuario. Quita el "
-              "permiso global de ubicación: las aplicaciones dejan de poder pedirla. "
-              "El pin ejecuta además Disable-AtlasLocation, que apaga lfsvc y MapsBroker; "
-              "esos servicios no se declaran aquí.",
+              "ShowGlobalPrompts=0 en el mismo ConsentStore del usuario, y APAGA los dos "
+              "servicios de ubicación: lfsvc y MapsBroker pasan a Desactivado y se "
+              "detienen (paso 11). Quita el permiso global de ubicación: las aplicaciones "
+              "dejan de poder pedirla. Deshacer: valores previos y, para cada servicio, "
+              "tipo de inicio y estado de ejecución anteriores.",
          risk="Low", security="Improves",
          build_note="ConsentStore de ubicación presente en 19045 y en Windows 11"),
     dict(id="system.mitigations.disable", atlas_toggle=("Security/Mitigations.psd1", "Disable"),
@@ -237,16 +239,20 @@ ATLAS_TWEAK_SPECS = [
          risk="Safe", security="Neutral",
          build_note="MenuShowDelay existe en 19045 y en Windows 11"),
     dict(id="system.time.ntp-servers", atlas_tweak="misc/config-time.psd1",
+         ntp_service=True,
          name="Usar los servidores de hora de pool.ntp.org",
          desc="Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org "
               "3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\"
-              "W32Time\\Parameters. El pin además arranca el servicio w32time y ejecuta "
-              "w32tm /config /update y w32tm /resync con IgnoreErrors: esas tres cosas no "
-              "son de registro y aquí no se declaran, así que la capacidad queda en "
-              "Specified (los valores quedan escritos, la resincronización la hace "
-              "Windows en su siguiente ciclo).",
-         risk="Low", security="Neutral", state="Specified",
-         omit="Services: Start de w32time; Run: w32tm /config /update y w32tm /resync",
+              "W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: "
+              "devuelve los dos valores previos y el estado de ejecución anterior del "
+              "servicio (si estaba parado, lo vuelve a parar). Sigue fuera de la "
+              "capacidad `w32tm /config /update` y `w32tm /resync`: son comandos sin "
+              "inversa declarada y no se ejecutan, así que la resincronización la hace "
+              "Windows en su siguiente ciclo. Por eso la capacidad es Implemented con esa "
+              "parte declarada, no Specified callada.",
+         risk="Low", security="Neutral",
+         omit="Run: w32tm /config /update y w32tm /resync (comandos sin inversa; NO se "
+              "ejecutan y se declaran aquí)",
          build_note="W32Time\\Parameters existe en 19045 y en Windows 11"),
     dict(id="system.oem-information.identify", atlas_tweak="misc/config-oem-information.psd1",
          name="Escribir la información OEM del sistema",
@@ -355,6 +361,110 @@ def line_of(script: str, needle: str) -> int:
     return b10.rel_line(path, needle)
 
 
+def reg_backup_task_actions() -> list[dict]:
+    """Tarea AutoRegBackup tal como la registra el pin (paso 11).
+
+    Los literales (nombre, ejecutable, argumentos, hora, usuario) se leen del
+    `InvokeScript` de `feature.json`: `New-ScheduledTaskAction -Execute 'schtasks'
+    -Argument '/run /i /tn "\\Microsoft\\Windows\\Registry\\RegIdleBackup"'`,
+    `New-ScheduledTaskTrigger -Daily -At 00:30` y
+    `Register-ScheduledTask -TaskName 'AutoRegBackup' … -User 'System'`.
+    `RunLevel=Highest` porque el pin registra la tarea como SYSTEM.
+    """
+    entry = W_FEATURES.get("WPFFeatureRegBackup") or {}
+    script = entry.get("InvokeScript") or []
+    script = script[0] if isinstance(script, list) and script else str(script)
+    name = re.search(r"-TaskName\s+'([^']+)'", script)
+    execute = re.search(r"New-ScheduledTaskAction\s+-Execute\s+'([^']+)'", script)
+    arguments = re.search(r"-Argument\s+'([^']*)'", script)
+    at = re.search(r"New-ScheduledTaskTrigger\s+-Daily\s+-At\s+([0-9:]+)", script)
+    user = re.search(r"-User\s+'([^']+)'", script)
+    description = re.search(r"-Description\s+'([^']+)'", script)
+    if not (name and execute and arguments and at and user):
+        raise SystemExit("feature.json: no se pudo leer la tarea AutoRegBackup del pin")
+    return [{
+        "type": "taskCreate",
+        "order": 3,
+        "description": f"Crear la tarea {name.group(1)} (diaria a las {at.group(1)})",
+        "taskPath": "\\",
+        "taskName": name.group(1),
+        "execute": execute.group(1),
+        "arguments": arguments.group(1).replace('\\"', '"'),
+        "trigger": "Daily",
+        "triggerAt": at.group(1).zfill(5),
+        "userId": user.group(1),
+        "runLevel": "Highest",
+        "taskDescription": description.group(1) if description else "",
+        "overwrite": False,
+    }]
+
+
+#: Servicios que el pin apaga con `Invoke-AtlasLocationServiceState` (Location.ps1:
+#: `Set-Service -StartupType Disabled` + `Stop()`), con el tipo de inicio y el
+#: estado que aplica el estado 'Disable' (StartupType 4 y Status 'Stopped').
+LOCATION_SERVICES = ("lfsvc", "MapsBroker")
+
+
+def location_service_actions(start_order: int) -> list[dict]:
+    actions = []
+    for name in LOCATION_SERVICES:
+        actions.append({
+            "type": "service",
+            "order": start_order,
+            "description": f"{name} -> Disabled",
+            "serviceName": name,
+            "operation": "SetStartupType",
+            "startupType": "Disabled",
+        })
+        actions.append({
+            "type": "service",
+            "order": start_order + 1,
+            "description": f"{name}: detener",
+            "serviceName": name,
+            "operation": "Stop",
+        })
+        start_order += 2
+    return actions
+
+
+def ntp_service_actions(order: int) -> list[dict]:
+    """`Services = @(@{ Name='w32time'; Operation='Start' })` del pin."""
+    return [{
+        "type": "service",
+        "order": order,
+        "description": "w32time: iniciar",
+        "serviceName": "w32time",
+        "operation": "Start",
+    }]
+
+
+ATLAS_PRIVACY_LOCATION = (
+    "package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1")
+
+
+def location_machine_action_line() -> int:
+    """Linea del `MachineAction` del estado 'Disable' en el toggle del pin."""
+    path = ATLAS_TOGGLES / "General" / "Location.psd1"
+    text = path.read_text(encoding="utf-8", errors="replace")
+    start = text.find("Name          = 'Disable'")
+    index = text.find("MachineAction", max(start, 0))
+    return 0 if index < 0 else text.count("\n", 0, index) + 1
+
+
+def location_service_evidence() -> tuple[int, int, int]:
+    """Lineas del pin que demuestran el cambio de servicio (ruta:linea)."""
+    path = UPSTREAM / "atlas" / ATLAS_PRIVACY_LOCATION
+    text = path.read_text(encoding="utf-8", errors="replace")
+
+    def line_of(needle: str) -> int:
+        index = text.find(needle)
+        return 0 if index < 0 else text.count("\n", 0, index) + 1
+
+    return (line_of("function Set-AtlasLocationMachineState"),
+            line_of("Invoke-AtlasLocationServiceState -Name lfsvc"),
+            line_of("Invoke-AtlasLocationServiceState -Name MapsBroker"))
+
+
 def base(cap_id: str, name: str, desc: str, risk: str, security: str,
          actions: list[dict], builds: list[int] | None, state: str,
          variants: list[str], provenance: str) -> dict:
@@ -401,16 +511,39 @@ def build() -> dict:
                 for i, v in enumerate(values, start=1)
             ]
             ledger = f"winutil:feature:{spec['winutil']}"
+            task_note = ""
+            if spec.get("task"):
+                # Paso 11: la tarea se declara como TaskCreateAction, con los
+                # literales leidos del propio InvokeScript del pin.
+                task_actions = reg_backup_task_actions()
+                for offset, task_action in enumerate(task_actions):
+                    task_action["order"] = len(actions) + 1 + offset
+                actions = actions + task_actions
+                tarea = task_actions[0]
+                task_note = (
+                    " El pin ADEMAS registra la tarea programada "
+                    f"{tarea['taskName']} con Register-ScheduledTask (paso 11): se declara "
+                    "como accion taskCreate con los literales del InvokeScript "
+                    f"(execute={tarea['execute']!r}, arguments={tarea['arguments']!r}, "
+                    f"trigger={tarea['trigger']} a las {tarea['triggerAt']}, "
+                    f"userId={tarea['userId']!r}, runLevel={tarea['runLevel']}). "
+                    "Deshacer: se borra la tarea creada; si ya existia, se restaura su "
+                    "estado previo (no se borra). "
+                    "Reversibilidad (ADR-0003): Reversible - valores de registro con valor "
+                    "previo guardado por el motor + tarea creada que se elimina."
+                )
             provenance = (
                 f"{WINUTIL_PIN}:config/feature.json#{spec['winutil']} (Type="
                 f"{entry.get('Type') or 'sin Type'}). Literales leidos de InvokeScript: "
-                + "; ".join(f"{a['valueName']}={a['value']}" for a in actions)
-                + ". El pin ademas registra la tarea AutoRegBackup (Register-ScheduledTask, "
-                  "diaria a las 00:30): crear una tarea no es una operacion de "
-                  "ServiceAction/TaskAction y no se declara; por eso State=Specified. "
-                  "Reversibilidad (ADR-0003): Reversible - valores de registro con valor "
-                  "previo guardado por el motor. "
-                + f"Builds: {spec['build_note']}. ledger_refs: {ledger}"
+                + "; ".join(
+                    f"{a['valueName']}={a['value']}" if a["type"] == "registry"
+                    else f"taskCreate {a['taskName']} ({a['trigger']} {a.get('triggerAt') or ''})".strip()
+                    for a in actions)
+                + "." + task_note
+                + ("" if task_note else
+                   " Reversibilidad (ADR-0003): Reversible - valores de registro con valor "
+                   "previo guardado por el motor. ")
+                + f" Builds: {spec['build_note']}. ledger_refs: {ledger}"
             )
         elif spec.get("services"):
             actions = winutil_service_actions(spec["winutil"])
@@ -458,12 +591,36 @@ def build() -> dict:
         lines = sorted({a["line"] for a in actions if a.get("line")}) or [0]
         for action in actions:
             action.pop("line", None)
+        if lines == [0]:
+            # Los toggles se trocean por estado y el parser no conserva la linea:
+            # se cita la linea del bloque `Registry` del estado en el pin.
+            located = b10.rel_line(ATLAS_TOGGLES / relative, "Registry")
+            lines = [located] if located else [0]
         refs = f"{source}:{lines[0]}" + (f"-{lines[-1]}" if len(lines) > 1 else "")
         blocked = ""
         if skipped:
             blocked = (" No expresable como RegistryAction y por tanto NO aplicado: "
                        + ", ".join(skipped) + " (el motor solo borra valores, no claves).")
         ledgers = [f"atlas:toggle:{Path(relative).stem}"] + spec.get("extra_ledgers", [])
+        service_note = ""
+        registry_actions = list(actions)
+        if spec.get("location_services"):
+            actions = actions + location_service_actions(len(actions) + 1)
+            machine_line, lfsvc_line, maps_line = location_service_evidence()
+            service_note = (
+                " El pin ADEMAS ejecuta MachineAction Disable-AtlasLocation "
+                f"(Toggles/General/Location.psd1:{location_machine_action_line()}), que llama "
+                "a Set-AtlasLocationMachineState (Atlas.Privacy/Domain/Location.ps1:"
+                f"{machine_line}) y esta MEDIDO como `Invoke-AtlasLocationServiceState -Name "
+                f"lfsvc` / `-Name MapsBroker` ahi mismo "
+                f"({ATLAS_PRIVACY_LOCATION}:{lfsvc_line} y "
+                f"{ATLAS_PRIVACY_LOCATION}:{maps_line}) → "
+                "`Set-Service -StartupType Disabled` + `$service.Stop()` (StartupType 4 y "
+                "Status 'Stopped'): el tipo de inicio y el estado de ejecucion SI son "
+                "expresables con ServiceAction, asi que desde el paso 11 se declaran. NO se "
+                "declara lo demas que hace ese script (politica de Find My Device y ocultar "
+                "las paginas de Configuracion), que queda fuera de esta capacidad."
+            )
         capabilities.append(base(
             spec["id"], spec["name"], spec["desc"], spec["risk"], spec["security"],
             actions, spec.get("builds"), spec.get("state", "Implemented"),
@@ -473,11 +630,13 @@ def build() -> dict:
             + "; ".join(
                 (f"{a['valueName'] or '(predeterminado)'}={a['value']}"
                  if a["operation"] == "Set" else f"{a['valueName']} (borrado)")
-                for a in actions)
-            + "." + blocked
+                for a in registry_actions)
+            + "." + blocked + service_note
             + " Reversibilidad (ADR-0003): Reversible - valores de registro con valor "
-              "previo guardado por el motor. "
-            + f"Builds: {spec['build_note']}. "
+              "previo guardado por el motor."
+            + (" Servicios: el diario guarda tipo de inicio y estado de ejecucion "
+               "previos de cada uno y los devuelve." if service_note else "")
+            + f" Builds: {spec['build_note']}. "
             + "ledger_refs: " + ", ".join(ledgers)))
 
     # ------------------------------------------------- Atlas (Scripts/Tweaks)
@@ -490,23 +649,40 @@ def build() -> dict:
         lines = sorted({a["line"] for a in actions if a.get("line")}) or [0]
         for action in actions:
             action.pop("line", None)
+        if lines == [0]:
+            # Los toggles se trocean por estado y el parser no conserva la linea:
+            # se cita la linea del bloque `Registry` del estado en el pin.
+            located = b10.rel_line(ATLAS_TOGGLES / relative, "Registry")
+            lines = [located] if located else [0]
         refs = f"{source}:{lines[0]}" + (f"-{lines[-1]}" if len(lines) > 1 else "")
         if skipped:
             raise SystemExit(f"{relative}: operaciones no expresables {skipped}")
         omit = spec.get("omit", "")
+        service_note = ""
+        if spec.get("ntp_service"):
+            # `Services = @(@{ Name = 'w32time'; Operation = 'Start' })` del pin.
+            actions = actions + ntp_service_actions(len(actions) + 1)
+            service_note = (
+                " El bloque Services del pin arranca w32time: se declara como "
+                "ServiceAction Start (paso 11) y el diario devuelve el estado de "
+                "ejecucion previo."
+            )
         capabilities.append(base(
             spec["id"], spec["name"], spec["desc"], spec["risk"], spec["security"],
             actions, spec.get("builds"), spec.get("state", "Implemented"),
             ["Evo", "Atlas"],
             f"{ATLAS_PIN}:{refs}. Valores tomados del bloque Registry del pin: "
             + "; ".join(f"{a['valueName']}={a['value'] or '(cadena vacia)'}"
-                        for a in actions)
-            + "."
-            + (f" El pin ADEMAS hace algo que no es registro y NO se declara: {omit}. "
-               "Por eso la capacidad queda en State=Specified." if omit else "")
+                        for a in actions if a["type"] == "registry")
+            + "." + service_note
+            + (f" El pin ADEMAS hace algo que NO se declara: {omit}. "
+               "Queda declarado aqui y no se ejecuta: no hay promesa de deshacer para "
+               "un comando." if omit else "")
             + " Reversibilidad (ADR-0003): Reversible - valores de registro con valor "
-              "previo guardado por el motor. "
-            + f"Builds: {spec['build_note']}. "
+              "previo guardado por el motor."
+            + (" Servicio: el diario guarda el estado de ejecucion previo y lo devuelve."
+               if service_note else "")
+            + f" Builds: {spec['build_note']}. "
             + "ledger_refs: atlas:manifest:"
             + spec["atlas_tweak"].replace(".psd1", "")))
 

@@ -161,11 +161,12 @@ ATLAS_SPECS = [
                      "(su CLSID {e88865ea-...} no existe en 19045)."),
     dict(id="explorer.home.hide", file="Interface/Home.psd1", state="Disable",
          name="Ocultar Inicio en el Explorador y abrir en Este equipo",
-         desc="Desancla Inicio del panel de navegación (IsPinnedToNameSpaceTree=0) y pone "
-              "LaunchTo=1 para que el Explorador abra en Este equipo. El estado 'Disable' "
-              "del pin además BORRA la clave HKLM Desktop\\NameSpace\\{f874310e…}; esa "
-              "operación es DeleteKey y el motor sólo sabe borrar valores, así que no se "
-              "declara: se aplica la parte de valores y se dice aquí.",
+         desc="Desancla Inicio del panel de navegación (IsPinnedToNameSpaceTree=0), pone "
+              "LaunchTo=1 para que el Explorador abra en Este equipo y BORRA la clave HKLM "
+              "Desktop\\NameSpace\\{f874310e…} tal como la declara el pin (paso 11: el "
+              "motor ya sabe borrar claves completas con instantánea previa). Deshacer: los "
+              "dos valores previos y la clave recreada con sus valores, tipos y subclaves "
+              "tal como estaban.",
          risk="Low", security="Neutral", builds=BUILDS_W11,
          builds_note="Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de "
                      "Windows 11; 19045 no se declara."),
@@ -233,9 +234,12 @@ ATLAS_SPECS = [
          state="Enable",
          name="Mostrar las unidades extraíbles en el panel de navegación",
          desc="Escribe la cadena «Removable Drives» como valor predeterminado de la clave "
-              "DelegateFolders\{F5FB2C77-…} en las dos vistas de registro (64 y WOW6432Node). "
-              "El estado contrario del pin borra esas dos CLAVES, operación que el motor no "
-              "sabe hacer.",
+              "DelegateFolders\\{F5FB2C77-…} en las dos vistas de registro (64 y WOW6432Node). "
+              "MEDIDO en el pin (paso 11): las dos DeleteKey de este toggle están en el "
+              "estado «Disable», que es el CONTRARIO al que declara esta capacidad; incluirlas "
+              "aquí borraría justo lo que la capacidad enciende, así que no se declaran. El "
+              "motor ya sabe hacerlas: si una oleada declara la capacidad de ocultarlas, esas "
+              "dos claves se expresan sin tocar el motor.",
          risk="Safe", security="Neutral", builds=[]),
     dict(id="explorer.shortcut-icon.classic", file="Interface/ShortcutIcon.psd1",
          state="Classic",
@@ -398,17 +402,19 @@ def parse_registry_block(path: Path) -> list[dict]:
             continue
         for body in entry_spans(line):
             path_match, name_match = FIELD["path"].search(body), FIELD["name"].search(body)
-            if not path_match or not name_match:
-                continue
             operation = FIELD["op"].search(body)
             op = operation.group(1) if operation else "Set"
+            if not path_match:
+                continue
+            if not name_match and op not in ("DeleteKey", "AddKey"):
+                continue
             data_match = FIELD["data"].search(body)
             type_match = FIELD["type"].search(body)
             entries.append(
                 {
                     "line": number,
                     "path": path_match.group(1),
-                    "name": name_match.group(1),
+                    "name": name_match.group(1) if name_match else "",
                     "type": type_match.group(1) if type_match else "",
                     "op": op,
                     "data": data_match.group(1) if data_match else "",
@@ -458,7 +464,25 @@ def atlas_actions(relative: str, state: str | None) -> tuple[list[dict], list[st
     actions, skipped = [], []
     for entry in entries:
         hive, key = split_path(entry["path"])
-        if entry["op"] in ("DeleteKey", "AddKey"):
+        if entry["op"] == "DeleteKey":
+            # Paso 11 (ADR-0005): el motor ya sabe borrar una CLAVE completa con
+            # instantanea previa, asi que se declara en vez de omitirse. `AddKey`
+            # sigue sin expresarse: crear una clave vacia no es un efecto propio.
+            actions.append(
+                {
+                    "type": "registryDeleteKey",
+                    "order": len(actions) + 1,
+                    "hive": {"HKLM": "LocalMachine", "HKCU": "CurrentUser",
+                             "HKCR": "ClassesRoot", "HKU": "Users"}[hive],
+                    "keyPath": key,
+                    # El pin borra la clave tal cual, sin subarbol.
+                    "recursive": False,
+                    "line": entry["line"],
+                    "description": f"Borrar la clave {hive}\\{key}",
+                }
+            )
+            continue
+        if entry["op"] == "AddKey":
             skipped.append(f"{entry['op']} {hive}\\{key}")
             continue
         operation = entry["op"]
@@ -569,16 +593,18 @@ def parse_registry_block_text(text: str) -> list[dict]:
         if not path_match:
             continue
         name_match = FIELD["name"].search(body)
-        if not name_match:
-            continue
         operation = FIELD["op"].search(body)
+        # Una entrada SIN `Name` es una operacion de CLAVE (`DeleteKey`/`AddKey`):
+        # se conserva a proposito para no perderla en silencio (paso 11).
+        if not name_match and not (operation and operation.group(1) in ("DeleteKey", "AddKey")):
+            continue
         data_match = FIELD["data"].search(body)
         type_match = FIELD["type"].search(body)
         entries.append(
             {
                 "line": 0,
                 "path": path_match.group(1),
-                "name": name_match.group(1),
+                "name": name_match.group(1) if name_match else "",
                 "type": type_match.group(1) if type_match else "",
                 "op": operation.group(1) if operation else "Set",
                 "data": data_match.group(1) if data_match else "",
@@ -675,8 +701,10 @@ def build() -> dict:
                     + (f" (estado '{spec['state']}')" if spec["state"] else "")
                     + ". Valores tomados del bloque Registry del pin: "
                     + "; ".join(
-                        f"{a['valueName'] or '(predeterminado)'}="
-                        f"{a['value'] if a['value'] != '' else '(cadena vacia)'}"
+                        (f"{a['valueName'] or '(predeterminado)'}="
+                         f"{a['value'] if a['value'] != '' else '(cadena vacia)'}")
+                        if a["type"] == "registry"
+                        else f"BORRAR CLAVE {a['hive']}\\{a['keyPath']} (DeleteKey del pin)"
                         for a in actions)
                     + "." + blocked
                     + spec.get("extra_provenance", "")
@@ -684,6 +712,11 @@ def build() -> dict:
                     + (" " if spec.get("builds_note") else "")
                     + " Reversibilidad (ADR-0003): Reversible - valores de registro con "
                     "valor previo guardado por el motor."
+                    + (" Las claves se borran con instantanea previa del subarbol "
+                       "(valores, tipos y subclaves) que el diario recrea al deshacer; si "
+                       "la instantanea falla o supera el limite, el motor aborta sin borrar "
+                       "(fail-closed)."
+                       if any(a["type"] == "registryDeleteKey" for a in actions) else "")
                     # Referencia al ledger: los toggles de Atlas viven en
                     # `atlas:toggle:<Nombre>`; los tweaks de `Scripts/Tweaks/`, en
                     # `atlas:manifest:<ruta sin Tweaks/ ni .psd1>`.

@@ -409,6 +409,8 @@ public sealed class RestorePointGateTests
                 new Evo.Engine.Executors.TaskActionExecutor(),
                 new Evo.Engine.Executors.ProcessActionExecutor(),
                 new Evo.Engine.Executors.CommandActionExecutor(),
+                new Evo.Engine.Executors.RegistryDeleteKeyExecutor(),
+                new Evo.Engine.Executors.TaskCreateExecutor(),
             });
 
         var summary = await coordinator.ExecuteAsync(
