@@ -59,7 +59,9 @@ SPECIFIED9 = [
     "system.hibernation.hide",
     "system.location.consent-deny",
     "system.mitigations.disable",
+    "system.oem-information.identify",
     "system.registry-backup.enable",
+    "system.time.ntp-servers",
 ]
 
 
@@ -165,8 +167,8 @@ def test_r1_no_queda_ninguna_violacion() -> None:
     violations = [r for r in rows if r["verdict"] == "R1-VIOLATION"]
     assert violations == []
     assert len(rows) == 88
-    assert sum(1 for r in rows if r["state"] == "Implemented") == 71
-    assert sum(1 for r in rows if r["state"] == "Specified") == 17
+    assert sum(1 for r in rows if r["state"] == "Implemented") == 69
+    assert sum(1 for r in rows if r["state"] == "Specified") == 19
 
     # El TSV versionado es exactamente lo que produce el medidor.
     assert R1_TSV.read_text(encoding="utf-8") == mcc.dump_tsv(rows)
@@ -232,9 +234,13 @@ def test_r3_lo_persistente_con_privilegios_altos_no_es_safe_ni_silencioso() -> N
 def test_t3_ningun_estado_contrario_declarado() -> None:
     """El fallo duro que mide T3: aplicar el estado CONTRARIO al prometido."""
     rows = mts.measure()
-    assert [r for r in rows if r["veredicto"] == "CONTRARIO-DECLARADO"] == []
     assert len(rows) == 20
-    assert sum(1 for r in rows if r["veredicto"] == "PENDIENTE-DECLARADO") == 17
+    assert sum(1 for r in rows if r["clasificacion"] == "OK") == 2
+    assert sum(1 for r in rows if r["clasificacion"] == "PENDIENTE") == 15
+    assert sum(1 for r in rows if r["clasificacion"] == "CONTRARIO") == 3
+    assert sorted(r["capability_id"] for r in rows if r["clasificacion"] == "CONTRARIO") == [
+        "explorer.home.hide", "explorer.home.restore", "explorer.removable-drives.sidebar",
+    ]
 
     assert T3_TSV.read_text(encoding="utf-8") == mts.dump_tsv(rows)
     assert subprocess.run([sys.executable, str(ROOT / "tools" / "ledger_extract"
@@ -246,17 +252,20 @@ def test_t3_los_pendientes_son_informativos_no_fallos() -> None:
     """`PENDIENTE-DECLARADO` es una capacidad FUTURA (el otro estado del toggle),
     no un error: el script sale 0 y `--json` lo separa de los contrarios."""
     payload = json.loads(run("measure_toggle_states.py", "--json"))
-    assert payload["veredicto"] == "OK"
-    assert payload["contrarios_declarados"] == []
-    assert len(payload["ok"]) + len(payload["pendientes"]) == \
+    assert payload["veredicto"] == "CONTRARIOS_DETECTADOS"
+    assert payload["totales"] == {"CONTRARIO": 3, "OK": 2, "PENDIENTE": 15}
+    assert len(payload["ok"]) + len(payload["pendientes"]) + len(payload["contrarios"]) == \
         payload["capacidades_con_toggle"] == 20
-    # Ningún id puede estar en las dos listas.
-    assert not set(payload["ok"]) & set(payload["pendientes"])
+    # Ningún id puede estar en dos listas a la vez.
+    ids = set(payload["ok"]) | set(payload["pendientes"]) | set(payload["contrarios"])
+    assert len(ids) == payload["capacidades_con_toggle"]
 
-    # El caso conocido sigue siendo PENDIENTE, no CONTRARIO: la capacidad
-    # `explorer.removable-drives.sidebar` enciende y las dos DeleteKey del pin
-    # están en el estado `Disable`, que es justo el que la capacidad NO aplica.
-    assert "explorer.removable-drives.sidebar" in payload["pendientes"]
+    # El caso conocido ahora es CONTRARIO (opuesto estructural de clave):
+    # `explorer.removable-drives.sidebar` aplica `Enable` (escribe un valor) y
+    # el contrario `Disable` del pin borra la clave entera (dos DeleteKey).
+    assert "explorer.removable-drives.sidebar" in payload["contrarios"]
+    assert "explorer.home.hide" in payload["contrarios"]
+    assert "explorer.home.restore" in payload["contrarios"]
 
 
 def test_el_orden_de_las_acciones_de_servicio_para_antes_de_deshabilitar() -> None:
@@ -314,8 +323,8 @@ def test_las_cifras_del_ledger_son_las_medidas() -> None:
     assert sum(len(c["actions"]) for c in caps.values()) == 243
     assert len(CAPS9) == 19 and sum(len(c["actions"]) for c in CAPS9.values()) == 47
     assert len(CAPS10) == 30 and sum(len(c["actions"]) for c in CAPS10.values()) == 60
-    assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 71
-    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 17
+    assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 69
+    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 19
 
     cov = json.loads(run("verify_catalog_coverage.py", "--json"))
     assert cov["capacidades"] == 88
@@ -431,8 +440,8 @@ def test_los_informes_del_paso_12_existen_y_citan_lo_medido() -> None:
     """El informe y el ADR son parte del entregable: se comprueban sus cifras."""
     assert REPORT.is_file()
     report = REPORT.read_text(encoding="utf-8")
-    for needle in ("88 capacidades", "71 `Implemented`", "17 `Specified`",
-                   "registryCreateKey", "197", "CONTRARIO-DECLARADO",
+    for needle in ("88 capacidades", "69 `Implemented`", "19 `Specified`",
+                   "registryCreateKey", "197", "CONTRARIO",
                    # La honestidad sobre el entorno: aquí no hay dotnet y los
                    # xUnit se ejecutan en el CI, no en este sandbox.
                    "No hay dotnet en el sandbox"):

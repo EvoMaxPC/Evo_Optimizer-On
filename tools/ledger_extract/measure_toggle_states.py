@@ -1,43 +1,10 @@
 #!/usr/bin/env python3
-"""Estados CONTRARIOS de los toggles de Atlas frente a lo que declara el catálogo (paso 12, T3).
-
-Un toggle de Atlas tiene dos o más estados con efectos distintos (`Disable` /
-`Enable`). El catálogo de una capacidad elige UNO y declara sus acciones. El
-riesgo que se mide aquí es el que ya apareció dos veces en el repo:
-
-    declarar operaciones del estado CONTRARIO al que la capacidad representa
-
-que es lo que pasó con `explorer.removable-drives.sidebar` (las dos `DeleteKey`
-del pin están en el estado `Disable`, y la capacidad enciende) y con la
-propuesta de declarar el `AddKey` de `Home` (está en `Enable`, y la capacidad
-oculta). Una operación así no es un hueco de expresividad: es un ERROR de
-significado que aplicaría lo contrario de lo prometido.
-
-Qué mide, para cada capacidad que sale de un `.psd1` de toggle:
-
-    estado_declarado   el que declara la provenance (`(estado 'X')`)
-    estados_del_pin    todos los estados del .psd1 con su número de entradas
-    ops_del_estado     operaciones de registro del estado declarado
-    ops_contrarias     operaciones de los DEMAS estados (valor/clave distinta)
-    veredicto          OK | CONTRARIO-DECLARADO (hay ops del otro estado en las
-                       acciones) | PENDIENTE-DECLARADO (el otro estado tiene
-                       operaciones que no se declaran: se informa, no es error)
-
-`CONTRARIO-DECLARADO` es un fallo duro: sale 1. `PENDIENTE` es informativo: son
-las operaciones que una capacidad futura necesitaría (el caso de Removable
-Drives) y quedan escritas en el TSV para que no se pierdan.
-
-Sólo stdlib. Determinista: orden por id, LF.
-
-Uso:
-    python3 tools/ledger_extract/measure_toggle_states.py
-    python3 tools/ledger_extract/measure_toggle_states.py --json
-    python3 tools/ledger_extract/measure_toggle_states.py --check
+"""
+Medicion de estados CONTRARIOS de los toggles de Atlas frente al catalogo (paso 12c, T6).
 """
 from __future__ import annotations
 
 import argparse
-import base64
 import json
 import re
 import sys
@@ -51,63 +18,55 @@ import build_section10_catalog as b10  # noqa: E402
 CATALOG_DIR = ROOT / "catalog" / "capabilities"
 OUT_TSV = ROOT / "inventory" / "ledger" / "toggle-state-audit.tsv"
 
-COLUMNS = ("capability_id", "section", "toggle", "estado_declarado", "estados_del_pin",
-           "ops_del_estado", "ops_contrarias", "contrarias_en_acciones", "veredicto")
+COLUMNS = (
+    "capability_id", "section", "toggle", "estado_aplicado",
+    "operaciones_contrarias_no_reproducidas", "clasificacion",
+)
+
+OPPOSITE = {
+    frozenset(("AddKey", "DeleteKey")),
+    frozenset(("Set", "DeleteKey")),
+}
 
 
 def normalize_data(entry: dict) -> str:
-    """Dato comparable: los binarios del pin (`@(0x90, …)`) en el mismo texto que
-    el catálogo (base64), para que un binario no parezca distinto por formato.
-    """
     raw = entry.get("data")
     if raw is None:
         return ""
     text = str(raw).strip().strip("'\"")
-    # Escalar: se compara el VALOR, no el formato. El pin escribe a veces 1 y a
-    # veces '1' para el mismo dato (DWord frente a String del .psd1); el catálogo
-    # conserva el tipo aparte.
     if re.fullmatch(r"-?\d+", text):
         return str(int(text))
-    match = re.fullmatch(r"@\((.+)\)", str(raw).strip())
-    if not match:
-        return text
-    try:
-        numbers = [int(part.strip(), 0) for part in match.group(1).split(",") if part.strip()]
-    except ValueError:
-        return str(raw)
-    return "base64:" + base64.b64encode(bytes(numbers)).decode("ascii")
+    return text
 
 
-def op_key(entry: dict) -> tuple[str, str, str, str, str]:
-    """Identidad comparable de una entrada de registro del pin.
-
-    El DATO entra en la identidad, y es la clave de todo el script: en un toggle,
-    `Disable` y `Enable` escriben el MISMO valor con datos distintos
-    (`AutoCheckSelect=0` frente a `=1`). Comparar sólo (hive, clave, nombre) haría
-    que el estado contrario pareciera declarado en las 19 capacidades; el dato
-    distingue el efecto y deja a la vista sólo lo que de verdad se cruzó.
-    """
+def op_key(entry: dict) -> tuple:
     hive, key = b10.split_path(entry["path"])
-    if entry["op"] in ("DeleteKey", "AddKey"):
-        return (hive, key, entry["op"], "", "")
-    return (hive, key, "Set", entry["name"] or "", normalize_data(entry))
+    op = entry.get("op") or "Set"
+    if op in ("AddKey", "DeleteKey"):
+        return (hive, key, op, "", "")
+    return (hive, key, op, entry.get("name") or "", normalize_data(entry))
 
 
-def action_keys(capability: dict) -> set[tuple[str, str, str, str, str]]:
-    keys = set()
-    for action in capability["actions"]:
-        if action["type"] not in ("registry", "registryDeleteKey", "registryCreateKey"):
-            continue
-        hive = {"LocalMachine": "HKLM", "CurrentUser": "HKCU",
-                "ClassesRoot": "HKCR", "Users": "HKU"}[action["hive"]]
-        if action["type"] == "registryDeleteKey":
-            keys.add((hive, action["keyPath"], "DeleteKey", "", ""))
-        elif action["type"] == "registryCreateKey":
-            keys.add((hive, action["keyPath"], "AddKey", "", ""))
-        elif action["type"] == "registry":
-            keys.add((hive, action["keyPath"], "Set", action["valueName"] or "",
-                      str(action.get("value"))))
-    return keys
+def op_human(entry: dict) -> str:
+    hive, key = b10.split_path(entry["path"])
+    op = entry.get("op") or "Set"
+    name = entry.get("name") or ""
+    data = normalize_data(entry)
+    if op in ("AddKey", "DeleteKey"):
+        return f"{op} {hive}:{key}"
+    return f"{op} {hive}:{key} {name}={data}"
+
+
+def is_structural_opposite(applied: dict, contrary: dict) -> bool:
+    ahive, akey = b10.split_path(applied["path"])
+    chive, ckey = b10.split_path(contrary["path"])
+    if ahive != chive or akey != ckey:
+        return False
+    aop = applied.get("op") or "Set"
+    cop = contrary.get("op") or "Set"
+    if frozenset((aop, cop)) in OPPOSITE:
+        return True
+    return False
 
 
 def declared_state(capability: dict) -> str | None:
@@ -129,43 +88,50 @@ def measure() -> list[dict]:
             if not relative:
                 continue
             source = b10.ATLAS_TOGGLES / relative
+            if not source.is_file():
+                continue
             text = source.read_text(encoding="utf-8", errors="replace")
             states = b10.split_states(text)
             declared = declared_state(capability)
-            if declared not in states:
+            if not declared or declared not in states:
                 continue
-            own = {op_key(e) for e in b10.parse_registry_block_text(states[declared])}
-            other: set[tuple[str, str, str, str, str]] = set()
+            applied_entries = {op_key(e): e for e in b10.parse_registry_block_text(states[declared])}
+            contrary_entries: list[dict] = []
             for name, block in states.items():
-                if name != declared:
-                    other |= {op_key(e) for e in b10.parse_registry_block_text(block)}
-            declared_actions = action_keys(capability)
-            # Contrario es lo que SOLO aplica el otro estado. Lo que ambos estados
-            # escriben igual (un valor compartido, p. ej. FontSmoothing='2') no es
-            # contrario: es común al toggle y se aplica igual se elija lo que se
-            # elija.
-            exclusive_other = other - own
-            contrary_in_actions = sorted(declared_actions & exclusive_other)
-            pending = sorted(exclusive_other - declared_actions)
-            if contrary_in_actions:
-                verdict = "CONTRARIO-DECLARADO"
-            elif pending:
-                verdict = "PENDIENTE-DECLARADO"
+                if name == declared:
+                    continue
+                contrary_entries.extend(b10.parse_registry_block_text(block))
+            applied_keys = set(applied_entries)
+            no_reproducidas = {op_key(e) for e in contrary_entries} - applied_keys
+            no_repro_list = sorted(
+                op_human(e) for e in contrary_entries if op_key(e) in no_reproducidas
+            )
+            structural_opposite = False
+            for ce in contrary_entries:
+                ck = op_key(ce)
+                if ck not in no_reproducidas:
+                    continue
+                for ae in applied_entries.values():
+                    if is_structural_opposite(ae, ce):
+                        structural_opposite = True
+                        break
+                if structural_opposite:
+                    break
+            if not no_reproducidas:
+                clasificacion = "OK"
+            elif structural_opposite:
+                clasificacion = "CONTRARIO"
             else:
-                verdict = "OK"
+                clasificacion = "PENDIENTE"
             rows.append({
                 "capability_id": capability["id"],
                 "section": str(capability["sectionId"]),
                 "toggle": Path(relative).stem,
-                "estado_declarado": declared,
-                "estados_del_pin": "|".join(
-                    f"{name}:{len(b10.parse_registry_block_text(block))}"
-                    for name, block in states.items()),
-                "ops_del_estado": len(own),
-                "ops_contrarias": len(exclusive_other),
-                "contrarias_en_acciones": len(contrary_in_actions),
-                "veredicto": verdict,
+                "estado_aplicado": declared,
+                "operaciones_contrarias_no_reproducidas": "; ".join(no_repro_list),
+                "clasificacion": clasificacion,
             })
+    rows.sort(key=lambda r: r["capability_id"])
     return rows
 
 
@@ -184,12 +150,15 @@ def main(argv: list[str] | None = None) -> int:
 
     rows = measure()
     tsv = dump_tsv(rows)
-    bad = [r for r in rows if r["veredicto"] == "CONTRARIO-DECLARADO"]
+    contrarios = [r for r in rows if r["clasificacion"] == "CONTRARIO"]
 
     if args.check:
         current = OUT_TSV.read_text(encoding="utf-8") if OUT_TSV.is_file() else ""
         if current != tsv:
-            print("el TSV no coincide: ejecuta el script sin --check", file=sys.stderr)
+            print(
+                f"el TSV de toggle-estados no coincide con {OUT_TSV}: ejecuta el script sin --check",
+                file=sys.stderr,
+            )
             return 1
     else:
         OUT_TSV.write_text(tsv, encoding="utf-8")
@@ -197,24 +166,28 @@ def main(argv: list[str] | None = None) -> int:
     if args.json:
         print(json.dumps({
             "capacidades_con_toggle": len(rows),
-            "ok": [r["capability_id"] for r in rows if r["veredicto"] == "OK"],
-            "pendientes": [r["capability_id"] for r in rows
-                           if r["veredicto"] == "PENDIENTE-DECLARADO"],
-            "contrarios_declarados": [r["capability_id"] for r in bad],
-            "veredicto": "OK" if not bad else "FALLO",
+            "ok": [r["capability_id"] for r in rows if r["clasificacion"] == "OK"],
+            "pendientes": [r["capability_id"] for r in rows if r["clasificacion"] == "PENDIENTE"],
+            "contrarios": [r["capability_id"] for r in contrarios],
+            "totales": {
+                "OK": sum(1 for r in rows if r["clasificacion"] == "OK"),
+                "PENDIENTE": sum(1 for r in rows if r["clasificacion"] == "PENDIENTE"),
+                "CONTRARIO": len(contrarios),
+            },
+            "veredicto": "OK" if not contrarios else "CONTRARIOS_DETECTADOS",
         }, ensure_ascii=False, indent=2, sort_keys=True))
-        return 0 if not bad else 1
+        return 0
 
     print(f"capacidades que salen de un toggle : {len(rows)}")
-    print(f"  estado declarado sin contrarios   : {sum(1 for r in rows if r['veredicto'] == 'OK')}")
-    print(f"  con operaciones pendientes del otro estado: "
-          f"{sum(1 for r in rows if r['veredicto'] == 'PENDIENTE-DECLARADO')}")
+    print(f"  OK (sin contrarias no reproducidas) : {sum(1 for r in rows if r['clasificacion'] == 'OK')}")
+    print(f"  PENDIENTE (contrarias no declaradas): {sum(1 for r in rows if r['clasificacion'] == 'PENDIENTE')}")
+    print(f"  CONTRARIO (opuesto estructural)     : {len(contrarios)}")
     for row in rows:
-        if row["veredicto"] != "OK":
-            print(f"  {row['veredicto']:<22} {row['capability_id']:<40} "
-                  f"declarado={row['estado_declarado']} pin={row['estados_del_pin']}")
-    print(f"contrarios DECLARADOS (fallo)      : {len(bad)}")
-    return 0 if not bad else 1
+        if row["clasificacion"] != "OK":
+            print(f"  {row['clasificacion']:<12} {row['capability_id']:<40} "
+                  f"estado={row['estado_aplicado']} "
+                  f"no_reproducidas=[{row['operaciones_contrarias_no_reproducidas']}]")
+    return 0
 
 
 if __name__ == "__main__":

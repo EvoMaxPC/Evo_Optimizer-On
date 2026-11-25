@@ -170,6 +170,7 @@ ATLAS_SPECS = [
          builds_note="Builds: la Galería del Explorador es una carpeta de Windows 11 "
                      "(su CLSID {e88865ea-...} no existe en 19045)."),
     dict(id="explorer.home.hide", file="Interface/Home.psd1", state="Disable",
+         conflictsWith=["explorer.home.restore"],
          name="Ocultar Inicio en el Explorador y abrir en Este equipo",
          desc="Desancla Inicio del panel de navegación (IsPinnedToNameSpaceTree=0), pone "
               "LaunchTo=1 para que el Explorador abra en Este equipo y BORRA la clave HKLM "
@@ -181,6 +182,7 @@ ATLAS_SPECS = [
          builds_note="Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de "
                      "Windows 11; 19045 no se declara."),
     dict(id="explorer.home.restore", file="Interface/Home.psd1", state="Enable",
+         conflictsWith=["explorer.home.hide"],
          name="Restaurar Inicio en el Explorador y abrir en Inicio",
          desc="Ancla la carpeta Inicio en el panel de navegacion de dos formas a la "
               "vez: CREA la clave HKLM\\SOFTWARE\\Microsoft\\Windows\\"
@@ -783,7 +785,7 @@ def build() -> dict:
                 "confirmation": CONFIRM[spec["risk"]],
                 "state": "Implemented",
                 "variants": ["Evo", "WinUtil"],
-                "conflictsWith": [],
+                "conflictsWith": spec.get("conflictsWith", []),
                 "dependsOn": [],
                 "supportedBuilds": spec["builds"] or DEFAULT_BUILDS,
                 "provenance": (
@@ -842,7 +844,7 @@ def build() -> dict:
                 "confirmation": CONFIRM[spec["risk"]],
                 "state": "Implemented",
                 "variants": spec.get("variants", ["Evo", "Atlas"]),
-                "conflictsWith": [],
+                "conflictsWith": spec.get("conflictsWith", []),
                 "dependsOn": [],
                 "supportedBuilds": spec["builds"] or DEFAULT_BUILDS,
                 "provenance": (

@@ -318,15 +318,14 @@ ATLAS_TWEAK_SPECS = [
               "3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\"
               "W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: "
               "devuelve los dos valores previos y el estado de ejecución anterior del "
-              "servicio (si estaba parado, lo vuelve a parar). Sigue fuera de la "
-              "capacidad `w32tm /config /update` y `w32tm /resync`: son comandos sin "
-              "inversa declarada y no se ejecutan, así que la resincronización la hace "
-              "Windows en su siguiente ciclo. Por eso la capacidad es Implemented con esa "
-              "parte declarada, no Specified callada.",
+              "servicio (si estaba parado, lo vuelve a parar).",
          risk="Low", security="Neutral",
-         omit="Run: w32tm /config /update y w32tm /resync (comandos sin inversa; NO se "
-              "ejecutan y se declaran aquí)",
+         r1_gap="ejecuta `w32tm /config /update` y `w32tm /resync` "
+         "(config-time.psd1, bloque `Run`), comandos sin inversa que no se declaran "
+         "como acción",
          build_note="W32Time\\Parameters existe en 19045 y en Windows 11"),
+
+
     dict(id="system.oem-information.identify", atlas_tweak="misc/config-oem-information.psd1",
          name="Escribir la información OEM del sistema",
          desc="Escribe Manufacturer, SupportURL y SupportPhone en HKLM\\SOFTWARE\\"
@@ -334,7 +333,12 @@ ATLAS_TWEAK_SPECS = [
               "Windows muestra en Información del sistema. Los literales son los del pin "
               "(atribución de Atlas), no una identidad inventada para EVO.",
          risk="Safe", security="Neutral",
+         r1_gap="ejecuta `config-oem-information.ps1` (config-oem-information.psd1, "
+         "bloque `Script`) que rellena valores dinámicos (versión/modelo de Atlas) no "
+         "expresados como acción",
          build_note="OEMInformation existe en 19045 y en Windows 11"),
+
+
 ]
 
 # Capacidades que salen de un `.psd1` de `Scripts/Tweaks/` con una unica entrada

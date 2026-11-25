@@ -787,10 +787,14 @@ jobs:
                                         "system.network.location-wizard.disable"]
                 and all(len(v) == 1 for v in creates.values())
                 # La lista cerrada de Specified de la seccion 9 (R1 + R3).
+                # Paso 12c: ntp-servers y oem-information también vuelven a
+                # Specified (R1: el pin hace más de lo declarado), así que son 6.
                 and specified9 == ["system.hibernation.hide",
                                    "system.location.consent-deny",
                                    "system.mitigations.disable",
-                                   "system.registry-backup.enable"]
+                                   "system.oem-information.identify",
+                                   "system.registry-backup.enable",
+                                   "system.time.ntp-servers"]
                 # R3: lo que INSTALA algo persistente con privilegios altos (una
                 # tarea programada o un servicio) no puede ser Safe ni quedar sin
                 # confirmacion. Las escrituras de registro quedan fuera del
@@ -804,6 +808,56 @@ jobs:
           PYEOF
           cp inventory/ledger/capability-completeness.tsv ci-out/
           cp inventory/ledger/toggle-state-audit.tsv ci-out/
+
+      - name: "Paso 12c (reporte R1/R2/R3 completo + estados contrarios, determinismo)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/report_rules_state.py \
+              > "ci-out/paso12c-rules-run${i}.txt"
+            sha256sum inventory/ledger/reglas-r1-r3.tsv \
+                      docs/reports/reglas-r1-r3.md \
+              > "ci-out/paso12c-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso12c-sha-run1.txt ci-out/paso12c-sha-run2.txt; then
+            echo "DETERMINISMO PASO 12C ROTO" | tee ci-out/paso12c-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 12c: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso12c-determinism.txt
+          python3 tools/ledger_extract/report_rules_state.py --check
+          cp inventory/ledger/reglas-r1-r3.tsv ci-out/
+          cp docs/reports/reglas-r1-r3.md ci-out/
+          python3 tools/ledger_extract/report_rules_state.py --json \
+            > ci-out/paso12c-rules.json
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/paso12c-rules.json", encoding="utf-8"))
+          print("capacidades:", d["capacidades"],
+                "| Implemented:", d["implemented"],
+                "| Specified:", d["specified"],
+                "| Stub:", d["stub"],
+                "| suma:", d["implemented"] + d["specified"] + d["stub"])
+          print("securityImpact=Improves:", d["improves"])
+          print("R3 aplica:", d["r3_aplica"], "| R3_ok:", d["r3_ok"])
+          print("R1 sin cumplir:", d["r1_fail"])
+          print("R2 sin cumplir:", d["r2_fail"])
+          print("R3 sin cumplir:", d["r3_bad"])
+          ok = (d["capacidades"] == 88
+                and d["implemented"] == 69
+                and d["specified"] == 19
+                and d["stub"] == 0
+                and d["implemented"] + d["specified"] + d["stub"] == 88
+                and d["improves"] == 7
+                and d["r3_aplica"] == 7 and d["r3_ok"] == 7
+                and d["r1_fail"] == ["explorer.home.hide",
+                                     "explorer.home.restore",
+                                     "explorer.removable-drives.sidebar"]
+                and d["r2_fail"] == []
+                and d["r3_bad"] == [])
+          sys.exit(0 if ok else 1)
+          PYEOF
 
       - name: Estructura .NET (validador)
         if: always()

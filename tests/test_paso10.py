@@ -161,9 +161,11 @@ def test_implemented_solo_con_acciones_y_specified_sin_perder_los_valores() -> N
         "system.hibernation.hide",
         "system.location.consent-deny",
         "system.mitigations.disable",
+        "system.oem-information.identify",
         "system.registry-backup.enable",
+        "system.time.ntp-servers",
     ]
-    # Y las cuatro lo dicen en description Y provenance (R1 no admite huecos
+    # Y las seis lo dicen en description Y provenance (R1 no admite huecos
     # silenciosos).
     for cap_id in specified:
         cap = BY_ID[cap_id]
@@ -316,7 +318,7 @@ def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> No
     assert "| 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |" in plan   # fila de §9
     ranges = RANGES.read_text(encoding="utf-8")
     # Paso 12: 88 capacidades (71 Implemented / 17 Specified).
-    assert "**88** capacidades, 71 `Implemented` y 17 `Specified`" in ranges
+    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in ranges
     assert "`system.hibernation.hide`" in ranges
 
 

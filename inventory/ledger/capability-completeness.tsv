@@ -78,12 +78,12 @@ system.menu-delay.disable	9	Implemented	atlas	package/Executables/AtlasModules/S
 system.mitigations.disable	9	Specified	atlas	package/Executables/AtlasModules/Toggles/Security/Mitigations.psd1:12	4	4	1	machine-action	0	si	OK
 system.mouse-acceleration.enable	9	Implemented	winutil	config/tweaks.json#WPFToggleMouseAcceleration	3	3	0		0	no	OK
 system.network.location-wizard.disable	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-network-location-wizard.psd1:5.	0	1	0		0	no	OK
-system.oem-information.identify	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1:5-7.	0	3	0		0	no	OK
+system.oem-information.identify	9	Specified	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1:5-7.	0	3	0		0	no	OK
 system.registry-backup.enable	9	Specified	winutil	config/feature.json#WPFFeatureRegBackup	2	2	0		0	no	OK
 system.search-indexing.disable	9	Implemented	winutil	config/tweaks.json#WPFTweaksDisableSearchIndexing.	1	2	0		0	no	OK
 system.services.manual-profile	9	Implemented	winutil	config/tweaks.json#WPFTweaksServices.	5	5	0		0	no	OK
 system.settings-page-visibility.hide	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5	0	1	0		0	no	OK
 system.sleep.s0-network-keep	9	Implemented	winutil	config/tweaks.json#WPFToggleStandbyFix	1	1	0		0	no	OK
 system.sleep.s3-enable	9	Implemented	winutil	config/tweaks.json#WPFToggleS3Sleep	1	1	0		0	no	OK
-system.time.ntp-servers	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10.	0	3	0		0	si	OK
+system.time.ntp-servers	9	Specified	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10.	0	3	0		0	si	OK
 system.time.utc-rtc	9	Implemented	winutil	config/tweaks.json#WPFTweaksUTC	1	1	0		0	no	OK

@@ -120,8 +120,8 @@ compara las operaciones del pin con las acciones del catálogo:
 
 ```
 capacidades medidas        : 88
-  Implemented              : 71
-  Specified                : 17
+  Implemented              : 69
+  Specified                : 19
   con efectos fuera del pin : 13
 violaciones de R1          : 0
 veredicto por capacidad    : 88 OK
@@ -201,7 +201,8 @@ y `explorer.removable-drives.sidebar` **no** aparecen como contrarios.
 catálogo            88 capacidades · 243 acciones
 sección 9           19 capacidades · 47 acciones (era 18/45)
 sección 10          30 capacidades · 60 acciones (era 29/57)
-estado              71 `Implemented` / 17 `Specified`  (el catálogo medido: 88 capacidades)
+estado              69 `Implemented` / 19 `Specified`  (el catálogo medido: 88 capacidades)
+estados contrarios  3 `CONTRARIO` (explorer.home.hide, explorer.home.restore, explorer.removable-drives.sidebar)
 cobertura           85/85 líneas Mapped · 0 huecos (0 declarados)
 secciones cerradas  1, 2, 3, 9, 10
 auditoría valores   197 filas · 0 sin excepción · veredicto OK
