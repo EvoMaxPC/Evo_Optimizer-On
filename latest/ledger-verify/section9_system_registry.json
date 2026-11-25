@@ -567,7 +567,7 @@
       {
          "id": "system.oem-information.identify",
          "name": "Escribir la información OEM del sistema",
-         "description": "Escribe Manufacturer, SupportURL y SupportPhone en HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OEMInformation, los tres valores que Windows muestra en Información del sistema. Los literales son los del pin (atribución de Atlas), no una identidad inventada para EVO.",
+         "description": "Escribe Manufacturer, SupportURL y SupportPhone en HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OEMInformation, los tres valores que Windows muestra en Información del sistema. Los literales son los del pin (atribución de Atlas), no una identidad inventada para EVO. FUERA DE ESTA CAPACIDAD (R1): ejecuta `config-oem-information.ps1` (config-oem-information.psd1, bloque `Script`) que rellena valores dinámicos (versión/modelo de Atlas) no expresados como acción",
          "sectionId": 9,
          "risk": "Safe",
          "securityImpact": "Neutral",
@@ -575,7 +575,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "None",
-         "state": "Implemented",
+         "state": "Specified",
          "variants": [
             "Evo",
             "Atlas"
@@ -588,7 +588,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1:5-7. Valores tomados del bloque Registry del pin: Manufacturer=Atlas Team; SupportURL=https://discord.atlasos.net; SupportPhone=https://github.com/Atlas-OS/Atlas. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: OEMInformation existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-oem-information",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1:5-7. Valores tomados del bloque Registry del pin: Manufacturer=Atlas Team; SupportURL=https://discord.atlasos.net; SupportPhone=https://github.com/Atlas-OS/Atlas. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: OEMInformation existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-oem-information R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: ejecuta `config-oem-information.ps1` (config-oem-information.psd1, bloque `Script`) que rellena valores dinámicos (versión/modelo de Atlas) no expresados como acción Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": [
             {
                "type": "registry",
@@ -921,7 +921,7 @@
       {
          "id": "system.time.ntp-servers",
          "name": "Usar los servidores de hora de pool.ntp.org",
-         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: devuelve los dos valores previos y el estado de ejecución anterior del servicio (si estaba parado, lo vuelve a parar). Sigue fuera de la capacidad `w32tm /config /update` y `w32tm /resync`: son comandos sin inversa declarada y no se ejecutan, así que la resincronización la hace Windows en su siguiente ciclo. Por eso la capacidad es Implemented con esa parte declarada, no Specified callada.",
+         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: devuelve los dos valores previos y el estado de ejecución anterior del servicio (si estaba parado, lo vuelve a parar). FUERA DE ESTA CAPACIDAD (R1): ejecuta `w32tm /config /update` y `w32tm /resync` (config-time.psd1, bloque `Run`), comandos sin inversa que no se declaran como acción",
          "sectionId": 9,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -929,7 +929,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "SimpleClick",
-         "state": "Implemented",
+         "state": "Specified",
          "variants": [
             "Evo",
             "Atlas"
@@ -942,7 +942,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El bloque Services del pin arranca w32time: se declara como ServiceAction Start (paso 11) y el diario devuelve el estado de ejecucion previo. El pin ADEMAS hace algo que NO se declara: Run: w32tm /config /update y w32tm /resync (comandos sin inversa; NO se ejecutan y se declaran aquí). Queda declarado aqui y no se ejecuta: no hay promesa de deshacer para un comando. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicio: el diario guarda el estado de ejecucion previo y lo devuelve. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El bloque Services del pin arranca w32time: se declara como ServiceAction Start (paso 11) y el diario devuelve el estado de ejecucion previo. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicio: el diario guarda el estado de ejecucion previo y lo devuelve. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: ejecuta `w32tm /config /update` y `w32tm /resync` (config-time.psd1, bloque `Run`), comandos sin inversa que no se declaran como acción Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": [
             {
                "type": "registry",
