@@ -1,7 +1,8 @@
 # PASO 11 — Expresividad del motor y cierre de huecos de las oleadas 2 y 3
 
-- Rama: `arena/ab2d6de7-evo-optimizer-on` (PR #1 **en borrador**, sin fusionar)
+- Rama: `arena/ab2d6de7-evo-optimizer-on` (PR #1 **listo para revisión**, sin fusionar)
 - Base: `0d72efa` (cierre del paso 10)
+- Head del informe: `73cf13b`
 - Fecha: 2026-11-23
 
 ## T0 — Estado de partida medido
@@ -420,12 +421,13 @@ xUnit Evo.Catalog.Tests (Wave4CatalogTests) |  62   |  75   | +13 casos (8 [Fact
 xUnit total (4 proyectos)                   | 187   | 224   | 224 passed / 0 failed en windows-2025 y windows-11-arm
 ```
 
-Medido en CI, no deducido: run `45667205885` (windows-2025) y `45667191359`
-(windows-11-arm), ambos `success`, `test-summary.txt` = `total=224 passed=224
-failed=0`. Desglose por proyecto (`test-per-project.txt`): Catalog 75, Core 34,
-Detection 35, Engine 80.
+Medido en CI, no deducido. Sobre `c3f4731` (el commit que arregla el build):
+`45667205885` (windows-2025) y `45667191359` (windows-11-arm); sobre el head final
+`73cf13b`: `45668057265` y `45668039934` (ledger-verify). Los cuatro `success`, y
+`test-summary.txt` = `total=224 passed=224 failed=0` en los dos runners. Desglose
+por proyecto (`test-per-project.txt`): Catalog 75, Core 34, Detection 35, Engine 80.
 
-Los 23 del motor cubren, uno a uno, lo que el paso exige: ejecutar, deshacer
+Los 24 del motor cubren, uno a uno, lo que el paso exige: ejecutar, deshacer
 exacto (valores + **tipos** + subclaves + ramas vacías), dry-run, clave
 inexistente, fallo de instantánea, límite superado, profundidad superada,
 sin-recursión, audit sin mutar, rollback por coordinador, puerta de punto de
@@ -440,7 +442,9 @@ contra las APIs reales leídas por `grep` (`RegistrySnapshotLimits`,
 `TestHarness.Create(restorePointAvailable:)`, `FakeTaskAccessor.Created/Seed/
 FailCreateWith`, `FakeRegistryAccessor.GetKind/EnsureKey/ClearLog`, `ActionContext`,
 `UndoContext`, `TaskCreateAction` como record). El primer intento **falló en CI** y
-quedó arreglado en `c3f4731`; los dos fallos eran reales, no de compilación:
+quedó arreglado en `c3f4731`. Los dos fallos eran reales, no ruido de CI: uno de
+compilación y otro de lógica (el segundo no llegó a ejecutarse porque el build se
+detuvo en el primero):
 
 1. `CS1574` en `Evo.Core`: un `<see cref="RegistrySnapshotLimits"/>` citaba un tipo
    de `Evo.Engine` desde `Evo.Core`, que no puede referenciarlo. Con
@@ -492,6 +496,9 @@ U6 | Job «Paso 11» con doble ejecución, diff y sha256          | CUMPLIDO
   debe declarar la parada primero.
 - **`inventory-reconciliation.tsv` no cambia**, pero `catalog-value-audit.tsv` sí
   (195 filas): cualquier documento que citara 194 queda desfasado.
+- **El sandbox no compila**: la primera vez que este paso se creyó terminado, CI
+  dijo que no. Los runs en rojo (`45660870515`, `45660888812`) están citados aquí
+  a propósito: son el coste real de no tener dotnet en local.
 
 ## Preguntas abiertas
 
