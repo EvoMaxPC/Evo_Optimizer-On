@@ -305,7 +305,7 @@ acciones por tipo                                 | registry 194, service 9, tas
 cobertura                                         | 85/85, 0 huecos | 85/85, 0 huecos
 auditoría de valores                              | 194 filas       | 195 filas (la clave de Inicio), veredicto OK
 pytest                                            | 518             | 539 (+21)
-xUnit                                             | 187             | 187 + 36 nuevos (23 motor + 13 catálogo) → 223 si compilan
+xUnit                                             | 187             | 224 (24 motor + 13 catálogo), 0 failed en CI
 rangos-build.md                                   | 73 Implemented / 13 Specified | 75 / 11
 ```
 
@@ -415,9 +415,15 @@ Antes/después de los `pending` de §9/§10: **no cambia ninguno** (siguen 3 en 
 suite                                  | antes | ahora | detalle
 ---------------------------------------+-------+-------+----------------------------------------
 pytest (tests + tools/ledger_extract/tests) | 518 | 539 | +21 de tests/test_paso11.py
-xUnit Evo.Engine.Tests (Wave4EngineTests)   | —   | +23   | 23 [Fact]: DeleteKey 10, tareas 5, servicios 6, capacidades reales 2
-xUnit Evo.Catalog.Tests (Wave4CatalogTests) | —   | +13   | 8 [Fact] + 5 [InlineData] = 13 casos; incluye el barrido de las 86
+xUnit Evo.Engine.Tests (Wave4EngineTests)   |  56   |  80   | +24 [Fact]: DeleteKey 10, tareas 5, servicios 7, capacidades reales 2
+xUnit Evo.Catalog.Tests (Wave4CatalogTests) |  62   |  75   | +13 casos (8 [Fact] + 5 [InlineData]); incluye el barrido de las 86
+xUnit total (4 proyectos)                   | 187   | 224   | 224 passed / 0 failed en windows-2025 y windows-11-arm
 ```
+
+Medido en CI, no deducido: run `45667205885` (windows-2025) y `45667191359`
+(windows-11-arm), ambos `success`, `test-summary.txt` = `total=224 passed=224
+failed=0`. Desglose por proyecto (`test-per-project.txt`): Catalog 75, Core 34,
+Detection 35, Engine 80.
 
 Los 23 del motor cubren, uno a uno, lo que el paso exige: ejecutar, deshacer
 exacto (valores + **tipos** + subclaves + ramas vacías), dry-run, clave
@@ -427,14 +433,25 @@ restauración, creación/overwrite/rechazos/fallo de tarea, arranque con deshace
 cambio de arranque sin tocar el estado, fallo de arranque con reversión LIFO y las
 tres capacidades reales de §9, más los dos del orden de servicios (1058).
 
-**Aviso honesto (REQ-002)**: el sandbox **no tiene dotnet**. Los 36 casos xUnit nuevos se
-han escrito y revisado contra las APIs reales por lectura y `grep`
-(`RegistrySnapshotLimits`, `ServiceUndoEntry.StartupTypeChanged/StatusChanged`,
+**Los 37 casos nuevos compilan y pasan en CI** (224/224, dos runners). Lo que el
+sandbox no pudo hacer fue compilarlos: aquí no hay dotnet, así que se escribieron
+contra las APIs reales leídas por `grep` (`RegistrySnapshotLimits`,
+`ServiceUndoEntry.StartupTypeChanged/StatusChanged`,
 `TestHarness.Create(restorePointAvailable:)`, `FakeTaskAccessor.Created/Seed/
 FailCreateWith`, `FakeRegistryAccessor.GetKind/EnsureKey/ClearLog`, `ActionContext`,
-`UndoContext`, `TaskCreateAction` como record), pero **su compilación y ejecución
-sólo se pueden verificar en CI**. No se citan resultados de CI de este paso hasta
-que el push exista y los runs terminen.
+`UndoContext`, `TaskCreateAction` como record). El primer intento **falló en CI** y
+quedó arreglado en `c3f4731`; los dos fallos eran reales, no de compilación:
+
+1. `CS1574` en `Evo.Core`: un `<see cref="RegistrySnapshotLimits"/>` citaba un tipo
+   de `Evo.Engine` desde `Evo.Core`, que no puede referenciarlo. Con
+   `TreatWarningsAsErrors` el build entero caía (runs `45660870515` y
+   `45660888812`). El comentario ahora dice dónde vive el límite y usa `<c>`.
+2. `TestWave2Catalog_PrivilegeMatchesTheHivesItWrites` deducía el privilegio sólo
+   de `RegistryAction`: `explorer.home.hide` pasó a borrar en HKLM con
+   `registryDeleteKey` y el test esperaba `User` con `Admin` declarado. Se añadió
+   `RegistryHives()` (valores **y** claves) y el barrido de la forma `DeleteKey`
+   (no recursiva, CLSID del pin) en `TestWave2Catalog_EveryActionTouchesExactlyOneValue`;
+   la misma regla se añadió a `Wave3CatalogTests`.
 
 ## Criterios U0–U6
 
@@ -453,8 +470,8 @@ U3 | Cierre desde los generadores                              | CUMPLIDO
    |   4 capacidades cerradas, 0 Specified en §9, 0 JSON a mano, --check byte a byte
 U4 | Ledgers y cobertura al día                                | CUMPLIDO
    |   195 filas, 0 ambiguous, 0 sin excepción, 85/85 cubiertas, 0 huecos
-U5 | Pruebas                                                   | CUMPLIDO (xUnit pendiente de CI)
-   |   539 pytest (+21), 36 xUnit nuevos (23 del motor + 13 de catálogo)
+U5 | Pruebas                                                   | CUMPLIDO
+   |   539 pytest (+21), 224 xUnit (+37: 24 del motor + 13 de catálogo), 0 failed
 U6 | Job «Paso 11» con doble ejecución, diff y sha256          | CUMPLIDO
    |   ledger-verify: dos pasadas, diff de sha256 de 8 artefactos, --check, y
    |   comprobación de invariantes de §9/§10 leídas de los JSON
@@ -467,8 +484,9 @@ U6 | Job «Paso 11» con doble ejecución, diff y sha256          | CUMPLIDO
 - **El borrado recursivo puede llevarse la clave padre vacía.** El diario devuelve
   el subárbol pedido; no promete más.
 - **Crear una tarea no valida que Windows la acepte**; eso es del accesor real.
-- **Los xUnit nuevos no se han compilado aquí** (no hay dotnet). Es el único punto
-  del paso que queda pendiente de verificación externa.
+- **La compilación se verificó en CI, no aquí** (el sandbox no tiene dotnet). Los
+  runs citados en T4 son la evidencia; el primer intento de este paso falló dos
+  veces y las dos correcciones están en `c3f4731`.
 - **El orden de declaración de los servicios es semántico**, no cosmético (ver
   «Hallazgo»): cualquier capacidad futura que combine `Stop` y `SetStartupType`
   debe declarar la parada primero.
