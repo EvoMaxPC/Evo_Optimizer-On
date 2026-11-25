@@ -4,7 +4,8 @@
 - **Rama**: `arena/ab2d6de7-evo-optimizer-on` (PR #1, **draft**)
 - **Punto de partida**: `cb75abe` (paso 11 verde)
 - **Estado**: cerrado. `ledger-verify` en verde con el job nuevo y `dotnet-ci`
-  con los xUnit; la primera pasada falló con 7 casos y cuatro eran defectos
+  con los xUnit en verde —**237/237 en `windows-2025` y en `windows-11-arm`**—
+  sobre `ee4475a`. La primera pasada falló con 7 casos y cuatro eran defectos
   reales que se corrigieron (§7.3).
 
 ## 1. Qué pedía el paso y qué se ha hecho
@@ -209,6 +210,8 @@ T3                  20 medidas · 3 OK · 17 pendientes · 0 contrarios
 plan de oleadas     89/435 líneas (20.5 %)
 rangos de build     79 completos + 9 recortados
 pytest              360 passed
+xUnit               237/237 en windows-2025 y windows-11-arm
+                    (run 45683131842 / 45683158829, sobre ee4475a)
 ```
 
 Las cifras del paso 11 (**86** capacidades, 238 acciones, 231, 195 filas de
