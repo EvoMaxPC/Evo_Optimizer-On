@@ -49,6 +49,16 @@ public sealed class FakeServiceAccessor : IServiceAccessor
             throw new InvalidOperationException($"No se pudo iniciar el servicio '{serviceName}'.");
         }
 
+        // Windows no arranca un servicio deshabilitado (ERROR_SERVICE_DISABLED,
+        // 1058). El fake lo imita para que un deshacer con el orden equivocado
+        // falle en los tests y no sólo en producción.
+        if (_services.TryGetValue(serviceName, out var disabled) &&
+            disabled.StartupType == ServiceStartupType.Disabled)
+        {
+            throw new InvalidOperationException(
+                $"No se pudo iniciar el servicio '{serviceName}': está deshabilitado (1058).");
+        }
+
         var current = _services.TryGetValue(serviceName, out var service)
             ? service
             : new FakeService(serviceName, ServiceStatus.Stopped, ServiceStartupType.Unknown);

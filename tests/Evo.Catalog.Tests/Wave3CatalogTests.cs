@@ -339,8 +339,10 @@ public sealed class Wave3CatalogTests
         var location = ServiceActions(Definition("system.location.consent-deny")).ToList();
         Assert.Equal(4, location.Count);
         Assert.Equal(
-            new[] { ("lfsvc", ServiceOperation.SetStartupType), ("lfsvc", ServiceOperation.Stop),
-                    ("MapsBroker", ServiceOperation.SetStartupType), ("MapsBroker", ServiceOperation.Stop) },
+            // Parar primero y deshabilitar después: así el deshacer LIFO devuelve
+            // el arranque antes de arrancar el servicio.
+            new[] { ("lfsvc", ServiceOperation.Stop), ("lfsvc", ServiceOperation.SetStartupType),
+                    ("MapsBroker", ServiceOperation.Stop), ("MapsBroker", ServiceOperation.SetStartupType) },
             location.Select(a => (a.ServiceName, a.Operation)).ToArray());
         Assert.All(location.Where(a => a.Operation == ServiceOperation.SetStartupType),
             a => Assert.Equal("Disabled", a.StartupType));

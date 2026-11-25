@@ -238,6 +238,28 @@ public sealed partial class CatalogValidator
                 // Paso 11 (ADR-0005): las acciones nuevas tienen contrato cerrado y
                 // el validador comprueba sus campos obligatorios aquí, no sólo al
                 // deserializar (un JSON con la clave vacía cargaría igual).
+
+                // Un servicio declara UNA cosa: cambiar el arranque pide
+                // 'startupType'; arrancar o parar no lo admite (serían dos efectos
+                // con un solo botón de deshacer).
+                case Evo.Core.Actions.ServiceAction service
+                    when service.Operation == Evo.Core.Actions.ServiceOperation.SetStartupType
+                         && string.IsNullOrWhiteSpace(service.StartupType):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"ServiceAction SetStartupType sobre '{service.ServiceName}' sin " +
+                        "'startupType'."));
+                    break;
+
+                case Evo.Core.Actions.ServiceAction service
+                    when service.Operation != Evo.Core.Actions.ServiceOperation.SetStartupType
+                         && service.StartupType is not null:
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"ServiceAction {service.Operation} sobre '{service.ServiceName}' con " +
+                        "'startupType': arrancar o parar no cambia el tipo de inicio."));
+                    break;
+
                 case Evo.Core.Actions.RegistryDeleteKeyAction deleteKey
                     when string.IsNullOrWhiteSpace(deleteKey.KeyPath):
                     issues.Add(Error(

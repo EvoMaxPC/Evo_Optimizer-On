@@ -479,6 +479,8 @@ jobs:
           python3 tools/ledger_extract/build_wave_plan.py --check
           python3 tools/ledger_extract/build_build_ranges_report.py --check
           cp catalog/capabilities/section10_explorer_ui.json ci-out/
+          python3 tools/ledger_extract/generate_coverage_matrix.py \
+            --report /tmp/paso9-matriz.md --json > ci-out/paso9-matriz.json
           python3 tools/ledger_extract/verify_catalog_coverage.py --json \
             > ci-out/paso9-coverage.json
           python3 tools/ledger_extract/audit_catalog_values.py --json \
@@ -495,7 +497,18 @@ jobs:
           print("seccion 10:", cov["por_seccion"]["10"])
           print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
           sec10 = cov["por_seccion"]["10"]
-          ok = (cov["capacidades"] >= 68
+          # Invariantes PROPIAS de la seccion 10, leidas del fichero del catalogo:
+          # sustituyen al recuento global de capacidades, que el paso 10 tuvo que
+          # aflojar (== 68 -> >= 68) y que por tanto ya no verificaba nada.
+          sec10_doc = json.load(open("ci-out/section10_explorer_ui.json", encoding="utf-8"))
+          caps10 = sec10_doc["capabilities"]
+          acts10 = sum(len(c["actions"]) for c in caps10)
+          ok = (len(caps10) == 29
+                and acts10 == 57
+                and all(c["sectionId"] == 10 for c in caps10)
+                and all(c["state"] in ("Implemented", "Specified") for c in caps10)
+                and any(a["type"] == "registryDeleteKey"
+                        for c in caps10 for a in c["actions"])
                 and sec10["lineas_mapped"] == 29
                 and sec10["cubiertas"] == 29
                 and sec10["huecos"] == 0

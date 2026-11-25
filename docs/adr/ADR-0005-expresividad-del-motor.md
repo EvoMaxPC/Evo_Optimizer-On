@@ -93,6 +93,23 @@ de algo que no se aplicó.
 - El deshacer restaura primero el tipo de inicio y después el estado: al revés,
   arrancar un servicio que quedó `Disabled` falla con `ERROR_SERVICE_DISABLED`.
 
+### 4-bis. El ORDEN de las acciones de servicio es semántico
+
+Como el diario se deshace en **LIFO**, la última acción es la primera en
+revertirse. Para dejar un servicio «parado y deshabilitado» con deshacer correcto
+hay que declarar **primero la parada y después el tipo de inicio**:
+
+```
+Stop(1) → SetStartupType Disabled(2)   → rollback: startup(2), then start(1)   OK
+SetStartupType Disabled(1) → Stop(2)   → rollback: stop(2), then startup(1)   arranca
+                                         con el servicio aún deshabilitado → 1058
+```
+
+`Stop` sobre un servicio ya parado es inocuo, así que el orden elegido no añade
+efectos. `location_service_actions()` lo emite así desde el paso 11 y
+`FakeServiceAccessor.StartService` imita el 1058 para que el orden equivocado
+falle en los tests.
+
 ### 5. Lo que NO cambia
 
 - **Comandos y procesos siguen sin inversa.** `CommandUndoEntry.Restore` no hace

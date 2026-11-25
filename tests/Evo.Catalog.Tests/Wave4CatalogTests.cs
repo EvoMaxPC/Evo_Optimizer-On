@@ -106,6 +106,43 @@ public sealed class Wave4CatalogTests
         Assert.True(Validate(Single(logon)).IsValid);
     }
 
+    /// <summary>T1: un servicio declara UNA cosa. Cambiar el arranque exige
+    /// 'startupType'; arrancar o parar no lo admite (serían dos efectos con un
+    /// solo deshacer).</summary>
+    [Fact]
+    public void TestWave4Catalog_ValidatorKeepsServiceOperationsSeparate()
+    {
+        var withoutStartup = Validate(Single(new ServiceAction
+        {
+            Order = 1,
+            Description = "lfsvc",
+            ServiceName = "lfsvc",
+            Operation = ServiceOperation.SetStartupType,
+        }));
+        Assert.False(withoutStartup.IsValid);
+        Assert.Contains(withoutStartup.Errors, e => e.Message.Contains("sin 'startupType'", StringComparison.Ordinal));
+
+        var startWithStartup = Validate(Single(new ServiceAction
+        {
+            Order = 1,
+            Description = "w32time",
+            ServiceName = "w32time",
+            Operation = ServiceOperation.Start,
+            StartupType = "Automatic",
+        }));
+        Assert.False(startWithStartup.IsValid);
+        Assert.Contains(startWithStartup.Errors, e => e.Message.Contains("no cambia el tipo de inicio", StringComparison.Ordinal));
+
+        var ok = Validate(Single(new ServiceAction
+        {
+            Order = 1,
+            Description = "w32time",
+            ServiceName = "w32time",
+            Operation = ServiceOperation.Start,
+        }));
+        Assert.True(ok.IsValid, ok.ErrorSummary);
+    }
+
     // ----------------------------------------------------- capacidades cerradas
     /// <summary>T2: `system.registry-backup.enable` queda completa (registro +
     /// tarea) y sigue cumpliendo ADR-0003: Reversible con SessionUndo.</summary>
@@ -162,13 +199,17 @@ public sealed class Wave4CatalogTests
         Assert.Equal(4, services.Count);
         Assert.Equal(new[] { "lfsvc", "lfsvc", "MapsBroker", "MapsBroker" },
             services.Select(s => s.ServiceName).ToArray());
+        // Orden elegido por el deshacer LIFO: tipo de inicio después de la parada.
         Assert.Equal(
             new[]
             {
-                ServiceOperation.SetStartupType, ServiceOperation.Stop,
-                ServiceOperation.SetStartupType, ServiceOperation.Stop,
+                ServiceOperation.Stop, ServiceOperation.SetStartupType,
+                ServiceOperation.Stop, ServiceOperation.SetStartupType,
             },
             services.Select(s => s.Operation).ToArray());
+        Assert.All(
+            services.Where(s => s.Operation == ServiceOperation.SetStartupType),
+            s => Assert.Equal("Disabled", s.StartupType));
         Assert.Equal(PrivilegeLevel.Admin, definition.Privilege);
         Assert.Equal(Reversibility.Reversible, definition.Reversibility);
         Assert.Equal(RestoreLevel.SessionUndo, definition.Restore);
@@ -229,6 +270,40 @@ public sealed class Wave4CatalogTests
             StringComparison.Ordinal);
         var again = new CatalogLoader().LoadFromText(unknown);
         Assert.IsType<RegistryDeleteKeyAction>(again.Capabilities.Single().Actions[0]);
+    }
+
+    /// <summary>
+    /// Barrido de TODO el catálogo (86). Existe porque cada oleada enumera sólo
+    /// sus ids: si una capacidad se colara fuera de las listas (o una oleada
+    /// dejara de enumerar la suya), ningún test se enteraría. Aquí se exige que
+    /// las 86 cumplan lo mismo, sin listas de ids de por medio.
+    /// </summary>
+    [Fact]
+    public void TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants()
+    {
+        var all = LoadAll();
+        Assert.Equal(86, all.Count);
+
+        // Las cinco secciones cerradas, ni una capacidad fuera de ellas.
+        var sections = all.Select(d => d.SectionId).Distinct().OrderBy(s => s).ToArray();
+        Assert.Equal(new[] { 1, 2, 3, 9, 10 }, sections);
+
+        var report = new CatalogValidator(KnownBuilds).Validate(
+            new CapabilityCatalog(new CatalogMetadata { Version = "1.0.0", SchemaVersion = 1 }, all));
+        Assert.True(report.IsValid, report.ErrorSummary);
+
+        foreach (var definition in all)
+        {
+            Assert.Contains(definition.State,
+                new[] { CapabilityState.Implemented, CapabilityState.Specified });
+            Assert.NotEmpty(definition.Actions);
+            Assert.NotNull(definition.Reversibility);
+            Assert.False(string.IsNullOrWhiteSpace(definition.Provenance));
+            Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+            Assert.Equal(
+                Enumerable.Range(1, definition.Actions.Count),
+                definition.Actions.Select(a => a.Order).OrderBy(o => o));
+        }
     }
 
     // ---------------------------------------------------------------- ayuda

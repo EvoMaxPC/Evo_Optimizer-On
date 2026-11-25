@@ -328,6 +328,13 @@
             {
                "type": "service",
                "order": 3,
+               "description": "lfsvc: detener",
+               "serviceName": "lfsvc",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 4,
                "description": "lfsvc -> Disabled",
                "serviceName": "lfsvc",
                "operation": "SetStartupType",
@@ -335,25 +342,18 @@
             },
             {
                "type": "service",
-               "order": 4,
-               "description": "lfsvc: detener",
-               "serviceName": "lfsvc",
-               "operation": "Stop"
-            },
-            {
-               "type": "service",
                "order": 5,
-               "description": "MapsBroker -> Disabled",
+               "description": "MapsBroker: detener",
                "serviceName": "MapsBroker",
-               "operation": "SetStartupType",
-               "startupType": "Disabled"
+               "operation": "Stop"
             },
             {
                "type": "service",
                "order": 6,
-               "description": "MapsBroker: detener",
+               "description": "MapsBroker -> Disabled",
                "serviceName": "MapsBroker",
-               "operation": "Stop"
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
             }
          ]
       },

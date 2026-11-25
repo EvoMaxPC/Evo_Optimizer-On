@@ -144,6 +144,28 @@ def test_la_seccion_9_cierra_sus_dos_specified() -> None:
     assert sum(len(c["actions"]) for c in CAPS9.values()) == 45
 
 
+def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
+    """73/13 -> 75/11: dos capacidades de §9 dejan de ser Specified.
+
+    Se comprueba contra el informe generado (no contra un literal suelto) y
+    contra los dos JSON que cambian, para que la cifra no pueda quedarse vieja.
+    """
+    text = RANGES.read_text(encoding="utf-8")
+    assert "**86** capacidades, 75 `Implemented` y 11 `Specified`" in text
+    for path in sorted(CATALOG.glob("*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        for cap in document["capabilities"]:
+            assert cap["state"] in ("Implemented", "Specified"), cap["id"]
+
+    total = sum(len(json.loads(p.read_text(encoding="utf-8"))["capabilities"])
+                for p in sorted(CATALOG.glob("*.json")))
+    assert total == 86
+    actions = sum(len(a["actions"])
+                  for p in sorted(CATALOG.glob("*.json"))
+                  for a in json.loads(p.read_text(encoding="utf-8"))["capabilities"])
+    assert actions == 238
+
+
 def test_la_copia_de_seguridad_lleva_registro_y_tarea() -> None:
     cap = CAPS9["system.registry-backup.enable"]
     assert cap["state"] == "Implemented"
@@ -170,8 +192,10 @@ def test_la_ubicacion_apaga_lfsvc_y_mapsbroker_con_evidencia_del_pin() -> None:
     cap = CAPS9["system.location.consent-deny"]
     services = [(a["serviceName"], a["operation"]) for a in cap["actions"]
                 if a["type"] == "service"]
-    assert services == [("lfsvc", "SetStartupType"), ("lfsvc", "Stop"),
-                        ("MapsBroker", "SetStartupType"), ("MapsBroker", "Stop")]
+    # Parar primero y deshabilitar después: el deshacer LIFO devuelve el tipo de
+    # inicio ANTES de intentar arrancar el servicio (si no, ERROR_SERVICE_DISABLED).
+    assert services == [("lfsvc", "Stop"), ("lfsvc", "SetStartupType"),
+                        ("MapsBroker", "Stop"), ("MapsBroker", "SetStartupType")]
     # La evidencia es ruta:linea del pin, no una impresion.
     assert "Atlas.Privacy/Domain/Location.ps1:113" in cap["provenance"]
     assert "Atlas.Privacy/Domain/Location.ps1:114" in cap["provenance"]
@@ -282,6 +306,46 @@ def test_no_se_rompe_la_reconciliacion_de_las_secciones_cerradas() -> None:
     assert statuses.count("Mapped") == 30
     assert statuses.count("Absent-At-Pin") == 26
     assert statuses.count("Informative-Header") == 2
+
+
+def test_el_informe_del_paso_11_cita_lo_medido() -> None:
+    """El informe no puede inventar cifras: las que da tienen que cuadrar con
+    el repo (y con los hallazgos T0 de este mismo paso)."""
+    report = (ROOT / "docs" / "reports" / "paso11.md").read_text(encoding="utf-8")
+
+    # Los siete renglones de la conciliación (6 MAPPED + 1 ABSENT), no «seis».
+    for line in ("9:265", "9:269", "9:302", "9:307", "9:308", "9:316", "9:278"):
+        assert line in report, line
+    assert "Son **7 filas**, no 6" in report
+
+    # T0-b.2: la partición medida (17/11) y no la del paso 10 (15/15).
+    assert "17 ya cubiertas / 11 sin cubrir" in report
+
+    # Las cifras de acción y estado, tal como están en el catálogo de verdad.
+    assert "231             | 238" in report
+    assert "73 / 13         | 75 / 11" in report
+
+    # Y el aviso de honestidad: no hay dotnet en el sandbox.
+    assert "no tiene dotnet" in report
+
+
+def test_las_relajaciones_del_ci_estan_reparadas() -> None:
+    """El job «Paso 9» ya no acepta `capacidades >= 68`: comprueba §10 por
+    invariantes propias. Y ninguna prueba de catálogo deja de enumerar una
+    sección sin sustituirlo por algo más estricto."""
+    workflow = (ROOT / ".github" / "workflows" / "ledger-verify.yml").read_text(encoding="utf-8")
+    assert 'cov["capacidades"] >= 68' not in workflow
+    assert 'len(caps10) == 29' in workflow
+    assert 'acts10 == 57' in workflow
+
+    wave1 = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave1CatalogTests.cs").read_text(encoding="utf-8")
+    assert "SectionId is not 10 and not 9" in wave1
+    assert "Assert.Equal(18, catalog.Definitions.Count(d => d.SectionId == 9))" in wave1
+
+    # Hay un barrido de TODO el catálogo que no depende de listas de ids.
+    sweep = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave4CatalogTests.cs").read_text(encoding="utf-8")
+    assert "EveryCapabilityInTheCatalogMeetsTheSameInvariants" in sweep
+    assert "Assert.Equal(86, all.Count)" in sweep
 
 
 # --------------------------------------------------------------------- ADR-0005

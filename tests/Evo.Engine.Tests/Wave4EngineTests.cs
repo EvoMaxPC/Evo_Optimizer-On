@@ -191,6 +191,85 @@ public sealed class Wave4EngineTests
         AssertSameRegistry(before, harness.Registry.Snapshot());
     }
 
+    /// <summary>T1: sin recursión sólo desaparece la clave pedida; sus subclaves
+    /// siguen ahí y el deshacer devuelve los valores de la clave borrada.</summary>
+    [Fact]
+    public async Task DeleteKey_NonRecursiveLeavesTheSubtreeInPlace()
+    {
+        var harness = TestHarness.Create();
+        SeedTree(harness);
+        var journal = new UndoJournal();
+
+        var result = await new RegistryDeleteKeyExecutor().ExecuteAsync(
+            DeleteKeyAction(recursive: false), ContextFor(harness, journal));
+
+        Assert.True(result.Success, result.ErrorMessage);
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath + @"\Child"));
+        Assert.Equal(7L, harness.Registry.GetValue(
+            RegistryHive.LocalMachine, KeyPath + @"\Child\Grand", "Q"));
+
+        await journal.RollbackAsync(UndoContextFor(harness));
+
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
+        Assert.Equal(42, harness.Registry.GetValue(
+            RegistryHive.LocalMachine, KeyPath, "Dword"));
+    }
+
+    /// <summary>T1: en Audit no se muta nada y se informa del estado actual; el
+    /// diario queda vacío (no hay nada que deshacer).</summary>
+    [Fact]
+    public async Task DeleteKey_AuditReportsStateWithoutMutating()
+    {
+        var harness = TestHarness.Create();
+        SeedTree(harness);
+        var mutationsBefore = harness.Registry.MutationCount;
+
+        var action = DeleteKeyAction(recursive: true, order: 1);
+        var contract = TestHarness.Contract([action], risk: RiskLevel.Safe,
+            restore: RestoreLevel.SessionUndo);
+        var summary = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contract, [action]), ExecutionMode.Audit,
+            harness.Context(ExecutionMode.Audit));
+
+        var only = Assert.Single(summary.Results);
+        Assert.Equal(ActionStatus.Skipped, only.Status);
+        // "4 claves / 5 valores": el estado actual legible sin tocar el registro.
+        Assert.Equal("4 claves / 5 valores", only.ErrorMessage);
+        Assert.Equal(0, summary.Succeeded);
+        Assert.False(summary.Mutated);
+        Assert.Empty(summary.UndoJournalEntry);
+        Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
+    }
+
+    /// <summary>T1: si la instantánea se toma de un subárbol con un ciclo de
+    /// profundidad absurda, el tope duro del recorrido corta y la comprobación
+    /// de límites aborta: ni siquiera se intenta borrar.</summary>
+    [Fact]
+    public async Task DeleteKey_DepthOverTheLimitAbortsBeforeDeleting()
+    {
+        var harness = TestHarness.Create();
+        var path = KeyPath;
+        harness.Registry.Seed(RegistryHive.LocalMachine, path, "Str", "texto",
+            RegistryValueKind.String);
+        for (var level = 0; level < 5; level++)
+        {
+            path += $@"\L{level}";
+            harness.Registry.Seed(RegistryHive.LocalMachine, path, "Str", $"n{level}",
+                RegistryValueKind.String);
+        }
+
+        harness.Registry.ClearLog();
+        var limits = new RegistrySnapshotLimits { MaxDepth = 2, MaxValues = 4096, MaxKeys = 1024 };
+        var result = await new RegistryDeleteKeyExecutor(limits).ExecuteAsync(
+            DeleteKeyAction(recursive: true), ContextFor(harness, new UndoJournal()));
+
+        Assert.False(result.Success);
+        Assert.Contains("profundidad", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
+        Assert.False(harness.Registry.Log.Any(l => l.StartsWith("delete-key", StringComparison.Ordinal)));
+    }
+
     // -------------------------------------------------------------- tareas
     /// <summary>T1: crear una tarea y deshacer = borrarla (no queda rastro).</summary>
     [Fact]
@@ -352,6 +431,103 @@ public sealed class Wave4EngineTests
 
         Assert.Equal(ServiceStartupType.Automatic, harness.Services.GetStartupType("lfsvc"));
         Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus("lfsvc"));
+    }
+
+    /// <summary>T1: el fake imita Windows y NO arranca un servicio deshabilitado
+    /// (1058). Si el diario devolviera el estado antes que el tipo de inicio, el
+    /// rollback fallaría aquí, no sólo en producción.</summary>
+    [Fact]
+    public async Task ServiceStart_OnDisabledServiceFailsLikeWindows()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("MapsBroker", ServiceStatus.Stopped, ServiceStartupType.Disabled);
+
+        var result = await new ServiceActionExecutor().ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "MapsBroker: iniciar",
+            ServiceName = "MapsBroker",
+            Operation = ServiceOperation.Start,
+        }, ContextFor(harness, new UndoJournal()));
+
+        Assert.False(result.Success);
+        Assert.Contains("1058", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus("MapsBroker"));
+    }
+
+    /// <summary>T1: el orden de declaración hace que el deshacer LIFO funcione.
+    /// Con «parar y luego deshabilitar» (el orden del catálogo), el rollback
+    /// devuelve el tipo de inicio ANTES de arrancar el servicio otra vez.</summary>
+    [Fact]
+    public async Task UndoInLifoOrderRestoresTheServiceCompletely()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("lfsvc", ServiceStatus.Running, ServiceStartupType.Automatic);
+        var journal = new UndoJournal();
+
+        // Orden del catálogo: primero la parada, después el tipo de inicio.
+        await new ServiceActionExecutor().ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "lfsvc: detener",
+            ServiceName = "lfsvc",
+            Operation = ServiceOperation.Stop,
+        }, ContextFor(harness, journal));
+
+        await new ServiceActionExecutor().ExecuteAsync(new ServiceAction
+        {
+            Order = 2,
+            Description = "lfsvc -> Disabled",
+            ServiceName = "lfsvc",
+            Operation = ServiceOperation.SetStartupType,
+            StartupType = "Disabled",
+        }, ContextFor(harness, journal));
+
+        Assert.Equal(ServiceStartupType.Disabled, harness.Services.GetStartupType("lfsvc"));
+        Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus("lfsvc"));
+
+        var rollback = await journal.RollbackAsync(UndoContextFor(harness));
+
+        // LIFO: se deshace primero el tipo de inicio (vuelve a Automatic) y sólo
+        // después la parada (arranca). Con el orden invertido, arrancar fallaría
+        // con 1058: por eso el generador declara Stop antes que SetStartupType.
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.Equal(ServiceStartupType.Automatic, harness.Services.GetStartupType("lfsvc"));
+        Assert.Equal(ServiceStatus.Running, harness.Services.GetStatus("lfsvc"));
+    }
+
+    /// <summary>T1: si el catálogo declarara el orden inverso, el deshacer
+    /// fallaría: el fake imita el 1058 de Windows y el rollback del coordinador
+    /// lo deja escrito en vez de mentir sobre el estado final.</summary>
+    [Fact]
+    public async Task UndoInTheOppositeOrderWouldFailAndIsNotWhatTheCatalogDeclares()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("lfsvc", ServiceStatus.Running, ServiceStartupType.Automatic);
+        var journal = new UndoJournal();
+
+        await new ServiceActionExecutor().ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "lfsvc -> Disabled",
+            ServiceName = "lfsvc",
+            Operation = ServiceOperation.SetStartupType,
+            StartupType = "Disabled",
+        }, ContextFor(harness, journal));
+
+        await new ServiceActionExecutor().ExecuteAsync(new ServiceAction
+        {
+            Order = 2,
+            Description = "lfsvc: detener",
+            ServiceName = "lfsvc",
+            Operation = ServiceOperation.Stop,
+        }, ContextFor(harness, journal));
+
+        var rollback = await journal.RollbackAsync(UndoContextFor(harness));
+
+        // El orden invertido NO se deshace: queda declarado, no silenciado.
+        Assert.False(rollback.Success);
+        Assert.Contains("1058", string.Join(" | ", rollback.Errors), StringComparison.Ordinal);
     }
 
     /// <summary>T1: si arrancar falla, la acción falla y la capacidad entera

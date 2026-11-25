@@ -65,12 +65,12 @@ public sealed record RegistryUndoEntry : UndoJournalEntry
 /// Deshacer un cambio de servicio (arranque y/o estado de ejecución).
 /// </summary>
 /// <remarks>
-/// Desde el paso 11 las operaciones <c>Start</c>/<c>Stop</c> existen como acción
-/// propia y también como efecto lateral de <c>SetStartupType</c> combinado. El
-/// deshacer devuelve <b>el tipo de inicio previo</b> y <b>el estado previo</b>
-/// cuando cualquiera de los dos cambió; el orden importa: primero se restaura el
-/// tipo de inicio (para que el servicio no quede deshabilitado al arrancarlo) y
-/// después el estado.
+/// Desde el paso 11 cada acción declara UNA cosa: <c>SetStartupType</c> sólo el
+/// tipo de inicio (<see cref="StartupTypeChanged"/>), y <c>Start</c>/<c>Stop</c>
+/// sólo el estado de ejecución (<see cref="StatusChanged"/>). El deshacer aplica
+/// la que cambió; el orden importa cuando cambian las dos: primero el tipo de
+/// inicio (para que el servicio no quede deshabilitado al arrancarlo) y después
+/// el estado.
 /// </remarks>
 public sealed record ServiceUndoEntry : UndoJournalEntry
 {

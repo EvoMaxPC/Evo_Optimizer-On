@@ -406,22 +406,31 @@ LOCATION_SERVICES = ("lfsvc", "MapsBroker")
 
 
 def location_service_actions(start_order: int) -> list[dict]:
+    """Para cada servicio: parar PRIMERO y deshabilitar después.
+
+    El orden importa por el deshacer LIFO del motor: al revertir se deshace en
+    orden inverso, así que el tipo de inicio se devuelve ANTES de que se intente
+    arrancar el servicio otra vez. Si se declarara al revés (Disabled y luego
+    Stop), el rollback arrancaría un servicio todavía deshabilitado y Windows
+    fallaría con ERROR_SERVICE_DISABLED. Se aplica igual que el pin: el efecto
+    final (parado y deshabilitado) es el mismo.
+    """
     actions = []
     for name in LOCATION_SERVICES:
         actions.append({
             "type": "service",
             "order": start_order,
-            "description": f"{name} -> Disabled",
+            "description": f"{name}: detener",
             "serviceName": name,
-            "operation": "SetStartupType",
-            "startupType": "Disabled",
+            "operation": "Stop",
         })
         actions.append({
             "type": "service",
             "order": start_order + 1,
-            "description": f"{name}: detener",
+            "description": f"{name} -> Disabled",
             "serviceName": name,
-            "operation": "Stop",
+            "operation": "SetStartupType",
+            "startupType": "Disabled",
         })
         start_order += 2
     return actions
