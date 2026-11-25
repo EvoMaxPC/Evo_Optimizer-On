@@ -172,8 +172,12 @@ public sealed class Wave3CatalogTests
             var touchesMachine = hives.Contains(RegistryHiveKind.LocalMachine)
                 || hives.Contains(RegistryHiveKind.Users)
                 || ServiceActions(definition).Any()
-                // Paso 11: crear una tarea de sistema tambien exige elevacion.
-                || definition.Actions.OfType<TaskCreateAction>().Any();
+                // Paso 11: crear una tarea de sistema tambien exige elevacion, y
+                // borrar una CLAVE (aunque hoy la seccion 9 no tenga ninguna) es
+                // una escritura mas en la colmena que declare.
+                || definition.Actions.OfType<TaskCreateAction>().Any()
+                || definition.Actions.OfType<RegistryDeleteKeyAction>()
+                    .Any(a => a.Hive is RegistryHiveKind.LocalMachine or RegistryHiveKind.Users);
             var expected = touchesMachine ? PrivilegeLevel.Admin : PrivilegeLevel.User;
             Assert.True(
                 expected == definition.Privilege,

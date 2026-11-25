@@ -190,7 +190,7 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
             // se comprueban DESPUÉS, sobre la instantánea ya tomada, pero un árbol
             // patológico no debe poder colgar el recorrido.
             IReadOnlyList<string> childNames = depth >= 64
-                ? []
+                ? Array.Empty<string>()
                 : reader.GetSubKeyNames(hive, path);
             foreach (var child in childNames.OrderBy(c => c, StringComparer.OrdinalIgnoreCase))
             {

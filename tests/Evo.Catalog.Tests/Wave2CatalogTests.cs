@@ -62,6 +62,9 @@ public sealed class Wave2CatalogTests
     /// <summary>CLSID del menú contextual clásico (Win11).</summary>
     private const string ClassicContextMenuClsid = "{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}";
 
+    /// <summary>CLSID de la carpeta Inicio que el pin borra (Win11).</summary>
+    private const string ClassicHomeClsid = "{f874310e-b6b7-47dc-bc84-b9e6b38f5903}";
+
     private static string CapabilitiesDirectory()
     {
         var directory = Path.Combine(AppContext.BaseDirectory, "capabilities");
@@ -87,6 +90,16 @@ public sealed class Wave2CatalogTests
 
     private static IEnumerable<RegistryAction> RegistryActions(CapabilityDefinition definition) =>
         definition.Actions.OfType<RegistryAction>();
+
+    /// <summary>
+    /// Colmenas que la capacidad TOCA, con las dos formas de registro: escribir o
+    /// borrar UN valor (<see cref="RegistryAction"/>) y borrar una CLAVE completa
+    /// (<see cref="RegistryDeleteKeyAction"/>, paso 11). Mirar sólo la primera
+    /// dejaba `explorer.home.hide` como «User» cuando borra en HKLM.
+    /// </summary>
+    private static IEnumerable<RegistryHiveKind> RegistryHives(CapabilityDefinition definition) =>
+        definition.Actions.OfType<RegistryAction>().Select(a => a.Hive)
+            .Concat(definition.Actions.OfType<RegistryDeleteKeyAction>().Select(a => a.Hive));
 
     // ---------------------------------------------------------------- T4.1 carga
     /// <summary>T4.1: el fichero de la sección 10 carga, valida sin errores ni avisos
@@ -182,7 +195,7 @@ public sealed class Wave2CatalogTests
     {
         foreach (var definition in Wave2())
         {
-            var hives = RegistryActions(definition).Select(a => a.Hive).Distinct().ToList();
+            var hives = RegistryHives(definition).Distinct().ToList();
             var writesMachine = hives.Contains(RegistryHiveKind.LocalMachine)
                 || hives.Contains(RegistryHiveKind.Users);
             var expected = writesMachine ? PrivilegeLevel.Admin : PrivilegeLevel.User;
@@ -324,14 +337,25 @@ public sealed class Wave2CatalogTests
     }
 
     // ------------------------------------------------------- T2 undo exacto
-    /// <summary>T2: cada acción de la sección 10 escribe o borra UN VALOR
-    /// concreto; el diario guarda el valor previo y lo restaura exactamente.
-    /// Ninguna acción borra CLAVES ni escribe binarios opacos inventados.</summary>
+    /// <summary>T2: cada acción de registro de la sección 10 escribe o borra UN
+    /// VALOR concreto; el diario guarda el valor previo y lo restaura exactamente.
+    /// El único borrado de CLAVE de la sección (`explorer.home.hide`) se comprueba
+    /// aparte, con su forma exacta: no recursivo y con instantánea previa.</summary>
     [Fact]
     public void TestWave2Catalog_EveryActionTouchesExactlyOneValue()
     {
         foreach (var definition in Wave2())
         {
+            foreach (var action in definition.Actions.OfType<RegistryDeleteKeyAction>())
+            {
+                // Paso 11: la clave del pin se borra tal cual, sin recursión, y el
+                // motor aborta sin borrar si no puede fotografiar el subárbol.
+                Assert.Equal("explorer.home.hide", definition.Id);
+                Assert.False(action.Recursive);
+                Assert.Contains(ClassicHomeClsid, action.KeyPath, StringComparison.Ordinal);
+                Assert.Equal(RegistryHiveKind.LocalMachine, action.Hive);
+            }
+
             foreach (var action in RegistryActions(definition))
             {
                 Assert.Contains(action.Operation,

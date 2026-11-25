@@ -132,8 +132,9 @@ public sealed record CommandAction : CapabilityAction
 /// acción elimina la clave y su subárbol. Para que sea reversible el ejecutor
 /// toma una instantánea completa (valores con tipo y subclaves, recursivamente)
 /// ANTES de borrar y la guarda en el diario. Si la instantánea falla o supera el
-/// límite declarado en <see cref="RegistrySnapshotLimits"/>, el motor ABORTA sin
-/// borrar (fail-closed).
+/// límite declarado en <c>RegistrySnapshotLimits</c> (Evo.Engine.Executors), el
+/// motor ABORTA sin borrar (fail-closed). El límite vive en el ejecutor, no aquí:
+/// Evo.Core no conoce implementaciones del motor.
 /// </remarks>
 public sealed record RegistryDeleteKeyAction : CapabilityAction
 {
