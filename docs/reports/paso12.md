@@ -4,8 +4,8 @@
 - **Rama**: `arena/ab2d6de7-evo-optimizer-on` (PR #1, **draft**)
 - **Punto de partida**: `cb75abe` (paso 11 verde)
 - **Estado**: cerrado. `ledger-verify` en verde con el job nuevo y `dotnet-ci`
-  con los xUnit en verde —**237/237 en `windows-2025` y en `windows-11-arm`**—
-  sobre `ee4475a`. La primera pasada falló con 7 casos y cuatro eran defectos
+  con los xUnit en verde —**239/239 en `windows-2025` y en `windows-11-arm`**—
+  sobre `0922fb9`. La primera pasada falló con 7 casos y cuatro eran defectos
   reales que se corrigieron (§7.3).
 
 ## 1. Qué pedía el paso y qué se ha hecho
@@ -210,8 +210,8 @@ T3                  20 medidas · 3 OK · 17 pendientes · 0 contrarios
 plan de oleadas     89/435 líneas (20.5 %)
 rangos de build     79 completos + 9 recortados
 pytest              559 passed  (539 al cierre del paso 11 + 20 de este paso)
-xUnit               237/237 en windows-2025 y windows-11-arm
-                    (run 45683131842 / 45683158829, sobre ee4475a)
+xUnit               239/239 en windows-2025 y windows-11-arm
+                    (runs 45693509207 / 45693528396, sobre 0922fb9)
 ```
 
 Las cifras del paso 11 (**86** capacidades, 238 acciones, 231, 195 filas de
@@ -349,6 +349,24 @@ por cifras obsoletas, no por el código.
 - **R3 no cubre las escrituras de registro con Admin**: se declara el alcance en
   §4.3 en vez de dejar que se lea como un hueco.
 - Las cifras 86/238/231/195/45/57 **no deben volver a citarse** como actuales.
+
+## 9-bis. Conteos verificados (paso 12b)
+
+- **pytest**: 559 sobre `tools/ledger_extract/tests tests` (539 al cierre del
+  paso 11 + 20 de `tests/test_paso12.py`). La cifra de 360 que se dio al
+  cerrarse el paso 12 era `tests/` **solo**; el directorio
+  `tools/ledger_extract/tests` aporta 199 casos. Cero tests perdidos: el
+  desglose por fichero está en §7.4.
+- **xUnit**: **15 casos nuevos** (mínimo pedido: 14) y el total pasa de 224 a
+  **239** (+15). El `+13` que se había reportado salía de contar el renombrado
+  `TestWave4Catalog_RegistryBackupIsNowComplete` →
+  `...DeclaresItsTaskAndStaysSpecified` como si fuera un caso nuevo; no lo es.
+- **Cambios de esta tanda**: solo tests y este informe. No se toca el motor, ni
+  el catálogo, ni los generadores. El único arreglo de test fue
+  `CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate`, que afirmaba
+  `present`/`absent` donde el ejecutor devuelve el informe `would-create…` (eso
+  lo da `ReadCurrentState`): falló en `dotnet-ci` con 1 fallo de 239 y se
+  corrigió el test, no el contrato.
 
 ## 10. Para reproducir
 
