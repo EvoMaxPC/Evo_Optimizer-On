@@ -201,7 +201,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Hibernation.psd1:0 (estado 'Disable'). Valores tomados del bloque Registry del pin: ShowHibernateOption=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la clave FlyoutMenuSettings (menú de energía de Windows 11) existe desde 22631; en 19045 Windows no la lee y la entrada del menú no cambia, por eso NO se declara 19045. ledger_refs: atlas:toggle:Hibernation",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Hibernation.psd1:12 (estado 'Disable'). Valores tomados del bloque Registry del pin: ShowHibernateOption=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la clave FlyoutMenuSettings (menú de energía de Windows 11) existe desde 22631; en 19045 Windows no la lee y la entrada del menú no cambia, por eso NO se declara 19045. ledger_refs: atlas:toggle:Hibernation",
          "actions": [
             {
                "type": "registry",
@@ -240,7 +240,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/KeyboardShortcuts.psd1:0 (estado 'Disable'). Valores tomados del bloque Registry del pin: Hotkey=3; Language Hotkey=3; Layout Hotkey=3. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la clave Keyboard Layout\\Toggle existe en 19045 y en Windows 11. ledger_refs: atlas:toggle:KeyboardShortcuts, atlas:manifest:qol/set-keyboard-switching",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/KeyboardShortcuts.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: Hotkey=3; Language Hotkey=3; Layout Hotkey=3. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la clave Keyboard Layout\\Toggle existe en 19045 y en Windows 11. ledger_refs: atlas:toggle:KeyboardShortcuts, atlas:manifest:qol/set-keyboard-switching",
          "actions": [
             {
                "type": "registry",
@@ -280,7 +280,7 @@
       {
          "id": "system.location.consent-deny",
          "name": "Denegar el acceso a la ubicación",
-         "description": "Pone Value='Deny' en el ConsentStore de ubicación (HKLM) y ShowGlobalPrompts=0 en el mismo ConsentStore del usuario. Quita el permiso global de ubicación: las aplicaciones dejan de poder pedirla. El pin ejecuta además Disable-AtlasLocation, que apaga lfsvc y MapsBroker; esos servicios no se declaran aquí.",
+         "description": "Pone Value='Deny' en el ConsentStore de ubicación (HKLM) y ShowGlobalPrompts=0 en el mismo ConsentStore del usuario, y APAGA los dos servicios de ubicación: lfsvc y MapsBroker pasan a Desactivado y se detienen (paso 11). Quita el permiso global de ubicación: las aplicaciones dejan de poder pedirla. Deshacer: valores previos y, para cada servicio, tipo de inicio y estado de ejecución anteriores.",
          "sectionId": 9,
          "risk": "Low",
          "securityImpact": "Improves",
@@ -301,7 +301,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Location.psd1:0 (estado 'Disable'). Valores tomados del bloque Registry del pin: Value=Deny; ShowGlobalPrompts=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: ConsentStore de ubicación presente en 19045 y en Windows 11. ledger_refs: atlas:toggle:Location",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Location.psd1:14 (estado 'Disable'). Valores tomados del bloque Registry del pin: Value=Deny; ShowGlobalPrompts=0. El pin ADEMAS ejecuta MachineAction Disable-AtlasLocation (Toggles/General/Location.psd1:13), que llama a Set-AtlasLocationMachineState (Atlas.Privacy/Domain/Location.ps1:91) y esta MEDIDO como `Invoke-AtlasLocationServiceState -Name lfsvc` / `-Name MapsBroker` ahi mismo (package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1:113 y package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1:114) → `Set-Service -StartupType Disabled` + `$service.Stop()` (StartupType 4 y Status 'Stopped'): el tipo de inicio y el estado de ejecucion SI son expresables con ServiceAction, asi que desde el paso 11 se declaran. NO se declara lo demas que hace ese script (politica de Find My Device y ocultar las paginas de Configuracion), que queda fuera de esta capacidad. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicios: el diario guarda tipo de inicio y estado de ejecucion previos de cada uno y los devuelve. Builds: ConsentStore de ubicación presente en 19045 y en Windows 11. ledger_refs: atlas:toggle:Location",
          "actions": [
             {
                "type": "registry",
@@ -324,6 +324,36 @@
                "valueType": "DWord",
                "operation": "Set",
                "description": "ShowGlobalPrompts en HKCU"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "lfsvc: detener",
+               "serviceName": "lfsvc",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 4,
+               "description": "lfsvc -> Disabled",
+               "serviceName": "lfsvc",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 5,
+               "description": "MapsBroker: detener",
+               "serviceName": "MapsBroker",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 6,
+               "description": "MapsBroker -> Disabled",
+               "serviceName": "MapsBroker",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
             }
          ]
       },
@@ -390,7 +420,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Security/Mitigations.psd1:0 (estado 'Disable'). Valores tomados del bloque Registry del pin: FeatureSettingsOverride=3; FeatureSettingsOverrideMask=3; DisableExceptionChainValidation=1; ProtectionMode=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: los cuatro valores existen en 19045 y en Windows 11. ledger_refs: atlas:toggle:Mitigations",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Security/Mitigations.psd1:12 (estado 'Disable'). Valores tomados del bloque Registry del pin: FeatureSettingsOverride=3; FeatureSettingsOverrideMask=3; DisableExceptionChainValidation=1; ProtectionMode=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: los cuatro valores existen en 19045 y en Windows 11. ledger_refs: atlas:toggle:Mitigations",
          "actions": [
             {
                "type": "registry",
@@ -563,7 +593,7 @@
       {
          "id": "system.registry-backup.enable",
          "name": "Reactivar la copia de seguridad diaria del registro",
-         "description": "Pone EnablePeriodicBackup=1 y BackupCount=2 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager, que es lo que Microsoft desactivó por defecto en Windows 10 1803. El pin además registra la tarea programada AutoRegBackup (schtasks /run /i /tn \\Microsoft\\Windows\\Registry\\RegIdleBackup, diaria a las 00:30): una tarea que no EXISTE todavía no se puede habilitar con el motor, sólo crearla, así que la capacidad queda en Specified y los valores del registro son los que se declaran.",
+         "description": "Pone EnablePeriodicBackup=1 y BackupCount=2 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager, que es lo que Microsoft desactivó por defecto en Windows 10 1803, y crea la tarea programada AutoRegBackup que ejecuta `schtasks /run /i /tn \\Microsoft\\Windows\\Registry\\RegIdleBackup` todos los días a las 00:30 como SYSTEM (paso 11). Deshacer: se restauran los dos valores previos y se BORRA la tarea creada; si ya existía, se devuelve a su estado anterior en vez de borrarla.",
          "sectionId": 9,
          "risk": "Safe",
          "securityImpact": "Improves",
@@ -571,7 +601,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "None",
-         "state": "Specified",
+         "state": "Implemented",
          "variants": [
             "Evo",
             "WinUtil"
@@ -584,7 +614,7 @@
             26100,
             26200
          ],
-         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json#WPFFeatureRegBackup (Type=sin Type). Literales leidos de InvokeScript: EnablePeriodicBackup=1; BackupCount=2. El pin ademas registra la tarea AutoRegBackup (Register-ScheduledTask, diaria a las 00:30): crear una tarea no es una operacion de ServiceAction/TaskAction y no se declara; por eso State=Specified. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: los valores son los mismos desde 1803; la tarea existe en todas. ledger_refs: winutil:feature:WPFFeatureRegBackup",
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json#WPFFeatureRegBackup (Type=sin Type). Literales leidos de InvokeScript: EnablePeriodicBackup=1; BackupCount=2; taskCreate AutoRegBackup (Daily 00:30). El pin ADEMAS registra la tarea programada AutoRegBackup con Register-ScheduledTask (paso 11): se declara como accion taskCreate con los literales del InvokeScript (execute='schtasks', arguments='/run /i /tn \"\\\\Microsoft\\\\Windows\\\\Registry\\\\RegIdleBackup\"', trigger=Daily a las 00:30, userId='System', runLevel=Highest). Deshacer: se borra la tarea creada; si ya existia, se restaura su estado previo (no se borra). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor + tarea creada que se elimina. Builds: los valores son los mismos desde 1803; la tarea existe en todas. ledger_refs: winutil:feature:WPFFeatureRegBackup",
          "actions": [
             {
                "type": "registry",
@@ -607,6 +637,21 @@
                "value": "2",
                "valueType": "DWord",
                "operation": "Set"
+            },
+            {
+               "type": "taskCreate",
+               "order": 3,
+               "description": "Crear la tarea AutoRegBackup (diaria a las 00:30)",
+               "taskPath": "\\",
+               "taskName": "AutoRegBackup",
+               "execute": "schtasks",
+               "arguments": "/run /i /tn \"\\Microsoft\\Windows\\Registry\\RegIdleBackup\"",
+               "trigger": "Daily",
+               "triggerAt": "00:30",
+               "userId": "System",
+               "runLevel": "Highest",
+               "taskDescription": "Create System Registry Backups",
+               "overwrite": false
             }
          ]
       },
@@ -834,7 +879,7 @@
       {
          "id": "system.time.ntp-servers",
          "name": "Usar los servidores de hora de pool.ntp.org",
-         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters. El pin además arranca el servicio w32time y ejecuta w32tm /config /update y w32tm /resync con IgnoreErrors: esas tres cosas no son de registro y aquí no se declaran, así que la capacidad queda en Specified (los valores quedan escritos, la resincronización la hace Windows en su siguiente ciclo).",
+         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: devuelve los dos valores previos y el estado de ejecución anterior del servicio (si estaba parado, lo vuelve a parar). Sigue fuera de la capacidad `w32tm /config /update` y `w32tm /resync`: son comandos sin inversa declarada y no se ejecutan, así que la resincronización la hace Windows en su siguiente ciclo. Por eso la capacidad es Implemented con esa parte declarada, no Specified callada.",
          "sectionId": 9,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -842,7 +887,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "SimpleClick",
-         "state": "Specified",
+         "state": "Implemented",
          "variants": [
             "Evo",
             "Atlas"
@@ -855,7 +900,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El pin ADEMAS hace algo que no es registro y NO se declara: Services: Start de w32time; Run: w32tm /config /update y w32tm /resync. Por eso la capacidad queda en State=Specified. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El bloque Services del pin arranca w32time: se declara como ServiceAction Start (paso 11) y el diario devuelve el estado de ejecucion previo. El pin ADEMAS hace algo que NO se declara: Run: w32tm /config /update y w32tm /resync (comandos sin inversa; NO se ejecutan y se declaran aquí). Queda declarado aqui y no se ejecuta: no hay promesa de deshacer para un comando. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicio: el diario guarda el estado de ejecucion previo y lo devuelve. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time",
          "actions": [
             {
                "type": "registry",
@@ -878,6 +923,13 @@
                "valueType": "String",
                "operation": "Set",
                "description": "Type en HKLM"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "w32time: iniciar",
+               "serviceName": "w32time",
+               "operation": "Start"
             }
          ]
       },

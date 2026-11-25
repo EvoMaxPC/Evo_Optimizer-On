@@ -314,11 +314,11 @@
       {
          "id": "explorer.home.hide",
          "name": "Ocultar Inicio en el Explorador y abrir en Este equipo",
-         "description": "Desancla Inicio del panel de navegación (IsPinnedToNameSpaceTree=0) y pone LaunchTo=1 para que el Explorador abra en Este equipo. El estado 'Disable' del pin además BORRA la clave HKLM Desktop\\NameSpace\\{f874310e…}; esa operación es DeleteKey y el motor sólo sabe borrar valores, así que no se declara: se aplica la parte de valores y se dice aquí.",
+         "description": "Desancla Inicio del panel de navegación (IsPinnedToNameSpaceTree=0), pone LaunchTo=1 para que el Explorador abra en Este equipo y BORRA la clave HKLM Desktop\\NameSpace\\{f874310e…} tal como la declara el pin (paso 11: el motor ya sabe borrar claves completas con instantánea previa). Deshacer: los dos valores previos y la clave recreada con sus valores, tipos y subclaves tal como estaban.",
          "sectionId": 10,
          "risk": "Low",
          "securityImpact": "Neutral",
-         "privilege": "User",
+         "privilege": "Admin",
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "SimpleClick",
@@ -334,11 +334,19 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/Home.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: System.IsPinnedToNameSpaceTree=0; LaunchTo=1.Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de Windows 11; 19045 no se declara.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:Home",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/Home.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: BORRAR CLAVE LocalMachine\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} (DeleteKey del pin); System.IsPinnedToNameSpaceTree=0; LaunchTo=1.Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de Windows 11; 19045 no se declara.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Las claves se borran con instantanea previa del subarbol (valores, tipos y subclaves) que el diario recrea al deshacer; si la instantanea falla o supera el limite, el motor aborta sin borrar (fail-closed). ledger_refs: atlas:toggle:Home",
          "actions": [
             {
-               "type": "registry",
+               "type": "registryDeleteKey",
                "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+               "recursive": false,
+               "description": "Borrar la clave HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+            },
+            {
+               "type": "registry",
+               "order": 2,
                "hive": "CurrentUser",
                "keyPath": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
                "valueName": "System.IsPinnedToNameSpaceTree",
@@ -349,7 +357,7 @@
             },
             {
                "type": "registry",
-               "order": 2,
+               "order": 3,
                "hive": "CurrentUser",
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
                "valueName": "LaunchTo",
@@ -568,7 +576,7 @@
       {
          "id": "explorer.removable-drives.sidebar",
          "name": "Mostrar las unidades extraíbles en el panel de navegación",
-         "description": "Escribe la cadena «Removable Drives» como valor predeterminado de la clave DelegateFolders\\{F5FB2C77-…} en las dos vistas de registro (64 y WOW6432Node). El estado contrario del pin borra esas dos CLAVES, operación que el motor no sabe hacer.",
+         "description": "Escribe la cadena «Removable Drives» como valor predeterminado de la clave DelegateFolders\\{F5FB2C77-…} en las dos vistas de registro (64 y WOW6432Node). MEDIDO en el pin (paso 11): las dos DeleteKey de este toggle están en el estado «Disable», que es el CONTRARIO al que declara esta capacidad; incluirlas aquí borraría justo lo que la capacidad enciende, así que no se declaran. El motor ya sabe hacerlas: si una oleada declara la capacidad de ocultarlas, esas dos claves se expresan sin tocar el motor.",
          "sectionId": 10,
          "risk": "Safe",
          "securityImpact": "Neutral",
