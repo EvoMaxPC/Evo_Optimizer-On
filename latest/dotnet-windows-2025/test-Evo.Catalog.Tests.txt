@@ -1,12 +1,13 @@
-Build started 11/25/2026 9:43:14 PM.
+Build started 11/25/2026 9:45:56 PM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\bin\Release\net10.0-windows\Evo.Catalog.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.13]   Discovering: Evo.Catalog.Tests
-[xUnit.net 00:00:00.20]   Discovered:  Evo.Catalog.Tests
-[xUnit.net 00:00:00.20]   Starting:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [169 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [1 ms]
+[xUnit.net 00:00:00.12]   Discovering: Evo.Catalog.Tests
+[xUnit.net 00:00:00.17]   Discovered:  Evo.Catalog.Tests
+[xUnit.net 00:00:00.17]   Starting:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [98 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoDanglingReferences [107 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [4 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry.") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry/DiagTrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: ".privacy.telemetry") [< 1 ms]
@@ -14,66 +15,33 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy telemetry") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry_diagtrack") [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [182 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SymmetricConflictPassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SelfDependencyIsACycle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.DuplicateIdsFailValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [4 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForReversibleRiskFails [2 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForReversibleRiskFails [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ValidIdWithDashesPassesThePattern [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.IrreversibleHighWithNoneIsValidUnderAdr0003 [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.CriticalRiskWithTypeOperationNamePasses [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_PassesValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [5 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.AcyclicDependencyChainPassesValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestAsymmetricConflict_FailsValidation [< 1 ms]
+[xUnit.net 00:00:00.36]     Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay [FAIL]
+[xUnit.net 00:00:00.36]       Assert.Equal() Failure: Collections differ
+[xUnit.net 00:00:00.36]                                                                                                                        ↓ (pos 3)
+[xUnit.net 00:00:00.36]       Expected: string[]     ["system.hibernation.hide", "system.location.consent-deny", "system.mitigations.disable", "system.registry-backup.enable"]
+[xUnit.net 00:00:00.36]       Actual:   List<string> [···, "system.location.consent-deny", "system.mitigations.disable", "system.oem-information.identify", "system.registry-backup.enable", "system.time.ntp-servers"]
+[xUnit.net 00:00:00.36]                                                                                                  ↑ (pos 3)
+[xUnit.net 00:00:00.37]       Stack Trace:
+[xUnit.net 00:00:00.37]         /_/tests/Evo.Catalog.Tests/Wave3CatalogTests.cs(302,0): at Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay()
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.37]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
   Passed Evo.Catalog.Tests.CatalogValidatorTests.MissingReversibilityFailsValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [211 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_LoadsAndValidates [17 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [11 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [39 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyCreations [21 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_PrivilegeMatchesTheHivesItWrites [35 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LocationDeclaresStartupTypeAndStop [15 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk [10 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoDanglingReferences [31 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants [12 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NewActionTypesRoundTripThroughTheLoader [2 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "execute") [1 ms]
-[xUnit.net 00:00:00.55]     Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay [FAIL]
-[xUnit.net 00:00:00.55]       Assert.Equal() Failure: Collections differ
-[xUnit.net 00:00:00.56]                                                                                                                        ↓ (pos 3)
-[xUnit.net 00:00:00.56]       Expected: string[]     ["system.hibernation.hide", "system.location.consent-deny", "system.mitigations.disable", "system.registry-backup.enable"]
-[xUnit.net 00:00:00.56]       Actual:   List<string> [···, "system.location.consent-deny", "system.mitigations.disable", "system.oem-information.identify", "system.registry-backup.enable", "system.time.ntp-servers"]
-[xUnit.net 00:00:00.56]                                                                                                  ↑ (pos 3)
-[xUnit.net 00:00:00.56]       Stack Trace:
-[xUnit.net 00:00:00.56]         /_/tests/Evo.Catalog.Tests/Wave3CatalogTests.cs(302,0): at Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay()
-[xUnit.net 00:00:00.56]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:00.56]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-[xUnit.net 00:00:00.56]     Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut [FAIL]
-[xUnit.net 00:00:00.56]       Assert.Equal() Failure: Values differ
-[xUnit.net 00:00:00.56]       Expected: Implemented
-[xUnit.net 00:00:00.56]       Actual:   Specified
-[xUnit.net 00:00:00.56]       Stack Trace:
-[xUnit.net 00:00:00.56]         /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs(185,0): at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut()
-[xUnit.net 00:00:00.56]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:00.56]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "trigger") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "runLevel") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "userId") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "taskName") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EveryActionTouchesExactlyOneValue [23 ms]
-  Failed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay [11 ms]
+  Failed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay [9 ms]
   Error Message:
    Assert.Equal() Failure: Collections differ
                                                                                                                  ↓ (pos 3)
@@ -84,7 +52,51 @@ Actual:   List<string> [···, "system.location.consent-deny", "system.mitigati
      at Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay() in /_/tests/Evo.Catalog.Tests/Wave3CatalogTests.cs:line 302
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Failed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut [5 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [133 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [24 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ValuesAreCopiedFromThePinLiterally [20 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [20 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_LoadsAndValidates [7 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_LoadsAndValidates [6 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [11 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [3 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyCreations [8 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_UndoRestoresPreviousValuesExactly [33 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_PrivilegeMatchesTheHivesItWrites [36 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ProvenanceQuotesPinAndToggleState [5 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LocationDeclaresStartupTypeAndStop [22 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk [7 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants [6 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NewActionTypesRoundTripThroughTheLoader [1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "execute") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "trigger") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "runLevel") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "userId") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "taskName") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EveryActionTouchesExactlyOneValue [8 ms]
+[xUnit.net 00:00:00.43]     Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut [FAIL]
+[xUnit.net 00:00:00.43]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.43]       Expected: Implemented
+[xUnit.net 00:00:00.43]       Actual:   Specified
+[xUnit.net 00:00:00.43]       Stack Trace:
+[xUnit.net 00:00:00.43]         /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs(185,0): at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut()
+[xUnit.net 00:00:00.43]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.43]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.43]     Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions [FAIL]
+[xUnit.net 00:00:00.43]       Assert.True() Failure
+[xUnit.net 00:00:00.43]       Expected: True
+[xUnit.net 00:00:00.43]       Actual:   False
+[xUnit.net 00:00:00.43]       Stack Trace:
+[xUnit.net 00:00:00.43]         /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs(54,0): at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions()
+[xUnit.net 00:00:00.43]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.43]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut [3 ms]
   Error Message:
    Assert.Equal() Failure: Values differ
 Expected: Implemented
@@ -93,17 +105,12 @@ Actual:   Specified
      at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut() in /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs:line 185
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-[xUnit.net 00:00:00.57]     Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions [FAIL]
-[xUnit.net 00:00:00.57]       Assert.True() Failure
-[xUnit.net 00:00:00.57]       Expected: True
-[xUnit.net 00:00:00.57]       Actual:   False
-[xUnit.net 00:00:00.57]       Stack Trace:
-[xUnit.net 00:00:00.57]         /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs(54,0): at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions()
-[xUnit.net 00:00:00.57]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:00.57]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
   Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsBadTriggersAndTimes [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorKeepsServiceOperationsSeparate [2 ms]
-  Failed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions [11 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorKeepsServiceOperationsSeparate [1 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EveryRegistryActionTouchesExactlyOneValue [17 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ClassicContextMenuIsWindows11Only [6 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EngineContractIsClean [4 ms]
+  Failed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions [5 ms]
   Error Message:
    Assert.True() Failure
 Expected: True
@@ -112,38 +119,31 @@ Actual:   False
      at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions() in /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs:line 54
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ValuesAreCopiedFromThePinLiterally [20 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ClassicContextMenuIsWindows11Only [36 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine [9 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_LoadsAndValidates [6 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EngineContractIsClean [10 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified [10 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LoaderReadsKeyCreationActions [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EngineContractIsClean [2 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine [3 ms]
   Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_IdsFollowTheContract [7 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide [10 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_AtlasCapabilitiesQuoteTheirState [7 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ValueDeviationsAreDeclared [4 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_UndoRestoresPreviousValuesExactly [27 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ProvenanceQuotesPinAndToggleState [9 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EveryRegistryActionTouchesExactlyOneValue [3 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EngineContractIsClean [4 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_UndoRestoresPreviousValuesExactly [27 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SecurityReductionIsDeclaredAndBounded [13 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SupportedBuildsAreExplicitAndJustified [38 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SecurityReductionIsDeclaredAndBounded [10 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_AtlasCapabilitiesQuoteTheirState [3 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ValueDeviationsAreDeclared [2 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_UndoRestoresPreviousValuesExactly [7 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified [31 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LoaderReadsKeyCreationActions [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide [11 ms]
   Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceActionsCarryTheStartupType [39 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_PrivilegeMatchesWhatItTouches [12 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceUndoRestoresTheStartupType [8 ms]
-[xUnit.net 00:00:00.73]   Finished:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SettingsPageVisibilityIsTheWholePinList [4 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SupportedBuildsAreExplicitAndJustified [18 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_IdsFollowTheContract [6 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SupportedBuildsAreExplicitAndJustified [29 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_PrivilegeMatchesWhatItTouches [6 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceUndoRestoresTheStartupType [4 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SettingsPageVisibilityIsTheWholePinList [1 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SupportedBuildsAreExplicitAndJustified [9 ms]
+[xUnit.net 00:00:00.51]   Finished:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_IdsFollowTheContract [4 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Catalog.Tests\Evo.Catalog.Tests.trx
 
-Total tests: 79
 Test Run Failed.
+Total tests: 79
      Passed: 76
      Failed: 3
- Total time: 1.1964 Seconds
+ Total time: 0.8650 Seconds
      1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\Evo.Catalog.Tests.csproj" on node 1 (VSTest target(s)).
      1>_VSTestConsole:
          MSB4181: The "VSTestTask" task returned false but did not log an error.
@@ -153,4 +153,4 @@ Build FAILED.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.72
+Time Elapsed 00:00:01.77
