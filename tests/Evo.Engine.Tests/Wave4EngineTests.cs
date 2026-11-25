@@ -867,8 +867,16 @@ public sealed class Wave4EngineTests
         var absent = await executor.ExecuteAsync(CreateKeyAction(missing), context);
 
         Assert.True(present.Success && absent.Success);
-        Assert.Equal("present", present.NewState);
-        Assert.Equal("absent", absent.NewState);
+        // En `Audit` (como en `DryRun`) el estado que devuelve el ejecutor es el
+        // INFORME de lo que haría, no el estado bruto de la clave: eso es
+        // `ReadCurrentState`. Lo que este test fija es que no muta y que distingue
+        // la clave que ya existe de la que falta.
+        Assert.Contains("would-create", present.NewState, StringComparison.Ordinal);
+        Assert.Contains("ya existía", present.NewState, StringComparison.Ordinal);
+        Assert.Equal("would-create", absent.NewState);
+        // Y `ReadCurrentState` sí da el estado real en el mismo contexto.
+        Assert.Equal("present", executor.ReadCurrentState(CreateKeyAction(existing), context));
+        Assert.Equal("absent", executor.ReadCurrentState(CreateKeyAction(missing), context));
         Assert.False(present.Applied || absent.Applied);
         Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
         Assert.Empty(journal.Entries);
