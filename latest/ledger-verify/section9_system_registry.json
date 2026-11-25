@@ -714,22 +714,22 @@
             26100,
             26200
          ],
-         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDisableSearchIndexing. Servicios y tipos de inicio tomados de la fuente: WSearch=Disabled; WSearch=Stop. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su propio deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer. Builds: WSearch existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksDisableSearchIndexing, winutil:tweak-op:WPFTweaksServices:service:0",
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDisableSearchIndexing. Servicios y tipos de inicio tomados de la fuente: WSearch=Stop; WSearch=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su propio deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer. Builds: WSearch existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksDisableSearchIndexing, winutil:tweak-op:WPFTweaksServices:service:0",
          "actions": [
             {
                "type": "service",
                "order": 1,
-               "description": "WSearch -> Disabled",
+               "description": "WSearch -> Detener",
                "serviceName": "WSearch",
-               "operation": "SetStartupType",
-               "startupType": "Disabled"
+               "operation": "Stop"
             },
             {
                "type": "service",
                "order": 2,
-               "description": "WSearch -> Detener",
+               "description": "WSearch -> Disabled",
                "serviceName": "WSearch",
-               "operation": "Stop"
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
             }
          ]
       },
