@@ -337,7 +337,7 @@ public sealed class Wave3CatalogTests
         Assert.False(task.Overwrite);
 
         var ntp = Definition("system.time.ntp-servers");
-        Assert.Equal(CapabilityState.Implemented, ntp.State);
+        Assert.Equal(CapabilityState.Specified, ntp.State);
         Assert.Contains("w32tm", ntp.Provenance, StringComparison.Ordinal);
         Assert.Equal("0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org",
             Value(ntp, "NtpServer").Value);
