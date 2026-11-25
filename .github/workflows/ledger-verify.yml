@@ -761,7 +761,7 @@ jobs:
                 "| Specified", r1["specified"], "| violaciones", r1["violaciones_r1"])
           print("T3:", t3["veredicto"], "| con toggle", t3["capacidades_con_toggle"],
                 "| pendientes", len(t3["pendientes"]),
-                "| contrarios", t3["contrarios_declarados"])
+                "| contrarios", t3["contrarios"])
           print("cobertura:", cov["capacidades"], "| huecos", cov["huecos"],
                 "| cubiertas", cov["cubiertas"])
           print("auditoria:", aud["filas"], "| sin excepcion", aud["sin_excepcion"],
