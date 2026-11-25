@@ -1,0 +1,976 @@
+{
+   "metadata": {
+      "version": "1.0.0",
+      "schemaVersion": 1,
+      "provenance": "Paso 10, seccion 9 (oleada 3). Fuentes: winutil@70c23c80641d7370532af2f619b2842658600842, atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f. Los literales de valor se leen del pin con tools/ledger_extract/build_section9_catalog.py; ninguno se escribe a mano.",
+      "generatedBy": "paso 10 (oleada 3)"
+   },
+   "capabilities": [
+      {
+         "id": "system.error-reporting.crash-control",
+         "name": "Configurar el control de fallos (pantalla azul y volcados)",
+         "description": "Deja la pantalla azul en pantalla sin reiniciar (AutoReboot=0), fija un volcado pequeño de 256 KiB (CrashDumpEnabled=3), conserva el registro del evento (LogEvent=1), muestra los parámetros del fallo (DisplayParameters=1) y apaga el volcado de StorageTelemetry. REDUCE el diagnóstico: sigue quedando un minidump analizable, pero ya no hay volcado completo de memoria y el equipo se queda detenido en la pantalla azul hasta que alguien lo reinicie.",
+         "sectionId": 9,
+         "risk": "Medium",
+         "securityImpact": "Reduces",
+         "privilege": "Admin",
+         "restore": "RestorePoint",
+         "reversibility": "Reversible",
+         "confirmation": "Summary",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/system/crash-control-qol.psd1:5-11. Valores tomados del bloque Registry del pin: AutoReboot=0; CrashDumpEnabled=3; LogEvent=1; DisplayParameters=1; DeviceDumpEnabled=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: CrashControl existe en 19045 y en Windows 11; el volcado pequeño es el modo 3 desde Windows 8. ledger_refs: atlas:manifest:qol/system/crash-control-qol",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+               "valueName": "AutoReboot",
+               "value": "0",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "AutoReboot en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+               "valueName": "CrashDumpEnabled",
+               "value": "3",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "CrashDumpEnabled en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 3,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+               "valueName": "LogEvent",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "LogEvent en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 4,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\CrashControl",
+               "valueName": "DisplayParameters",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "DisplayParameters en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 5,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\CrashControl\\StorageTelemetry",
+               "valueName": "DeviceDumpEnabled",
+               "value": "0",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "DeviceDumpEnabled en HKLM"
+            }
+         ]
+      },
+      {
+         "id": "system.error-reporting.wpbt-disable",
+         "name": "Impedir la ejecución del programa WPBT del firmware",
+         "description": "Pone DisableWpbtExecution=1 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager. WPBT permite que el firmware ejecute un binario en cada arranque; el propio pin avisa de que Microsoft no documenta este valor. Evita software OEM que se reinstala solo, a costa de una función del firmware: se declara Medium porque cambia el arranque, no Safe.",
+         "sectionId": 9,
+         "risk": "Medium",
+         "securityImpact": "Improves",
+         "privilege": "Admin",
+         "restore": "RestorePoint",
+         "reversibility": "Reversible",
+         "confirmation": "Summary",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/system/disable-wpbt.psd1:8. Valores tomados del bloque Registry del pin: DisableWpbtExecution=1. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: el valor se lee en el arranque de 19045 y de Windows 11. ledger_refs: atlas:manifest:qol/system/disable-wpbt",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+               "valueName": "DisableWpbtExecution",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "DisableWpbtExecution en HKLM"
+            }
+         ]
+      },
+      {
+         "id": "system.game-mode.enable",
+         "name": "Activar el modo de juego de Windows",
+         "description": "Pone AllowAutoGameMode=1 y AutoGameModeEnabled=1 en HKCU\\Software\\Microsoft\\GameBar. El modo de juego evita que Windows reparta recursos de CPU y GPU entre segundo plano y juego mientras uno está en primer plano. Es una preferencia por usuario y ya suele estar activa.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFToggleGameMode (Type=Toggle). Valores tomados de la fuente: AllowAutoGameMode=1; AutoGameModeEnabled=1. Semantica: en un Toggle de WinUtil `Value` es el valor que se escribe y `OriginalValue` el que restaura su deshacer (functions/private/Invoke-WinUtilTweaks.ps1:34-46). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: claves de HKCU presentes en 19045 y en las tres builds de Windows 11. ledger_refs: winutil:tweak:WPFToggleGameMode",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "AllowAutoGameMode en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "Software\\Microsoft\\GameBar",
+               "valueName": "AllowAutoGameMode",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "description": "AutoGameModeEnabled en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "Software\\Microsoft\\GameBar",
+               "valueName": "AutoGameModeEnabled",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set"
+            }
+         ]
+      },
+      {
+         "id": "system.hibernation.hide",
+         "name": "Ocultar la opción Hibernar del menú de energía",
+         "description": "Pone ShowHibernateOption=0 en HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FlyoutMenuSettings: la entrada «Hibernar» deja de aparecer en el menú de energía. El pin ejecuta además Disable-AtlasHibernation, que apaga la hibernación de verdad con powercfg; esa acción de máquina no es de registro y aquí no se declara.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Hibernation.psd1:12 (estado 'Disable'). Valores tomados del bloque Registry del pin: ShowHibernateOption=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la clave FlyoutMenuSettings (menú de energía de Windows 11) existe desde 22631; en 19045 Windows no la lee y la entrada del menú no cambia, por eso NO se declara 19045. ledger_refs: atlas:toggle:Hibernation",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FlyoutMenuSettings",
+               "valueName": "ShowHibernateOption",
+               "value": "0",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "ShowHibernateOption en HKLM"
+            }
+         ]
+      },
+      {
+         "id": "system.keyboard-shortcuts.disable",
+         "name": "Desactivar los atajos de cambio de idioma del teclado",
+         "description": "Pone Hotkey='3', 'Language Hotkey'='3' y 'Layout Hotkey'='3' en HKCU\\Keyboard Layout\\Toggle. Desactiva Alt+Shift y Ctrl+Shift para cambiar de idioma o de distribución; Win+Space y el resto de métodos de entrada siguen funcionando. Atlas requiere cerrar sesión para que el cambio se note; el motor no puede forzarlo.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/KeyboardShortcuts.psd1:11 (estado 'Disable'). Valores tomados del bloque Registry del pin: Hotkey=3; Language Hotkey=3; Layout Hotkey=3. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la clave Keyboard Layout\\Toggle existe en 19045 y en Windows 11. ledger_refs: atlas:toggle:KeyboardShortcuts, atlas:manifest:qol/set-keyboard-switching",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "CurrentUser",
+               "keyPath": "Keyboard Layout\\Toggle",
+               "valueName": "Hotkey",
+               "value": "3",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "Hotkey en HKCU"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "CurrentUser",
+               "keyPath": "Keyboard Layout\\Toggle",
+               "valueName": "Language Hotkey",
+               "value": "3",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "Language Hotkey en HKCU"
+            },
+            {
+               "type": "registry",
+               "order": 3,
+               "hive": "CurrentUser",
+               "keyPath": "Keyboard Layout\\Toggle",
+               "valueName": "Layout Hotkey",
+               "value": "3",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "Layout Hotkey en HKCU"
+            }
+         ]
+      },
+      {
+         "id": "system.location.consent-deny",
+         "name": "Denegar el acceso a la ubicación",
+         "description": "Pone Value='Deny' en el ConsentStore de ubicación (HKLM) y ShowGlobalPrompts=0 en el mismo ConsentStore del usuario, y APAGA los dos servicios de ubicación: lfsvc y MapsBroker pasan a Desactivado y se detienen (paso 11). Quita el permiso global de ubicación: las aplicaciones dejan de poder pedirla. Deshacer: valores previos y, para cada servicio, tipo de inicio y estado de ejecución anteriores.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Improves",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Location.psd1:14 (estado 'Disable'). Valores tomados del bloque Registry del pin: Value=Deny; ShowGlobalPrompts=0. El pin ADEMAS ejecuta MachineAction Disable-AtlasLocation (Toggles/General/Location.psd1:13), que llama a Set-AtlasLocationMachineState (Atlas.Privacy/Domain/Location.ps1:91) y esta MEDIDO como `Invoke-AtlasLocationServiceState -Name lfsvc` / `-Name MapsBroker` ahi mismo (package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1:113 y package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1:114) → `Set-Service -StartupType Disabled` + `$service.Stop()` (StartupType 4 y Status 'Stopped'): el tipo de inicio y el estado de ejecucion SI son expresables con ServiceAction, asi que desde el paso 11 se declaran. NO se declara lo demas que hace ese script (politica de Find My Device y ocultar las paginas de Configuracion), que queda fuera de esta capacidad. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicios: el diario guarda tipo de inicio y estado de ejecucion previos de cada uno y los devuelve. Builds: ConsentStore de ubicación presente en 19045 y en Windows 11. ledger_refs: atlas:toggle:Location",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+               "valueName": "Value",
+               "value": "Deny",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "Value en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "CurrentUser",
+               "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+               "valueName": "ShowGlobalPrompts",
+               "value": "0",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "ShowGlobalPrompts en HKCU"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "lfsvc: detener",
+               "serviceName": "lfsvc",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 4,
+               "description": "lfsvc -> Disabled",
+               "serviceName": "lfsvc",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 5,
+               "description": "MapsBroker: detener",
+               "serviceName": "MapsBroker",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 6,
+               "description": "MapsBroker -> Disabled",
+               "serviceName": "MapsBroker",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "system.menu-delay.disable",
+         "name": "Quitar el retardo de los submenús",
+         "description": "Pone MenuShowDelay='0' en HKCU\\Control Panel\\Desktop: los submenús se abren en cuanto el puntero se posa sobre ellos, sin la espera por defecto. Sólo afecta a la respuesta visual del menú de la sesión.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-menu-delay.psd1:5. Valores tomados del bloque Registry del pin: MenuShowDelay=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: MenuShowDelay existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:qol/shell/disable-menu-delay",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "CurrentUser",
+               "keyPath": "Control Panel\\Desktop",
+               "valueName": "MenuShowDelay",
+               "value": "0",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "MenuShowDelay en HKCU"
+            }
+         ]
+      },
+      {
+         "id": "system.mitigations.disable",
+         "name": "Desactivar las mitigaciones del kernel",
+         "description": "Escribe FeatureSettingsOverride=3, FeatureSettingsOverrideMask=3, DisableExceptionChainValidation=1 y ProtectionMode=0 bajo HKLM\\SYSTEM: desactiva mitigaciones del kernel (SEHOP, validación del árbol de excepciones) para ganar rendimiento. REDUCE de forma real la protección frente a exploits y exige reinicio; por eso el riesgo es High y la confirmación pide resumen y punto de restauración.",
+         "sectionId": 9,
+         "risk": "High",
+         "securityImpact": "Reduces",
+         "privilege": "Admin",
+         "restore": "RestorePoint",
+         "reversibility": "Reversible",
+         "confirmation": "SummaryAndRestorePoint",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Security/Mitigations.psd1:12 (estado 'Disable'). Valores tomados del bloque Registry del pin: FeatureSettingsOverride=3; FeatureSettingsOverrideMask=3; DisableExceptionChainValidation=1; ProtectionMode=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: los cuatro valores existen en 19045 y en Windows 11. ledger_refs: atlas:toggle:Mitigations",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+               "valueName": "FeatureSettingsOverride",
+               "value": "3",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "FeatureSettingsOverride en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+               "valueName": "FeatureSettingsOverrideMask",
+               "value": "3",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "FeatureSettingsOverrideMask en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 3,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+               "valueName": "DisableExceptionChainValidation",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "DisableExceptionChainValidation en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 4,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager",
+               "valueName": "ProtectionMode",
+               "value": "0",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "ProtectionMode en HKLM"
+            }
+         ]
+      },
+      {
+         "id": "system.mouse-acceleration.enable",
+         "name": "Activar la aceleración del puntero del ratón",
+         "description": "Pone MouseSpeed='1' y MouseThreshold1='6' / MouseThreshold2='10' en HKCU\\Control Panel\\Mouse. La casilla encendida del pin ACTIVA la aceleración (es el valor por defecto de Windows); el catálogo declara el efecto tal y como está medido en la fuente, sin invertir su significado. Sólo escribe valores de la sesión del usuario.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFToggleMouseAcceleration (Type=Toggle). Valores tomados de la fuente: MouseSpeed=1; MouseThreshold1=6; MouseThreshold2=10. Semantica: en un Toggle de WinUtil `Value` es el valor que se escribe y `OriginalValue` el que restaura su deshacer (functions/private/Invoke-WinUtilTweaks.ps1:34-46). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: claves de HKCU/Control Panel estables desde Windows 10 1507. ledger_refs: winutil:tweak:WPFToggleMouseAcceleration",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "MouseSpeed en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "Control Panel\\Mouse",
+               "valueName": "MouseSpeed",
+               "value": "1",
+               "valueType": "String",
+               "operation": "Set"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "description": "MouseThreshold1 en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "Control Panel\\Mouse",
+               "valueName": "MouseThreshold1",
+               "value": "6",
+               "valueType": "String",
+               "operation": "Set"
+            },
+            {
+               "type": "registry",
+               "order": 3,
+               "description": "MouseThreshold2 en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "Control Panel\\Mouse",
+               "valueName": "MouseThreshold2",
+               "value": "10",
+               "valueType": "String",
+               "operation": "Set"
+            }
+         ]
+      },
+      {
+         "id": "system.oem-information.identify",
+         "name": "Escribir la información OEM del sistema",
+         "description": "Escribe Manufacturer, SupportURL y SupportPhone en HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OEMInformation, los tres valores que Windows muestra en Información del sistema. Los literales son los del pin (atribución de Atlas), no una identidad inventada para EVO.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1:5-7. Valores tomados del bloque Registry del pin: Manufacturer=Atlas Team; SupportURL=https://discord.atlasos.net; SupportPhone=https://github.com/Atlas-OS/Atlas. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: OEMInformation existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-oem-information",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OEMInformation",
+               "valueName": "Manufacturer",
+               "value": "Atlas Team",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "Manufacturer en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OEMInformation",
+               "valueName": "SupportURL",
+               "value": "https://discord.atlasos.net",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "SupportURL en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 3,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\OEMInformation",
+               "valueName": "SupportPhone",
+               "value": "https://github.com/Atlas-OS/Atlas",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "SupportPhone en HKLM"
+            }
+         ]
+      },
+      {
+         "id": "system.registry-backup.enable",
+         "name": "Reactivar la copia de seguridad diaria del registro",
+         "description": "Pone EnablePeriodicBackup=1 y BackupCount=2 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager, que es lo que Microsoft desactivó por defecto en Windows 10 1803, y crea la tarea programada AutoRegBackup que ejecuta `schtasks /run /i /tn \\Microsoft\\Windows\\Registry\\RegIdleBackup` todos los días a las 00:30 como SYSTEM (paso 11). Deshacer: se restauran los dos valores previos y se BORRA la tarea creada; si ya existía, se devuelve a su estado anterior en vez de borrarla.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Improves",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json#WPFFeatureRegBackup (Type=sin Type). Literales leidos de InvokeScript: EnablePeriodicBackup=1; BackupCount=2; taskCreate AutoRegBackup (Daily 00:30). El pin ADEMAS registra la tarea programada AutoRegBackup con Register-ScheduledTask (paso 11): se declara como accion taskCreate con los literales del InvokeScript (execute='schtasks', arguments='/run /i /tn \"\\\\Microsoft\\\\Windows\\\\Registry\\\\RegIdleBackup\"', trigger=Daily a las 00:30, userId='System', runLevel=Highest). Deshacer: se borra la tarea creada; si ya existia, se restaura su estado previo (no se borra). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor + tarea creada que se elimina. Builds: los valores son los mismos desde 1803; la tarea existe en todas. ledger_refs: winutil:feature:WPFFeatureRegBackup",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "EnablePeriodicBackup en HKLM",
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager",
+               "valueName": "EnablePeriodicBackup",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "description": "BackupCount en HKLM",
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager",
+               "valueName": "BackupCount",
+               "value": "2",
+               "valueType": "DWord",
+               "operation": "Set"
+            },
+            {
+               "type": "taskCreate",
+               "order": 3,
+               "description": "Crear la tarea AutoRegBackup (diaria a las 00:30)",
+               "taskPath": "\\",
+               "taskName": "AutoRegBackup",
+               "execute": "schtasks",
+               "arguments": "/run /i /tn \"\\Microsoft\\Windows\\Registry\\RegIdleBackup\"",
+               "trigger": "Daily",
+               "triggerAt": "00:30",
+               "userId": "System",
+               "runLevel": "Highest",
+               "taskDescription": "Create System Registry Backups",
+               "overwrite": false
+            }
+         ]
+      },
+      {
+         "id": "system.search-indexing.disable",
+         "name": "Desactivar la indización de búsqueda de Windows",
+         "description": "Pone el servicio WSearch en Desactivado y lo detiene si estaba corriendo. La búsqueda del Explorador y del menú Inicio deja de usar el índice y pasa a recorrer las carpetas: menos actividad de disco en reposo y resultados más lentos en bibliotecas grandes.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDisableSearchIndexing. Servicios y tipos de inicio tomados de la fuente: WSearch=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su propio deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer. Builds: WSearch existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksDisableSearchIndexing, winutil:tweak-op:WPFTweaksServices:service:0",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "WSearch -> Disabled",
+               "serviceName": "WSearch",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "system.services.manual-profile",
+         "name": "Pasar a manual o desactivar los servicios del perfil de WinUtil",
+         "description": "Ajusta el tipo de inicio de cinco servicios: CscService (Desactivado), DiagTrack (Desactivado), MapsBroker (Manual), StorSvc (Manual) y SharedAccess (Manual). Desactivar DiagTrack reduce la telemetría; desactivar CscService quita el cliente de archivos sin conexión y SharedAccess en Manual puede impedir compartir la conexión a Internet. Se puede deshacer porque el motor guarda el tipo de inicio previo.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Improves",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksServices. Servicios y tipos de inicio tomados de la fuente: CscService=Disabled; DiagTrack=Disabled; MapsBroker=Manual; StorSvc=Manual; SharedAccess=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su propio deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer. Builds: los cinco servicios existen en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:0",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "CscService -> Disabled",
+               "serviceName": "CscService",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "DiagTrack -> Disabled",
+               "serviceName": "DiagTrack",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "MapsBroker -> Manual",
+               "serviceName": "MapsBroker",
+               "operation": "SetStartupType",
+               "startupType": "Manual"
+            },
+            {
+               "type": "service",
+               "order": 4,
+               "description": "StorSvc -> Manual",
+               "serviceName": "StorSvc",
+               "operation": "SetStartupType",
+               "startupType": "Manual"
+            },
+            {
+               "type": "service",
+               "order": 5,
+               "description": "SharedAccess -> Disabled",
+               "serviceName": "SharedAccess",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "system.settings-page-visibility.hide",
+         "name": "Ocultar las páginas de Configuración que Atlas considera rotas",
+         "description": "Escribe SettingsPageVisibility='hide:recovery;maps;maps-downloadmaps;privacy;privacy-feedback;privacy-activityhistory;search-permissions;privacy-general;sync;mobile-devices;mobile-devices-addphone;workplace;family-group;deviceusage;home' en HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer. Muchas de esas páginas son las que usan los ajustes de privacidad: ocultarlas también las hace más difíciles de encontrar. El valor del pin es una lista COMPLETA: sobrescribe la que el usuario tuviera, no la amplía (a diferencia de la ayuda incremental de Atlas, que edita una página por vez). Se puede deshacer porque el motor guarda el valor previo.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5 (clave en la linea 7). Valor literal del pin: SettingsPageVisibility='hide:recovery;maps;maps-downloadmaps;privacy;privacy-feedback;privacy-activityhistory;search-permissions;privacy-general;sync;mobile-devices;mobile-devices-addphone;workplace;family-group;deviceusage;home'. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la directiva SettingsPageVisibility existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:qol/set-hidden-settings-pages",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "SettingsPageVisibility en HKLM",
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+               "valueName": "SettingsPageVisibility",
+               "value": "hide:recovery;maps;maps-downloadmaps;privacy;privacy-feedback;privacy-activityhistory;search-permissions;privacy-general;sync;mobile-devices;mobile-devices-addphone;workplace;family-group;deviceusage;home",
+               "valueType": "String",
+               "operation": "Set"
+            }
+         ]
+      },
+      {
+         "id": "system.sleep.s0-network-keep",
+         "name": "Mantener la red durante el reposo moderno (S0)",
+         "description": "Pone ACSettingIndex=1 en la directiva de energía del adaptador de red (HKCU\\SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-…). Evita que la conexión se caiga al entrar en reposo moderno (S0). No cambia el modelo de reposo del equipo.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFToggleStandbyFix (Type=Toggle). Valores tomados de la fuente: ACSettingIndex=1. Semantica: en un Toggle de WinUtil `Value` es el valor que se escribe y `OriginalValue` el que restaura su deshacer (functions/private/Invoke-WinUtilTweaks.ps1:34-46). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Builds: la directiva por GUID existe en 19045 y en las tres de Windows 11. ledger_refs: winutil:tweak:WPFToggleStandbyFix",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "ACSettingIndex en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "SOFTWARE\\Policies\\Microsoft\\Power\\PowerSettings\\f15576e8-98b7-4186-b944-eafa664402d9",
+               "valueName": "ACSettingIndex",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set"
+            }
+         ]
+      },
+      {
+         "id": "system.sleep.s3-enable",
+         "name": "Usar el reposo S3 clásico",
+         "description": "Pone PlatformAoAcOverride=0 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Power. Fuerza el modelo de reposo clásico (S3) en equipos que soportan reposo moderno (S0). Cambia cómo duerme el equipo y puede afectar a la reanudación en portátiles modernos, por eso el riesgo no es Safe.",
+         "sectionId": 9,
+         "risk": "Medium",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "RestorePoint",
+         "reversibility": "Reversible",
+         "confirmation": "Summary",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFToggleS3Sleep (Type=Toggle). Valores tomados de la fuente: PlatformAoAcOverride=0. Semantica: en un Toggle de WinUtil `Value` es el valor que se escribe y `OriginalValue` el que restaura su deshacer (functions/private/Invoke-WinUtilTweaks.ps1:34-46). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Privilegio Admin por escribir en HKLM. Builds: el valor existe en 19045 y en las tres de Windows 11 a partir de 2004. ledger_refs: winutil:tweak:WPFToggleS3Sleep",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "PlatformAoAcOverride en HKLM",
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Power",
+               "valueName": "PlatformAoAcOverride",
+               "value": "0",
+               "valueType": "DWord",
+               "operation": "Set"
+            }
+         ]
+      },
+      {
+         "id": "system.time.ntp-servers",
+         "name": "Usar los servidores de hora de pool.ntp.org",
+         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: devuelve los dos valores previos y el estado de ejecución anterior del servicio (si estaba parado, lo vuelve a parar). Sigue fuera de la capacidad `w32tm /config /update` y `w32tm /resync`: son comandos sin inversa declarada y no se ejecutan, así que la resincronización la hace Windows en su siguiente ciclo. Por eso la capacidad es Implemented con esa parte declarada, no Specified callada.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El bloque Services del pin arranca w32time: se declara como ServiceAction Start (paso 11) y el diario devuelve el estado de ejecucion previo. El pin ADEMAS hace algo que NO se declara: Run: w32tm /config /update y w32tm /resync (comandos sin inversa; NO se ejecutan y se declaran aquí). Queda declarado aqui y no se ejecuta: no hay promesa de deshacer para un comando. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicio: el diario guarda el estado de ejecucion previo y lo devuelve. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters",
+               "valueName": "NtpServer",
+               "value": "0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "NtpServer en HKLM"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters",
+               "valueName": "Type",
+               "value": "NTP",
+               "valueType": "String",
+               "operation": "Set",
+               "description": "Type en HKLM"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "w32time: iniciar",
+               "serviceName": "w32time",
+               "operation": "Start"
+            }
+         ]
+      },
+      {
+         "id": "system.time.utc-rtc",
+         "name": "Guardar el reloj del hardware en UTC",
+         "description": "Pone RealTimeIsUniversal=1 (QWord) en HKLM\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation. Windows pasa a interpretar el reloj de la placa como UTC, que es lo que esperan Linux y otros sistemas en un equipo con arranque dual. En un equipo de un solo sistema no hace falta.",
+         "sectionId": 9,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksUTC (Type=sin Type). Valores tomados de la fuente: RealTimeIsUniversal=1. Semantica: en un Toggle de WinUtil `Value` es el valor que se escribe y `OriginalValue` el que restaura su deshacer (functions/private/Invoke-WinUtilTweaks.ps1:34-46). Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Privilegio Admin por escribir en HKLM. Builds: valor documentado y presente en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksUTC",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "RealTimeIsUniversal en HKLM",
+               "hive": "LocalMachine",
+               "keyPath": "SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation",
+               "valueName": "RealTimeIsUniversal",
+               "value": "1",
+               "valueType": "QWord",
+               "operation": "Set"
+            }
+         ]
+      }
+   ]
+}
