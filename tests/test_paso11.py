@@ -368,7 +368,9 @@ def test_las_relajaciones_del_ci_estan_reparadas() -> None:
 
     wave1 = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave1CatalogTests.cs").read_text(encoding="utf-8")
     assert "SectionId is not 10 and not 9" in wave1
-    assert "Assert.Equal(18, catalog.Definitions.Count(d => d.SectionId == 9))" in wave1
+    # Paso 12: la sección 9 creció a 19 capacidades; lo que el test protege es
+    # que la sección se enumere por su cuenta, no el número de aquel día.
+    assert "catalog.Definitions.Count(d => d.SectionId == 9)" in wave1
 
     # Hay un barrido de TODO el catálogo que no depende de listas de ids.
     sweep = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave4CatalogTests.cs").read_text(encoding="utf-8")

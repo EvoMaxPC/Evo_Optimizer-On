@@ -679,7 +679,11 @@ public sealed class Wave4EngineTests
 
         Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
         Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, newKey));
-        AssertSameRegistry(before, harness.Registry.Snapshot());
+        // El árbol vuelve a ser EXACTAMENTE el de antes: mismas claves (ninguna
+        // de más) y mismos valores. No se usa `AssertSameRegistry`, que comprueba
+        // además la clave `EmptyKey` del árbol de ejemplo y aquí el registro está
+        // vacío a propósito para medir sólo lo que creó esta acción.
+        AssertSameTree(before, harness.Registry.Snapshot());
     }
 
     /// <summary>T2: si la clave YA existía, la acción es un no-op sin mutación y
@@ -790,6 +794,59 @@ public sealed class Wave4EngineTests
         Assert.Equal("present", executor.ReadCurrentState(action, context));
     }
 
+    /// <summary>T2: crear una clave dentro de una clave que ya existe NO es un
+    /// borrado recursivo: el deshacer quita sólo la creada y deja intacto el
+    /// subárbol de la madre (que no era suyo).</summary>
+    [Fact]
+    public async Task CreateKey_UndoAddsNothingToTheExistingParentSubtree()
+    {
+        var harness = TestHarness.Create();
+        var parent = @"SOFTWARE\Evo\Wave4\Madre";
+        harness.Registry.Seed(RegistryHive.LocalMachine, parent, "SeQueda", "sí",
+            RegistryValueKind.String);
+        harness.Registry.ClearLog();
+        var journal = new UndoJournal();
+        var child = parent + @"\Hija";
+
+        var result = await new RegistryCreateKeyExecutor().ExecuteAsync(
+            CreateKeyAction(child), ContextFor(harness, journal));
+
+        Assert.True(result.Success, result.ErrorMessage);
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, child));
+
+        var rollback = await journal.RollbackAsync(UndoContextFor(harness));
+
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, child));
+        // La madre y su valor siguen exactamente donde estaban.
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, parent));
+        Assert.Equal("sí", harness.Registry.GetValue(RegistryHive.LocalMachine, parent, "SeQueda"));
+    }
+
+    /// <summary>T2: dos creaciones de la MISMA clave en el mismo diario no se
+    /// duplican: la segunda es un no-op y el deshacer borra una sola vez.</summary>
+    [Fact]
+    public async Task CreateKey_TwiceInARowIsIdempotent()
+    {
+        var harness = TestHarness.Create();
+        var journal = new UndoJournal();
+        var key = @"SOFTWARE\Evo\Wave4\UnaVez";
+        var executor = new RegistryCreateKeyExecutor();
+
+        var first = await executor.ExecuteAsync(CreateKeyAction(key), ContextFor(harness, journal));
+        var second = await executor.ExecuteAsync(CreateKeyAction(key), ContextFor(harness, journal));
+
+        Assert.True(first.Success && second.Success);
+        Assert.True(first.Applied);
+        Assert.False(second.Applied);
+        Assert.Single(journal.Entries);
+
+        var rollback = await journal.RollbackAsync(UndoContextFor(harness));
+
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, key));
+    }
+
     // ------------------------------------------------------------- ayuda
     private static RegistryCreateKeyAction CreateKeyAction(string keyPath) => new()
     {
@@ -859,6 +916,33 @@ public sealed class Wave4EngineTests
 
     private static UndoContext UndoContextFor(TestHarness harness) => new(
         harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands);
+
+    /// <summary>Mismo árbol de claves y valores, sin exigir ninguna clave
+    /// concreta: sirve para snapshots que no son el árbol de ejemplo de la clase.</summary>
+    private static void AssertSameTree(
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> expected,
+        IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> actual)
+    {
+        Assert.Equal(expected.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase),
+            actual.Keys.OrderBy(k => k, StringComparer.OrdinalIgnoreCase));
+
+        foreach (var (key, values) in expected)
+        {
+            foreach (var (name, entry) in values)
+            {
+                Assert.True(actual[key].ContainsKey(name), $"{key}\\{name} no volvió");
+                Assert.Equal(entry.Kind, actual[key][name].Kind);
+                if (entry.Value is byte[] expectedBytes)
+                {
+                    Assert.Equal(expectedBytes, Assert.IsType<byte[]>(actual[key][name].Value));
+                }
+                else
+                {
+                    Assert.Equal(entry.Value, actual[key][name].Value);
+                }
+            }
+        }
+    }
 
     private static void AssertSameRegistry(
         IReadOnlyDictionary<string, IReadOnlyDictionary<string, RegistryEntry>> expected,

@@ -3,8 +3,9 @@
 - **Fecha**: 2026-11-23
 - **Rama**: `arena/ab2d6de7-evo-optimizer-on` (PR #1, **draft**)
 - **Punto de partida**: `cb75abe` (paso 11 verde)
-- **Estado**: cerrado en lo medible en este sandbox. Los tests xUnit **no se han
-  podido ejecutar** (este entorno no tiene dotnet); ver §8.
+- **Estado**: cerrado. `ledger-verify` en verde con el job nuevo y `dotnet-ci`
+  con los xUnit; la primera pasada falló con 7 casos y cuatro eran defectos
+  reales que se corrigieron (§7.3).
 
 ## 1. Qué pedía el paso y qué se ha hecho
 
@@ -207,7 +208,7 @@ R1                  88 medidas · 0 violaciones · 13 con efectos fuera del pin
 T3                  20 medidas · 3 OK · 17 pendientes · 0 contrarios
 plan de oleadas     89/435 líneas (20.5 %)
 rangos de build     79 completos + 9 recortados
-pytest              357 passed
+pytest              360 passed
 ```
 
 Las cifras del paso 11 (**86** capacidades, 238 acciones, 231, 195 filas de
@@ -234,23 +235,51 @@ Los ficheros `test_paso8b/9/10/11.py` se han actualizado a las cifras nuevas
 88/243/47/60, y donde se exigía `new9 == []` ahora se compara la lista cerrada
 completa (más estricto, no menos).
 
-### 7.2 xUnit — 14 casos nuevos, **no ejecutados aquí**
+### 7.2 xUnit — 14 casos nuevos, ejecutados en CI
 
-- `Wave4EngineTests`: `CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt`,
+- `Wave4EngineTests` (8): `CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt`,
   `CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt`,
   `CreateKey_DryRunDoesNotMutate`, `CreateKey_WithoutKeyCreatorFailsClosed`,
   `CreateKey_GoesThroughTheRestorePointGate`,
-  `CreateKey_ReadCurrentStateReportsPresence`.
+  `CreateKey_ReadCurrentStateReportsPresence`,
+  `CreateKey_UndoAddsNothingToTheExistingParentSubtree`,
+  `CreateKey_TwiceInARowIsIdempotent`.
+- `Wave3EngineTests` (1): `SearchIndexing_StopsBeforeDisablingSoUndoCanRestart`.
 - `Wave4CatalogTests`: `TestWave4Catalog_ValidatorRejectsMalformedKeyCreations`,
-  `TestWave4Catalog_LoaderReadsKeyCreationActions`.
+  `TestWave4Catalog_LoaderReadsKeyCreationActions`,
+  `TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide`,
+  `TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine`,
+  `TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified`.
 - Y el endurecimiento de los existentes: el barrido de las 88, el privilegio
-  por colmena contando también `registryCreateKey`, `explorer.home.restore` en
-  la sección 10, las cuatro `Specified` de la sección 9 con su motivo, la parada
-  de `WSearch` (`Stop` + estado) y la tarea de `AutoRegBackup` con R3.
+  por colmena contando también `registryCreateKey`, las listas de ids de las
+  secciones 9 y 10, las builds de Windows 11 (con `explorer.home.restore`), y la
+  parada de `WSearch` con su orden.
 
-**Este sandbox no tiene dotnet**: los xUnit se han escrito y revisado a mano,
-pero no se han podido compilar ni ejecutar. Es el único punto del paso que queda
-sin verificación mecánica, y va declarado como tal.
+### 7.3 Lo que encontró la primera pasada de CI
+
+La primera ejecución de `dotnet-ci` sobre este paso dio **7 fallos de 232**. Se
+arreglaron todos y **cuatro eran defectos de verdad**, no del test:
+
+1. **Orden de las acciones de servicio (el peor).** El generador de §9 emitía
+   `SetStartupType(Disabled)` y **después** `Stop(WSearch)`, justo el orden que
+   ADR-0005 §4-bis prohíbe: con el diario en LIFO, el deshacer restauraba el
+   arranque y luego intentaba arrancar un servicio aún deshabilitado → 1058.
+   Lo cazó `TestWave3Catalog_SearchIndexingDisablesWSearch`. Corregido en el
+   generador (parar primero) y **fijado por dos tests nuevos**, uno de catálogo
+   y otro de motor, más un test de Python que recorre las 88 capacidades
+   buscando el par `Stop`+`SetStartupType` en el orden equivocado.
+2. **`AssertSameRegistry` exigía una clave del árbol de ejemplo** (`EmptyKey`)
+   que no existe en el snapshot vacío del test de creación. Se añadió un helper
+   `AssertSameTree` que compara clave por clave sin esperar ninguna concreta.
+3. Las **listas de ids** de `Wave1`, `Wave2` y `Wave3` (y los recuentos por
+   sección 29/18) no incluían las dos capacidades nuevas.
+4. `explorer.home.restore` **excluye 19045** (CLSID de Windows 11) y no estaba
+   en la lista de «solo Windows 11» del test de builds.
+
+Los otros tres eran consecuencia directa de lo anterior. Para no repetirlo, hay
+un test de Python (`test_las_listas_de_ids_de_los_xunit_incluyen_las_dos_capacidades_nuevas`)
+que comprueba las listas **desde el catálogo**, sin necesitar dotnet: las cifras
+que se congelan en C# ahora se validan en la suite que sí corre aquí.
 
 ## 8. CI
 
@@ -272,10 +301,11 @@ por cifras obsoletas, no por el código.
 
 ## 9. Riesgos y límites declarados
 
-- **Sin dotnet en el sandbox**: los 14 xUnit nuevos y los endurecidos no se han
-  ejecutado. Se han escrito contra las firmas reales (`ActionResult.NewState`,
-  `FakeServiceAccessor.GetStatus`, `FakeRegistryAccessor`), pero un error de
-  compilación es posible y sólo lo verá el CI.
+- **No hay dotnet en el sandbox**: los xUnit se escriben y revisan aquí, pero se
+  ejecutan en el CI. La primera pasada trajo 7 fallos y cuatro eran defectos
+  reales (ver §7.3): el más grave, el orden `Stop`/`SetStartupType` que rompía
+  el deshacer. La lección está aplicada: las cifras y las listas de ids que se
+  congelan en C# se validan también desde Python.
 - **La instantánea del borrado de clave es en memoria** (paso 11): sigue igual.
   La creación no toma instantánea porque no hay nada que fotografiar.
 - **`config-pins` sigue sin capacidad**: es el único `AddKey` que queda fuera y

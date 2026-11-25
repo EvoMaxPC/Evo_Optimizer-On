@@ -31,6 +31,8 @@ public sealed class Wave3CatalogTests
         "system.menu-delay.disable",
         "system.mitigations.disable",
         "system.mouse-acceleration.enable",
+        // Paso 12: cerrar el asistente de ubicacion de red (AddKey del pin).
+        "system.network.location-wizard.disable",
         "system.oem-information.identify",
         "system.registry-backup.enable",
         "system.search-indexing.disable",
@@ -358,9 +360,18 @@ public sealed class Wave3CatalogTests
             services.Select(s => (s.ServiceName, s.StartupType!)).ToArray());
         Assert.All(services, s => Assert.Equal(ServiceOperation.SetStartupType, s.Operation));
 
-        var indexing = Assert.Single(ServiceActions(Definition("system.search-indexing.disable")));
-        Assert.Equal("WSearch", indexing.ServiceName);
-        Assert.Equal("Disabled", indexing.StartupType);
+        // Paso 12 (R1): el pin PARA WSearch y después lo deshabilita, así que la
+        // capacidad declara las dos operaciones y en ese orden (ADR-0005 §4-bis):
+        // el deshacer LIFO devuelve el arranque antes de arrancar el servicio.
+        var indexing = ServiceActions(Definition("system.search-indexing.disable")).ToList();
+        Assert.Equal(2, indexing.Count);
+        Assert.Equal(
+            new[] { (ServiceOperation.Stop, (string?)null),
+                    (ServiceOperation.SetStartupType, (string?)"Disabled") },
+            indexing.Select(a => (a.Operation, a.StartupType)).ToArray());
+        Assert.All(indexing, a => Assert.Equal("WSearch", a.ServiceName));
+        // Y el orden que se escribe en el fichero es el que se aplica.
+        Assert.Equal(new[] { 1, 2 }, indexing.Select(a => a.Order).ToArray());
 
         // Paso 11: el estado 'Disable' del pin apaga lfsvc y MapsBroker con
         // `Set-Service -StartupType Disabled` + `Stop()` (medido en

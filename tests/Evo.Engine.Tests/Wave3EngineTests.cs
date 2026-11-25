@@ -364,6 +364,14 @@ public sealed class Wave3EngineTests
         // Paso 12 (R1): el pin PARA el servicio en su InvokeScript, así que la
         // capacidad declara también `Stop`; desactivar el arranque no lo detiene.
         Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus("WSearch"));
+        // Y las dos operaciones se aplican EN ESE ORDEN (parar y después
+        // deshabilitar): el diario es LIFO y así el deshacer devuelve el arranque
+        // antes de arrancar el servicio. Al revés el rollback da 1058.
+        var applied = harness.Services.Log;
+        var stopAt = applied.FindIndex(a => a.StartsWith("stop ", StringComparison.Ordinal));
+        var typeAt = applied.FindIndex(a => a.StartsWith("startup ", StringComparison.Ordinal));
+        Assert.True(stopAt >= 0 && typeAt >= 0, string.Join(", ", applied));
+        Assert.True(stopAt < typeAt, string.Join(", ", applied));
 
         var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
         Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
@@ -462,5 +470,30 @@ public sealed class Wave3EngineTests
         var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
         Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
         AssertSameValues(before, harness.Registry.Snapshot());
+    }
+
+    /// <summary>Paso 12: el orden de las DOS acciones de servicio de la capacidad
+    /// de indización es el que el motor necesita para poder deshacer: parar y
+    /// después deshabilitar. Con el orden inverso el rollback no puede arrancar
+    /// el servicio (1058) y el plan entero se cae.</summary>
+    [Fact]
+    public async Task SearchIndexing_StopsBeforeDisablingSoUndoCanRestart()
+    {
+        var harness = Harness();
+        harness.Services.Seed("WSearch", ServiceStatus.Running, ServiceStartupType.Automatic);
+
+        var summary = await harness.Coordinator.ExecuteAsync(
+            Plan("system.search-indexing.disable"), ExecutionMode.Execute,
+            harness.Context(ExecutionMode.Execute));
+
+        Assert.Equal(0, summary.Failed);
+        var log = harness.Services.Log;
+        Assert.Equal(new[] { "stop WSearch", "startup WSearch=Disabled" }, log.ToArray());
+
+        var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
+
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.Equal(ServiceStartupType.Automatic, harness.Services.GetStartupType("WSearch"));
+        Assert.Equal(ServiceStatus.Running, harness.Services.GetStatus("WSearch"));
     }
 }

@@ -259,6 +259,52 @@ def test_t3_los_pendientes_son_informativos_no_fallos() -> None:
     assert "explorer.removable-drives.sidebar" in payload["pendientes"]
 
 
+def test_el_orden_de_las_acciones_de_servicio_para_antes_de_deshabilitar() -> None:
+    """ADR-0005 §4-bis, que el paso 12 volvió a pisar: si una capacidad para un
+    servicio y además le cambia el tipo de inicio, el `Stop` va PRIMERO. El
+    diario es LIFO; al revés, el deshacer arranca un servicio aún deshabilitado
+    y falla con 1058. Lo cazó `dotnet-ci`, no este test: por eso se añade."""
+    for cap in {**CAPS9, **CAPS10}.values():
+        services = [a for a in cap["actions"] if a["type"] == "service"]
+        for name in {a["serviceName"] for a in services}:
+            own = [a for a in services if a["serviceName"] == name]
+            operations = [a["operation"] for a in own]
+            if "Stop" in operations and "SetStartupType" in operations:
+                assert operations.index("Stop") < operations.index("SetStartupType"), \
+                    f"{cap['id']}: {name} -> {operations}"
+            # Y los `order` son consecutivos en el orden del array.
+            assert [a["order"] for a in cap["actions"]] == \
+                list(range(1, len(cap["actions"]) + 1)), cap["id"]
+
+    indexing = CAPS9["system.search-indexing.disable"]["actions"]
+    assert [(a["operation"], a.get("startupType")) for a in indexing] == \
+        [("Stop", None), ("SetStartupType", "Disabled")]
+
+
+def test_las_listas_de_ids_de_los_xunit_incluyen_las_dos_capacidades_nuevas() -> None:
+    """Los xUnit enumeran los ids de su sección: si una capacidad nueva no entra
+    en la lista, el test falla en CI y no aquí. Se comprueba en Python para no
+    depender de dotnet (que este sandbox no tiene)."""
+    wave2 = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave2CatalogTests.cs").read_text(
+        encoding="utf-8")
+    wave3 = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave3CatalogTests.cs").read_text(
+        encoding="utf-8")
+    wave1 = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave1CatalogTests.cs").read_text(
+        encoding="utf-8")
+    assert "\"explorer.home.restore\"," in wave2
+    assert "\"system.network.location-wizard.disable\"," in wave3
+    assert "Assert.Equal(30, catalog.Definitions.Count(d => d.SectionId == 10));" in wave1
+    assert "Assert.Equal(19, catalog.Definitions.Count(d => d.SectionId == 9));" in wave1
+
+    # Cada capacidad del catálogo está en la lista de su oleada.
+    section10 = wave2.split("private static readonly string[] Section10", 1)[1].split("];", 1)[0]
+    section9 = wave3.split("private static readonly string[] Section9", 1)[1].split("];", 1)[0]
+    for cap_id in CAPS10:
+        assert f"\"{cap_id}\"" in section10, cap_id
+    for cap_id in CAPS9:
+        assert f"\"{cap_id}\"" in section9, cap_id
+
+
 # ------------------------------------------------------------------- cifras
 def test_las_cifras_del_ledger_son_las_medidas() -> None:
     """88 capacidades, 243 acciones; §9 19/47 y §10 30/60. Ninguna cifra del
@@ -387,7 +433,9 @@ def test_los_informes_del_paso_12_existen_y_citan_lo_medido() -> None:
     report = REPORT.read_text(encoding="utf-8")
     for needle in ("88 capacidades", "71 `Implemented`", "17 `Specified`",
                    "registryCreateKey", "197", "CONTRARIO-DECLARADO",
-                   "no tiene dotnet"):
+                   # La honestidad sobre el entorno: aquí no hay dotnet y los
+                   # xUnit se ejecutan en el CI, no en este sandbox.
+                   "No hay dotnet en el sandbox"):
         assert needle in report, needle
 
     adr = ADR5.read_text(encoding="utf-8")

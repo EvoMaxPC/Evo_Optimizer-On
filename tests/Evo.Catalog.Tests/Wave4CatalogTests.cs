@@ -338,6 +338,71 @@ public sealed class Wave4CatalogTests
             CatalogOf(Definition("system.network.location-wizard.disable"))).IsValid);
     }
 
+    /// <summary>Paso 12 (T2): `explorer.home.restore` es la inversa exacta de
+    /// `explorer.home.hide` y declara las tres operaciones del estado `Enable`
+    /// del pin (AddKey + Delete + Set), ninguna del estado contrario.</summary>
+    [Fact]
+    public void TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide()
+    {
+        var restore = Definition("explorer.home.restore");
+        var hide = Definition("explorer.home.hide");
+
+        Assert.Equal(CapabilityState.Implemented, restore.State);
+        Assert.Equal(CapabilityState.Implemented, hide.State);
+        Assert.Equal(RestoreLevel.SessionUndo, restore.Restore);
+        Assert.Equal(Reversibility.Reversible, restore.Reversibility);
+
+        // Las tres operaciones, en el orden del pin: crear la clave, borrar el
+        // valor del CLSID de usuario y dejar LaunchTo=0.
+        Assert.Equal(new[] { 1, 2, 3 }, restore.Actions.Select(a => a.Order).OrderBy(o => o).ToArray());
+        var create = Assert.Single(restore.Actions.OfType<RegistryCreateKeyAction>());
+        Assert.Contains("{f874310e-b6b7-47dc-bc84-b9e6b38f5903}", create.KeyPath, StringComparison.Ordinal);
+        Assert.Equal(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace",
+            create.KeyPath[..create.KeyPath.LastIndexOf('\\')]);
+        Assert.Equal(RegistryHiveKind.LocalMachine, create.Hive);
+
+        // Se busca por nombre, no por índice: `Actions` es polimórfica y el
+        // orden del array no es el contrato (el contrato es `Order`).
+        var actions = restore.Actions.OfType<RegistryAction>().ToList();
+        Assert.Equal(2, actions.Count);
+        var unpin = Assert.Single(actions, a => a.ValueName == "System.IsPinnedToNameSpaceTree");
+        Assert.Equal(RegistryOperation.Delete, unpin.Operation);
+        var launch = Assert.Single(actions, a => a.ValueName == "LaunchTo");
+        Assert.Equal(RegistryOperation.Set, launch.Operation);
+        Assert.Equal("0", launch.Value);
+
+        // Y son la inversa la una de la otra: `hide` BORRA la clave que `restore`
+        // crea, y ninguna de las dos declara el estado contrario de su toggle.
+        var delete = Assert.Single(hide.Actions.OfType<RegistryDeleteKeyAction>());
+        Assert.Equal(create.KeyPath, delete.KeyPath);
+        Assert.Equal(create.Hive, delete.Hive);
+        Assert.Empty(hide.Actions.OfType<RegistryCreateKeyAction>());
+        Assert.Contains("ledger_refs: atlas:toggle:Home", restore.Provenance, StringComparison.Ordinal);
+        Assert.Equal(new[] { 22631, 26100, 26200 }, restore.SupportedBuilds.OrderBy(b => b).ToArray());
+    }
+
+    /// <summary>Paso 12 (T2): la creación de clave de la sección 9 escribe en HKLM
+    /// y por tanto pide Admin; y su línea del pin va en la procedencia, no en la
+    /// acción (el contrato de `CapabilityAction` sigue cerrado).</summary>
+    [Fact]
+    public void TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine()
+    {
+        var definition = Definition("system.network.location-wizard.disable");
+
+        Assert.Equal(CapabilityState.Implemented, definition.State);
+        Assert.Equal(PrivilegeLevel.Admin, definition.Privilege);
+        Assert.Single(definition.Actions);
+        var create = Assert.Single(definition.Actions.OfType<RegistryCreateKeyAction>());
+        Assert.Equal("NewNetworkWindowOff", create.KeyPath.Split('\\')[^1]);
+        Assert.Equal(@"SYSTEM\CurrentControlSet\Control\Network", create.KeyPath[..create.KeyPath.LastIndexOf('\\')]);
+
+        // La cita al manifiesto es la que cierra el `pending` del mapa upstream.
+        Assert.Contains("atlas:manifest:qol/shell/disable-network-location-wizard",
+            definition.Provenance, StringComparison.Ordinal);
+        Assert.Contains("disable-network-location-wizard.psd1:5", definition.Provenance,
+            StringComparison.Ordinal);
+    }
+
     /// <summary>T5: el cargador acepta el discriminante <c>registryCreateKey</c> y
     /// lo materializa como <see cref="RegistryCreateKeyAction"/>.</summary>
     [Fact]

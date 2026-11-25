@@ -30,6 +30,8 @@ public sealed class Wave2CatalogTests
         "explorer.gallery.hide",
         "explorer.hidden-files.show",
         "explorer.home.hide",
+        // Paso 12: restaurar el Inicio clasico (AddKey del estado 'Enable').
+        "explorer.home.restore",
         "explorer.long-paths.enable",
         "explorer.quick-access.hide",
         "explorer.recent-items.disable",
@@ -276,13 +278,16 @@ public sealed class Wave2CatalogTests
             {
                 "explorer.gallery.hide",
                 "explorer.home.hide",
+                // Paso 12: `explorer.home.restore` escribe la clave del CLSID de
+                // Inicio, que Windows 10 (19045) no lee.
+                "explorer.home.restore",
                 "ui.context-menu.classic",
                 "ui.taskbar.end-task",
                 "ui.taskbar.icons-centered",
             },
             windows11Only);
 
-        // Las cinco excluyen 19045 porque la clave que escriben no la lee Windows 10
+        // Las seis excluyen 19045 porque la clave que escriben no la lee Windows 10
         // (CLSID de la Galería, de Inicio, del menú contextual clásico, o
         // TaskbarAl/TaskbarEndTask): la procedencia lo dice con "Builds:".
         foreach (var id in windows11Only)

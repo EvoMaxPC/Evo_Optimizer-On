@@ -683,8 +683,18 @@ def build() -> dict:
                 # Paso 12 (R1): el pin PARA el servicio en su InvokeScript, y solo
                 # cambiar el arranque no lo detiene. ServiceAction Stop es la
                 # operacion equivalente (el diario guarda el estado previo).
-                actions = actions + [stop_service_action(actions[-1]["serviceName"],
-                                                         len(actions) + 1)]
+                #
+                # ORDEN (ADR-0005 4-bis): primero `Stop` y DESPUES el tipo de
+                # inicio, igual que hace el pin (`Stop-Service` y luego
+                # `Set-Service -StartupType Disabled`). El diario se deshace en
+                # LIFO: asi el deshacer devuelve el arranque ANTES de arrancar el
+                # servicio. Al reves, el rollback intenta arrancar un servicio
+                # aun deshabilitado y falla con 1058.
+                final: list[dict] = []
+                for index, action in enumerate(actions):
+                    final.append(stop_service_action(action["serviceName"], 2 * index + 1))
+                    final.append(dict(action, order=2 * index + 2))
+                actions = final
             provenance = (
                 f"{WINUTIL_PIN}:config/tweaks.json#{spec['winutil']}. Servicios y tipos de "
                 "inicio tomados de la fuente: "

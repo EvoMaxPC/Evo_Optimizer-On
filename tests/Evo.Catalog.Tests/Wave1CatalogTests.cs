@@ -101,8 +101,10 @@ public sealed class Wave1CatalogTests
         Assert.Equal(wave1.OrderBy(i => i, StringComparer.Ordinal),
             catalog.Definitions.Where(d => d.SectionId is not 10 and not 9)
                 .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal));
-        Assert.Equal(29, catalog.Definitions.Count(d => d.SectionId == 10));
-        Assert.Equal(18, catalog.Definitions.Count(d => d.SectionId == 9));
+        // Paso 12: 29 -> 30 en la seccion 10 (`explorer.home.restore`) y
+        // 18 -> 19 en la 9 (`system.network.location-wizard.disable`).
+        Assert.Equal(30, catalog.Definitions.Count(d => d.SectionId == 10));
+        Assert.Equal(19, catalog.Definitions.Count(d => d.SectionId == 9));
 
         var report = new CatalogValidator(KnownBuilds).Validate(catalog);
 
