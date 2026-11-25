@@ -1,6 +1,6 @@
 # ADR-0005 — Expresividad del motor: claves, tareas y servicios
 
-- **Estado**: Propuesto (paso 11)
+- **Estado**: Propuesto (paso 11; ampliado en el paso 12 con `registryCreateKey`)
 - **Decide**: qué operaciones del pin puede aplicar el motor sin romper ADR-0003
   (reversibilidad honesta) y cómo se deshacen exactamente
 - **Contexto de código**: `src/Evo.Core/Actions/CapabilityAction.cs`
@@ -10,6 +10,7 @@
   `IRegistryKeyCreator`), `src/Evo.Core/System/ITaskAccessor.cs`
   (`CreateTask`, `DeleteTask`, `TaskDefinition`),
   `src/Evo.Engine/Executors/RegistryDeleteKeyExecutor.cs`,
+  `src/Evo.Engine/Executors/RegistryCreateKeyExecutor.cs`,
   `src/Evo.Engine/Executors/TaskCreateExecutor.cs`,
   `src/Evo.Engine/Executors/ServiceActionExecutor.cs`,
   `src/Evo.Engine/Undo/UndoJournal.cs`,
@@ -29,17 +30,21 @@ se declara lo que se sabe deshacer**. Eso dejó tres huecos escritos y medidos:
 2. **Crear una tarea.** `WPFFeatureRegBackup` registra la tarea `AutoRegBackup`
    con `Register-ScheduledTask`. El motor sólo sabía habilitar o deshabilitar una
    tarea **existente**.
-3. **Arrancar o parar un servicio.** El enum `ServiceOperation` ya tenía `Start`
+3. **Crear una clave vacía.** Atlas usa `Operation = 'AddKey'` (por ejemplo,
+   `Interface/Home.psd1` y `qol/shell/disable-network-location-wizard.psd1`).
+   El motor sólo sabía escribir valores, así que la clave no se creaba.
+4. **Arrancar o parar un servicio.** El enum `ServiceOperation` ya tenía `Start`
    y `Stop`, pero ninguna capacidad los usaba y el deshacer sólo restauraba el
    estado cuando la operación no era `SetStartupType` (caso que nunca se daba).
 
-Los tres huecos afectan a capacidades ya publicadas: `explorer.home.hide`,
-`system.registry-backup.enable`, `system.time.ntp-servers` y
-`system.location.consent-deny`.
+Los tres primeros huecos afectan a capacidades ya publicadas:
+`explorer.home.hide`, `system.registry-backup.enable`, `system.time.ntp-servers`
+y `system.location.consent-deny`. El cuarto (`AddKey`) se cerró en el paso 12 y
+es la sección 6 de este documento.
 
 ## Decisión
 
-### 1. Dos acciones nuevas, con contrato cerrado
+### 1. Las acciones nuevas, con contrato cerrado
 
 - **`registryDeleteKey`** (`RegistryDeleteKeyAction`): `hive`, `keyPath`,
   `recursive` (por defecto `false`, que es lo que hace el pin), `order`,
@@ -48,6 +53,8 @@ Los tres huecos afectan a capacidades ya publicadas: `explorer.home.hide`,
   `arguments`, `trigger` (`Daily` | `OnLogon`), `triggerAt` (`HH:mm` con
   `Daily`), `userId` (`System` en el pin), `runLevel` (`Highest` | `Limited`),
   `taskDescription`, `overwrite` (por defecto `false`).
+- **`registryCreateKey`** (paso 12, `RegistryCreateKeyAction`): `hive`,
+  `keyPath`, `order`, `description`. Se detalla en §6.
 
 Las acciones **no** llevan `line`: la línea del pin va en la `provenance` de la
 capacidad, como en las oleadas 2 y 3 (`CapabilityAction` es polimórfica y su
@@ -121,11 +128,41 @@ falle en los tests.
   `IRegistryTreeReader` sobre el registro llega con la capa de sistema.
 - No se cambia `SecurityImpact` de ninguna capacidad sin evidencia del pin.
 
+### 6. Creación de clave: el deshacer borra sólo lo que ella creó
+
+`registryCreateKey` (`RegistryCreateKeyAction`) tiene contrato cerrado: `hive`,
+`keyPath`, `order`, `description`. **No** lleva `line` (va en la procedencia),
+no admite patrones ni recursión, y el validador rechaza `keyPath` vacío o con
+comodín (`R-ACTION`).
+
+`RegistryCreateKeyExecutor`, en `ExecutionMode.Execute`:
+
+1. Si el accesor no implementa `IRegistryKeyCreator` → **falla sin tocar nada**:
+   no se promete un deshacer que no se sabe hacer.
+2. Si la clave **ya existe** → **no-op registrado**, sin mutación y **sin entrada
+   de diario**. Crear algo que existe no es un cambio, y borrarlo al deshacer
+   destruiría estado previo (`ExistedBefore` no se escribe porque no hubo nada
+   que deshacer).
+3. Si **no existe** → se crea, se comprueba que existe y el diario apunta
+   `RegistryCreateKeyUndoEntry` con `PreviousState = "absent"`; el deshacer la
+   **borra, y no de forma recursiva**. Una clave que existía y tenía subárbol no
+   pasa nunca por este camino, así que el deshacer no puede borrar datos ajenos.
+
+En `DryRun` y `Audit` se informa `would-create` (o `would-create: ya existía
+(no-op)`) y no se muta nada. `ReadCurrentState` devuelve `present`/`absent`
+**antes** de crear, que es justo de lo que depende el deshacer.
+
+Con esto, dos `AddKey` del pin son capacidades: `explorer.home.restore` (§10) y
+`system.network.location-wizard.disable` (§9). El tercero —
+`qol/taskbar/config-pins.ps1:11` — sigue declarado como hueco: crea `Taskband`,
+escribe `FavoritesVersion=3` y borra dos valores, todo en una clave que no
+existe de fábrica; publicarlo entero es del siguiente paso, no de este.
+
 ## Consecuencias
 
 - **Positivas**: cuatro capacidades cierran su hueco sin bajar la promesa de
-  deshacer; los huecos que quedan (crear claves, `AddKey`, comandos) están
-  escritos con su motivo.
+  deshacer, y el paso 12 cierra el de `AddKey` para dos de las tres apariciones;
+  los que quedan (`config-pins`, comandos) están escritos con su motivo.
 - **Negativas / límites declarados**:
   - La instantánea se toma **en memoria**: una clave enorme no se borra
     (fail-closed) en vez de intentarlo con riesgo de perder el deshacer.
@@ -138,5 +175,11 @@ falle en los tests.
     (eso es del accesor real).
 - **Pruebas**: `tests/Evo.Engine.Tests/Wave4EngineTests.cs` (ejecutar, deshacer
   exacto, dry-run, clave inexistente, instantánea que falla, límite superado,
-  fallo a mitad con reversión, puerta de punto de restauración) y
-  `tests/Evo.Catalog.Tests/Wave4CatalogTests.cs` (validador acepta/rechaza).
+  fallo a mitad con reversión, puerta de punto de restauración; y para la
+  creación: `CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt`,
+  `CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt`,
+  `CreateKey_DryRunDoesNotMutate`, `CreateKey_WithoutKeyCreatorFailsClosed`,
+  `CreateKey_GoesThroughTheRestorePointGate`,
+  `CreateKey_ReadCurrentStateReportsPresence`) y
+  `tests/Evo.Catalog.Tests/Wave4CatalogTests.cs` (validador acepta/rechaza,
+  incluidas las creaciones mal formadas).

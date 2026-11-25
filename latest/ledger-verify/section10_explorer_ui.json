@@ -198,7 +198,7 @@
       {
          "id": "explorer.file-extensions.show",
          "name": "Mostrar las extensiones de archivo",
-         "description": "Pone HideFileExt=0 en el Explorador para que se vea la extensión real de cada archivo (por ejemplo `factura.pdf.exe` en vez de `factura.pdf`). Se deshace con el diario: el valor anterior se guarda antes de escribir.",
+         "description": "Pone HideFileExt=0 en el Explorador para que se vea la extensión real de cada archivo (por ejemplo `factura.pdf.exe` en vez de `factura.pdf`). Se deshace con el diario: el valor anterior se guarda antes de escribir. Por que mejora la seguridad: MEJORA la seguridad: mostrar la extension real hace visible un `factura.pdf.exe` que el Explorador oculta por defecto, que es el vector clasico de doble extension. No quita ninguna proteccion y no cambia permisos.",
          "sectionId": 10,
          "risk": "Safe",
          "securityImpact": "Improves",
@@ -219,7 +219,7 @@
             26100,
             26200
          ],
-         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1455 (#WPFToggleShowExt, Type=Toggle). Valores tomados de la fuente: HideFileExt=0. Semantica: en un Toggle de WinUtil `Value` es la casilla ENCENDIDA y `OriginalValue` la apagada (functions/private/Invoke-WinUtilTweaks.ps1:34-46, Get-WinUtilToggleStatus.ps1:44). Reversibilidad (ADR-0003): Reversible - el motor guarda el valor previo de cada clave antes de escribir y lo restaura al deshacer. Builds: las cuatro del catalogo (extension de archivo, ocultos, tema, barras, ajuste de ventanas, Bloq Num, busqueda y Vista de tareas son claves que existen en 19045 y en las tres de Windows 11). ledger_refs: winutil:tweak:WPFToggleShowExt",
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1455 (#WPFToggleShowExt, Type=Toggle). Valores tomados de la fuente: HideFileExt=0. Semantica: en un Toggle de WinUtil `Value` es la casilla ENCENDIDA y `OriginalValue` la apagada (functions/private/Invoke-WinUtilTweaks.ps1:34-46, Get-WinUtilToggleStatus.ps1:44). Reversibilidad (ADR-0003): Reversible - el motor guarda el valor previo de cada clave antes de escribir y lo restaura al deshacer. Builds: las cuatro del catalogo (extension de archivo, ocultos, tema, barras, ajuste de ventanas, Bloq Num, busqueda y Vista de tareas son claves que existen en 19045 y en las tres de Windows 11). ledger_refs: winutil:tweak:WPFToggleShowExt R2 (paso 12): SecurityImpact=Improves por: MEJORA la seguridad: mostrar la extension real hace visible un `factura.pdf.exe` que el Explorador oculta por defecto, que es el vector clasico de doble extension. No quita ninguna proteccion y no cambia permisos.",
          "actions": [
             {
                "type": "registry",
@@ -275,7 +275,7 @@
       {
          "id": "explorer.hidden-files.show",
          "name": "Mostrar los archivos y carpetas ocultos",
-         "description": "Pone Hidden=1 en el Explorador para que se vean los elementos con atributo oculto. Aumenta lo que se ve, no cambia permisos ni borra nada.",
+         "description": "Pone Hidden=1 en el Explorador para que se vean los elementos con atributo oculto. Aumenta lo que se ve, no cambia permisos ni borra nada. Por que mejora la seguridad: MEJORA la seguridad por VISIBILIDAD: el atributo oculto es lo primero que usa el malware para esconderse del usuario. Mostrarlo no concede ni quita acceso (los permisos no cambian) y no borra nada.",
          "sectionId": 10,
          "risk": "Safe",
          "securityImpact": "Improves",
@@ -296,7 +296,7 @@
             26100,
             26200
          ],
-         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1483 (#WPFToggleHiddenFiles, Type=Toggle). Valores tomados de la fuente: Hidden=1. Semantica: en un Toggle de WinUtil `Value` es la casilla ENCENDIDA y `OriginalValue` la apagada (functions/private/Invoke-WinUtilTweaks.ps1:34-46, Get-WinUtilToggleStatus.ps1:44). Reversibilidad (ADR-0003): Reversible - el motor guarda el valor previo de cada clave antes de escribir y lo restaura al deshacer. Builds: las cuatro del catalogo (extension de archivo, ocultos, tema, barras, ajuste de ventanas, Bloq Num, busqueda y Vista de tareas son claves que existen en 19045 y en las tres de Windows 11). ledger_refs: winutil:tweak:WPFToggleHiddenFiles",
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1483 (#WPFToggleHiddenFiles, Type=Toggle). Valores tomados de la fuente: Hidden=1. Semantica: en un Toggle de WinUtil `Value` es la casilla ENCENDIDA y `OriginalValue` la apagada (functions/private/Invoke-WinUtilTweaks.ps1:34-46, Get-WinUtilToggleStatus.ps1:44). Reversibilidad (ADR-0003): Reversible - el motor guarda el valor previo de cada clave antes de escribir y lo restaura al deshacer. Builds: las cuatro del catalogo (extension de archivo, ocultos, tema, barras, ajuste de ventanas, Bloq Num, busqueda y Vista de tareas son claves que existen en 19045 y en las tres de Windows 11). ledger_refs: winutil:tweak:WPFToggleHiddenFiles R2 (paso 12): SecurityImpact=Improves por: MEJORA la seguridad por VISIBILIDAD: el atributo oculto es lo primero que usa el malware para esconderse del usuario. Mostrarlo no concede ni quita acceso (los permisos no cambian) y no borra nada.",
          "actions": [
             {
                "type": "registry",
@@ -362,6 +362,62 @@
                "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
                "valueName": "LaunchTo",
                "value": "1",
+               "valueType": "DWord",
+               "operation": "Set",
+               "description": "LaunchTo en HKCU"
+            }
+         ]
+      },
+      {
+         "id": "explorer.home.restore",
+         "name": "Restaurar Inicio en el Explorador y abrir en Inicio",
+         "description": "Ancla la carpeta Inicio en el panel de navegacion de dos formas a la vez: CREA la clave HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} (la entrada del panel) y escribe System.IsPinnedToNameSpaceTree=0 en su CLSID de usuario mas LaunchTo=0 para que el Explorador abra en Inicio. Es la inversa exacta de `explorer.home.hide`, que borra esa misma clave. Deshacer: los dos valores previos y la clave creada se borra; si la clave ya existia, la accion de creacion es un no-op.",
+         "sectionId": 10,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/Home.psd1:11 (estado 'Enable'). Valores tomados del bloque Registry del pin: BORRAR CLAVE LocalMachine\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} (DeleteKey del pin); System.IsPinnedToNameSpaceTree=(cadena vacia); LaunchTo=0.Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de Windows 11; 19045 no se declara.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:Home",
+         "actions": [
+            {
+               "type": "registryCreateKey",
+               "order": 1,
+               "hive": "LocalMachine",
+               "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+               "description": "Crear la clave HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}"
+            },
+            {
+               "type": "registry",
+               "order": 2,
+               "hive": "CurrentUser",
+               "keyPath": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+               "valueName": "System.IsPinnedToNameSpaceTree",
+               "value": "",
+               "valueType": "String",
+               "operation": "Delete",
+               "description": "System.IsPinnedToNameSpaceTree en HKCU"
+            },
+            {
+               "type": "registry",
+               "order": 3,
+               "hive": "CurrentUser",
+               "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+               "valueName": "LaunchTo",
+               "value": "0",
                "valueType": "DWord",
                "operation": "Set",
                "description": "LaunchTo en HKCU"
@@ -449,7 +505,7 @@
       {
          "id": "explorer.recent-items.disable",
          "name": "Quitar los elementos recientes del Explorador y del menú Inicio",
-         "description": "Escribe nueve valores de directiva y de usuario para que no se guarden ni se muestren los documentos y programas usados recientemente (Start_TrackDocs, Start_TrackProgs, NoRecentDocsHistory, ClearRecentDocsOnExit y compañía). El pin añade una acción de máquina para la página de Configuración que no es de registro y aquí no se declara.",
+         "description": "Escribe nueve valores de directiva y de usuario para que no se guarden ni se muestren los documentos y programas usados recientemente (Start_TrackDocs, Start_TrackProgs, NoRecentDocsHistory, ClearRecentDocsOnExit y compañía). El pin añade una acción de máquina para la página de Configuración que no es de registro y aquí no se declara. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Set-AtlasRecentItemsSettingsPage (Interface/RecentItems.psd1:18), que OCULTA la pagina privacy-general de Configuracion escribiendo la directiva SettingsPageVisibility (Atlas.Shell/Domain/SettingsPages.ps1:66-96; RecentItems.ps1:12-20), y UserAction Show-AtlasRecentItemsMessage (:19), que solo muestra un aviso. La directiva es un cambio que PERSISTE y el motor no la declara aqui: ocultar una pagina de Configuracion no es 'quitar los elementos recientes' y ademas comparte clave con system.settings-page-visibility.hide, que escribiria un valor distinto sobre la MISMA SettingsPageVisibility. Por que mejora la seguridad: MEJORA la privacidad: sin historial de documentos y programas recientes, quien use el equipo despues no ve que ficheros y aplicaciones se abrieron. No reduce ninguna proteccion de seguridad; el efecto es sobre el rastro de uso local, y por eso el impacto es `Improves` y no `Neutral`.",
          "sectionId": 10,
          "risk": "Low",
          "securityImpact": "Improves",
@@ -457,7 +513,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "SimpleClick",
-         "state": "Implemented",
+         "state": "Specified",
          "variants": [
             "Evo",
             "Atlas"
@@ -470,7 +526,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/RecentItems.psd1:13 (estado 'Disable'). Valores tomados del bloque Registry del pin: NoStartMenuMFUprogramsList=1; NoInstrumentation=1; ClearRecentDocsOnExit=1; NoRecentDocsHistory=1; ShowOrHideMostUsedApps=2; HideRecentlyAddedApps=1; NoRemoteDestinations=1; Start_TrackProgs=0; Start_TrackDocs=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:RecentItems",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/RecentItems.psd1:13 (estado 'Disable'). Valores tomados del bloque Registry del pin: NoStartMenuMFUprogramsList=1; NoInstrumentation=1; ClearRecentDocsOnExit=1; NoRecentDocsHistory=1; ShowOrHideMostUsedApps=2; HideRecentlyAddedApps=1; NoRemoteDestinations=1; Start_TrackProgs=0; Start_TrackDocs=0. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:RecentItems R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara ademas MachineAction Set-AtlasRecentItemsSettingsPage (Interface/RecentItems.psd1:18), que OCULTA la pagina privacy-general de Configuracion escribiendo la directiva SettingsPageVisibility (Atlas.Shell/Domain/SettingsPages.ps1:66-96; RecentItems.ps1:12-20), y UserAction Show-AtlasRecentItemsMessage (:19), que solo muestra un aviso. La directiva es un cambio que PERSISTE y el motor no la declara aqui: ocultar una pagina de Configuracion no es 'quitar los elementos recientes' y ademas comparte clave con system.settings-page-visibility.hide, que escribiria un valor distinto sobre la MISMA SettingsPageVisibility. Como el efecto del pin no queda expresado entero, State=Specified. R2 (paso 12): SecurityImpact=Improves por: MEJORA la privacidad: sin historial de documentos y programas recientes, quien use el equipo despues no ve que ficheros y aplicaciones se abrieron. No reduce ninguna proteccion de seguridad; el efecto es sobre el rastro de uso local, y por eso el impacto es `Improves` y no `Neutral`.",
          "actions": [
             {
                "type": "registry",
@@ -704,7 +760,7 @@
       {
          "id": "ui.context-menu.classic",
          "name": "Restaurar el menú contextual clásico de Windows 11",
-         "description": "Escribe la cadena vacía en el valor predeterminado de InprocServer32 del CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. El menú antiguo sólo se activa cuando ese valor existe y está vacío: con la clave desnuda Windows sigue mostrando el menú compacto. Es exclusivo de Windows 11: en Windows 10 ese CLSID no interviene y por eso no se declara 19045.",
+         "description": "Escribe la cadena vacía en el valor predeterminado de InprocServer32 del CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. El menú antiguo sólo se activa cuando ese valor existe y está vacío: con la clave desnuda Windows sigue mostrando el menú compacto. Es exclusivo de Windows 11: en Windows 10 ese CLSID no interviene y por eso no se declara 19045. FUERA DE ESTA CAPACIDAD (R1): en la variante WinUtil el pin hace dos cosas MAS que no se declaran: crea la clave de workaround HKCU\\Software\\Classes\\CLSID\\{51668040-5e31-4023-bbe3-149163bd80f1} con el valor WinUtilClassicContextMenu=1 como marca de propiedad y le anade InprocServer32 con la cadena vacia (functions/private/Set-WinUtilClassicContextMenu.ps1:6-8, 53-72). La accion declarada es la de Atlas (OldContextMenu.psd1:9-13), que escribe el MISMO efecto por la via del CLSID {86ca1aa0-...} y no crea el workaround. El motor ya sabe crear claves (registryCreateKey, paso 12) pero no se declara aqui porque el workaround es especifico de WinUtil y su marca de propiedad existe para que SU deshacer sepa que la creo el.",
          "sectionId": 10,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -712,7 +768,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "SimpleClick",
-         "state": "Implemented",
+         "state": "Specified",
          "variants": [
             "Evo",
             "Atlas",
@@ -725,7 +781,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/OldContextMenu.psd1:13 (estado 'Enable'). Valores tomados del bloque Registry del pin: (predeterminado)=(cadena vacia). El mismo efecto existe en WinUtil: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1172 invoca functions/private/Set-WinUtilClassicContextMenu.ps1, que escribe el mismo CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. Ledger: winutil:tweak:WPFTweaksRightClickMenu (linea 10:326 del inventario, 'Previous Right-Click Menu').Builds: el CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2} es el del menú contextual de Windows 11; Windows 10 no lo usa.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:OldContextMenu",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Interface/OldContextMenu.psd1:13 (estado 'Enable'). Valores tomados del bloque Registry del pin: (predeterminado)=(cadena vacia). El mismo efecto existe en WinUtil: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1172 invoca functions/private/Set-WinUtilClassicContextMenu.ps1, que escribe el mismo CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. Ledger: winutil:tweak:WPFTweaksRightClickMenu (linea 10:326 del inventario, 'Previous Right-Click Menu').Builds: el CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2} es el del menú contextual de Windows 11; Windows 10 no lo usa.  Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. ledger_refs: atlas:toggle:OldContextMenu R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: en la variante WinUtil el pin hace dos cosas MAS que no se declaran: crea la clave de workaround HKCU\\Software\\Classes\\CLSID\\{51668040-5e31-4023-bbe3-149163bd80f1} con el valor WinUtilClassicContextMenu=1 como marca de propiedad y le anade InprocServer32 con la cadena vacia (functions/private/Set-WinUtilClassicContextMenu.ps1:6-8, 53-72). La accion declarada es la de Atlas (OldContextMenu.psd1:9-13), que escribe el MISMO efecto por la via del CLSID {86ca1aa0-...} y no crea el workaround. El motor ya sabe crear claves (registryCreateKey, paso 12) pero no se declara aqui porque el workaround es especifico de WinUtil y su marca de propiedad existe para que SU deshacer sepa que la creo el. Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": [
             {
                "type": "registry",
