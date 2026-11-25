@@ -773,7 +773,7 @@ jobs:
                 and r1["violaciones_r1"] == []
                 and r1["implemented"] + r1["specified"] == 88
                 and t3["veredicto"] == "OK"
-                and t3["contrarios_declarados"] == []
+                and t3["contrarios"] == ["explorer.home.hide", "explorer.home.restore", "explorer.removable-drives.sidebar"]
                 and cov["capacidades"] == 88
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
