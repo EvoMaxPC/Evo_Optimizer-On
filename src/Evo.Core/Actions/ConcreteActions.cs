@@ -200,3 +200,32 @@ public sealed record TaskCreateAction : CapabilityAction
 
     protected override string Fingerprint => $"{TaskPath}\\{TaskName}";
 }
+
+/// <summary>
+/// Creación de una clave VACÍA del registro (paso 12, ADR-0005).
+/// </summary>
+/// <remarks>
+/// El pin de Atlas la usa como efecto propio en tres sitios: ocultar la carpeta
+/// Inicio crea su CLSID, el asistente de ubicación de red se apaga creando
+/// <c>NewNetworkWindowOff</c> y la configuración de pines de la barra de tareas
+/// prepara <c>Taskband</c>. Hacía falta una acción porque
+/// <see cref="RegistryAction"/> siempre escribe un valor.
+/// <para>
+/// La inversa NO es «borrar la clave»: si la clave ya existía (con sus valores y
+/// subclaves) borrarla destruiría estado previo. El ejecutor sólo crea la clave
+/// cuando no existe y, en ese caso, el diario apunta «la clave no existía» para
+/// que el deshacer la borre. Si ya existía, la acción es un no-op registrado y el
+/// deshacer no toca nada. Un no-op nunca se apunta como borrado: se mide antes.
+/// </para>
+/// </remarks>
+public sealed record RegistryCreateKeyAction : CapabilityAction
+{
+    public override ActionKind Kind => ActionKind.RegistryCreateKey;
+
+    public required RegistryHiveKind Hive { get; init; }
+
+    /// <summary>Ruta completa de la clave a crear (vacía, sin valores).</summary>
+    public required string KeyPath { get; init; }
+
+    protected override string Fingerprint => $"{Hive}\\{KeyPath}";
+}

@@ -94,12 +94,15 @@ public sealed class Wave2CatalogTests
     /// <summary>
     /// Colmenas que la capacidad TOCA, con las dos formas de registro: escribir o
     /// borrar UN valor (<see cref="RegistryAction"/>) y borrar una CLAVE completa
-    /// (<see cref="RegistryDeleteKeyAction"/>, paso 11). Mirar sólo la primera
+    /// (<see cref="RegistryDeleteKeyAction"/>, paso 11) y crear una CLAVE vacía
+    /// (<see cref="RegistryCreateKeyAction"/>, paso 12). Mirar sólo la primera
     /// dejaba `explorer.home.hide` como «User» cuando borra en HKLM.
     /// </summary>
     private static IEnumerable<RegistryHiveKind> RegistryHives(CapabilityDefinition definition) =>
         definition.Actions.OfType<RegistryAction>().Select(a => a.Hive)
-            .Concat(definition.Actions.OfType<RegistryDeleteKeyAction>().Select(a => a.Hive));
+            .Concat(definition.Actions.OfType<RegistryDeleteKeyAction>().Select(a => a.Hive))
+            // Paso 12: crear una clave vacía también toca una colmena.
+            .Concat(definition.Actions.OfType<RegistryCreateKeyAction>().Select(a => a.Hive));
 
     // ---------------------------------------------------------------- T4.1 carga
     /// <summary>T4.1: el fichero de la sección 10 carga, valida sin errores ni avisos
@@ -110,8 +113,8 @@ public sealed class Wave2CatalogTests
         var catalog = LoadAll();
 
         // 39 de las oleadas 1/1b/8c + 29 de la sección 10 + 18 de la sección 9
-        // (paso 10) = 86. Lo que este test protege sigue siendo la sección 10.
-        Assert.Equal(86, catalog.Count);
+        // (paso 10) = 86, + 2 del paso 12 = 88. Lo que este test protege sigue siendo la sección 10.
+        Assert.Equal(88, catalog.Count);
 
         var wave2 = catalog.Definitions.Where(d => d.SectionId == 10)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
@@ -352,6 +355,15 @@ public sealed class Wave2CatalogTests
                 // motor aborta sin borrar si no puede fotografiar el subárbol.
                 Assert.Equal("explorer.home.hide", definition.Id);
                 Assert.False(action.Recursive);
+                Assert.Contains(ClassicHomeClsid, action.KeyPath, StringComparison.Ordinal);
+                Assert.Equal(RegistryHiveKind.LocalMachine, action.Hive);
+            }
+
+            foreach (var action in definition.Actions.OfType<RegistryCreateKeyAction>())
+            {
+                // Paso 12: la creación de clave es de `explorer.home.restore`
+                // (restaurar Inicio) y su inversa es borrarla.
+                Assert.Equal("explorer.home.restore", definition.Id);
                 Assert.Contains(ClassicHomeClsid, action.KeyPath, StringComparison.Ordinal);
                 Assert.Equal(RegistryHiveKind.LocalMachine, action.Hive);
             }

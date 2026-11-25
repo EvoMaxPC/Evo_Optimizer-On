@@ -72,8 +72,10 @@ def test_el_fichero_de_la_seccion_9_reproduce_byte_a_byte() -> None:
     assert text.endswith("\n") and "\r\n" not in text
 
 
-def test_la_seccion_9_declara_18_capacidades_con_ids_validos_y_unicos() -> None:
-    assert len(CAPS) == 18
+def test_la_seccion_9_declara_19_capacidades_con_ids_validos_y_unicos() -> None:
+    # Paso 12: 18 -> 19 con `system.network.location-wizard.disable`, la
+    # capacidad que expresa la `AddKey` del pin (crear una clave vacía).
+    assert len(CAPS) == 19
     ids = [c["id"] for c in CAPS]
     assert len(ids) == len(set(ids))
     assert ids == sorted(ids), "el generador ordena por id"
@@ -94,7 +96,8 @@ def test_todas_las_acciones_llevan_discriminador_y_una_sola_forma_por_tipo() -> 
     shapes: dict[str, set] = {}
     for cap in CAPS:
         for action in cap["actions"]:
-            assert action["type"] in ("registry", "service", "taskCreate"), (cap["id"], action)
+            assert action["type"] in ("registry", "service", "taskCreate",
+                                      "registryCreateKey"), (cap["id"], action)
             shapes.setdefault(action["type"], set()).add(tuple(sorted(action)))
     assert shapes["registry"] == {("description", "hive", "keyPath", "operation",
                                    "order", "type", "value", "valueName", "valueType")}
@@ -111,6 +114,9 @@ def test_todas_las_acciones_llevan_discriminador_y_una_sola_forma_por_tipo() -> 
         ("arguments", "description", "execute", "order", "overwrite", "runLevel",
          "taskDescription", "taskName", "taskPath", "trigger", "triggerAt", "type",
          "userId")}
+    # Paso 12: la creación de clave vacía, sin valor ni recursión.
+    assert shapes["registryCreateKey"] == {
+        ("description", "hive", "keyPath", "order", "type")}
 
 
 def test_adr_0003_riesgo_restauracion_confirmacion_y_seguridad_coherentes() -> None:
@@ -144,9 +150,25 @@ def test_implemented_solo_con_acciones_y_specified_sin_perder_los_valores() -> N
             assert "Specified" in cap["provenance"], cap["id"]
     # Paso 11: las dos que quedaban en Specified cierran su hueco con las
     # acciones nuevas (tarea AutoRegBackup y arranque de w32time) y pasan a
-    # Implemented. No queda ninguna Specified en la sección 9.
+    # Implemented. El paso 12 aplica R1 SOBRE LA MARCHA: cuatro capacidades cuyo
+    # pin hace algo mas que lo declarado vuelven a Specified, y no por
+    # expresividad de registro sino por operaciones que el motor no tiene
+    # (powercfg, bcdedit/CFG, politica de Find My Device y la diferencia de
+    # RunLevel de la tarea). La lista es cerrada a proposito: si aparece otra,
+    # este test falla y hay que decidir.
     specified = sorted(c["id"] for c in CAPS if c["state"] == "Specified")
-    assert specified == []
+    assert specified == [
+        "system.hibernation.hide",
+        "system.location.consent-deny",
+        "system.mitigations.disable",
+        "system.registry-backup.enable",
+    ]
+    # Y las cuatro lo dicen en description Y provenance (R1 no admite huecos
+    # silenciosos).
+    for cap_id in specified:
+        cap = BY_ID[cap_id]
+        assert "FUERA DE ESTA CAPACIDAD (R1)" in cap["description"], cap_id
+        assert "R1 (paso 12)" in cap["provenance"], cap_id
 
 
 def test_las_tres_capacidades_que_reducen_seguridad_lo_dicen_sin_taparlo() -> None:
@@ -236,7 +258,8 @@ def test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9() -> None:
                                          "huecos": 0}
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
-    assert report["capacidades"] == 86
+    # Paso 12: 86 -> 88 capacidades en el catalogo completo.
+    assert report["capacidades"] == 88
 
 
 def test_las_correcciones_medidas_del_paso_10_estan_en_el_ledger() -> None:
@@ -292,7 +315,8 @@ def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> No
     assert "oleada 3, cerrada en el catálogo (30 de 30" in plan
     assert "| 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |" in plan   # fila de §9
     ranges = RANGES.read_text(encoding="utf-8")
-    assert "**86** capacidades" in ranges
+    # Paso 12: 88 capacidades (71 Implemented / 17 Specified).
+    assert "**88** capacidades, 71 `Implemented` y 17 `Specified`" in ranges
     assert "`system.hibernation.hide`" in ranges
 
 

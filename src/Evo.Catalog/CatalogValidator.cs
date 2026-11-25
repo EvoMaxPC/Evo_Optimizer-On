@@ -275,6 +275,20 @@ public sealed partial class CatalogValidator
                         "el borrado de claves no admite patrones."));
                     break;
 
+                case Evo.Core.Actions.RegistryCreateKeyAction createKey
+                    when string.IsNullOrWhiteSpace(createKey.KeyPath):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id, "RegistryCreateKeyAction sin 'keyPath'."));
+                    break;
+
+                case Evo.Core.Actions.RegistryCreateKeyAction createKey
+                    when createKey.KeyPath.Contains("*", StringComparison.Ordinal):
+                    issues.Add(Error(
+                        "R-ACTION", definition.Id,
+                        $"RegistryCreateKeyAction con comodín en 'keyPath' " +
+                        $"('{createKey.KeyPath}'): crear claves no admite patrones."));
+                    break;
+
                 case Evo.Core.Actions.TaskCreateAction create
                     when string.IsNullOrWhiteSpace(create.TaskName)
                          || string.IsNullOrWhiteSpace(create.Execute)

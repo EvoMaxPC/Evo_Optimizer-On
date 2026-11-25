@@ -503,8 +503,10 @@ jobs:
           sec10_doc = json.load(open("ci-out/section10_explorer_ui.json", encoding="utf-8"))
           caps10 = sec10_doc["capabilities"]
           acts10 = sum(len(c["actions"]) for c in caps10)
-          ok = (len(caps10) == 29
-                and acts10 == 57
+          # Paso 12: la seccion 10 suma `explorer.home.restore` (3 acciones:
+          # registryCreateKey + IsPinnedToNameSpaceTree + LaunchTo).
+          ok = (len(caps10) == 30
+                and acts10 == 60
                 and all(c["sectionId"] == 10 for c in caps10)
                 and all(c["state"] in ("Implemented", "Specified") for c in caps10)
                 and any(a["type"] == "registryDeleteKey"
@@ -574,8 +576,12 @@ jobs:
           print("seccion 9:", cov["por_seccion"]["9"])
           print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
           sec9 = cov["por_seccion"]["9"]
+          # Paso 12: 86 -> 88 capacidades. Las filas de la seccion 9 siguen siendo
+          # 30: `system.network.location-wizard.disable` cierra un `AddKey` pero la
+          # linea del manifiesto que la respalda ya estaba mapeada por la propia
+          # capacidad; su cobertura se mide en el mapa upstream, no aqui.
           ok = (cov["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
-                and cov["capacidades"] == 86
+                and cov["capacidades"] == 88
                 and sec9["lineas_mapped"] == 30
                 and sec9["cubiertas"] == 30
                 and sec9["huecos"] == 0
@@ -663,21 +669,141 @@ jobs:
                  for a in caps9["system.location.consent-deny"]["actions"]
                  if a["type"] == "service"]
           ok = (cov["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
-                and cov["capacidades"] == 86
+                # Paso 12: 86 -> 88 capacidades, 45 -> 47 acciones en la seccion 9
+                # (el createKey de `system.network.location-wizard.disable`) y
+                # 57 -> 60 en la 10 (`explorer.home.restore`). `new9` deja de ser
+                # vacia: R1 devuelve cuatro capacidades a Specified y la lista es
+                # cerrada, asi que se compara entera y no con `!= []`.
+                and cov["capacidades"] == 88
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
-                and len(caps9) == 18 and acts9 == 45 and new9 == []
-                and acts10 == 57
+                and len(caps9) == 19 and acts9 == 47
+                and new9 == ["system.hibernation.hide", "system.location.consent-deny",
+                             "system.mitigations.disable", "system.registry-backup.enable"]
+                and acts10 == 60
                 and {"registryDeleteKey", "taskCreate", "service"} <= set(kinds)
                 and len(task) == 1 and task[0]["taskName"] == "AutoRegBackup"
                 and task[0]["overwrite"] is False
                 and len(deletes) == 1 and deletes[0]["recursive"] is False
                 and len(loc) == 4
-                and aud["filas"] == 195
+                # Paso 12: 195 -> 197 filas (los dos valores nuevos del
+                # createKey y su verificacion).
+                and aud["filas"] == 197
                 and aud["sin_excepcion"] == 0
                 and aud["distribucion"].get("ambiguous", 0) == 0)
           sys.exit(0 if ok else 1)
           PYEOF
+
+      - name: "Paso 12 (R1/R2/R3, registryCreateKey y estados contrarios)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Doble ejecución de los DOS generadores y de los dos medidores nuevos:
+          # si alguno no es determinista, aqui se ve.
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section9_catalog.py \
+              | tee "ci-out/paso12-cat9-run${i}.txt"
+            python3 tools/ledger_extract/build_section10_catalog.py \
+              | tee "ci-out/paso12-cat10-run${i}.txt"
+            python3 tools/ledger_extract/measure_capability_completeness.py \
+              > "ci-out/paso12-r1-run${i}.txt"
+            python3 tools/ledger_extract/measure_toggle_states.py \
+              | tee "ci-out/paso12-toggle-states-run${i}.txt"
+            sha256sum catalog/capabilities/section9_system_registry.json \
+                      catalog/capabilities/section10_explorer_ui.json \
+                      inventory/ledger/capability-completeness.tsv \
+                      inventory/ledger/toggle-state-audit.tsv \
+                      inventory/ledger/catalog-value-audit.tsv \
+              > "ci-out/paso12-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso12-sha-run1.txt ci-out/paso12-sha-run2.txt; then
+            echo "DETERMINISMO PASO 12 ROTO" | tee ci-out/paso12-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 12: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso12-determinism.txt
+
+          # Los dos medidores comparan contra el TSV versionado y fallan si difiere.
+          python3 tools/ledger_extract/measure_capability_completeness.py --check
+          python3 tools/ledger_extract/measure_toggle_states.py --check
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/build_section10_catalog.py --check
+          python3 tools/ledger_extract/audit_catalog_values.py
+          python3 tools/ledger_extract/verify_catalog_coverage.py
+
+          cp ci-out/paso12-sha-run1.txt ci-out/paso12-sha.txt
+          python3 tools/ledger_extract/measure_capability_completeness.py --json \
+            > ci-out/paso12-r1.json
+          python3 tools/ledger_extract/measure_toggle_states.py --json \
+            > ci-out/paso12-toggle-states.json
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso12-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso12-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          r1 = json.load(open("ci-out/paso12-r1.json", encoding="utf-8"))
+          t3 = json.load(open("ci-out/paso12-toggle-states.json", encoding="utf-8"))
+          cov = json.load(open("ci-out/paso12-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso12-audit.json", encoding="utf-8"))
+          sec9 = json.load(open("catalog/capabilities/section9_system_registry.json", encoding="utf-8"))
+          sec10 = json.load(open("catalog/capabilities/section10_explorer_ui.json", encoding="utf-8"))
+          caps9 = {c["id"]: c for c in sec9["capabilities"]}
+          caps10 = {c["id"]: c for c in sec10["capabilities"]}
+          acts9 = sum(len(c["actions"]) for c in caps9.values())
+          acts10 = sum(len(c["actions"]) for c in caps10.values())
+          creates = {cap: [a for a in c["actions"] if a["type"] == "registryCreateKey"]
+                     for cap, c in list(caps9.items()) + list(caps10.items())}
+          creates = {k: v for k, v in creates.items() if v}
+          specified9 = sorted(c["id"] for c in caps9.values() if c["state"] == "Specified")
+          print("R1:", r1["capacidades"], "caps | Implemented", r1["implemented"],
+                "| Specified", r1["specified"], "| violaciones", r1["violaciones_r1"])
+          print("T3:", t3["veredicto"], "| con toggle", t3["capacidades_con_toggle"],
+                "| pendientes", len(t3["pendientes"]),
+                "| contrarios", t3["contrarios_declarados"])
+          print("cobertura:", cov["capacidades"], "| huecos", cov["huecos"],
+                "| cubiertas", cov["cubiertas"])
+          print("auditoria:", aud["filas"], "| sin excepcion", aud["sin_excepcion"],
+                "| veredicto", "OK" if aud["ok"] else "FALLO")
+          print("seccion 9:", len(caps9), "caps /", acts9, "acciones |",
+                "seccion 10:", len(caps10), "caps /", acts10, "acciones")
+          print("registryCreateKey:", sorted(creates))
+          ok = (r1["capacidades"] == 88
+                and r1["violaciones_r1"] == []
+                and r1["implemented"] + r1["specified"] == 88
+                and t3["veredicto"] == "OK"
+                and t3["contrarios_declarados"] == []
+                and cov["capacidades"] == 88
+                and cov["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and aud["filas"] == 197
+                and aud["sin_excepcion"] == 0
+                and len(caps9) == 19 and acts9 == 47
+                and len(caps10) == 30 and acts10 == 60
+                # T2: los tres AddKey pendientes del paso 11 ya son acciones, y
+                # cada una es UNICA en su capacidad (crear dos veces la misma
+                # clave no seria idempotente).
+                and sorted(creates) == ["explorer.home.restore",
+                                        "system.network.location-wizard.disable"]
+                and all(len(v) == 1 for v in creates.values())
+                # La lista cerrada de Specified de la seccion 9 (R1 + R3).
+                and specified9 == ["system.hibernation.hide",
+                                   "system.location.consent-deny",
+                                   "system.mitigations.disable",
+                                   "system.registry-backup.enable"]
+                # R3: lo que INSTALA algo persistente con privilegios altos (una
+                # tarea programada o un servicio) no puede ser Safe ni quedar sin
+                # confirmacion. Las escrituras de registro quedan fuera del
+                # alcance de R3 que declaran los generadores (ver paso12.md).
+                and all(c["risk"] != "Safe" and c["confirmation"] != "None"
+                        for c in list(caps9.values()) + list(caps10.values())
+                        if c["privilege"] == "Admin"
+                        and any(a["type"] in ("taskCreate", "service")
+                                for a in c["actions"])))
+          sys.exit(0 if ok else 1)
+          PYEOF
+          cp inventory/ledger/capability-completeness.tsv ci-out/
+          cp inventory/ledger/toggle-state-audit.tsv ci-out/
 
       - name: Estructura .NET (validador)
         if: always()

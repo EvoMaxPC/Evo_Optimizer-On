@@ -66,11 +66,21 @@ WINUTIL_SPECS = [
          desc="Pone HideFileExt=0 en el Explorador para que se vea la extensión real "
               "de cada archivo (por ejemplo `factura.pdf.exe` en vez de `factura.pdf`). "
               "Se deshace con el diario: el valor anterior se guarda antes de escribir.",
+         # R2 (paso 12): el porque de `Improves` va escrito, no se hereda.
+         r2_reason=(
+             "MEJORA la seguridad: mostrar la extension real hace visible un "
+             "`factura.pdf.exe` que el Explorador oculta por defecto, que es el vector "
+             "clasico de doble extension. No quita ninguna proteccion y no cambia "
+             "permisos."),
          risk="Safe", security="Improves", builds=[]),
     dict(id="explorer.hidden-files.show", tweak="WPFToggleHiddenFiles",
          name="Mostrar los archivos y carpetas ocultos",
          desc="Pone Hidden=1 en el Explorador para que se vean los elementos con "
               "atributo oculto. Aumenta lo que se ve, no cambia permisos ni borra nada.",
+         r2_reason=(
+             "MEJORA la seguridad por VISIBILIDAD: el atributo oculto es lo primero que "
+             "usa el malware para esconderse del usuario. Mostrarlo no concede ni quita "
+             "acceso (los permisos no cambian) y no borra nada."),
          risk="Safe", security="Improves", builds=[]),
     dict(id="ui.theme.dark", tweak="WPFToggleDarkMode",
          name="Activar el tema oscuro de Windows",
@@ -170,6 +180,20 @@ ATLAS_SPECS = [
          risk="Low", security="Neutral", builds=BUILDS_W11,
          builds_note="Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de "
                      "Windows 11; 19045 no se declara."),
+    dict(id="explorer.home.restore", file="Interface/Home.psd1", state="Enable",
+         name="Restaurar Inicio en el Explorador y abrir en Inicio",
+         desc="Ancla la carpeta Inicio en el panel de navegacion de dos formas a la "
+              "vez: CREA la clave HKLM\\SOFTWARE\\Microsoft\\Windows\\"
+              "CurrentVersion\\Explorer\\Desktop\\NameSpace\\"
+              "{f874310e-b6b7-47dc-bc84-b9e6b38f5903} (la entrada del panel) y escribe "
+              "System.IsPinnedToNameSpaceTree=0 en su CLSID de usuario mas LaunchTo=0 "
+              "para que el Explorador abra en Inicio. Es la inversa exacta de "
+              "`explorer.home.hide`, que borra esa misma clave. Deshacer: los dos valores "
+              "previos y la clave creada se borra; si la clave ya existia, la accion de "
+              "creacion es un no-op.",
+         risk="Low", security="Neutral", builds=BUILDS_W11,
+         builds_note="Builds: la carpeta Inicio (CLSID {f874310e-...}) y LaunchTo son de "
+                     "Windows 11; 19045 no se declara."),
     dict(id="ui.context-menu.classic", file="Interface/OldContextMenu.psd1", state="Enable",
          variants=["Evo", "Atlas", "WinUtil"],
          extra_provenance=(
@@ -179,6 +203,17 @@ ATLAS_SPECS = [
              "CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. Ledger: "
              "winutil:tweak:WPFTweaksRightClickMenu (linea 10:326 del inventario, "
              "'Previous Right-Click Menu')."),
+         r1_gap=(
+             "en la variante WinUtil el pin hace dos cosas MAS que no se declaran: crea "
+             "la clave de workaround HKCU\\Software\\Classes\\CLSID\\"
+             "{51668040-5e31-4023-bbe3-149163bd80f1} con el valor WinUtilClassicContextMenu=1 "
+             "como marca de propiedad y le anade InprocServer32 con la cadena vacia "
+             "(functions/private/Set-WinUtilClassicContextMenu.ps1:6-8, 53-72). La accion "
+             "declarada es la de Atlas (OldContextMenu.psd1:9-13), que escribe el MISMO "
+             "efecto por la via del CLSID {86ca1aa0-...} y no crea el workaround. El "
+             "motor ya sabe crear claves (registryCreateKey, paso 12) pero no se declara "
+             "aqui porque el workaround es especifico de WinUtil y su marca de propiedad "
+             "existe para que SU deshacer sepa que la creo el."),
          name="Restaurar el menú contextual clásico de Windows 11",
          desc="Escribe la cadena vacía en el valor predeterminado de InprocServer32 del "
               "CLSID {86ca1aa0-34aa-4e8b-a509-50c905bae2a2}. El menú antiguo sólo se "
@@ -229,7 +264,23 @@ ATLAS_SPECS = [
               "Start_TrackProgs, NoRecentDocsHistory, ClearRecentDocsOnExit y compañía). "
               "El pin añade una acción de máquina para la página de Configuración que no es "
               "de registro y aquí no se declara.",
-         risk="Low", security="Improves", builds=[]),
+         risk="Low", security="Improves", builds=[],
+         r2_reason=(
+             "MEJORA la privacidad: sin historial de documentos y programas recientes, "
+             "quien use el equipo despues no ve que ficheros y aplicaciones se abrieron. "
+             "No reduce ninguna proteccion de seguridad; el efecto es sobre el rastro de "
+             "uso local, y por eso el impacto es `Improves` y no `Neutral`."),
+         r1_gap=(
+             "el pin declara ademas MachineAction Set-AtlasRecentItemsSettingsPage "
+             "(Interface/RecentItems.psd1:18), que OCULTA la pagina privacy-general de "
+             "Configuracion escribiendo la directiva SettingsPageVisibility "
+             "(Atlas.Shell/Domain/SettingsPages.ps1:66-96; RecentItems.ps1:12-20), y "
+             "UserAction Show-AtlasRecentItemsMessage (:19), que solo muestra un aviso. "
+             "La directiva es un cambio que PERSISTE y el motor no la declara aqui: "
+             "ocultar una pagina de Configuracion no es 'quitar los elementos recientes' "
+             "y ademas comparte clave con system.settings-page-visibility.hide, que "
+             "escribiria un valor distinto sobre la MISMA SettingsPageVisibility."),
+    ),
     dict(id="explorer.removable-drives.sidebar", file="Interface/RemovableDrivesInSidebar.psd1",
          state="Enable",
          name="Mostrar las unidades extraíbles en el panel de navegación",
@@ -449,8 +500,18 @@ def psd1_value(raw: str) -> str:
     return raw
 
 
-def atlas_actions(relative: str, state: str | None) -> tuple[list[dict], list[str], str]:
-    """Acciones del estado pedido y lista de operaciones no expresables."""
+def atlas_actions(
+    relative: str, state: str | None, create_key: bool = False
+) -> tuple[list[dict], list[str], str]:
+    """Acciones del estado pedido y lista de operaciones no expresables.
+
+    `create_key` decide qué pasa con las entradas `Operation = 'AddKey'`. Por
+    defecto (oleada 2, paso 9) se descartan y se declaran como no expresables,
+    porque las secciones 10 no necesitaban crear claves. Desde el paso 12 el
+    motor sabe hacerlas (`registryCreateKey`, ADR-0005) y la seccion 9 las pide
+    con `create_key=True`: entonces se declaran, y la descripcion/provenance lo
+    dicen. La clave se crea VACIA: el pin no le pone valores en esa entrada.
+    """
     if relative.startswith("Tweaks/"):
         path = ATLAS_TWEAKS / relative[len("Tweaks/"):]
         entries = parse_registry_block(path)
@@ -483,7 +544,20 @@ def atlas_actions(relative: str, state: str | None) -> tuple[list[dict], list[st
             )
             continue
         if entry["op"] == "AddKey":
-            skipped.append(f"{entry['op']} {hive}\\{key}")
+            if not create_key:
+                skipped.append(f"{entry['op']} {hive}\\{key}")
+                continue
+            actions.append(
+                {
+                    "type": "registryCreateKey",
+                    "order": len(actions) + 1,
+                    "hive": {"HKLM": "LocalMachine", "HKCU": "CurrentUser",
+                             "HKCR": "ClassesRoot", "HKU": "Users"}[hive],
+                    "keyPath": key,
+                    "line": entry["line"],
+                    "description": f"Crear la clave {hive}\\{key}",
+                }
+            )
             continue
         operation = entry["op"]
         if operation.lower() == "delete":
@@ -510,6 +584,74 @@ def atlas_actions(relative: str, state: str | None) -> tuple[list[dict], list[st
             }
         )
     return actions, skipped, str(path.relative_to(UPSTREAM / "atlas"))
+
+
+def apply_r2_r3(capability: dict, spec: dict) -> dict:
+    """R2 y R3 (paso 12) sobre la capacidad ya construida.
+
+    R2  `Improves` sólo con la justificación escrita: si no la hay, la capacidad
+        se queda en `Neutral` y se dice en la provenance (no se inventa un
+        motivo, que sería peor que no declararlo).
+    R3  lo que instala algo persistente con privilegios altos (tarea SYSTEM,
+        servicio) no puede ser `Safe` ni quedar sin confirmación: mínimo
+        `Risk=Low` y `Confirmation=SimpleClick`.
+    """
+    security = capability["securityImpact"]
+    if security == "Improves":
+        reason = spec.get("r2_reason")
+        if reason:
+            capability["description"] = (
+                capability["description"].rstrip()
+                + " Por que mejora la seguridad: " + reason)
+            capability["provenance"] = (
+                capability["provenance"].rstrip()
+                + " R2 (paso 12): SecurityImpact=Improves por: " + reason)
+        else:
+            capability["securityImpact"] = "Neutral"
+            capability["provenance"] = (
+                capability["provenance"].rstrip()
+                + " R2 (paso 12): sin justificacion escrita, SecurityImpact baja a "
+                "Neutral. Si el titular la aporta, se sube otra vez.")
+    installs = any(a["type"] == "taskCreate" for a in capability["actions"])
+    if installs:
+        reason = spec.get("r3_reason")
+        if not reason:
+            raise SystemExit(
+                f"{capability['id']}: instala una tarea y R3 exige r3_reason escrito")
+        capability["risk"] = "Low" if capability["risk"] == "Safe" else capability["risk"]
+        if capability["confirmation"] == "None":
+            capability["confirmation"] = "SimpleClick"
+        capability["provenance"] = (
+            capability["provenance"].rstrip()
+            + " R3 (paso 12): instala una tarea persistente con privilegios altos, asi "
+            "que Risk>=Low y Confirmation>=SimpleClick por: " + reason)
+    return capability
+
+
+def apply_r1(capability: dict, spec: dict) -> dict:
+    """Aplica la regla R1 (paso 12) al dict de la capacidad, en su sitio.
+
+    R1: una capacidad es `Implemented` sólo si expresa TODO el efecto del pin.
+    Si el pin hace algo más que la capacidad, `spec['r1_gap']` describe lo que
+    queda fuera y la capacidad pasa a `Specified`, con la declaración escrita en
+    `description` Y en `provenance` (el usuario tiene que verlo en los dos
+    sitios, no sólo en el JSON interno).
+    """
+    gap = spec.get("r1_gap")
+    if not gap:
+        return capability
+    capability["state"] = "Specified"
+    capability["description"] = (
+        capability["description"].rstrip()
+        + " FUERA DE ESTA CAPACIDAD (R1): " + gap
+    )
+    capability["provenance"] = (
+        capability["provenance"].rstrip()
+        + " R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: "
+        + gap
+        + " Como el efecto del pin no queda expresado entero, State=Specified."
+    )
+    return capability
 
 
 def balanced_spans(block: str, opener: str = "@{") -> list[str]:
@@ -668,9 +810,16 @@ def build() -> dict:
                 "actions": actions,
             }
         )
+        # Paso 12: R2 y R3 se aplican TAMBIEN a los tweaks de WinUtil. Antes R2
+        # solo dejaba una coletilla en la provenance y la justificacion no
+        # llegaba a la descripcion, que es lo que lee quien audita.
+        apply_r2_r3(capabilities[-1], spec)
 
     for spec in ATLAS_SPECS:
-        actions, skipped, source_path = atlas_actions(spec["file"], spec["state"])
+        # Paso 12: el generador ya sabe expresar `AddKey` (registryCreateKey), y
+        # la capacidad que la necesita la declara; las demas no tienen ninguna.
+        actions, skipped, source_path = atlas_actions(
+            spec["file"], spec["state"], create_key=True)
         lines = sorted({line for line in (a.pop("line") for a in actions) if line}) or \
             [atlas_line(spec["file"], "Registry")]
         refs = f"{source_path}:{lines[0]}-{lines[-1]}" if len(lines) > 1 else f"{source_path}:{lines[0]}"
@@ -728,6 +877,8 @@ def build() -> dict:
                 "actions": actions,
             }
         )
+        apply_r1(capabilities[-1], spec)
+        apply_r2_r3(capabilities[-1], spec)
 
     capabilities.sort(key=lambda c: c["id"])
     return {

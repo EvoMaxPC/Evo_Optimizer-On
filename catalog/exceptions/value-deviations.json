@@ -11,7 +11,7 @@
       "source": "winutil",
       "source_apply_value": "show:home",
       "source_original_value": "hide:home",
-      "relation": "equals-original",
+      "relation": "equals-off",
       "evidence": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1741-1755 (WPFToggleHideSettingsHome: Value='show:home', OriginalValue='hide:home', DefaultState='true'); inventory/ledger/winutil-tweak-ops.tsv winutil:tweak-op:WPFToggleHideSettingsHome:registry:0",
       "reason": "Desviacion de SIGNIFICADO DE INTERRUPTOR, no de valor: la casilla encendida de WinUtil deja la pagina de Inicio visible (Value='show:home'); el valor que produce el efecto que anuncia la capacidad de EVO es el estado apagado ('hide:home'). Se copia el estado apagado y se deja constancia. Si el titular confirma que quiere replicar la casilla tal cual, hay que invertir este literal.",
       "deviation_kind": "switch-meaning",
@@ -27,7 +27,7 @@
       "source_apply_value": "hide:aicomponents",
       "source_original_value": "<RemoveEntry>",
       "relation": "differs",
-      "evidence": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5 ($value literal) y :8 ($key literal); el valor de WinUtil que aparece en la auditoria es WPFTweaksWindowsAI (hide:aicomponents), que toca la MISMA clave pero escondiendo otra pagina; inventory/ledger/atlas-manifest.tsv linea 137 (atlas:manifest:qol/set-hidden-settings-pages)",
+      "evidence": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5 ($value literal) y :8 ($key literal) -> valor del catalogo. Lado WinUtil: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:952-961 (#WPFTweaksWindowsAI, registry entry con Value='hide:aicomponents' en la MISMA clave HKLM policies\\explorer\\SettingsPageVisibility) e inventory/ledger/winutil-tweak-ops.tsv winutil:tweak-op:WPFTweaksWindowsAI:registry:0 -> valor que la auditoria encontro primero. inventory/ledger/atlas-manifest.tsv linea 137 (atlas:manifest:qol/set-hidden-settings-pages).",
       "reason": "La auditoria casa por (hive, clave, nombre) y la misma clave SettingsPageVisibility la escribe tambien WinUtil con otro valor. El valor del catalogo NO sale de WinUtil: es el literal $value completo del script de Atlas, copiado byte a byte. Se declara la desviacion para que la fila deje de ser `differs` sin excepcion y quede escrito de donde sale cada uno.",
       "deviation_kind": "value"
     }

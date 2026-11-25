@@ -137,11 +137,22 @@ def test_los_servicios_declarados_llevan_el_tipo_solo_si_lo_cambian() -> None:
 
 # ------------------------------------------------------- T2 capacidades cerradas
 def test_la_seccion_9_cierra_sus_dos_specified() -> None:
+    """El paso 11 cerró las dos que quedaban. El paso 12 aplica R1 y reabre
+    cuatro por un motivo DISTINTO: el pin hace operaciones que el motor no
+    tiene (powercfg, bcdedit/CFG, política de Find My Device, RunLevel). La
+    lista es cerrada: si aparece otra, este test falla."""
     specified = sorted(cid for cid, cap in CAPS9.items() if cap["state"] == "Specified")
-    assert specified == [], specified
-    assert len(CAPS9) == 18
-    # Actions: 39 del paso 10 + tarea (1) + w32time (1) + lfsvc/MapsBroker (4).
-    assert sum(len(c["actions"]) for c in CAPS9.values()) == 45
+    assert specified == [
+        "system.hibernation.hide",
+        "system.location.consent-deny",
+        "system.mitigations.disable",
+        "system.registry-backup.enable",
+    ], specified
+    # Paso 12: 18 -> 19 con system.network.location-wizard.disable.
+    assert len(CAPS9) == 19
+    # Actions: 39 del paso 10 + tarea (1) + w32time (1) + lfsvc/MapsBroker (4)
+    # + Stop de WSearch (1) + registryCreateKey de NewNetworkWindowOff (1).
+    assert sum(len(c["actions"]) for c in CAPS9.values()) == 47
 
 
 def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
@@ -151,7 +162,7 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
     contra los dos JSON que cambian, para que la cifra no pueda quedarse vieja.
     """
     text = RANGES.read_text(encoding="utf-8")
-    assert "**86** capacidades, 75 `Implemented` y 11 `Specified`" in text
+    assert "**88** capacidades, 71 `Implemented` y 17 `Specified`" in text
     for path in sorted(CATALOG.glob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
         for cap in document["capabilities"]:
@@ -159,16 +170,27 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
 
     total = sum(len(json.loads(p.read_text(encoding="utf-8"))["capabilities"])
                 for p in sorted(CATALOG.glob("*.json")))
-    assert total == 86
+    # Paso 12: 86 -> 88 capacidades y 238 -> 243 acciones. Las cinco de más son
+    # Explorer y sistema: 3 de `explorer.home.restore` (crear la clave + 2 valores),
+    # 1 `ServiceAction Stop` de WSearch y 1 `registryCreateKey` de
+    # `system.network.location-wizard.disable`.
+    assert total == 88
     actions = sum(len(a["actions"])
                   for p in sorted(CATALOG.glob("*.json"))
                   for a in json.loads(p.read_text(encoding="utf-8"))["capabilities"])
-    assert actions == 238
+    assert actions == 243
 
 
 def test_la_copia_de_seguridad_lleva_registro_y_tarea() -> None:
     cap = CAPS9["system.registry-backup.enable"]
-    assert cap["state"] == "Implemented"
+    # Paso 12: R1 la pasa a Specified (el pin registra la tarea sin -RunLevel y
+    # con /i, y eso queda declarado) y R3 le exige Risk=Low y SimpleClick por
+    # instalar una tarea SYSTEM.
+    assert cap["state"] == "Specified"
+    assert cap["risk"] == "Low"
+    assert cap["confirmation"] == "SimpleClick"
+    assert "FUERA DE ESTA CAPACIDAD (R1)" in cap["description"]
+    assert "R3 (paso 12)" in cap["provenance"]
     assert cap["reversibility"] == "Reversible"
     assert cap["restore"] == "SessionUndo"
     kinds = [a["type"] for a in cap["actions"]]
@@ -243,10 +265,11 @@ def test_la_auditoria_incluye_el_borrado_de_clave_con_su_fuente() -> None:
     assert report["sin_excepcion"] == 0
     assert report["distribucion"].get("ambiguous", 0) == 0
     assert report["excepciones"] == 2
-    # 194 del paso 10 + la fila del DeleteKey de Inicio.
-    assert report["filas"] == 195
+    # 194 del paso 10 + la fila del DeleteKey de Inicio (195) + los dos valores
+    # de explorer.home.restore (197).
+    assert report["filas"] == 197
     assert report["por_seccion"]["9"] == 33
-    assert report["por_seccion"]["10"] == 57
+    assert report["por_seccion"]["10"] == 59
 
     rows = read_tsv(AUDIT)
     deletes = [r for r in rows if r["capability_id"] == "explorer.home.hide"
@@ -267,7 +290,9 @@ def test_la_cobertura_sigue_en_85_de_85_sin_huecos() -> None:
     assert report["cubiertas"] == 85
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
-    assert report["capacidades"] == 86
+    # Paso 12: 86 -> 88 capacidades (la cobertura sigue 85/85, no cambian las
+    # líneas Mapped del inventario).
+    assert report["capacidades"] == 88
     for section in ("1", "2", "3", "9", "10"):
         assert report["por_seccion"][section]["huecos"] == 0, section
 
@@ -288,8 +313,8 @@ def test_las_cifras_de_los_informes_generados_estan_al_dia() -> None:
     assert MAP.read_text(encoding="utf-8").strip() != ""
 
     text = RANGES.read_text(encoding="utf-8")
-    # Paso 11: dos capacidades dejan de ser Specified (86 = 75 + 11).
-    assert "**86** capacidades, 75 `Implemented` y 11 `Specified`" in text
+    # Paso 12: 88 = 71 + 17 (R1 reabre cuatro de §9 y cierra dos de §10).
+    assert "**88** capacidades, 71 `Implemented` y 17 `Specified`" in text
 
     plan = PLAN.read_text(encoding="utf-8")
     assert "| 9 |" in plan and "| 10 |" in plan
@@ -335,8 +360,11 @@ def test_las_relajaciones_del_ci_estan_reparadas() -> None:
     sección sin sustituirlo por algo más estricto."""
     workflow = (ROOT / ".github" / "workflows" / "ledger-verify.yml").read_text(encoding="utf-8")
     assert 'cov["capacidades"] >= 68' not in workflow
-    assert 'len(caps10) == 29' in workflow
-    assert 'acts10 == 57' in workflow
+    # Paso 12: la sección 10 creció a 30 capacidades / 60 acciones y el job del
+    # paso 9 se actualizó con ella; lo que este test protege es que la
+    # comprobación sea por invariantes del fichero, no un umbral flojo.
+    assert 'len(caps10) == 30' in workflow
+    assert 'acts10 == 60' in workflow
 
     wave1 = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave1CatalogTests.cs").read_text(encoding="utf-8")
     assert "SectionId is not 10 and not 9" in wave1
@@ -345,14 +373,15 @@ def test_las_relajaciones_del_ci_estan_reparadas() -> None:
     # Hay un barrido de TODO el catálogo que no depende de listas de ids.
     sweep = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave4CatalogTests.cs").read_text(encoding="utf-8")
     assert "EveryCapabilityInTheCatalogMeetsTheSameInvariants" in sweep
-    assert "Assert.Equal(86, all.Count)" in sweep
+    assert "Assert.Equal(88, all.Count)" in sweep
 
 
 # --------------------------------------------------------------------- ADR-0005
 def test_el_adr_0005_existe_y_esta_propuesto() -> None:
     assert ADR5.is_file()
     text = ADR5.read_text(encoding="utf-8")
-    assert "- **Estado**: Propuesto (paso 11)" in text
+    # Paso 12: el ADR se amplía con `registryCreateKey`, pero sigue Propuesto.
+    assert "- **Estado**: Propuesto (paso 11" in text
     for section in ("## Contexto", "## Decisión", "## Consecuencias"):
         assert section in text, section
     # Los tres huecos que cierra y los dos que deja declarados.

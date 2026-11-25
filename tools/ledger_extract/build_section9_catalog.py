@@ -139,7 +139,33 @@ WINUTIL_SPECS = [
               "como SYSTEM (paso 11). Deshacer: se restauran los dos valores previos y se "
               "BORRA la tarea creada; si ya existía, se devuelve a su estado anterior en "
               "vez de borrarla.",
-         risk="Safe", security="Improves",
+         # R3 (paso 12): la capacidad instala una tarea que se ejecuta como SYSTEM
+         # con privilegios altos. Eso no puede declararse `Safe` ni sin
+         # confirmacion: minimo Risk=Low y Confirmation=SimpleClick, aunque los dos
+         # valores de registro por si solos serian inofensivos.
+         risk="Low", security="Improves",
+         r2_reason=(
+             "MEJORA la capacidad de recuperacion: con la copia periodica del registro "
+             "activa hay una copia diaria que Windows no tenia desde 1803, y una clave "
+             "danada deja de ser una reinstalacion. No reduce ninguna proteccion."),
+         r3_reason=(
+             "crea la tarea programada AutoRegBackup que se ejecuta como SYSTEM con "
+             "privilegios altos (config/feature.json WPFFeatureRegBackup: "
+             "Register-ScheduledTask -User 'System'; reg_backup_task_actions lee "
+             "UserId='System', RunLevel='Highest'). R3 exige minimo Risk=Low y "
+             "Confirmation=SimpleClick para cualquier capacidad que instale algo "
+             "persistente con privilegios altos; con Risk=Safe seria None."),
+         r1_gap=(
+             "la tarea del pin se registra SIN `-RunLevel`: "
+             "`Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "
+             "'AutoRegBackup' -Description 'Create System Registry Backups' -User 'System'` "
+             "(config/feature.json, WPFFeatureRegBackup), es decir con el nivel por "
+             "defecto (Limited). La capacidad la declara con RunLevel=Highest porque sin "
+             "nivel elevado la tarea no puede leer HKLM, y eso es una desviacion MEDIDA "
+             "del pin, no una copia. Se suman dos efectos del script que la capacidad no "
+             "declara: el `-Argument '/run /i /tn ...'` con `/i`, que hace que `schtasks` "
+             "dispare la copia al crear la tarea, y que el pin no comprueba si "
+             "RegIdleBackup existe. Por eso State=Specified."),
          build_note="los valores son los mismos desde 1803; la tarea existe en todas"),
     dict(id="system.services.manual-profile", winutil="WPFTweaksServices", services=True,
          name="Pasar a manual o desactivar los servicios del perfil de WinUtil",
@@ -150,6 +176,12 @@ WINUTIL_SPECS = [
               "SharedAccess en Manual puede impedir compartir la conexión a Internet. Se "
               "puede deshacer porque el motor guarda el tipo de inicio previo.",
          risk="Low", security="Improves",
+         r2_reason=(
+             "MEJORA la privacidad y la superficie de ataque: desactivar DiagTrack corta "
+             "la telemetria de diagnostico y deja tres servicios que no se pueden "
+             "arrancar por si solos (CscService y SharedAccess en Desactivado). El coste "
+             "se declara en la descripcion: se pierde el cliente de archivos sin conexion "
+             "y puede romperse el uso compartido de conexion."),
          build_note="los cinco servicios existen en 19045 y en Windows 11"),
     dict(id="system.search-indexing.disable", winutil="WPFTweaksDisableSearchIndexing",
          services=True,
@@ -159,6 +191,7 @@ WINUTIL_SPECS = [
               "pasa a recorrer las carpetas: menos actividad de disco en reposo y "
               "resultados más lentos en bibliotecas grandes.",
          risk="Low", security="Neutral",
+         stop_service=True,
          build_note="WSearch existe en 19045 y en Windows 11"),
 ]
 
@@ -171,6 +204,14 @@ ATLAS_TOGGLE_SPECS = [
               "Disable-AtlasHibernation, que apaga la hibernación de verdad con powercfg; "
               "esa acción de máquina no es de registro y aquí no se declara.",
          risk="Low", security="Neutral",
+         r1_gap=(
+             "el pin declara ademas MachineAction Set-AtlasHibernationPowerState "
+             "(General/Hibernation.psd1:15 y :25), que ejecuta "
+             "`powercfg /h off` y `powercfg /h on` (Hibernation.ps1): apaga o enciende la "
+             "HIBERNACION de verdad, no solo la entrada del menu. Es un cambio que "
+             "PERSISTE (hiberfil.sys desaparece o vuelve) y el motor no tiene accion de "
+             "energia, asi que no se declara. Ocultar la opcion del menu y desactivar la "
+             "hibernacion son dos efectos distintos: por eso State=Specified."),
          builds=[22631, 26100, 26200],
          build_note="la clave FlyoutMenuSettings (menú de energía de Windows 11) existe "
                     "desde 22631; en 19045 Windows no la lee y la entrada del menú no "
@@ -185,6 +226,21 @@ ATLAS_TOGGLE_SPECS = [
               "dejan de poder pedirla. Deshacer: valores previos y, para cada servicio, "
               "tipo de inicio y estado de ejecución anteriores.",
          risk="Low", security="Improves",
+         r2_reason=(
+             "MEJORA la privacidad: sin el consentimiento global ninguna aplicacion "
+             "puede pedir la ubicacion, y los dos servicios que la sirven quedan "
+             "desactivados y detenidos. No reduce ninguna proteccion de seguridad: quita "
+             "una capacidad del sistema, no una defensa."),
+         r1_gap=(
+             "el pin declara ademas MachineAction Disable-AtlasLocation "
+             "(General/Location.psd1:6) y ese script, ADEMAS de los dos servicios ya "
+             "declarados, escribe la politica de Buscar mi dispositivo: "
+             "AllowFindMyDevice=0 y LocationSyncEnabled=0 bajo "
+             "HKLM\\SOFTWARE\\Policies\\Microsoft\\FindMyDevice "
+             "(Atlas.Privacy/Domain/Location.ps1:8, :116-119) y oculta las paginas "
+             "privacy-location y findmydevice (:122-123). Son valores que PERSISTEN y no "
+             "se declaran: la politica de Find My Device no es 'denegar la ubicacion' y "
+             "ocultar paginas de Configuracion es otro efecto. Por eso State=Specified."),
          build_note="ConsentStore de ubicación presente en 19045 y en Windows 11"),
     dict(id="system.mitigations.disable", atlas_toggle=("Security/Mitigations.psd1", "Disable"),
          name="Desactivar las mitigaciones del kernel",
@@ -195,6 +251,17 @@ ATLAS_TOGGLE_SPECS = [
               "frente a exploits y exige reinicio; por eso el riesgo es High y la "
               "confirmación pide resumen y punto de restauración.",
          risk="High", security="Reduces",
+         r1_gap=(
+             "el pin declara ademas MachineAction Disable-AtlasMitigations "
+             "(Security/Mitigations.psd1:21), que hace tres cosas que no son valores de "
+             "registro y no se declaran: `Set-ProcessMitigation -System -Disable CFG` "
+             "sobre la proteccion de flujo de control del sistema y `-Enable CFG` sobre "
+             "valorant, valorant-win64-shipping, vgtray y vgc (Mitigations.ps1:48-53), y "
+             "`bcdedit /set nx OptIn`, que cambia el arranque (Mitigations.ps1:54-56). "
+             "Las dos ultimas escriben el binario MitigationOptions/"
+             "MitigationAuditOptions con un relleno 0x22 (Mitigations.ps1:57), que si "
+             "esta declarado si el pin lo escribiera en el .psd1, pero aqui lo escribe el "
+             "script, con un tamano que depende de lo que haya. Por eso State=Specified."),
          build_note="los cuatro valores existen en 19045 y en Windows 11"),
     dict(id="system.keyboard-shortcuts.disable", atlas_toggle=("Interface/KeyboardShortcuts.psd1",
                                                               "Disable"),
@@ -230,6 +297,12 @@ ATLAS_TWEAK_SPECS = [
               "Evita software OEM que se reinstala solo, a costa de una función del "
               "firmware: se declara Medium porque cambia el arranque, no Safe.",
          risk="Medium", security="Improves",
+         r2_reason=(
+             "MEJORA la seguridad: WPBT permite que el firmware ejecute un binario en "
+             "cada arranque, y es el mecanismo con el que el software OEM se reinstala "
+             "solo despues de que el usuario lo quite. Bloquearlo cierra esa via de "
+             "persistencia; el coste (una funcion del firmware) esta en la descripcion y "
+             "es la razon de que el riesgo sea Medium."),
          build_note="el valor se lee en el arranque de 19045 y de Windows 11"),
     dict(id="system.menu-delay.disable", atlas_tweak="qol/shell/disable-menu-delay.psd1",
          name="Quitar el retardo de los submenús",
@@ -262,6 +335,26 @@ ATLAS_TWEAK_SPECS = [
               "(atribución de Atlas), no una identidad inventada para EVO.",
          risk="Safe", security="Neutral",
          build_note="OEMInformation existe en 19045 y en Windows 11"),
+]
+
+# Capacidades que salen de un `.psd1` de `Scripts/Tweaks/` con una unica entrada
+# `Operation = 'AddKey'` (paso 12): crear una clave VACIA es un efecto propio
+# —apaga el asistente de ubicacion de red— y el motor ya sabe hacerlo con
+# `registryCreateKey`, con deshacer (se borra lo creado). Antes se declaraban
+# como hueco; ahora se declaran.
+ADDKEY_SPECS = [
+    dict(id="system.network.location-wizard.disable",
+         atlas_tweak="qol/shell/disable-network-location-wizard.psd1",
+         name="Apagar el asistente de ubicacion de red",
+         desc="Crea la clave HKLM\\SYSTEM\\CurrentControlSet\\Control\\Network\\"
+              "NewNetworkWindowOff. Windows muestra su asistente de ubicacion de red "
+              "(el cuadro que pregunta si el equipo debe ser reconocible en una red "
+              "nueva) cuando esa clave NO existe; con la clave creada el asistente deja "
+              "de aparecer y la red se trata como publica. El pin NO escribe ningun "
+              "valor dentro: la clave va vacia. Deshacer: se BORRA la clave creada; si "
+              "ya existia, no se toca nada (la accion es un no-op y no se apunta).",
+         risk="Low", security="Neutral",
+         build_note="NewNetworkWindowOff se lee en 19045 y en Windows 11"),
 ]
 
 # Capacidad que no sale de un bloque `Registry` sino de un script con clave y
@@ -323,6 +416,17 @@ def winutil_service_actions(tweak: str) -> list[dict]:
     if not actions:
         raise SystemExit(f"el tweak {tweak} no declara servicios en el pin")
     return actions
+
+
+def stop_service_action(service_name: str, order: int) -> dict:
+    """ServiceAction Stop del servicio, con el orden que le toque."""
+    return {
+        "type": "service",
+        "order": order,
+        "description": f"{service_name} -> Detener",
+        "serviceName": service_name,
+        "operation": "Stop",
+    }
 
 
 def script_props(script: str) -> list[dict]:
@@ -476,7 +580,26 @@ def location_service_evidence() -> tuple[int, int, int]:
 
 def base(cap_id: str, name: str, desc: str, risk: str, security: str,
          actions: list[dict], builds: list[int] | None, state: str,
-         variants: list[str], provenance: str) -> dict:
+         variants: list[str], provenance: str,
+         r2_reason: str | None = None, r3_reason: str | None = None) -> dict:
+    # R2 (paso 12): `Improves` exige la justificacion ESCRITA en la description.
+    # El enum no basta: quien audita tiene que poder leer por que mejora sin
+    # abrir el codigo del generador.
+    if security == "Improves":
+        if not r2_reason:
+            raise SystemExit(
+                f"{cap_id}: SecurityImpact=Improves exige r2_reason (regla R2 del paso 12)")
+        desc = desc.rstrip() + " Por que mejora la seguridad: " + r2_reason
+        provenance = provenance.rstrip() + " R2 (paso 12): SecurityImpact=Improves por: " + r2_reason
+    # R3 (paso 12): lo que instala algo persistente con privilegios altos no
+    # puede ser Safe (ni quedar sin confirmacion). Se comprueba, no se supone.
+    if any(a["type"] == "taskCreate" for a in actions):
+        if risk == "Safe" or risk == "Low" and r3_reason is None:
+            raise SystemExit(
+                f"{cap_id}: instala una tarea programada y R3 exige Risk>=Low con motivo")
+        if not r3_reason:
+            raise SystemExit(f"{cap_id}: R3 exige r3_reason escrito en la provenance")
+        provenance = provenance.rstrip() + " R3 (paso 12): Risk=Low y Confirmation=SimpleClick por: " + r3_reason
     return {
         "id": cap_id,
         "name": name,
@@ -556,10 +679,19 @@ def build() -> dict:
             )
         elif spec.get("services"):
             actions = winutil_service_actions(spec["winutil"])
+            if spec.get("stop_service"):
+                # Paso 12 (R1): el pin PARA el servicio en su InvokeScript, y solo
+                # cambiar el arranque no lo detiene. ServiceAction Stop es la
+                # operacion equivalente (el diario guarda el estado previo).
+                actions = actions + [stop_service_action(actions[-1]["serviceName"],
+                                                         len(actions) + 1)]
             provenance = (
                 f"{WINUTIL_PIN}:config/tweaks.json#{spec['winutil']}. Servicios y tipos de "
                 "inicio tomados de la fuente: "
-                + "; ".join(f"{a['serviceName']}={a['startupType']}" for a in actions)
+                + "; ".join(
+                    (f"{a['serviceName']}={a['startupType']}" if a["operation"] == "SetStartupType"
+                     else f"{a['serviceName']}=Stop")
+                    for a in actions)
                 + ". Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo "
                   "que restaura su propio deshacer; el motor guarda el tipo previo. "
                   "Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de "
@@ -588,7 +720,8 @@ def build() -> dict:
         capabilities.append(base(
             spec["id"], spec["name"], spec["desc"], spec["risk"], spec["security"],
             actions, spec.get("builds"), spec.get("state", "Implemented"),
-            ["Evo", "WinUtil"], provenance))
+            ["Evo", "WinUtil"], provenance,
+            r2_reason=spec.get("r2_reason"), r3_reason=spec.get("r3_reason")))
 
     # ------------------------------------------------------- Atlas (Toggles)
     for spec in ATLAS_TOGGLE_SPECS:
@@ -646,12 +779,13 @@ def build() -> dict:
             + (" Servicios: el diario guarda tipo de inicio y estado de ejecucion "
                "previos de cada uno y los devuelve." if service_note else "")
             + f" Builds: {spec['build_note']}. "
-            + "ledger_refs: " + ", ".join(ledgers)))
+            + "ledger_refs: " + ", ".join(ledgers),
+            r2_reason=spec.get("r2_reason"), r3_reason=spec.get("r3_reason")))
 
     # ------------------------------------------------- Atlas (Scripts/Tweaks)
     for spec in ATLAS_TWEAK_SPECS:
         relative = f"Tweaks/{spec['atlas_tweak']}"
-        actions, skipped, source = b10.atlas_actions(relative, None)
+        actions, skipped, source = b10.atlas_actions(relative, None, create_key=True)
         # La línea del pin va en la provenance, no en la acción: el contrato de
         # `RegistryAction` es cerrado y no tiene ese campo (lo rechazaría el
         # cargador estricto si se colara como propiedad desconocida).
@@ -693,7 +827,38 @@ def build() -> dict:
                if service_note else "")
             + f" Builds: {spec['build_note']}. "
             + "ledger_refs: atlas:manifest:"
-            + spec["atlas_tweak"].replace(".psd1", "")))
+            + spec["atlas_tweak"].replace(".psd1", ""),
+            r2_reason=spec.get("r2_reason"), r3_reason=spec.get("r3_reason")))
+
+    # ------------------------------------------- Atlas (clave creada, AddKey)
+    for spec in ADDKEY_SPECS:
+        relative = f"Tweaks/{spec['atlas_tweak']}"
+        actions, skipped, source = b10.atlas_actions(relative, None, create_key=True)
+        lines = sorted({a["line"] for a in actions if a.get("line")}) or [0]
+        for action in actions:
+            action.pop("line", None)
+        refs = f"{source}:{lines[0]}" + (f"-{lines[-1]}" if len(lines) > 1 else "")
+        if skipped:
+            raise SystemExit(f"{relative}: operaciones no expresables {skipped}")
+        creadas = [a for a in actions if a["type"] == "registryCreateKey"]
+        if len(creadas) != 1:
+            raise SystemExit(f"{relative}: se esperaba una sola AddKey")
+        capabilities.append(base(
+            spec["id"], spec["name"], spec["desc"], spec["risk"], spec["security"],
+            actions, spec.get("builds"), spec.get("state", "Implemented"),
+            ["Evo", "Atlas"],
+            f"{ATLAS_PIN}:{refs}. La entrada del pin es una operacion de CLAVE, no de "
+            f"valor: `Operation = 'AddKey'` sobre {creadas[0]['hive']}\\"
+            f"{creadas[0]['keyPath']}, sin Name ni Data, asi que se declara como "
+            "registryCreateKey (paso 12) y la clave se crea VACIA. "
+            "Reversibilidad (ADR-0003): Reversible - el motor solo crea la clave si NO "
+            "existia y el diario apunta ese hecho; al deshacer la borra. Si ya existia, "
+            "la accion es un no-op y el deshacer no toca nada (borrarla destruiria "
+            "estado previo). "
+            f"Builds: {spec['build_note']}. "
+            "ledger_refs: atlas:manifest:"
+            + spec["atlas_tweak"].removesuffix(".psd1"),
+            r2_reason=spec.get("r2_reason"), r3_reason=spec.get("r3_reason")))
 
     # --------------------------------------------- Atlas (clave y valor fijos)
     for spec in STATIC_SCRIPT_SPECS:
@@ -718,6 +883,16 @@ def build() -> dict:
             "ledger_refs: atlas:manifest:qol/set-hidden-settings-pages"))
 
     capabilities.sort(key=lambda c: c["id"])
+    # R1 (paso 12): las capacidades cuyo pin hace algo mas que lo declarado pasan
+    # a Specified y lo dicen en description Y provenance.
+    gaps = {spec["id"]: spec.get("r1_gap")
+            for spec in WINUTIL_SPECS + ATLAS_TOGGLE_SPECS + ATLAS_TWEAK_SPECS
+            + ADDKEY_SPECS}
+    for capability in capabilities:
+        gap = gaps.get(capability["id"])
+        if gap:
+            b10.apply_r1(capability, {"r1_gap": gap})
+
     return {
         "metadata": {
             "version": "1.0.0",

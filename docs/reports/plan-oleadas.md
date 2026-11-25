@@ -4,7 +4,7 @@ Generado por `tools/ledger_extract/build_wave_plan.py`. No editar a mano: CI com
 
 ## Tabla por sección
 
-MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/inventory-reconciliation.tsv` (588 líneas); «Mapped cubiertas» cruza esas líneas con `ledger_refs` de las 86 capacidades del catálogo; «pending upstream» cuenta las filas `pending` de `upstream-capability-map.tsv` con `section_guess` igual a esa sección.
+MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/inventory-reconciliation.tsv` (588 líneas); «Mapped cubiertas» cruza esas líneas con `ledger_refs` de las 88 capacidades del catálogo; «pending upstream» cuenta las filas `pending` de `upstream-capability-map.tsv` con `section_guess` igual a esa sección.
 
 | § | Título | Líneas | Mapped | Mapped-To-App | EVO-Exclusive | Absent-At-Pin | Informative | Mapped cubiertas | Mapped sin cubrir | Trabajo (medido) | Pending upstream |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -17,7 +17,7 @@ MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/invent
 | 7 | Memoria y aplicaciones en segundo plano | 29 | 7 | 0 | 10 | 10 | 2 | 2 | 5 | 25 | 4 |
 | 8 | Administración de inicio y apagado | 21 | 4 | 0 | 0 | 15 | 2 | 1 | 3 | 18 | 16 |
 | 9 | Registro de Windows y configuración del sistema | 58 | 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |
-| 10 | Explorador de archivos e interfaz | 48 | 29 | 0 | 0 | 17 | 2 | 29 | 0 | 17 | 100 |
+| 10 | Explorador de archivos e interfaz | 48 | 29 | 0 | 0 | 17 | 2 | 29 | 0 | 17 | 99 |
 | 11 | Red y conectividad | 26 | 4 | 0 | 0 | 20 | 2 | 0 | 4 | 24 | 26 |
 | 12 | Windows Update y mantenimiento | 28 | 5 | 0 | 0 | 21 | 2 | 1 | 4 | 25 | 17 |
 | 13 | Seguridad y protección | 25 | 9 | 0 | 0 | 13 | 3 | 2 | 7 | 20 | 16 |
@@ -25,7 +25,7 @@ MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/invent
 | 15 | Administración de aplicaciones | 32 | 1 | 5 | 0 | 23 | 3 | 0 | 6 | 29 | 44 |
 | 16 | Funciones de instalación y administración avanzada | 44 | 5 | 0 | 0 | 35 | 4 | 0 | 5 | 40 | 7 |
 | 17 | Capacidades adicionales que no debemos perder | 49 | 0 | 0 | 15 | 2 | 32 | 0 | 0 | 17 | 0 |
-| **Σ** | **17 secciones** | **588** | **155** | **5** | **37** | **320** | **71** | **100** | **60** | **417** | **318** |
+| **Σ** | **17 secciones** | **588** | **155** | **5** | **37** | **320** | **71** | **100** | **60** | **417** | **317** |
 
 Pendientes upstream **sin sección**: 18. Desde el paso 8d la sección sale también de `inventory/partition/item-section-map.tsv` (435 filas, regla y evidencia escritas). Lo que queda sin sección no tiene efecto propio: entradas de navegación, presets, paneles heredados y scripts cuyo efecto no está medido en el pin.
 

@@ -86,8 +86,8 @@ public sealed class Wave3CatalogTests
     {
         var catalog = LoadAll();
 
-        // 68 de las oleadas 1/1b/8c/2 + 18 de la sección 9 = 86.
-        Assert.Equal(86, catalog.Count);
+        // 68 de las oleadas 1/1b/8c/2 + 18 de la sección 9 = 86, + 2 del paso 12 = 88.
+        Assert.Equal(88, catalog.Count);
 
         var wave3 = catalog.Definitions.Where(d => d.SectionId == 9)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
@@ -177,6 +177,9 @@ public sealed class Wave3CatalogTests
                 // una escritura mas en la colmena que declare.
                 || definition.Actions.OfType<TaskCreateAction>().Any()
                 || definition.Actions.OfType<RegistryDeleteKeyAction>()
+                    .Any(a => a.Hive is RegistryHiveKind.LocalMachine or RegistryHiveKind.Users)
+                // Paso 12: crear una clave en HKLM es la misma escritura.
+                || definition.Actions.OfType<RegistryCreateKeyAction>()
                     .Any(a => a.Hive is RegistryHiveKind.LocalMachine or RegistryHiveKind.Users);
             var expected = touchesMachine ? PrivilegeLevel.Admin : PrivilegeLevel.User;
             Assert.True(
@@ -288,12 +291,34 @@ public sealed class Wave3CatalogTests
     [Fact]
     public void TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay()
     {
+        // Paso 12 (R1): las cuatro capacidades cuyo pin hace algo que el motor no
+        // tiene (powercfg, bcdedit/CFG, política de Find My Device y la diferencia
+        // de RunLevel de la tarea) vuelven a Specified. La lista es cerrada: si
+        // aparece otra, este test falla y hay que decidir.
         var specified = Wave3().Where(d => d.State == CapabilityState.Specified)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
-        Assert.Empty(specified);
+        Assert.Equal(
+            new[]
+            {
+                "system.hibernation.hide",
+                "system.location.consent-deny",
+                "system.mitigations.disable",
+                "system.registry-backup.enable",
+            },
+            specified);
+        foreach (var id in specified)
+        {
+            var cap = Definition(id);
+            Assert.Contains("FUERA DE ESTA CAPACIDAD (R1)", cap.Description, StringComparison.Ordinal);
+            Assert.Contains("R1 (paso 12)", cap.Provenance, StringComparison.Ordinal);
+        }
 
         var backup = Definition("system.registry-backup.enable");
-        Assert.Equal(CapabilityState.Implemented, backup.State);
+        Assert.Equal(CapabilityState.Specified, backup.State);
+        // R3: instala una tarea SYSTEM, así que ni Safe ni sin confirmación.
+        Assert.Equal(RiskLevel.Low, backup.Risk);
+        Assert.Equal(ConfirmationType.SimpleClick, backup.Confirmation);
+        Assert.Contains("R3 (paso 12)", backup.Provenance, StringComparison.Ordinal);
         Assert.Contains("AutoRegBackup", backup.Provenance, StringComparison.Ordinal);
         var task = Assert.Single(backup.Actions.OfType<TaskCreateAction>());
         Assert.Equal("AutoRegBackup", task.TaskName);
@@ -498,7 +523,7 @@ public sealed class Wave3CatalogTests
     }
 
     /// <summary>T1: el catálogo sigue siendo un conjunto cerrado de capacidades
-    /// (86) y la sección 9 no declara conflictos ni dependencias sin pareja.</summary>
+    /// (88) y la sección 9 no declara conflictos ni dependencias sin pareja.</summary>
     [Fact]
     public void TestWave3Catalog_NoDanglingReferences()
     {
@@ -510,7 +535,7 @@ public sealed class Wave3CatalogTests
             Assert.Empty(definition.DependsOn);
         }
 
-        Assert.Equal(86, ids.Count);
+        Assert.Equal(88, ids.Count);
         Assert.All(Wave3(), d => Assert.Contains("system.", d.Id, StringComparison.Ordinal));
     }
 }

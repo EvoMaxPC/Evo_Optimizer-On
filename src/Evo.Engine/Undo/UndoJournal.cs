@@ -170,6 +170,36 @@ public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
 }
 
 /// <summary>
+/// Deshacer la creación de una clave vacía (paso 12, ADR-0005).
+/// </summary>
+/// <remarks>
+/// Sólo se apunta cuando la clave NO existía antes; en ese caso la inversa es
+/// borrarla, que devuelve el árbol exactamente a su estado anterior. Si ya
+/// existía, el ejecutor no apunta nada y el deshacer no toca la clave.
+/// </remarks>
+public sealed record RegistryCreateKeyUndoEntry : UndoJournalEntry
+{
+    public required RegistryHive Hive { get; init; }
+
+    public required string KeyPath { get; init; }
+
+    public override void Restore(IUndoContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+
+        if (context.DryRun)
+        {
+            return;
+        }
+
+        // Borrado simple (sin recursión): la clave la creó esta acción y estaba
+        // vacía, así que no hay nada dentro que perder. Si algo se coló dentro
+        // después, el borrado no recursivo no se lo lleva por delante.
+        context.Registry.DeleteKey(Hive, KeyPath, recursive: false);
+    }
+}
+
+/// <summary>
 /// Deshacer la creación de una tarea programada (paso 11): se borra la tarea
 /// creada o se restaura el estado previo de la que ya existía.
 /// </summary>

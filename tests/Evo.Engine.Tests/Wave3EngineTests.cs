@@ -348,7 +348,8 @@ public sealed class Wave3EngineTests
         Assert.Equal(ServiceStartupType.Automatic, harness.Services.GetStartupType("SharedAccess"));
     }
 
-    /// <summary>T1: la indización desactiva WSearch con el tipo que declara el pin.</summary>
+    /// <summary>T1: la indización desactiva y PARA WSearch, que es lo que hace el pin
+    /// (`Stop-Service -Name WSearch`), y el diario restaura las dos cosas.</summary>
     [Fact]
     public async Task TestWave3Catalog_SearchIndexingDisablesWSearch()
     {
@@ -360,10 +361,15 @@ public sealed class Wave3EngineTests
             harness.Context(ExecutionMode.Execute));
         Assert.Equal(0, summary.Failed);
         Assert.Equal(ServiceStartupType.Disabled, harness.Services.GetStartupType("WSearch"));
+        // Paso 12 (R1): el pin PARA el servicio en su InvokeScript, así que la
+        // capacidad declara también `Stop`; desactivar el arranque no lo detiene.
+        Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus("WSearch"));
 
         var rollback = await harness.Coordinator.RollbackAsync(harness.Context(ExecutionMode.Execute));
         Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
         Assert.Equal(ServiceStartupType.Automatic, harness.Services.GetStartupType("WSearch"));
+        // El diario devuelve también el estado de ejecución previo.
+        Assert.Equal(ServiceStatus.Running, harness.Services.GetStatus("WSearch"));
     }
 
     // ------------------------------------------------------- T1 valores del pin

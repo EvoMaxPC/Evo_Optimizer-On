@@ -144,17 +144,24 @@ public sealed class Wave4CatalogTests
     }
 
     // ----------------------------------------------------- capacidades cerradas
-    /// <summary>T2: `system.registry-backup.enable` queda completa (registro +
-    /// tarea) y sigue cumpliendo ADR-0003: Reversible con SessionUndo.</summary>
+    /// <summary>T2: `system.registry-backup.enable` declara registro + tarea y
+    /// sigue cumpliendo ADR-0003. Paso 12 (R1/R3): el pin ejecuta el script con
+    /// `-RunLevel Highest` y el motor no expresa el nivel de la tarea, así que la
+    /// capacidad vuelve a Specified y sube de Safe a Low con SimpleClick.</summary>
     [Fact]
-    public void TestWave4Catalog_RegistryBackupIsNowComplete()
+    public void TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified()
     {
         var definition = Definition("system.registry-backup.enable");
 
-        Assert.Equal(CapabilityState.Implemented, definition.State);
+        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Contains("FUERA DE ESTA CAPACIDAD (R1)", definition.Description, StringComparison.Ordinal);
         Assert.Equal(Reversibility.Reversible, definition.Reversibility);
         Assert.Equal(RestoreLevel.SessionUndo, definition.Restore);
         Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+
+        // R3: instala una tarea como SYSTEM; nunca Safe ni sin confirmación.
+        Assert.NotEqual(RiskLevel.Safe, definition.Risk);
+        Assert.NotEqual(ConfirmationType.None, definition.Confirmation);
 
         // 2 valores + 1 tarea, en ese orden y con órdenes consecutivas.
         Assert.Equal(new[] { 1, 2, 3 }, definition.Actions.Select(a => a.Order).ToArray());
@@ -273,16 +280,16 @@ public sealed class Wave4CatalogTests
     }
 
     /// <summary>
-    /// Barrido de TODO el catálogo (86). Existe porque cada oleada enumera sólo
+    /// Barrido de TODO el catálogo (88). Existe porque cada oleada enumera sólo
     /// sus ids: si una capacidad se colara fuera de las listas (o una oleada
     /// dejara de enumerar la suya), ningún test se enteraría. Aquí se exige que
-    /// las 86 cumplan lo mismo, sin listas de ids de por medio.
+    /// las 88 cumplan lo mismo, sin listas de ids de por medio.
     /// </summary>
     [Fact]
     public void TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants()
     {
         var all = LoadAll();
-        Assert.Equal(86, all.Count);
+        Assert.Equal(88, all.Count);
 
         // Las cinco secciones cerradas, ni una capacidad fuera de ellas.
         var sections = all.Select(d => d.SectionId).Distinct().OrderBy(s => s).ToArray();
@@ -306,7 +313,79 @@ public sealed class Wave4CatalogTests
         }
     }
 
+    // ------------------------------------------------------------ CreateKey
+    /// <summary>T5: el validador RECHAZA las creaciones de clave mal declaradas
+    /// (sin ruta o con comodines) y ACEPTA la del catálogo real.</summary>
+    [Fact]
+    public void TestWave4Catalog_ValidatorRejectsMalformedKeyCreations()
+    {
+        var withoutPath = Validate(Single(CreateKey(keyPath: " ")));
+        Assert.Contains(withoutPath.Errors, e => e.Message.Contains("sin 'keyPath'", StringComparison.Ordinal));
+
+        var wildcard = Validate(Single(CreateKey(keyPath: @"SOFTWARE\Evo\*")));
+        Assert.Contains(wildcard.Errors, e => e.Message.Contains("comodín", StringComparison.Ordinal));
+
+        var ok = Validate(Single(CreateKey(keyPath: @"SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff")));
+        Assert.True(ok.IsValid, ok.ErrorSummary);
+
+        // Y el del catálogo real pasa el validador, con la ruta del pin.
+        var real = Assert.Single(Definition("system.network.location-wizard.disable")
+            .Actions.OfType<RegistryCreateKeyAction>());
+        Assert.Equal(@"SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff",
+            real.KeyPath);
+        Assert.Equal(RegistryHiveKind.LocalMachine, real.Hive);
+        Assert.True(new CatalogValidator(KnownBuilds).Validate(
+            CatalogOf(Definition("system.network.location-wizard.disable"))).IsValid);
+    }
+
+    /// <summary>T5: el cargador acepta el discriminante <c>registryCreateKey</c> y
+    /// lo materializa como <see cref="RegistryCreateKeyAction"/>.</summary>
+    [Fact]
+    public void TestWave4Catalog_LoaderReadsKeyCreationActions()
+    {
+        const string json = """
+        {
+          "metadata": { "version": "1.0.0", "schemaVersion": 1 },
+          "capabilities": [
+            {
+              "id": "test.wave4.createkey",
+              "name": "Prueba",
+              "description": "prueba",
+              "sectionId": 9,
+              "risk": "Safe",
+              "securityImpact": "Neutral",
+              "privilege": "Admin",
+              "restore": "SessionUndo",
+              "reversibility": "Reversible",
+              "confirmation": "None",
+              "state": "Implemented",
+              "variants": ["Evo"],
+              "supportedBuilds": [19045],
+              "actions": [
+                { "type": "registryCreateKey", "order": 1, "description": "crear", "hive": "LocalMachine", "keyPath": "SOFTWARE\\Evo\\Y" }
+              ]
+            }
+          ]
+        }
+        """;
+
+        var document = new CatalogLoader().LoadFromText(json);
+        var action = Assert.IsType<RegistryCreateKeyAction>(
+            document.Capabilities.Single().Actions.Single());
+        Assert.Equal(ActionKind.RegistryCreateKey, action.Kind);
+        Assert.Equal(RegistryHiveKind.LocalMachine, action.Hive);
+        Assert.Equal(@"SOFTWARE\Evo\Y", action.KeyPath);
+    }
+
     // ---------------------------------------------------------------- ayuda
+    private static RegistryCreateKeyAction CreateKey(string keyPath) => new()
+    {
+        Order = 1,
+        Description = "crear",
+        Hive = RegistryHiveKind.LocalMachine,
+        KeyPath = keyPath,
+    };
+
     private static IReadOnlyList<CapabilityDefinition> Single(CapabilityAction action) =>
     [
         new CapabilityDefinition

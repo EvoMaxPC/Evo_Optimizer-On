@@ -652,7 +652,153 @@ public sealed class Wave4EngineTests
         Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
     }
 
+    // ----------------------------------------------------------- CreateKey
+    /// <summary>T2: crear una clave que no existe la crea vacía y el deshacer la
+    /// borra, dejando el árbol exactamente como estaba.</summary>
+    [Fact]
+    public async Task CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt()
+    {
+        var harness = TestHarness.Create();
+        var before = harness.Registry.Snapshot();
+        var journal = new UndoJournal();
+        var newKey = @"SOFTWARE\Evo\Wave4\Created";
+
+        var result = await new RegistryCreateKeyExecutor().ExecuteAsync(
+            CreateKeyAction(newKey), ContextFor(harness, journal));
+
+        Assert.True(result.Success, result.ErrorMessage);
+        Assert.True(result.Applied);
+        Assert.Equal("created", result.NewState);
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, newKey));
+        // Creada VACÍA: no se inventa ningún valor.
+        Assert.Empty(harness.Registry.GetValueNames(RegistryHive.LocalMachine, newKey));
+        var entry = Assert.IsType<RegistryCreateKeyUndoEntry>(Assert.Single(journal.Entries));
+        Assert.Equal("absent", entry.PreviousState);
+
+        var rollback = await journal.RollbackAsync(UndoContextFor(harness));
+
+        Assert.True(rollback.Success, string.Join(" | ", rollback.Errors));
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, newKey));
+        AssertSameRegistry(before, harness.Registry.Snapshot());
+    }
+
+    /// <summary>T2: si la clave YA existía, la acción es un no-op sin mutación y
+    /// SIN entrada de diario: borrarla al deshacer destruiría estado previo.</summary>
+    [Fact]
+    public async Task CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt()
+    {
+        var harness = TestHarness.Create();
+        const string existing = @"SOFTWARE\Evo\Wave4\Existing";
+        harness.Registry.Seed(RegistryHive.LocalMachine, existing, "Keep", "valor",
+            RegistryValueKind.String);
+        harness.Registry.ClearLog();
+        var mutationsBefore = harness.Registry.MutationCount;
+        var journal = new UndoJournal();
+
+        var result = await new RegistryCreateKeyExecutor().ExecuteAsync(
+            CreateKeyAction(existing), ContextFor(harness, journal));
+
+        Assert.True(result.Success, result.ErrorMessage);
+        Assert.False(result.Applied);
+        Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
+        Assert.Empty(journal.Entries);
+        Assert.Equal("valor", harness.Registry.GetValue(
+            RegistryHive.LocalMachine, existing, "Keep"));
+
+        await journal.RollbackAsync(UndoContextFor(harness));
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, existing));
+        Assert.Equal("valor", harness.Registry.GetValue(
+            RegistryHive.LocalMachine, existing, "Keep"));
+    }
+
+    /// <summary>T2: en DryRun no se crea nada y no se apunta deshacer.</summary>
+    [Fact]
+    public async Task CreateKey_DryRunDoesNotMutate()
+    {
+        var harness = TestHarness.Create();
+        var mutationsBefore = harness.Registry.MutationCount;
+        var journal = new UndoJournal();
+        var newKey = @"SOFTWARE\Evo\Wave4\Dry";
+
+        var result = await new RegistryCreateKeyExecutor().ExecuteAsync(
+            CreateKeyAction(newKey),
+            ContextFor(harness, journal, ExecutionMode.DryRun));
+
+        Assert.True(result.Success, result.ErrorMessage);
+        Assert.False(result.Applied);
+        Assert.Equal("would-create", result.NewState);
+        Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
+        Assert.Empty(journal.Entries);
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, newKey));
+    }
+
+    /// <summary>T2: un accesor que no sabe crear claves hace que el motor falle
+    /// CERRADO (no muta y lo dice), igual que el borrado sin lector de árbol.</summary>
+    [Fact]
+    public async Task CreateKey_WithoutKeyCreatorFailsClosed()
+    {
+        var harness = TestHarness.Create();
+        var blind = new NoCreatorRegistry(harness.Registry);
+        var mutationsBefore = harness.Registry.MutationCount;
+        var journal = new UndoJournal();
+
+        var result = await new RegistryCreateKeyExecutor().ExecuteAsync(
+            CreateKeyAction(@"SOFTWARE\Evo\Wave4\Blind"),
+            ContextFor(harness, journal, registry: blind));
+
+        Assert.False(result.Success);
+        Assert.Contains("no sabe crear claves", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
+        Assert.Empty(journal.Entries);
+    }
+
+    /// <summary>T2: la creación de clave pasa por la puerta de punto de
+    /// restauración como cualquier otra acción que muta.</summary>
+    [Fact]
+    public async Task CreateKey_GoesThroughTheRestorePointGate()
+    {
+        var harness = TestHarness.Create(restorePointAvailable: false);
+        var mutationsBefore = harness.Registry.MutationCount;
+        var newKey = @"SOFTWARE\Evo\Wave4\Gate";
+
+        var action = CreateKeyAction(newKey);
+        var contract = TestHarness.Contract([action], risk: RiskLevel.Medium,
+            restore: RestoreLevel.RestorePoint);
+        var summary = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contract, [action]), ExecutionMode.Execute,
+            harness.Context(ExecutionMode.Execute));
+
+        Assert.True(summary.Aborted);
+        Assert.Contains("Protección del sistema", summary.AbortedReason, StringComparison.Ordinal);
+        Assert.Equal(mutationsBefore, harness.Registry.MutationCount);
+        Assert.False(harness.Registry.KeyExists(RegistryHive.LocalMachine, newKey));
+    }
+
+    /// <summary>T2: el ejecutor devuelve el estado actual de la clave.</summary>
+    [Fact]
+    public async Task CreateKey_ReadCurrentStateReportsPresence()
+    {
+        var harness = TestHarness.Create();
+        var executor = new RegistryCreateKeyExecutor();
+        var action = CreateKeyAction(@"SOFTWARE\Evo\Wave4\State");
+        var context = ContextFor(harness, new UndoJournal());
+
+        Assert.Equal("absent", executor.ReadCurrentState(action, context));
+
+        await executor.ExecuteAsync(action, context);
+
+        Assert.Equal("present", executor.ReadCurrentState(action, context));
+    }
+
     // ------------------------------------------------------------- ayuda
+    private static RegistryCreateKeyAction CreateKeyAction(string keyPath) => new()
+    {
+        Order = 1,
+        Description = $"crear {keyPath}",
+        Hive = RegistryHiveKind.LocalMachine,
+        KeyPath = keyPath,
+    };
+
     private static RegistryDeleteKeyAction DeleteKeyAction(int order = 1, bool recursive = false) => new()
     {
         Order = order,
@@ -741,6 +887,30 @@ public sealed class Wave4EngineTests
         // Y ninguna clave de más: el árbol recreado es el mismo, no uno más gordo.
         // (Child\Empty es una clave SIN valores: se comprueba por existencia.)
         Assert.True(actual.ContainsKey(EmptyKey));
+    }
+
+    /// <summary>Accesor que sabe leer y escribir valores pero NO crear claves.</summary>
+    private sealed class NoCreatorRegistry : IRegistryAccessor
+    {
+        private readonly FakeRegistryAccessor _inner;
+
+        public NoCreatorRegistry(FakeRegistryAccessor inner) => _inner = inner;
+
+        public object? GetValue(RegistryHive hive, string keyPath, string valueName) =>
+            _inner.GetValue(hive, keyPath, valueName);
+
+        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value,
+            RegistryValueKind kind) =>
+            _inner.SetValue(hive, keyPath, valueName, value, kind);
+
+        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) =>
+            _inner.DeleteValue(hive, keyPath, valueName);
+
+        public bool KeyExists(RegistryHive hive, string keyPath) =>
+            _inner.KeyExists(hive, keyPath);
+
+        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive) =>
+            _inner.DeleteKey(hive, keyPath, recursive);
     }
 
     /// <summary>Accesor que sabe leer valores pero NO enumerar el árbol.</summary>

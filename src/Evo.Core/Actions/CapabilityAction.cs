@@ -20,6 +20,9 @@ public enum ActionKind
 
     /// <summary>Creación de una tarea programada (paso 11).</summary>
     TaskCreate = 6,
+
+    /// <summary>Creación de una clave vacía del registro (paso 12).</summary>
+    RegistryCreateKey = 7,
 }
 
 /// <summary>Acción atómica y reversible declarada por una capacidad.</summary>
@@ -31,6 +34,7 @@ public enum ActionKind
 [JsonDerivedType(typeof(CommandAction), "command")]
 [JsonDerivedType(typeof(RegistryDeleteKeyAction), "registryDeleteKey")]
 [JsonDerivedType(typeof(TaskCreateAction), "taskCreate")]
+[JsonDerivedType(typeof(RegistryCreateKeyAction), "registryCreateKey")]
 public abstract record CapabilityAction
 {
     /// <summary>Orden de aplicación dentro del plan (menor primero).</summary>

@@ -62,15 +62,18 @@ def test_todas_las_acciones_llevan_el_discriminador_de_tipo() -> None:
     .NET rechaza el fichero entero (lo comprobó el CI del paso 9).
 
     Cambió en el paso 11: la sección 10 tiene DOS formas de acción desde que el
-    motor sabe borrar claves completas (`registryDeleteKey`), no una. La forma
-    se comprueba por tipo, no se relaja la comprobación.
+    motor sabe borrar claves completas (`registryDeleteKey`), no una. Y en el
+    paso 12 son TRES: `registryCreateKey` expresa la `AddKey` de
+    `explorer.home.restore`. La forma se comprueba por tipo, no se relaja la
+    comprobación.
     """
+    tipos = ("registry", "registryDeleteKey", "registryCreateKey")
     for cap in CAPS:
         for action in cap["actions"]:
-            assert action["type"] in ("registry", "registryDeleteKey"), (cap["id"], action)
+            assert action["type"] in tipos, (cap["id"], action)
     # Una sola forma por discriminador: un campo de más en una sola capacidad
     # sería una acción que el cargador ignora en silencio.
-    for kind in ("registry", "registryDeleteKey"):
+    for kind in tipos:
         shapes = {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]
                   if a["type"] == kind}
         assert len(shapes) == 1, (kind, shapes)
@@ -82,15 +85,22 @@ def test_todas_las_acciones_llevan_el_discriminador_de_tipo() -> None:
     assert {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]
             if a["type"] == "registryDeleteKey"} == {
         ('description', 'hive', 'keyPath', 'order', 'recursive', 'type')}
+    # Y la del paso 12: colmena y ruta, sin valor ni recursión (una clave vacía).
+    assert {tuple(sorted(a.keys())) for c in CAPS for a in c["actions"]
+            if a["type"] == "registryCreateKey"} == {
+        ('description', 'hive', 'keyPath', 'order', 'type')}
 
 
-def test_hay_29_capacidades_y_57_acciones() -> None:
+def test_hay_30_capacidades_y_60_acciones() -> None:
     # Paso 11: la acción DeleteKey de `explorer.home.hide` ya se declara (antes se
     # omitía porque el motor no sabía borrar claves): 56 -> 57.
-    assert len(CAPS) == 29
-    assert sum(len(c["actions"]) for c in CAPS) == 57
+    # Paso 12: `explorer.home.restore` es la capacidad NUEVA que expresa la
+    # `AddKey` del estado Enable de Home (29 -> 30 capacidades) y añade tres
+    # acciones: crear la clave + dos valores (57 -> 60).
+    assert len(CAPS) == 30
+    assert sum(len(c["actions"]) for c in CAPS) == 60
     assert [c["id"] for c in CAPS] == sorted(c["id"] for c in CAPS), "orden estable"
-    assert len({c["id"] for c in CAPS}) == 29
+    assert len({c["id"] for c in CAPS}) == 30
 
 
 def test_los_ids_cumplen_el_contrato_y_el_namespace() -> None:
@@ -108,7 +118,13 @@ def test_adr_0003_en_todas_las_capacidades() -> None:
         assert cap["restore"] == "SessionUndo", cap["id"]
         assert cap["securityImpact"] in ("Improves", "Neutral", "Reduces")
         assert cap["state"] in ("Implemented", "Specified")
-        assert cap["state"] == "Implemented", cap["id"]
+        # Paso 12 (R1): `Implemented` sólo si el pin no deja nada fuera; si lo
+        # deja, la capacidad tiene que ser `Specified` y decirlo. Se comprueba en
+        # las dos direcciones, no se admite ninguna de las dos a ciegas.
+        if "FUERA DE ESTA CAPACIDAD (R1)" in cap["description"]:
+            assert cap["state"] == "Specified", cap["id"]
+        if cap["state"] == "Specified":
+            assert "R1" in cap["provenance"], cap["id"]
         assert cap["variants"], cap["id"]
         assert set(cap["variants"]) <= {"Evo", "Atlas", "WinUtil", "Default"}
         # La confirmación es exactamente la del riesgo (CapabilityRules).
@@ -177,9 +193,12 @@ def test_omitir_la_pantalla_de_bloqueo_no_se_declara_como_reduccion() -> None:
 
 def test_las_cinco_capacidades_sin_19045_lo_justifican() -> None:
     sin_w10 = [c["id"] for c in CAPS if 19045 not in c["supportedBuilds"]]
+    # Paso 12: `explorer.home.restore` es la contraparte de `explorer.home.hide` y
+    # usa el mismo CLSID de Windows 11, asi que tampoco declara 19045.
     assert sin_w10 == [
         "explorer.gallery.hide",
         "explorer.home.hide",
+        "explorer.home.restore",
         "ui.context-menu.classic",
         "ui.taskbar.end-task",
         "ui.taskbar.icons-centered",
@@ -201,6 +220,12 @@ def test_toda_accion_es_una_operacion_que_el_motor_sabe_deshacer() -> None:
                 assert set(action) == {"type", "order", "hive", "keyPath",
                                        "recursive", "description"}, (cap["id"], action)
                 assert action["recursive"] is False, cap["id"]
+                continue
+            if action["type"] == "registryCreateKey":
+                # Creación de clave VACÍA (paso 12): la inversa es borrarla, y sólo
+                # se apunta si no existía antes.
+                assert set(action) == {"type", "order", "hive", "keyPath",
+                                       "description"}, (cap["id"], action)
                 continue
             assert action["operation"] in ("Set", "Delete"), cap["id"]
             # DWord y String son la mayoría; ExpandString es texto que el diario
@@ -313,7 +338,8 @@ def test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10() -> None:
     assert report["por_seccion"]["10"]["huecos"] == 0
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
-    assert report["capacidades"] == 86
+    # Paso 12: 86 -> 88 (explorer.home.restore y system.network.location-wizard.disable).
+    assert report["capacidades"] == 88
     assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 30 + 29
 
 
@@ -345,8 +371,10 @@ def test_la_auditoria_de_valores_no_tiene_ni_ambiguous_ni_unhandled() -> None:
     # 56 y todas coinciden con el pin (Set y Delete incluidos).
     # Paso 11: el DeleteKey de `explorer.home.hide` entra en la auditoría como
     # fila propia (57), casada contra el `Operation = 'DeleteKey'` del pin.
+    # Paso 12: los dos valores de `explorer.home.restore` suman 59 filas
+    # (60 acciones menos la `registryCreateKey`, que no escribe ningún valor).
     section10 = [r for r in rows if r["capability_id"] in BY_ID]
-    assert len(section10) == 57, len(section10)
+    assert len(section10) == 59, len(section10)
     assert all(r["relation"] in ("equals-apply", "equals-on") for r in section10), [
         r for r in section10 if r["relation"] not in ("equals-apply", "equals-on")]
 
@@ -399,12 +427,12 @@ def test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido() -> None:
         capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
     text = (ROOT / "docs" / "reports" / "rangos-build.md").read_text(encoding="utf-8")
-    assert "**86** capacidades" in text
-    # Paso 10: 78 con las cuatro builds y 8 con rango recortado (la sección 9
-    # añade system.hibernation.hide al grupo de Windows 11 y 18 capacidades).
-    assert "**78**" in text and "**8**" in text
+    # Paso 12: 86 -> 88 capacidades (71 Implemented / 17 Specified) y 79 + 9 de
+    # rango, porque `explorer.home.restore` se suma al grupo de Windows 11.
+    assert "**88** capacidades, 71 `Implemented` y 17 `Specified`" in text
+    assert "**79**" in text and "**9**" in text
     # Las cinco de la sección 10 con rango recortado aparecen cada una.
     for cap_id in ("explorer.gallery.hide", "explorer.home.hide",
-                   "ui.context-menu.classic", "ui.taskbar.end-task",
-                   "ui.taskbar.icons-centered"):
+                   "explorer.home.restore", "ui.context-menu.classic",
+                   "ui.taskbar.end-task", "ui.taskbar.icons-centered"):
         assert f"`{cap_id}`" in text, cap_id
