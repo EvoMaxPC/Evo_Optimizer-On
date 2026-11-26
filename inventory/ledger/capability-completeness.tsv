@@ -85,5 +85,5 @@ system.services.manual-profile	9	Implemented	winutil	config/tweaks.json#WPFTweak
 system.settings-page-visibility.hide	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5	0	1	0		0	no	OK
 system.sleep.s0-network-keep	9	Implemented	winutil	config/tweaks.json#WPFToggleStandbyFix	1	1	0		0	no	OK
 system.sleep.s3-enable	9	Implemented	winutil	config/tweaks.json#WPFToggleS3Sleep	1	1	0		0	no	OK
-system.time.ntp-servers	9	Specified	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10.	0	3	0		0	si	OK
+system.time.ntp-servers	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10.	0	3	0		0	si	OK
 system.time.utc-rtc	9	Implemented	winutil	config/tweaks.json#WPFTweaksUTC	1	1	0		0	no	OK

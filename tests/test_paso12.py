@@ -61,7 +61,6 @@ SPECIFIED9 = [
     "system.mitigations.disable",
     "system.oem-information.identify",
     "system.registry-backup.enable",
-    "system.time.ntp-servers",
 ]
 
 
@@ -167,8 +166,8 @@ def test_r1_no_queda_ninguna_violacion() -> None:
     violations = [r for r in rows if r["verdict"] == "R1-VIOLATION"]
     assert violations == []
     assert len(rows) == 88
-    assert sum(1 for r in rows if r["state"] == "Implemented") == 69
-    assert sum(1 for r in rows if r["state"] == "Specified") == 19
+    assert sum(1 for r in rows if r["state"] == "Implemented") == 70
+    assert sum(1 for r in rows if r["state"] == "Specified") == 18
 
     # El TSV versionado es exactamente lo que produce el medidor.
     assert R1_TSV.read_text(encoding="utf-8") == mcc.dump_tsv(rows)
@@ -178,8 +177,9 @@ def test_r1_no_queda_ninguna_violacion() -> None:
 
 
 def test_r1_baja_a_specified_solo_a_quien_le_sobra_efecto() -> None:
-    """Las cuatro de la sección 9 vuelven a `Specified` con el motivo escrito y
-    la lista es cerrada: si aparece otra, hay que decidir, no dejarla pasar."""
+    """Solo las tres de la sección 9 que dejan algo SIN declarar quedan en
+    `Specified` con el motivo escrito; la lista es cerrada: si aparece otra,
+    hay que decidir, no dejarla pasar."""
     specified = sorted(c["id"] for c in CAPS9.values() if c["state"] == "Specified")
     assert specified == SPECIFIED9
 
@@ -323,8 +323,8 @@ def test_las_cifras_del_ledger_son_las_medidas() -> None:
     assert sum(len(c["actions"]) for c in caps.values()) == 243
     assert len(CAPS9) == 19 and sum(len(c["actions"]) for c in CAPS9.values()) == 47
     assert len(CAPS10) == 30 and sum(len(c["actions"]) for c in CAPS10.values()) == 60
-    assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 69
-    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 19
+    assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 70
+    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 18
 
     cov = json.loads(run("verify_catalog_coverage.py", "--json"))
     assert cov["capacidades"] == 88
@@ -440,7 +440,7 @@ def test_los_informes_del_paso_12_existen_y_citan_lo_medido() -> None:
     """El informe y el ADR son parte del entregable: se comprueban sus cifras."""
     assert REPORT.is_file()
     report = REPORT.read_text(encoding="utf-8")
-    for needle in ("88 capacidades", "69 `Implemented`", "19 `Specified`",
+    for needle in ("88 capacidades", "70 `Implemented`", "18 `Specified`",
                    "registryCreateKey", "197", "CONTRARIO",
                    # La honestidad sobre el entorno: aquí no hay dotnet y los
                    # xUnit se ejecutan en el CI, no en este sandbox.

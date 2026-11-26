@@ -179,16 +179,17 @@ public sealed class Wave4CatalogTests
         Assert.Equal(PrivilegeLevel.Admin, definition.Privilege);
     }
 
-    /// <summary>T2: `system.time.ntp-servers` arranca w32time y declara en la
-    /// descripción lo que sigue sin declararse (w32tm). Es Specified (R1 paso 12c:
-    /// el pin hace más de lo declarado: w32tm /config /update y /resync no son
-    /// acciones del motor).</summary>
+    /// <summary>T2: `system.time.ntp-servers` arranca w32time y declara el
+    /// registro (NtpServer, Type). El pin además ejecuta w32tm /config /update
+    /// y /resync, efectos de máquina que no son motivo válido para mantener
+    /// Specified (regla del paso 12c/G2), así que ahora es Implemented; se
+    /// declara en la descripción lo que queda fuera (REQ-002: no se calla).</summary>
     [Fact]
     public void TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut()
     {
         var definition = Definition("system.time.ntp-servers");
 
-        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Equal(CapabilityState.Implemented, definition.State);
         var start = Assert.Single(definition.Actions.OfType<ServiceAction>());
         Assert.Equal("w32time", start.ServiceName);
         Assert.Equal(ServiceOperation.Start, start.Operation);
@@ -197,7 +198,7 @@ public sealed class Wave4CatalogTests
         // Lo que NO se declara sigue escrito (REQ-002: no se calla un hueco).
         Assert.Contains("w32tm /config /update", definition.Description, StringComparison.Ordinal);
         Assert.Contains("w32tm /resync", definition.Description, StringComparison.Ordinal);
-        Assert.Contains("sin inversa", definition.Provenance, StringComparison.Ordinal);
+        Assert.Contains("sin inversa", definition.Description, StringComparison.Ordinal);
         Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
     }
 

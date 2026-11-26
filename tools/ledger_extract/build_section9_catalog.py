@@ -200,9 +200,7 @@ ATLAS_TOGGLE_SPECS = [
          name="Ocultar la opción Hibernar del menú de energía",
          desc="Pone ShowHibernateOption=0 en HKLM\\SOFTWARE\\Microsoft\\Windows\\"
               "CurrentVersion\\Explorer\\FlyoutMenuSettings: la entrada «Hibernar» deja "
-              "de aparecer en el menú de energía. El pin ejecuta además "
-              "Disable-AtlasHibernation, que apaga la hibernación de verdad con powercfg; "
-              "esa acción de máquina no es de registro y aquí no se declara.",
+              "de aparecer en el menú de energía.",
          risk="Low", security="Neutral",
          r1_gap=(
              "el pin declara ademas MachineAction Set-AtlasHibernationPowerState "
@@ -318,11 +316,13 @@ ATLAS_TWEAK_SPECS = [
               "3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\"
               "W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: "
               "devuelve los dos valores previos y el estado de ejecución anterior del "
-              "servicio (si estaba parado, lo vuelve a parar).",
+              "servicio (si estaba parado, lo vuelve a parar). El pin además ejecuta "
+              "`w32tm /config /update` y `w32tm /resync` (config-time.psd1, bloque "
+              "`Run`), comandos sin inversa que no son acción de registro; por regla del "
+              "paso 12c/G2 eso no es motivo válido para especificar porque el valor de "
+              "registro SÍ está declarado y el servicio se declara. Deshacer: se restauran "
+              "los dos valores y el estado previo del servicio w32time.",
          risk="Low", security="Neutral",
-         r1_gap="ejecuta `w32tm /config /update` y `w32tm /resync` "
-         "(config-time.psd1, bloque `Run`), comandos sin inversa que no se declaran "
-         "como acción",
          build_note="W32Time\\Parameters existe en 19045 y en Windows 11"),
 
 

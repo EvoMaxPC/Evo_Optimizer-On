@@ -182,6 +182,42 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  OK (sin contrarias no reproducidas) : {sum(1 for r in rows if r['clasificacion'] == 'OK')}")
     print(f"  PENDIENTE (contrarias no declaradas): {sum(1 for r in rows if r['clasificacion'] == 'PENDIENTE')}")
     print(f"  CONTRARIO (opuesto estructural)     : {len(contrarios)}")
+
+    # ----------------------------------------------------------------- criterio
+    print()
+    print("Criterio de clasificacion (escrito):")
+    print("  * OK       : el estado aplicado del toggle reproduce todas las operaciones")
+    print("               del pin; no queda ninguna operacion contraria sin declarar.")
+    print("  * PENDIENTE: hay operaciones del pin en el estado CONTRARIO que el estado")
+    print("               aplicado no reproduce (claves/valores que se dejan atras).")
+    print("               Requieren revision: o se declaran o se justifican por escrito.")
+    print("  * CONTRARIO: el estado aplicado es el opuesto estructural de otro estado")
+    print("               del mismo toggle (AddKey frente a DeleteKey, o Set frente a")
+    print("               DeleteKey) sobre la misma clave. Aplicar ambos estados anularia")
+    print("               el efecto del uno; es un conflicto de diseño, no un hueco.")
+    print()
+
+    # ----------------------------------------------- explicacion de los CONTRARIO
+    if contrarios:
+        print("Filas CONTRARIO (opuesto estructural), detalle:")
+        for row in contrarios:
+            print(f"  - {row['capability_id']} (estado_aplicado={row['estado_aplicado']}):")
+            print(f"      {row['operaciones_contrarias_no_reproducidas']}")
+        print()
+        print("  explorer.home.hide  y  explorer.home.restore son estados simetricos del")
+        print("  mismo toggle (Toggles/Interface/Home.psd1). `hide`=Disable quita el icono")
+        print("  de Inicio del escritorio (DeleteKey del NameSpace {f874310e-...});")
+        print("  `restore`=Enable lo vuelve a poner (AddKey del mismo NameSpace). AddKey y")
+        print("  DeleteKey sobre la misma clave son opuestos estructurales: no pueden")
+        print("  declararse los dos como efecto del estado aplicado sin anularse. Por eso")
+        print("  ambos se clasifican CONTRARIO y se documentan en R1/CONTRARIO.")
+        print()
+        print("  explorer.removable-drives.sidebar (estado=Enable) borra las claves")
+        print("  DelegateFolders\\{F5FB2C77-...} (quita las unidades extraibles de la barra")
+        print("  lateral). El estado contrario del toggle (Disable) las anadiria (AddKey):")
+        print("  AddKey frente a DeleteKey sobre la misma clave, opuesto estructural.")
+        print()
+
     for row in rows:
         if row["clasificacion"] != "OK":
             print(f"  {row['clasificacion']:<12} {row['capability_id']:<40} "

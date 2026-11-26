@@ -120,14 +120,14 @@ compara las operaciones del pin con las acciones del catálogo:
 
 ```
 capacidades medidas        : 88
-  Implemented              : 69
-  Specified                : 19
+  Implemented              : 70
+  Specified                : 18
   con efectos fuera del pin : 13
 violaciones de R1          : 0
 veredicto por capacidad    : 88 OK
 ```
 
-Las cuatro `Specified` de la sección 9 son una **lista cerrada** (un test falla
+Las cinco `Specified` de la sección 9 son una **lista cerrada** (un test falla
 si aparece otra):
 
 | Capacidad | Lo que el pin hace y el motor no |
@@ -135,6 +135,7 @@ si aparece otra):
 | `system.hibernation.hide` | `powercfg /h off` (apaga la hibernación, no sólo la entrada del menú) |
 | `system.location.consent-deny` | política de Find My Device + páginas de configuración |
 | `system.mitigations.disable` | CFG y `bcdedit /set nx` |
+| `system.oem-information.identify` | `config-oem-information.ps1` rellena valores dinámicos (versión/modelo) |
 | `system.registry-backup.enable` | el script se ejecuta con `-RunLevel Highest` y el motor no expresa el nivel de la tarea |
 
 Todas siguen siendo `Reversible` con deshacer de sesión o mejor, y todas lo
@@ -201,7 +202,7 @@ y `explorer.removable-drives.sidebar` **no** aparecen como contrarios.
 catálogo            88 capacidades · 243 acciones
 sección 9           19 capacidades · 47 acciones (era 18/45)
 sección 10          30 capacidades · 60 acciones (era 29/57)
-estado              69 `Implemented` / 19 `Specified`  (el catálogo medido: 88 capacidades)
+estado              70 `Implemented` / 18 `Specified`  (el catálogo medido: 88 capacidades)
 estados contrarios  3 `CONTRARIO` (explorer.home.hide, explorer.home.restore, explorer.removable-drives.sidebar)
 cobertura           85/85 líneas Mapped · 0 huecos (0 declarados)
 secciones cerradas  1, 2, 3, 9, 10

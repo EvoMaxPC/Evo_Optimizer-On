@@ -70,7 +70,7 @@ system.services.manual-profile	9	Implemented	Reversible	Low	Improves	Admin	Simpl
 system.settings-page-visibility.hide	9	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 system.sleep.s0-network-keep	9	Implemented	Reversible	Safe	Neutral	User	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 system.sleep.s3-enable	9	Implemented	Reversible	Medium	Neutral	Admin	Summary	RestorePoint	19045,22631,26100,26200	registry	si	si	no	-
-system.time.ntp-servers	9	Specified	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry,service	si	si	si	si
+system.time.ntp-servers	9	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry,service	no	si	si	si
 system.time.utc-rtc	9	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 ui.context-menu.classic	10	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	22631,26100,26200	registry	si	si	no	-
 ui.lockscreen.hide	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-

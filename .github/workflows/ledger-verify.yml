@@ -37,7 +37,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7.0.1
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Instalar pytest y pyyaml
         shell: bash
@@ -678,9 +678,11 @@ jobs:
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
                 and len(caps9) == 19 and acts9 == 47
+                # 12c/G2: ntp-servers paso a Implemented (outside=0), por eso la
+                # lista cerrada de Specified de la seccion 9 tiene 5 entradas.
                 and new9 == ["system.hibernation.hide", "system.location.consent-deny",
                              "system.mitigations.disable", "system.oem-information.identify",
-                             "system.registry-backup.enable", "system.time.ntp-servers"]
+                             "system.registry-backup.enable"]
                 and acts10 == 60
                 and {"registryDeleteKey", "taskCreate", "service"} <= set(kinds)
                 and len(task) == 1 and task[0]["taskName"] == "AutoRegBackup"
@@ -791,14 +793,14 @@ jobs:
                                         "system.network.location-wizard.disable"]
                 and all(len(v) == 1 for v in creates.values())
                 # La lista cerrada de Specified de la seccion 9 (R1 + R3).
-                # Paso 12c: ntp-servers y oem-information también vuelven a
-                # Specified (R1: el pin hace más de lo declarado), así que son 6.
+                # La lista cerrada de Specified de la seccion 9 (R1 + R3).
+                # 12c/G2: ntp-servers pasa a Implemented (outside=0: registro y
+                # arranque de w32time se declaran); quedan 5 Specified.
                 and specified9 == ["system.hibernation.hide",
                                    "system.location.consent-deny",
                                    "system.mitigations.disable",
                                    "system.oem-information.identify",
-                                   "system.registry-backup.enable",
-                                   "system.time.ntp-servers"]
+                                   "system.registry-backup.enable"]
                 # R3: lo que INSTALA algo persistente con privilegios altos (una
                 # tarea programada o un servicio) no puede ser Safe ni quedar sin
                 # confirmacion. Las escrituras de registro quedan fuera del
@@ -830,6 +832,104 @@ jobs:
           python3 tools/ledger_extract/report_rules_state.py --check
           cp inventory/ledger/reglas-r1-r3.tsv ci-out/
           cp docs/reports/reglas-r1-r3.md ci-out/
+
+      - name: Publicar informe
+        if: always()
+        shell: bash
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          mkdir -p ci-out
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "${{ job.status }}" \
+            || echo "publish-report fallo (no bloquea el job)"
+
+  paso-12g:
+    name: paso 12g (reconciliacion verificable de 12c)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [verify]
+    env:
+      LABEL: ledger-verify
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Instalar pytest y pyyaml
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages pytest pyyaml
+          python3 -c "import pytest, yaml; print('pytest', pytest.__version__, '| pyyaml', yaml.__version__)"
+
+      - name: G1 - historia de Specified de la seccion 9
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/report_specified_history.py | tee ci-out/paso12g-specified-history.txt
+          python3 tools/ledger_extract/report_specified_history.py > ci-out/paso12g-specified-history-run2.txt
+          if ! diff -u ci-out/paso12g-specified-history.txt ci-out/paso12g-specified-history-run2.txt; then
+            echo "G1: report_specified_history.py no es determinista" | tee ci-out/paso12g-determinismo.txt
+            exit 1
+          fi
+          echo "G1: report_specified_history.py determinista y sin errores" | tee ci-out/paso12g-determinismo.txt
+
+      - name: G2 - catalogo de seccion 9 reproducible y sin violaciones R1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/measure_capability_completeness.py --check
+          python3 tools/ledger_extract/audit_catalog_values.py
+          python3 tools/ledger_extract/verify_catalog_coverage.py
+          cp inventory/ledger/capability-completeness.tsv ci-out/
+          cp inventory/ledger/toggle-state-audit.tsv ci-out/
+          cp catalog/capabilities/section9_system_registry.json ci-out/
+          python3 tools/ledger_extract/measure_capability_completeness.py --json > ci-out/paso12g-r1.json
+          python3 - <<'PYEOF'
+          import json, sys
+          r1 = json.load(open("ci-out/paso12g-r1.json", encoding="utf-8"))
+          print("R1:", r1["capacidades"], "caps | Implemented", r1["implemented"],
+                "| Specified", r1["specified"], "| violaciones", r1["violaciones_r1"])
+          sys.exit(0 if (r1["capacidades"] == 88 and r1["violaciones_r1"] == []
+                         and r1["implemented"] + r1["specified"] == 88) else 1)
+          PYEOF
+
+      - name: G3 - estados de toggles y estados contrarios (T3)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/measure_toggle_states.py --check
+          python3 tools/ledger_extract/measure_toggle_states.py --json > ci-out/paso12g-toggle.json
+          python3 - <<'PYEOF'
+          import json, sys
+          t3 = json.load(open("ci-out/paso12g-toggle.json", encoding="utf-8"))
+          print("T3:", t3["veredicto"], "| OK", t3["totales"]["OK"],
+                "| PENDIENTE", t3["totales"]["PENDIENTE"],
+                "| CONTRARIO", t3["totales"]["CONTRARIO"])
+          sys.exit(0 if (t3["veredicto"] == "CONTRARIOS_DETECTADOS"
+                         and t3["totales"]["OK"] == 2
+                         and t3["totales"]["PENDIENTE"] == 15
+                         and t3["totales"]["CONTRARIO"] == 3) else 1)
+          PYEOF
+
+      - name: G4 - reproducibilidad con worktrees temporales
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/reproducibilidad_worktrees.py
+
+      - name: Suite pytest (12g)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pytest tools/ledger_extract/tests/ tests/ -q
 
       - name: Estructura .NET (validador)
         if: always()
