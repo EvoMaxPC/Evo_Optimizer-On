@@ -226,7 +226,7 @@ public sealed record ServiceUndoEntry : UndoJournalEntry
 /// <remarks>
 /// Si la clave no existía cuando se ejecutó la acción, el diario nunca se crea
 /// (la acción fue un no-op) y por tanto el deshacer no crea nada. Si el borrado
-/// fue un no-op registrado (<see cref="ExistedBefore\"/> = false) el deshacer
+/// fue un no-op registrado (<see cref="ExistedBefore"/> = false) el deshacer
 /// vuelve a ser un no-op.
 /// </remarks>
 public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
