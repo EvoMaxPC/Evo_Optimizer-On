@@ -150,15 +150,13 @@ def test_implemented_solo_con_acciones_y_specified_sin_perder_los_valores() -> N
             assert "Specified" in cap["provenance"], cap["id"]
     # Paso 11: las dos que quedaban en Specified cierran su hueco con las
     # acciones nuevas (tarea AutoRegBackup y arranque de w32time) y pasan a
-    # Implemented. El paso 12c/G2 aplica R1: quedan Specified las cinco
+    # Implemented. El paso 12h aplica R1: quedan Specified las seis
     # capacidades de §9 cuyo pin deja un efecto SIN declarar que el motor no
     # tiene (powercfg de hibernacion, politica Find My Device de location,
     # bcdedit/CFG de mitigaciones, valores dinamicos del script oem-information
-    # y RunLevel/ejecucion inmediata de la tarea de registry-backup).
-    # system.time.ntp-servers pasa a Implemented: su registro (NtpServer, Type)
-    # y el arranque de w32time SÍ se declaran, y el w32tm /config /update +
-    # /resync del bloque Run no es una operación de registro ni servicio que
-    # pin_pairs cuente, así que outside=0 y R1 permite Implemented.
+    # y RunLevel/ejecucion inmediata de la tarea de registry-backup) más
+    # system.time.ntp-servers (w32tm /config /update y /resync sin acción
+    # equivalente en el motor).
     # La lista es cerrada a proposito: si aparece otra, este test falla.
     specified = sorted(c["id"] for c in CAPS if c["state"] == "Specified")
     assert specified == [
@@ -167,6 +165,7 @@ def test_implemented_solo_con_acciones_y_specified_sin_perder_los_valores() -> N
         "system.mitigations.disable",
         "system.oem-information.identify",
         "system.registry-backup.enable",
+        "system.time.ntp-servers",
     ]
     # Y las cinco lo dicen en description Y provenance (R1 no admite huecos
     # silenciosos).
@@ -320,8 +319,9 @@ def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> No
     assert "oleada 3, cerrada en el catálogo (30 de 30" in plan
     assert "| 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |" in plan   # fila de §9
     ranges = RANGES.read_text(encoding="utf-8")
-    # 12c/G2: 88 capacidades (70 Implemented / 18 Specified).
-    assert "**88** capacidades, 70 `Implemented` y 18 `Specified`" in ranges
+    # 12h: 88 capacidades (69 Implemented / 19 Specified; ntp-servers pasa a
+    # Specified por R1: w32tm sin acción equivalente en el motor).
+    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in ranges
     assert "`system.hibernation.hide`" in ranges
 
 

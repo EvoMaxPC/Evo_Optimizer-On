@@ -80,12 +80,12 @@ def test_cabecera_tabla_b() -> None:
 
 
 def test_19_specified_en_head() -> None:
-    """HEAD debe tener exactamente 18 capacidades Specified (tras 12c/G2:
-    solo ntp-servers paso a Implemented; hibernation.hide, mitigations.disable
-    y las otras tres siguen Specified porque el pin deja efectos de maquina no
-    expresables)."""
+    """HEAD debe tener exactamente 19 capacidades Specified (tras 12h:
+    ntp-servers pasa a Specified porque el pin ejecuta w32tm /config /update
+    y w32tm /resync, comandos sin acción equivalente en el motor;
+    hibernation.hide, mitigations.disable y las otras tres siguen Specified)."""
     resultado = _run()
-    assert "Total Specified en HEAD: 18" in resultado.stdout
+    assert "Total Specified en HEAD: 19" in resultado.stdout
 
 
 def test_seis_specified_de_seccion9() -> None:
@@ -122,17 +122,17 @@ def test_estado_por_commit_es_consistente() -> None:
 
 
 def test_ntp_servers_estado_por_commit() -> None:
-    """system.time.ntp-servers: no es Specified en commits antiguos, sí en HEAD."""
+    """system.time.ntp-servers: no es Specified en commits antiguos, sí en HEAD (12h)."""
     resultado = _run()
     filas = _tabla_b(resultado)
     for celdas in filas:
         if celdas[0] == "system.time.ntp-servers":
             # celdas[1]=830290c, celdas[2]=0d72efa, celdas[3]=cb75abe, celdas[4]=231564b, celdas[5]=HEAD
-            # 0d72efa: Specified, cb75abe: Implemented, 231564b: Implemented, HEAD: Specified
+            # 0d72efa: Specified, cb75abe: Implemented, 231564b: Implemented, HEAD: Specified (12h)
             assert celdas[2] == "Specified", f"0d72efa debería tener ntp-servers como Specified: {celdas}"
             assert celdas[3] != "Specified", f"cb75abe no debería tener ntp-servers como Specified: {celdas}"
             assert celdas[4] != "Specified", f"231564b no debería tener ntp-servers como Specified: {celdas}"
-            assert celdas[5] == "Implemented", f"HEAD debe tener ntp-servers como Implemented (G2): {celdas}"
+            assert celdas[5] == "Specified", f"HEAD debe tener ntp-servers como Specified (12h): {celdas}"
             return
     pytest.fail("no se encontro la fila de system.time.ntp-servers en la tabla (b)")
 

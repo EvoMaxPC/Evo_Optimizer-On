@@ -102,7 +102,15 @@ def r1_ok(cap: dict) -> str:
     state = cap.get("state")
     if state == "Implemented":
         for marker in R1_OMISSION_MARKERS:
-            if marker.lower() in text:
+            m = marker.lower()
+            if m == "no se declara":
+                # No cuenta como omision R1: "N no se declara" es informacion de
+                # builds soportadas (ej. "19045 no se declara"); y "no se declaran"
+                # (plural) se refiere a acciones de otro toggle (CONTRARIO de
+                # toggle, ver H4d), no a una omision de esta capacidad.
+                if re.search(r"(?<!\d )no se declara(?!\w)", text):
+                    return "no"
+            elif m in text:
                 return "no"  # deja algo fuera del pin -> deberia ser Specified
         return "si"
     if state == "Specified":

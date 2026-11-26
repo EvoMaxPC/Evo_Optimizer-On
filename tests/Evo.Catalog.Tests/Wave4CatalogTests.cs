@@ -181,15 +181,15 @@ public sealed class Wave4CatalogTests
 
     /// <summary>T2: `system.time.ntp-servers` arranca w32time y declara el
     /// registro (NtpServer, Type). El pin además ejecuta w32tm /config /update
-    /// y /resync, efectos de máquina que no son motivo válido para mantener
-    /// Specified (regla del paso 12c/G2), así que ahora es Implemented; se
+    /// y /resync, comandos de máquina para los que el motor no tiene accion
+    /// equivalente; por regla R1 (paso 12h) la capacidad es Specified y se
     /// declara en la descripción lo que queda fuera (REQ-002: no se calla).</summary>
     [Fact]
     public void TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut()
     {
         var definition = Definition("system.time.ntp-servers");
 
-        Assert.Equal(CapabilityState.Implemented, definition.State);
+        Assert.Equal(CapabilityState.Specified, definition.State);
         var start = Assert.Single(definition.Actions.OfType<ServiceAction>());
         Assert.Equal("w32time", start.ServiceName);
         Assert.Equal(ServiceOperation.Start, start.Operation);

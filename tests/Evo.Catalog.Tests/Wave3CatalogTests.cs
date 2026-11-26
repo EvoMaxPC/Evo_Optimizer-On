@@ -286,20 +286,20 @@ public sealed class Wave3CatalogTests
         }
     }
 
-    /// <summary>T1: tras el paso 12c/G2, §9 tiene 19 capacidades y 5 quedan
+    /// <summary>T1: tras el paso 12h, §9 tiene 19 capacidades y 6 quedan
     /// Specified: hibernation.hide (powercfg), location.consent-deny
     /// (politica Find My Device), mitigations.disable (bcdedit/CFG),
-    /// oem-information.identify (valores dinamicos del script) y
-    /// registry-backup.enable (RunLevel de la tarea). Solo ntp-servers pasa a
-    /// Implemented porque su registro y el arranque de w32time SÍ se declaran
-    /// y outside=0.</summary>
+    /// oem-information.identify (valores dinamicos del script),
+    /// registry-backup.enable (RunLevel de la tarea) y
+    /// system.time.ntp-servers (w32tm /config /update y /resync sin accion
+    /// equivalente en el motor).</summary>
     [Fact]
     public void TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay()
     {
-        // Paso 12c/G2 (R1): la lista de Specified de sección 9 está cerrada.
+        // Paso 12h (R1): la lista de Specified de sección 9 está cerrada.
         // hibernation.hide, location.consent-deny, mitigations.disable,
-        // oem-information.identify y registry-backup.enable siguen Specified;
-        // system.time.ntp-servers pasó a Implemented.
+        // oem-information.identify, registry-backup.enable y
+        // system.time.ntp-servers siguen Specified.
         var specified = Wave3().Where(d => d.State == CapabilityState.Specified)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
         Assert.Equal(
@@ -310,6 +310,7 @@ public sealed class Wave3CatalogTests
                 "system.mitigations.disable",
                 "system.oem-information.identify",
                 "system.registry-backup.enable",
+                "system.time.ntp-servers",
             },
             specified);
         foreach (var id in specified)
@@ -350,9 +351,11 @@ public sealed class Wave3CatalogTests
         Assert.Equal("Highest", task.RunLevel);
         Assert.False(task.Overwrite);
 
-        // ntp-servers: Implemented, el registro y el arranque de w32time se declaran.
+        // ntp-servers: Specified (w32tm /config /update y /resync no tienen
+        // accion equivalente en el motor); el registro y el arranque de w32time
+        // SÍ se declaran.
         var ntp = Definition("system.time.ntp-servers");
-        Assert.Equal(CapabilityState.Implemented, ntp.State);
+        Assert.Equal(CapabilityState.Specified, ntp.State);
         Assert.Contains("w32tm", ntp.Description, StringComparison.OrdinalIgnoreCase);
         Assert.Equal("0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org",
             Value(ntp, "NtpServer").Value);

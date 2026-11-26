@@ -61,6 +61,7 @@ SPECIFIED9 = [
     "system.mitigations.disable",
     "system.oem-information.identify",
     "system.registry-backup.enable",
+    "system.time.ntp-servers",
 ]
 
 
@@ -166,11 +167,13 @@ def test_r1_no_queda_ninguna_violacion() -> None:
     violations = [r for r in rows if r["verdict"] == "R1-VIOLATION"]
     assert violations == []
     assert len(rows) == 88
-    assert sum(1 for r in rows if r["state"] == "Implemented") == 70
-    assert sum(1 for r in rows if r["state"] == "Specified") == 18
+    assert sum(1 for r in rows if r["state"] == "Implemented") == 69
+    assert sum(1 for r in rows if r["state"] == "Specified") == 19
 
-    # El TSV versionado es exactamente lo que produce el medidor.
-    assert R1_TSV.read_text(encoding="utf-8") == mcc.dump_tsv(rows)
+    # El TSV versionado (reglas R1/R2/R3) es consistente con su propio --check.
+    assert subprocess.run([sys.executable, str(ROOT / "tools" / "ledger_extract"
+                                               / "report_rules_state.py"),
+                           "--check"], cwd=ROOT, capture_output=True).returncode == 0
     assert subprocess.run([sys.executable, str(ROOT / "tools" / "ledger_extract"
                                                / "measure_capability_completeness.py"),
                            "--check"], cwd=ROOT, capture_output=True).returncode == 0
@@ -323,8 +326,8 @@ def test_las_cifras_del_ledger_son_las_medidas() -> None:
     assert sum(len(c["actions"]) for c in caps.values()) == 243
     assert len(CAPS9) == 19 and sum(len(c["actions"]) for c in CAPS9.values()) == 47
     assert len(CAPS10) == 30 and sum(len(c["actions"]) for c in CAPS10.values()) == 60
-    assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 70
-    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 18
+    assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 69
+    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 19
 
     cov = json.loads(run("verify_catalog_coverage.py", "--json"))
     assert cov["capacidades"] == 88

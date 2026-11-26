@@ -314,15 +314,18 @@ ATLAS_TWEAK_SPECS = [
          name="Usar los servidores de hora de pool.ntp.org",
          desc="Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org "
               "3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\"
-              "W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: "
-              "devuelve los dos valores previos y el estado de ejecución anterior del "
-              "servicio (si estaba parado, lo vuelve a parar). El pin además ejecuta "
-              "`w32tm /config /update` y `w32tm /resync` (config-time.psd1, bloque "
-              "`Run`), comandos sin inversa que no son acción de registro; por regla del "
-              "paso 12c/G2 eso no es motivo válido para especificar porque el valor de "
-              "registro SÍ está declarado y el servicio se declara. Deshacer: se restauran "
-              "los dos valores y el estado previo del servicio w32time.",
-         risk="Low", security="Neutral",
+              "W32Time\\Parameters y declara el arranque del servicio w32time (paso 11). "
+              "FUERA DE ESTA CAPACIDAD (R1): el pin además ejecuta `w32tm /config /update` y "
+              "`w32tm /resync` (config-time.psd1:9-10, bloque `Run`), comandos sin inversa "
+              "para los que el motor no tiene acción equivalente (no son registro, servicio "
+              "ni tarea); por regla R1 esos comandos quedan fuera de esta capacidad y no se "
+              "expresan como acción del catálogo, por lo que la capacidad es Specified y no "
+              "Implemented. Los valores de registro y el estado previo de ejecución del "
+              "servicio w32time se restauran al deshacer.",
+         risk="Low", security="Neutral", state="Specified",
+         r1_gap="el pin ejecuta `w32tm /config /update` y `w32tm /resync` "
+         "(config-time.psd1:9-10, bloque `Run`), comandos sin inversa para los que el "
+         "motor no tiene acción equivalente; R1 (paso 12): quedan fuera de esta capacidad.",
          build_note="W32Time\\Parameters existe en 19045 y en Windows 11"),
 
 

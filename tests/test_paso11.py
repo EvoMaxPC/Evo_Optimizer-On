@@ -137,13 +137,13 @@ def test_los_servicios_declarados_llevan_el_tipo_solo_si_lo_cambian() -> None:
 
 # ------------------------------------------------------- T2 capacidades cerradas
 def test_la_seccion_9_cierra_sus_dos_specified() -> None:
-    """Tras 12c/G2, §9 tiene 19 capacidades y 5 quedan Specified:
+    """Tras 12h, §9 tiene 19 capacidades y 6 quedan Specified:
     hibernation.hide (powercfg), location.consent-deny (politica Find My
     Device), mitigations.disable (bcdedit/CFG), oem-information.identify
-    (valores dinamicos del script) y registry-backup.enable (RunLevel de la
-    tarea). system.time.ntp-servers pasa a Implemented: su registro y el
-    arranque de w32time SÍ se declaran y outside=0. La lista es cerrada: si
-    aparece otra, este test falla."""
+    (valores dinamicos del script), registry-backup.enable (RunLevel de la
+    tarea) y system.time.ntp-servers (w32tm /config /update y /resync sin
+    acción equivalente en el motor). La lista es cerrada: si aparece otra,
+    este test falla."""
     specified = sorted(cid for cid, cap in CAPS9.items() if cap["state"] == "Specified")
     assert specified == [
         "system.hibernation.hide",
@@ -151,6 +151,7 @@ def test_la_seccion_9_cierra_sus_dos_specified() -> None:
         "system.mitigations.disable",
         "system.oem-information.identify",
         "system.registry-backup.enable",
+        "system.time.ntp-servers",
     ], specified
     # Paso 12: 18 -> 19 con system.network.location-wizard.disable.
     assert len(CAPS9) == 19
@@ -166,7 +167,7 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
     contra los dos JSON que cambian, para que la cifra no pueda quedarse vieja.
     """
     text = RANGES.read_text(encoding="utf-8")
-    assert "**88** capacidades, 70 `Implemented` y 18 `Specified`" in text
+    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in text
     for path in sorted(CATALOG.glob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
         for cap in document["capabilities"]:
@@ -205,11 +206,11 @@ def test_la_copia_de_seguridad_lleva_registro_y_tarea() -> None:
 
 def test_los_servidores_de_hora_arrancan_w32time_y_declaran_w32tm() -> None:
     cap = CAPS9["system.time.ntp-servers"]
-    # 12c/G2: ntp-servers pasa a Implemented: el registro (NtpServer, Type) y el
-    # arranque de w32time SÍ se declaran; w32tm /config /update y /resync son
-    # efectos de maquina que no son motivo valido para Specified, pero se
-    # declaran en la descripcion (REQ-002: no se calla).
-    assert cap["state"] == "Implemented"
+    # 12h: ntp-servers es Specified: el pin ejecuta w32tm /config /update y
+    # w32tm /resync (config-time.psd1:9-10) y el motor no tiene acción
+    # equivalente para esos comandos; se declaran en description/provenance
+    # (REQ-002: no se calla) pero quedan fuera de la capacidad.
+    assert cap["state"] == "Specified"
     service = [a for a in cap["actions"] if a["type"] == "service"]
     assert [(a["serviceName"], a["operation"]) for a in service] == [("w32time", "Start")]
     # Lo que sigue fuera se dice: dos comandos sin inversa, NO ejecutados.
@@ -321,8 +322,9 @@ def test_las_cifras_de_los_informes_generados_estan_al_dia() -> None:
     assert MAP.read_text(encoding="utf-8").strip() != ""
 
     text = RANGES.read_text(encoding="utf-8")
-    # Paso 12: 88 = 71 + 17 (R1 reabre cuatro de §9 y cierra dos de §10).
-    assert "**88** capacidades, 70 `Implemented` y 18 `Specified`" in text
+    # Paso 12h: 88 = 69 + 19 (ntp-servers pasa a Specified por R1: w32tm sin
+    # acción equivalente en el motor).
+    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in text
 
     plan = PLAN.read_text(encoding="utf-8")
     assert "| 9 |" in plan and "| 10 |" in plan

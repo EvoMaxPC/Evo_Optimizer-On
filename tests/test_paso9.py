@@ -427,9 +427,9 @@ def test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido() -> None:
         capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
     text = (ROOT / "docs" / "reports" / "rangos-build.md").read_text(encoding="utf-8")
-    # Paso 12: 86 -> 88 capacidades (71 Implemented / 17 Specified) y 79 + 9 de
-    # rango, porque `explorer.home.restore` se suma al grupo de Windows 11.
-    assert "**88** capacidades, 70 `Implemented` y 18 `Specified`" in text
+    # Paso 12h: 88 capacidades (69 Implemented / 19 Specified; ntp-servers a
+    # Specified por R1) y 79 + 9 de rango.
+    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in text
     assert "**79**" in text and "**9**" in text
     # Las cinco de la sección 10 con rango recortado aparecen cada una.
     for cap_id in ("explorer.gallery.hide", "explorer.home.hide",

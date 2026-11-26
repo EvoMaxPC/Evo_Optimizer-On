@@ -35,12 +35,12 @@ explorer.extract-context-menu.add	10	Implemented	Reversible	Safe	Neutral	Admin	N
 explorer.file-extensions.show	10	Implemented	Reversible	Safe	Improves	User	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 explorer.gallery.hide	10	Implemented	Reversible	Safe	Neutral	User	None	SessionUndo	22631,26100,26200	registry	si	si	no	-
 explorer.hidden-files.show	10	Implemented	Reversible	Safe	Improves	User	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
-explorer.home.hide	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	22631,26100,26200	registry,registryDeleteKey	no	si	no	-
-explorer.home.restore	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	22631,26100,26200	registry,registryCreateKey	no	si	no	-
+explorer.home.hide	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	22631,26100,26200	registry,registryDeleteKey	si	si	no	-
+explorer.home.restore	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	22631,26100,26200	registry,registryCreateKey	si	si	no	-
 explorer.long-paths.enable	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 explorer.quick-access.hide	10	Implemented	Reversible	Safe	Neutral	Admin	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 explorer.recent-items.disable	10	Specified	Reversible	Low	Improves	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
-explorer.removable-drives.sidebar	10	Implemented	Reversible	Safe	Neutral	Admin	None	SessionUndo	19045,22631,26100,26200	registry	no	si	no	-
+explorer.removable-drives.sidebar	10	Implemented	Reversible	Safe	Neutral	Admin	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 explorer.shortcut-icon.classic	10	Implemented	Reversible	Safe	Neutral	Admin	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 explorer.shortcut-text.hide	10	Implemented	Reversible	Safe	Neutral	User	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 privacy.activity.history	3	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
@@ -70,7 +70,7 @@ system.services.manual-profile	9	Implemented	Reversible	Low	Improves	Admin	Simpl
 system.settings-page-visibility.hide	9	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 system.sleep.s0-network-keep	9	Implemented	Reversible	Safe	Neutral	User	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 system.sleep.s3-enable	9	Implemented	Reversible	Medium	Neutral	Admin	Summary	RestorePoint	19045,22631,26100,26200	registry	si	si	no	-
-system.time.ntp-servers	9	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry,service	no	si	si	si
+system.time.ntp-servers	9	Specified	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry,service	si	si	si	si
 system.time.utc-rtc	9	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 ui.context-menu.classic	10	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	22631,26100,26200	registry	si	si	no	-
 ui.lockscreen.hide	10	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-

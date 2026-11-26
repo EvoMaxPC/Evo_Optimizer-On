@@ -921,7 +921,7 @@
       {
          "id": "system.time.ntp-servers",
          "name": "Usar los servidores de hora de pool.ntp.org",
-         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters y ARRANCA el servicio w32time (paso 11). Deshacer: devuelve los dos valores previos y el estado de ejecución anterior del servicio (si estaba parado, lo vuelve a parar). El pin además ejecuta `w32tm /config /update` y `w32tm /resync` (config-time.psd1, bloque `Run`), comandos sin inversa que no son acción de registro; por regla del paso 12c/G2 eso no es motivo válido para especificar porque el valor de registro SÍ está declarado y el servicio se declara. Deshacer: se restauran los dos valores y el estado previo del servicio w32time.",
+         "description": "Escribe NtpServer='0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org' y Type='NTP' en HKLM\\SYSTEM\\CurrentControlSet\\Services\\W32Time\\Parameters y declara el arranque del servicio w32time (paso 11). FUERA DE ESTA CAPACIDAD (R1): el pin además ejecuta `w32tm /config /update` y `w32tm /resync` (config-time.psd1:9-10, bloque `Run`), comandos sin inversa para los que el motor no tiene acción equivalente (no son registro, servicio ni tarea); por regla R1 esos comandos quedan fuera de esta capacidad y no se expresan como acción del catálogo, por lo que la capacidad es Specified y no Implemented. Los valores de registro y el estado previo de ejecución del servicio w32time se restauran al deshacer. FUERA DE ESTA CAPACIDAD (R1): el pin ejecuta `w32tm /config /update` y `w32tm /resync` (config-time.psd1:9-10, bloque `Run`), comandos sin inversa para los que el motor no tiene acción equivalente; R1 (paso 12): quedan fuera de esta capacidad.",
          "sectionId": 9,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -929,7 +929,7 @@
          "restore": "SessionUndo",
          "reversibility": "Reversible",
          "confirmation": "SimpleClick",
-         "state": "Implemented",
+         "state": "Specified",
          "variants": [
             "Evo",
             "Atlas"
@@ -942,7 +942,7 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El bloque Services del pin arranca w32time: se declara como ServiceAction Start (paso 11) y el diario devuelve el estado de ejecucion previo. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicio: el diario guarda el estado de ejecucion previo y lo devuelve. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10. Valores tomados del bloque Registry del pin: NtpServer=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 3.pool.ntp.org; Type=NTP. El bloque Services del pin arranca w32time: se declara como ServiceAction Start (paso 11) y el diario devuelve el estado de ejecucion previo. Reversibilidad (ADR-0003): Reversible - valores de registro con valor previo guardado por el motor. Servicio: el diario guarda el estado de ejecucion previo y lo devuelve. Builds: W32Time\\Parameters existe en 19045 y en Windows 11. ledger_refs: atlas:manifest:misc/config-time R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin ejecuta `w32tm /config /update` y `w32tm /resync` (config-time.psd1:9-10, bloque `Run`), comandos sin inversa para los que el motor no tiene acción equivalente; R1 (paso 12): quedan fuera de esta capacidad. Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": [
             {
                "type": "registry",
