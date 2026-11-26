@@ -2,6 +2,7 @@ using Evo.Core.Actions;
 using Evo.Core.System;
 using Evo.Engine.Execution;
 using Evo.Engine.Undo;
+using Evo.Testing;
 using Microsoft.Win32;
 using Xunit;
 
