@@ -4,6 +4,87 @@ using Microsoft.Win32;
 
 namespace Evo.Engine.Undo;
 
+/// <summary>Resultado de deshacer una única entrada del diario.</summary>
+public sealed record UndoEntryOutcome
+{
+    /// <summary>Clave de la acción que se deshace.</summary>
+    public required string ActionKey { get; init; }
+
+    /// <summary>Descripción legible de la acción.</summary>
+    public required string Description { get; init; }
+
+    /// <summary>Resultado del deshacer.</summary>
+    public required UndoRestoreResult Result { get; init; }
+
+    /// <summary>Mensaje de error cuando <see cref="Result"/> es <see cref="UndoRestoreResult.Failed"/>.</summary>
+    public string? FailureMessage { get; init; }
+}
+
+/// <summary>Resultado de restaurar una única entrada del diario.</summary>
+public enum UndoRestoreResult
+{
+    /// <summary>Se restauró el estado previo de verdad.</summary>
+    Restored = 0,
+
+    /// <summary>La entrada no tiene reversión real (comando, proceso informativo).</summary>
+    NotReversible = 1,
+
+    /// <summary>Se intentó restaurar pero falló; se conserva para reintento.</summary>
+    Failed = 2,
+}
+
+/// <summary>Informe completo de un rollback.</summary>
+public sealed record RollbackReport
+{
+    /// <summary>Entradas que se restauraron de verdad.</summary>
+    public required IReadOnlyList<UndoEntryOutcome> Restored { get; init; }
+
+    /// <summary>Entradas sin reversión real (no cuenta como restaurado).</summary>
+    public required IReadOnlyList<UndoEntryOutcome> NotReversible { get; init; }
+
+    /// <summary>
+    /// Entradas que fallaron al restaurarse; se conservan para reintento.
+    /// </summary>
+    public required IReadOnlyList<UndoEntryOutcome> Failed { get; init; }
+
+    /// <summary>True si no hubo excepciones al deshacer.</summary>
+    public bool Success => Failed.Count == 0;
+
+    /// <summary>Número de entradas restauradas.</summary>
+    public int Count => Restored.Count;
+
+    /// <summary>
+    /// Errores de las entradas falladas (compatibilidad con informes previos).
+    /// </summary>
+    public IReadOnlyList<string> Errors =>
+        Failed.Select(f => $"{f.ActionKey}: {f.FailureMessage ?? string.Empty}").ToList();
+
+    /// <summary>True si hay al menos una entrada no reversible.</summary>
+    public bool HasUnrestorable => NotReversible.Count > 0;
+
+    /// <summary>True si no hay fallos ni entradas no reversibles.</summary>
+    public bool AllReversible => Failed.Count == 0 && NotReversible.Count == 0;
+}
+
+/// <summary>Estado global del rollback de una ejecución.</summary>
+public enum RollbackOutcome
+{
+    /// <summary>No se ejecutó ningún rollback.</summary>
+    None = 0,
+
+    /// <summary>Todas las entradas se deshicieron (sin fallos ni no reversibles).</summary>
+    RolledBack = 1,
+
+    /// <summary>Sin fallos, pero hubo entradas no reversibles.</summary>
+    RolledBackWithUnrestorable = 2,
+
+    /// <summary>Hubo fallos (al menos una entrada no se deshizo).</summary>
+    PartiallyRolledBack = 3,
+
+    /// <summary>Todas las entradas fallaron al deshacerse.</summary>
+    RollbackFailed = 4,
+}
+
 /// <summary>
 /// Entrada del diario de deshacer: la operación inversa exacta de un cambio.
 /// </summary>
@@ -21,8 +102,11 @@ public abstract record UndoJournalEntry
     /// <summary>Estado previo serializado (auditoría).</summary>
     public required string? PreviousState { get; init; }
 
-    /// <summary>Aplica la operación inversa.</summary>
-    public abstract void Restore(IUndoContext context);
+    /// <summary>
+    /// Aplica la operación inversa y devuelve el resultado explícito del
+    /// deshacer.
+    /// </summary>
+    public abstract UndoEntryOutcome Restore(IUndoContext context);
 }
 
 /// <summary>Deshacer una escritura o borrado de registro.</summary>
@@ -41,13 +125,18 @@ public sealed record RegistryUndoEntry : UndoJournalEntry
 
     public RegistryValueKind PreviousKind { get; init; } = RegistryValueKind.Unknown;
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         if (context.DryRun)
         {
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
         }
 
         if (ExistedBefore)
@@ -58,6 +147,13 @@ public sealed record RegistryUndoEntry : UndoJournalEntry
         {
             context.Registry.DeleteValue(Hive, KeyPath, ValueName);
         }
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.Restored,
+        };
     }
 }
 
@@ -84,13 +180,18 @@ public sealed record ServiceUndoEntry : UndoJournalEntry
 
     public ServiceStatus PreviousStatus { get; init; }
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         if (context.DryRun)
         {
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
         }
 
         // Tipo de inicio primero: si el servicio quedó deshabilitado, arrancarlo
@@ -108,6 +209,13 @@ public sealed record ServiceUndoEntry : UndoJournalEntry
         {
             context.Services.StopService(ServiceName);
         }
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.Restored,
+        };
     }
 }
 
@@ -118,7 +226,7 @@ public sealed record ServiceUndoEntry : UndoJournalEntry
 /// <remarks>
 /// Si la clave no existía cuando se ejecutó la acción, el diario nunca se crea
 /// (la acción fue un no-op) y por tanto el deshacer no crea nada. Si el borrado
-/// fue un no-op registrado (<see cref="ExistedBefore"/> = false) el deshacer
+/// fue un no-op registrado (<see cref="ExistedBefore\"/> = false) el deshacer
 /// vuelve a ser un no-op.
 /// </remarks>
 public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
@@ -135,16 +243,28 @@ public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
     /// <summary>Instantánea que se recrea al deshacer.</summary>
     public required Executors.RegistryKeySnapshot Snapshot { get; init; }
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         if (context.DryRun || !ExistedBefore)
         {
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
         }
 
         RestoreNode(context.Registry, Hive, Snapshot.Root);
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.Restored,
+        };
     }
 
     private static void RestoreNode(
@@ -183,19 +303,31 @@ public sealed record RegistryCreateKeyUndoEntry : UndoJournalEntry
 
     public required string KeyPath { get; init; }
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         if (context.DryRun)
         {
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
         }
 
         // Borrado simple (sin recursión): la clave la creó esta acción y estaba
         // vacía, así que no hay nada dentro que perder. Si algo se coló dentro
         // después, el borrado no recursivo no se lo lleva por delante.
         context.Registry.DeleteKey(Hive, KeyPath, recursive: false);
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.Restored,
+        };
     }
 }
 
@@ -215,19 +347,29 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
     /// <summary>Estado previo de la tarea si ya existía.</summary>
     public required bool WasEnabled { get; init; }
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         if (context.DryRun)
         {
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
         }
 
         if (!ExistedBefore)
         {
             context.Tasks.DeleteTask(TaskPath, TaskName);
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.Restored,
+            };
         }
 
         if (WasEnabled)
@@ -238,6 +380,13 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
         {
             context.Tasks.DisableTask(TaskPath, TaskName);
         }
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.Restored,
+        };
     }
 }
 
@@ -250,13 +399,18 @@ public sealed record TaskUndoEntry : UndoJournalEntry
 
     public required bool WasEnabled { get; init; }
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         if (context.DryRun)
         {
-            return;
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
         }
 
         if (WasEnabled)
@@ -267,19 +421,14 @@ public sealed record TaskUndoEntry : UndoJournalEntry
         {
             context.Tasks.DisableTask(TaskPath, TaskName);
         }
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.Restored,
+        };
     }
-}
-
-/// <summary>Resultado de un rollback.</summary>
-public sealed record RollbackResult
-{
-    public required bool Success { get; init; }
-
-    public required IReadOnlyList<string> Restored { get; init; }
-
-    public required IReadOnlyList<string> Errors { get; init; }
-
-    public int Count => Restored.Count;
 }
 
 /// <summary>
@@ -318,39 +467,65 @@ public sealed class UndoJournal
     /// <summary>
     /// Deshace todos los cambios en orden LIFO. Si una entrada falla, se anota
     /// el error y se continúa con las anteriores: nunca se deja el sistema a
-    /// medias si se puede evitar.
+    /// medias si se puede evitar. Las entradas que fallan se conservan en el
+    /// diario para que un segundo <see cref="RollbackAsync"/> las reintente;
+    /// las restauradas y las no reversibles se descardan.
     /// </summary>
-    public Task<RollbackResult> RollbackAsync(IUndoContext context)
+    public Task<RollbackReport> RollbackAsync(IUndoContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        var restored = new List<string>();
-        var errors = new List<string>();
+        var restored = new List<UndoEntryOutcome>();
+        var notReversible = new List<UndoEntryOutcome>();
+        var failed = new List<UndoEntryOutcome>();
 
         for (var index = _entries.Count - 1; index >= 0; index--)
         {
             var entry = _entries[index];
+            UndoEntryOutcome outcome;
             try
             {
-                entry.Restore(context);
-                restored.Add(entry.ActionKey);
+                outcome = entry.Restore(context);
             }
             catch (Exception ex) when (ex is not OutOfMemoryException)
             {
-                errors.Add($"{entry.ActionKey}: {ex.Message}");
+                outcome = new UndoEntryOutcome
+                {
+                    ActionKey = entry.ActionKey,
+                    Description = entry.Description,
+                    Result = UndoRestoreResult.Failed,
+                    FailureMessage = ex.Message,
+                };
+            }
+
+            switch (outcome.Result)
+            {
+                case UndoRestoreResult.Restored:
+                    restored.Add(outcome);
+                    break;
+                case UndoRestoreResult.NotReversible:
+                    notReversible.Add(outcome);
+                    break;
+                case UndoRestoreResult.Failed:
+                    failed.Add(outcome);
+                    break;
             }
         }
 
         if (!context.DryRun)
         {
-            _entries.Clear();
+            // Se conservan SOLO las entradas que fallaron: un segundo
+            // RollbackAsync las reintentará. Las restauradas y no reversibles
+            // ya se procesaron y se descardan del diario.
+            var failedKeys = failed.Select(f => f.ActionKey).ToHashSet(StringComparer.Ordinal);
+            _entries.RemoveAll(e => !failedKeys.Contains(e.ActionKey));
         }
 
-        return Task.FromResult(new RollbackResult
+        return Task.FromResult(new RollbackReport
         {
-            Success = errors.Count == 0,
             Restored = restored,
-            Errors = errors,
+            NotReversible = notReversible,
+            Failed = failed,
         });
     }
 

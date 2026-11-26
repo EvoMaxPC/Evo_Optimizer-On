@@ -40,6 +40,20 @@ public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReade
     /// <summary>Número de escrituras y borrados aplicados (auditoría de tests).</summary>
     public int MutationCount { get; private set; }
 
+    /// <summary>Número de llamadas a <see cref="SetValue"/> realizadas (incluye las de <see cref="Seed"/>).</summary>
+    public int SetValueCallCount { get; private set; }
+
+    /// <summary>
+    /// Número de llamada a <see cref="SetValue"/> en la que lanzar
+    /// <see cref="OperationCanceledException"/> (1-based; 0 = nunca). Sirve
+    /// para simular una cancelación del token durante una acción (etapa 1,
+    /// H1). Se reinicia con <see cref="ResetSetValueCounter"/>.
+    /// </summary>
+    public int ThrowOnSetValueCall { get; set; }
+
+    /// <summary>Reinicia el contador de llamadas a <see cref="SetValue"/>.</summary>
+    public void ResetSetValueCounter() => SetValueCallCount = 0;
+
     /// <summary>Llamadas registradas, en orden.</summary>
     public List<string> Log { get; } = [];
 
@@ -89,6 +103,13 @@ public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReade
 
     public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind)
     {
+        SetValueCallCount++;
+        if (ThrowOnSetValueCall > 0 && SetValueCallCount == ThrowOnSetValueCall)
+        {
+            ThrowOnSetValueCall = 0;
+            throw new OperationCanceledException();
+        }
+
         if (!SupportedKinds.Contains(kind))
         {
             throw new NotSupportedException(

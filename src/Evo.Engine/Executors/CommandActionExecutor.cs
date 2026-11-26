@@ -68,10 +68,18 @@ public sealed class CommandActionExecutor : IActionExecutor
 /// <summary>Entrada de diario para comandos: no hay operación inversa.</summary>
 public sealed record CommandUndoEntry : UndoJournalEntry
 {
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         // Un comando arbitrario no tiene inversa declarada; el rollback no
-        // inventa una. Documentado como limitación en docs/reports/paso7.md.
+        // inventa una. Es no reversible por definición. Documentado como
+        // limitación en docs/reports/paso7.md.
         ArgumentNullException.ThrowIfNull(context);
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.NotReversible,
+        };
     }
 }

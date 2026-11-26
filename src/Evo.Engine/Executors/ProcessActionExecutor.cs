@@ -79,10 +79,18 @@ public sealed record ProcessUndoEntry : UndoJournalEntry
 {
     public required string ProcessName { get; init; }
 
-    public override void Restore(IUndoContext context)
+    public override UndoEntryOutcome Restore(IUndoContext context)
     {
         // Un proceso no se puede "des-terminar": el rollback deja constancia y
-        // no muta el sistema. Documentado como limitación en docs/reports/paso7.md.
+        // no muta el sistema. Es no reversible por definición. Documentado como
+        // limitación en docs/reports/paso7.md.
         ArgumentNullException.ThrowIfNull(context);
+
+        return new UndoEntryOutcome
+        {
+            ActionKey = ActionKey,
+            Description = Description,
+            Result = UndoRestoreResult.NotReversible,
+        };
     }
 }

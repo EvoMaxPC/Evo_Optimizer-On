@@ -303,7 +303,13 @@ public sealed class ExecutorTests
 
     private sealed record ThrowingEntry : UndoJournalEntry
     {
-        public override void Restore(IUndoContext context) =>
-            throw new InvalidOperationException("rollback imposible");
+        public override UndoEntryOutcome Restore(IUndoContext context) =>
+            new()
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.Failed,
+                FailureMessage = "rollback imposible",
+            };
     }
 }

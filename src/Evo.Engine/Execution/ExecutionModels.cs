@@ -1,5 +1,6 @@
 using Evo.Core.Enums;
 using Evo.Core.Models;
+using Evo.Engine.Undo;
 
 namespace Evo.Engine.Execution;
 
@@ -142,6 +143,12 @@ public sealed record ExecutionSummary
     /// <c>AcceptNoRestorePoint</c>. Queda visible para el informe.
     /// </summary>
     public bool RestorePointWaived { get; init; }
+
+    /// <summary>Informe del rollback automático, si se ejecutó uno.</summary>
+    public RollbackReport? RollbackReport { get; init; }
+
+    /// <summary>Estado global del rollback de esta ejecución.</summary>
+    public RollbackOutcome RollbackOutcome { get; init; }
 }
 
 /// <summary>Acción declarada con su contrato de origen.</summary>

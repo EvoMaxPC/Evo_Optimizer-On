@@ -332,21 +332,22 @@ public sealed class EngineCoordinator
 
         var context = template with { Mode = mode, Journal = journal, CapabilityId = plan.Capability.Id };
         var failed = false;
+        var canceled = false;
 
         foreach (var step in plan.Steps)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
-            if (!_executors.TryGetValue(step.Action.Kind, out var executor))
-            {
-                results.Add(ActionResult.Fail(
-                    step.Action.Key, $"No hay ejecutor para {step.Action.Kind}.", description: step.Description));
-                failed = true;
-                break;
-            }
-
             try
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                if (!_executors.TryGetValue(step.Action.Kind, out var executor))
+                {
+                    results.Add(ActionResult.Fail(
+                        step.Action.Key, $"No hay ejecutor para {step.Action.Kind}.", description: step.Description));
+                    failed = true;
+                    break;
+                }
+
                 var result = await executor.ExecuteAsync(step.Action, context).ConfigureAwait(false);
                 results.Add(result);
 
@@ -356,7 +357,16 @@ public sealed class EngineCoordinator
                     break;
                 }
             }
-            catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+            catch (OperationCanceledException)
+            {
+                // Cancelación antes o durante una acción: se trata como un
+                // fallo controlado para que entre por el mismo camino de
+                // rollback que cualquier otro fallo (A3).
+                canceled = true;
+                failed = true;
+                break;
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException)
             {
                 results.Add(ActionResult.Fail(
                     step.Action.Key, ex.Message, description: step.Description));
@@ -366,15 +376,31 @@ public sealed class EngineCoordinator
         }
 
         var rollbackEntries = journal.Entries.ToList();
+        RollbackReport? rollbackReport = null;
 
-        if (failed && mode == ExecutionMode.Execute)
+        // El rollback se ejecuta en Execute cuando hay algo aplicado y la
+        // ejecución terminó en fallo o cancelación. Nunca se cancela el
+        // rollback (A3/A5): journal.RollbackAsync no recibe el token del
+        // llamante, así que una cancelación durante el rollback se ignora y
+        // el deshacer se completa.
+        bool doRollback = mode == ExecutionMode.Execute &&
+                          rollbackEntries.Count > 0 &&
+                          (failed || canceled);
+
+        if (doRollback)
         {
-            // Rollback automático LIFO de lo ya aplicado.
             var undoContext = new UndoContext(
                 template.Registry, template.Services, template.Tasks,
                 template.Processes, template.Commands);
             // Tras un rollback el diario queda vacío: el estado es el inicial.
-            await journal.RollbackAsync(undoContext).ConfigureAwait(false);
+            rollbackReport = await journal.RollbackAsync(undoContext).ConfigureAwait(false);
+        }
+
+        if (canceled)
+        {
+            // A1: cancelación antes de cualquier mutación (journal vacío) → no
+            // hay rollback. A2: cancelación tras ≥1 mutación → ya se deshizo
+            // arriba y se informa Cancelled con el resultado del rollback.
             stopwatch.Stop();
             return new ExecutionSummary
             {
@@ -383,6 +409,35 @@ public sealed class EngineCoordinator
                 Results = results,
                 Duration = stopwatch.Elapsed,
                 UndoJournalEntry = rollbackEntries,
+                RollbackReport = rollbackReport,
+                RollbackOutcome = rollbackReport is null
+                    ? RollbackOutcome.None
+                    : ComputeRollbackOutcome(rollbackReport),
+                PlannedActions = planned,
+                RestorePointId = restorePointId,
+                ConfirmationRequested = confirmationType,
+                Confirmed = confirmed,
+                RestorePointWaived = restorePointWaived,
+                AbortedReason = "Cancelado",
+            };
+        }
+
+        if (failed && mode == ExecutionMode.Execute)
+        {
+            // Rollback automático LIFO de lo ya aplicado (ya ejecutado arriba
+            // cuando doRollback es true; rollbackReport lo refleja).
+            stopwatch.Stop();
+            return new ExecutionSummary
+            {
+                CapabilityId = plan.Capability.Id,
+                Mode = mode,
+                Results = results,
+                Duration = stopwatch.Elapsed,
+                UndoJournalEntry = rollbackEntries,
+                RollbackReport = rollbackReport,
+                RollbackOutcome = rollbackReport is null
+                    ? RollbackOutcome.None
+                    : ComputeRollbackOutcome(rollbackReport),
                 PlannedActions = planned,
                 RestorePointId = restorePointId,
                 ConfirmationRequested = confirmationType,
@@ -414,6 +469,8 @@ public sealed class EngineCoordinator
             Results = results,
             Duration = stopwatch.Elapsed,
             UndoJournalEntry = rollbackEntries,
+            RollbackReport = rollbackReport,
+            RollbackOutcome = RollbackOutcome.None,
             PlannedActions = planned,
             RestorePointId = restorePointId,
             ConfirmationRequested = confirmationType,
@@ -423,13 +480,33 @@ public sealed class EngineCoordinator
     }
 
     /// <summary>Deshace el diario acumulado del coordinador.</summary>
-    public Task<RollbackResult> RollbackAsync(ActionContext context)
+    public Task<RollbackReport> RollbackAsync(ActionContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         var undoContext = new UndoContext(
             context.Registry, context.Services, context.Tasks, context.Processes, context.Commands);
         return Journal.RollbackAsync(undoContext);
+    }
+
+    private static RollbackOutcome ComputeRollbackOutcome(RollbackReport report)
+    {
+        if (report.Failed.Count > 0 && report.Restored.Count == 0)
+        {
+            return RollbackOutcome.RollbackFailed;
+        }
+
+        if (report.Failed.Count > 0)
+        {
+            return RollbackOutcome.PartiallyRolledBack;
+        }
+
+        if (report.NotReversible.Count > 0)
+        {
+            return RollbackOutcome.RolledBackWithUnrestorable;
+        }
+
+        return RollbackOutcome.RolledBack;
     }
 
     private async Task<bool> IsRestorePointAvailableAsync(CancellationToken cancellationToken)
