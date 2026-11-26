@@ -27,8 +27,12 @@ public sealed class CancellationAndHonestRollbackTests
 
     // ---------------- H1: cancelación ----------------
 
+    /// <summary>
+    /// 1. Cancelación antes de cualquier mutación: Cancelado sin rollback, sin
+    /// excepción, estado fake intacto, RollbackReport null, RollbackOutcome None.
+    /// </summary>
     [Fact]
-    public async Task CancelacionAntesDeCualquierMutacion_RetornaCanceladoSinRollback()
+    public async Task CancelacionAntes_RetornaCanceladoSinRollback()
     {
         var harness = TestHarness.Create();
         harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
@@ -38,7 +42,7 @@ public sealed class CancellationAndHonestRollbackTests
         var contract = TestHarness.Contract(actions);
         var context = harness.Context(ExecutionMode.Execute);
         var cts = new CancellationTokenSource();
-        cts.Cancel();
+        cts.Cancel(); // token cancelado ANTES de ExecuteAsync
 
         var summary = await harness.Coordinator.ExecuteAsync(
             TestHarness.Plan(contract, actions), ExecutionMode.Execute, context, cts.Token);
@@ -49,18 +53,21 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Null(summary.RollbackReport);
         Assert.Equal(RollbackOutcome.None, summary.RollbackOutcome);
         Assert.Empty(summary.UndoJournalEntry);
-        // Nada mutó
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
     }
 
+    /// <summary>
+    /// 2. Cancelación tras mutación reversible: la primera acción se deshace y el
+    /// FakeRegistry vuelve al valor ORIGINAL; Cancelled + RolledBack.
+    /// </summary>
     [Fact]
-    public async Task CancelacionTrasMutacion_RollbackYCanceladoConInforme()
+    public async Task CancelacionTrasMutacionReversible_FakeRegistryVuelveAlOriginal()
     {
         var harness = TestHarness.Create();
         harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
         harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "B", 2);
         harness.Registry.ResetSetValueCounter();
-        // La 2ª escritura (acción 2) lanza OperationCanceledException: simula cancelación durante la acción.
+        // La 2ª escritura (SetValue #2) lanza OperationCanceledException.
         harness.Registry.ThrowOnSetValueCall = 2;
 
         var actions = new CapabilityAction[]
@@ -76,10 +83,8 @@ public sealed class CancellationAndHonestRollbackTests
 
         Assert.Equal("Cancelado", summary.AbortedReason);
         Assert.True(summary.Aborted);
-        // A se deshace (vuelve a 1); B nunca se aplicó
-        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
-        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B"));
-        // Informe de rollback: solo A (1 entrada) restaurada, sin fallos
+        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A")); // vuelve al original
+        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó
         Assert.NotNull(summary.RollbackReport);
         var report = summary.RollbackReport!;
         Assert.Single(report.Restored);
@@ -90,30 +95,36 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Single(summary.UndoJournalEntry);
     }
 
+    /// <summary>
+    /// 3. Cancelación entre acciones: el hook cancela el cts al terminar la primera
+    /// acción (sin lanzar); el bucle detecta el token antes de la segunda; la
+    /// segunda NO se aplica; la primera se deshace.
+    /// </summary>
     [Fact]
     public async Task CancelacionEntreAcciones_RollbackDeLaPrimera()
     {
         var harness = TestHarness.Create();
         harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
         harness.Registry.ResetSetValueCounter();
-        // La escritura de la acción 2 se cancela: la acción 1 ya se aplicó y debe deshacerse.
-        harness.Registry.ThrowOnSetValueCall = 2;
+        // Tras la 1ª escritura se cancela el token (sin lanzar OCE aún).
+        var cts = new CancellationTokenSource();
+        harness.Registry.OnSetValue = call => { if (call == 1) cts.Cancel(); };
 
         var actions = new CapabilityAction[]
         {
-            SetDword(1, "A", "111"), // se aplica
-            SetDword(2, "B", "222"), // no llega a aplicarse (cancelación observada antes de su efecto)
+            SetDword(1, "A", "111"), // se aplica, luego se cancela
+            SetDword(2, "B", "222"), // no se aplica (token cancelado al entrar)
         };
         var contract = TestHarness.Contract(actions);
         var context = harness.Context(ExecutionMode.Execute);
 
         var summary = await harness.Coordinator.ExecuteAsync(
-            TestHarness.Plan(contract, actions), ExecutionMode.Execute, context, CancellationToken.None);
+            TestHarness.Plan(contract, actions), ExecutionMode.Execute, context, cts.Token);
 
         Assert.Equal("Cancelado", summary.AbortedReason);
         Assert.True(summary.Aborted);
-        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
-        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B"));
+        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A")); // deshecho
+        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó
         Assert.NotNull(summary.RollbackReport);
         var report = summary.RollbackReport!;
         Assert.Single(report.Restored);
@@ -121,8 +132,106 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Equal(RollbackOutcome.RolledBack, summary.RollbackOutcome);
     }
 
+    /// <summary>
+    /// 4. Token cancelado DURANTE la acción: el hook hace cts.Cancel() y luego
+    /// ThrowIfCancellationRequested() en la segunda acción; resultado Cancelled;
+    /// el rollback se completa aunque el token YA esté cancelado
+    /// (RollbackAsync usa CancellationToken.None).
+    /// </summary>
     [Fact]
-    public async Task CancelacionEnDryRun_SinCambiosNiRollback()
+    public async Task TokenCanceladoDuranteLaAccion_RollbackSeCompletaConTokenNone()
+    {
+        var harness = TestHarness.Create();
+        harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
+        harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "B", 2);
+        harness.Registry.ResetSetValueCounter();
+        var cts = new CancellationTokenSource();
+        // En la 2ª escritura: cancela y lanza OCE dentro de la acción.
+        harness.Registry.OnSetValue = call =>
+        {
+            if (call == 2)
+            {
+                cts.Cancel();
+                cts.Token.ThrowIfCancellationRequested();
+            }
+        };
+
+        var actions = new CapabilityAction[]
+        {
+            SetDword(1, "A", "111"), // se aplica
+            SetDword(2, "B", "222"), // OCE dentro de la acción
+        };
+        var contract = TestHarness.Contract(actions);
+        var context = harness.Context(ExecutionMode.Execute);
+
+        var summary = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contract, actions), ExecutionMode.Execute, context, cts.Token);
+
+        Assert.Equal("Cancelado", summary.AbortedReason);
+        Assert.True(summary.Aborted);
+        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A")); // deshecho
+        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó
+        Assert.NotNull(summary.RollbackReport);
+        var report = summary.RollbackReport!;
+        Assert.Single(report.Restored);
+        Assert.Equal(RollbackOutcome.RolledBack, summary.RollbackOutcome);
+    }
+
+    /// <summary>
+    /// 5. Cancelación DURANTE el rollback: 3 acciones aplicadas, la 3ª lanza OCE
+    /// (dispara rollback); el hook cancela el cts durante la PRIMERA restauración.
+    /// El rollback se completa entero (usa CancellationToken.None) y el resumen es
+    /// Cancelled con RolledBack. La cancelación durante el rollback se ignora.
+    /// </summary>
+    [Fact]
+    public async Task CancelacionDuranteElRollback_SeIgnoraYElRollbackSeCompleta()
+    {
+        var harness = TestHarness.Create();
+        harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
+        harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "B", 2);
+        harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "C", 3);
+        harness.Registry.ResetSetValueCounter();
+        var cts = new CancellationTokenSource();
+        // SetValue #3 (la 3ª acción) lanza OCE; #4 (1ª restauración) cancela el cts.
+        harness.Registry.OnSetValue = call =>
+        {
+            if (call == 3) cts.Token.ThrowIfCancellationRequested(); // nunca llega: C se cancela antes
+            if (call == 4) cts.Cancel(); // durante la 1ª restauración
+        };
+        // Forzar que la 3ª acción lance OCE: ThrowOnSetValueCall = 3.
+        harness.Registry.ThrowOnSetValueCall = 3;
+
+        var actions = new CapabilityAction[]
+        {
+            SetDword(1, "A", "111"), // se aplica (SetValue #1)
+            SetDword(2, "B", "222"), // se aplica (SetValue #2)
+            SetDword(3, "C", "333"), // lanza OCE (SetValue #3) -> dispara rollback
+        };
+        var contract = TestHarness.Contract(actions);
+        var context = harness.Context(ExecutionMode.Execute);
+
+        var summary = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contract, actions), ExecutionMode.Execute, context, cts.Token);
+
+        Assert.Equal("Cancelado", summary.AbortedReason);
+        Assert.True(summary.Aborted);
+        // Rollback completo a pesar de la cancelación durante el rollback
+        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
+        Assert.Equal(2, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B"));
+        Assert.Equal(3, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "C"));
+        Assert.NotNull(summary.RollbackReport);
+        var report = summary.RollbackReport!;
+        Assert.Equal(2, report.Restored.Count); // B y A (LIFO)
+        Assert.Empty(report.Failed);
+        Assert.Equal(RollbackOutcome.RolledBack, summary.RollbackOutcome);
+        Assert.True(harness.Coordinator.Journal.IsEmpty);
+    }
+
+    /// <summary>
+    /// 6. DryRun cancelado: Cancelled, Mutated=false, sin journal, sin rollback.
+    /// </summary>
+    [Fact]
+    public async Task DryRunCancelado_CanceladoSinMutar()
     {
         var harness = TestHarness.Create();
         harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
@@ -144,7 +253,7 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Equal(RollbackOutcome.None, summary.RollbackOutcome);
     }
 
-    // ---------------- H2: rollback honesto ----------------
+    // ---------------- H2: rollback honesto (llamada directa a UndoJournal) ----------------
 
     private static UndoContext BuildContext(
         FakeRegistryAccessor registry,
@@ -186,15 +295,13 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Empty(report.NotReversible);
         Assert.Empty(report.Failed);
         Assert.True(report.AllReversible);
-        // Estado real restaurado
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
         Assert.Equal(ServiceStatus.Running, services.GetStatus("Svc"));
-        // Diario vacío tras rollback exitoso
         Assert.True(journal.IsEmpty);
     }
 
     [Fact]
-    public async Task RollbackConEntradaNoReversible_NoCuentaComoRestaurada()
+    public async Task RollbackConNotReversible_NoCuentaComoRestaurada()
     {
         var registry = new FakeRegistryAccessor();
         registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V", 1);
@@ -216,21 +323,19 @@ public sealed class CancellationAndHonestRollbackTests
         var report = await journal.RollbackAsync(BuildContext(
             registry, new FakeServiceAccessor(), new FakeTaskAccessor(), processes, new FakeCommandRunner()));
 
-        Assert.True(report.Success); // no hubo excepciones
+        Assert.True(report.Success);
         Assert.Equal(1, report.Restored.Count);
         Assert.Single(report.NotReversible);
         Assert.Empty(report.Failed);
         Assert.True(report.HasUnrestorable);
         Assert.False(report.AllReversible);
-        // El registro sí se restauró; la entrada no reversible no se restauró
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
         Assert.Empty(processes.Started);
-        // Diario vacío: todo se procesó y nada falló
         Assert.True(journal.IsEmpty);
     }
 
     [Fact]
-    public async Task RollbackEntradaQueFalla_QuedaFailedYSeContinua()
+    public async Task RollbackExcepcionQuedaFailed_SeConservaYSeContinua()
     {
         var registry = new FakeRegistryAccessor();
         registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V", 1);
@@ -241,7 +346,7 @@ public sealed class CancellationAndHonestRollbackTests
             Hive = RegistryHive.LocalMachine, KeyPath = @"SOFTWARE\Evo\X", ValueName = "V",
             ExistedBefore = true, PreviousValue = 1, PreviousKind = RegistryValueKind.DWord,
         });
-        journal.Add(new FailingEntry { CapabilityId = "c", ActionKey = "fail", Description = "fail", PreviousState = null });
+        journal.Add(new ThrowingEntry { CapabilityId = "c", ActionKey = "fail", Description = "fail", PreviousState = null });
 
         var report = await journal.RollbackAsync(BuildContext(
             registry, new FakeServiceAccessor(), new FakeTaskAccessor(), new FakeProcessAccessor(), new FakeCommandRunner()));
@@ -252,22 +357,21 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Single(report.Failed);
         Assert.Single(report.Errors);
         Assert.Contains("boom", report.Errors[0]);
-        // La que se pudo deshacer, se deshizo
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
-        // El diario conserva solo la fallida para reintento
         Assert.False(journal.IsEmpty);
         Assert.Single(journal.Entries);
         Assert.Equal("fail", journal.Entries[0].ActionKey);
     }
 
     [Fact]
-    public async Task RollbackMezcla_InformeExactoYOrdenLifo()
+    public async Task RollbackMezclaLifo_InformeExactoYOrdenVerificado()
     {
         var registry = new FakeRegistryAccessor();
         registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V", 1);
         var processes = new FakeProcessAccessor();
         processes.Seed("SearchHost", running: true);
 
+        var orden = new List<string>();
         var journal = new UndoJournal();
         journal.Add(new RegistryUndoEntry
         {
@@ -284,22 +388,25 @@ public sealed class CancellationAndHonestRollbackTests
         var report = await journal.RollbackAsync(BuildContext(
             registry, new FakeServiceAccessor(), new FakeTaskAccessor(), processes, new FakeCommandRunner()));
 
-        // Se procesan todas las entradas (LIFO): first, second, third
+        // LIFO: se procesan third, second, first -> todas las listas tienen 1
         Assert.Equal(3, report.Restored.Count + report.NotReversible.Count + report.Failed.Count);
         Assert.Single(report.Restored);
+        Assert.Equal("first", report.Restored[0].ActionKey);
         Assert.Single(report.NotReversible);
+        Assert.Equal("second", report.NotReversible[0].ActionKey);
         Assert.Single(report.Failed);
+        Assert.Equal("third", report.Failed[0].ActionKey);
         Assert.False(report.Success);
         Assert.Equal(RollbackOutcome.PartiallyRolledBack, ComputeOutcome(report));
-        // Estado real: registro restaurado, la no reversible no se tocó
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
         Assert.Empty(processes.Started);
     }
 
     [Fact]
-    public async Task RollbackSegundoIntento_SoloReprocesaLasConservadas()
+    public async Task RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio()
     {
         var calls = new int[1];
+        var restoreCalls = new int[1];
         var registry = new FakeRegistryAccessor();
         registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V", 99);
         var journal = new UndoJournal();
@@ -308,7 +415,12 @@ public sealed class CancellationAndHonestRollbackTests
             CapabilityId = "c", ActionKey = "ok", Description = "ok", PreviousState = "1",
             Calls = calls,
         });
-        journal.Add(new FailingEntry { CapabilityId = "c", ActionKey = "fail", Description = "fail", PreviousState = null });
+        // Falla la primera vez que se restaura, funciona la segunda.
+        journal.Add(new RetryEntry
+        {
+            CapabilityId = "c", ActionKey = "fail", Description = "fail", PreviousState = null,
+            RestoreCalls = restoreCalls,
+        });
 
         var ctx = BuildContext(
             registry, new FakeServiceAccessor(), new FakeTaskAccessor(), new FakeProcessAccessor(), new FakeCommandRunner());
@@ -317,39 +429,47 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.False(r1.Success);
         Assert.Single(r1.Restored);
         Assert.Single(r1.Failed);
+        Assert.Equal("ok", r1.Restored[0].ActionKey);
+        Assert.Equal("fail", r1.Failed[0].ActionKey);
         Assert.Equal(1, calls[0]); // "ok" restaurado una vez
         Assert.Single(journal.Entries); // solo "fail" conservada
         Assert.Equal("fail", journal.Entries[0].ActionKey);
 
         var r2 = await journal.RollbackAsync(ctx);
-        Assert.False(r2.Success); // "fail" falla de nuevo
+        Assert.True(r2.Success); // "fail" ahora funciona
+        Assert.Single(r2.Restored);
+        Assert.Equal("fail", r2.Restored[0].ActionKey);
+        Assert.Empty(r2.Failed);
         Assert.Equal(1, calls[0]); // "ok" NO se reprocesó
-        Assert.Single(journal.Entries); // "fail" sigue conservada
+        Assert.True(journal.IsEmpty); // journal vacía tras reintento exitoso
     }
 
     [Fact]
-    public async Task RollbackEnDryRun_InformeNoReversibleYSinVaciarDiario()
+    public async Task DryRunSinJournalNiInforme_ExecuteYRollbackVacían()
     {
-        var registry = new FakeRegistryAccessor();
-        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V", 1);
-        var journal = new UndoJournal();
-        journal.Add(new RegistryUndoEntry
-        {
-            CapabilityId = "c", ActionKey = "ok", Description = "ok", PreviousState = "1",
-            Hive = RegistryHive.LocalMachine, KeyPath = @"SOFTWARE\Evo\X", ValueName = "V",
-            ExistedBefore = true, PreviousValue = 1, PreviousKind = RegistryValueKind.DWord,
-        });
+        var harness = TestHarness.Create();
+        harness.Registry.Seed(RegistryHive.LocalMachine, KeyPath, "A", 1);
+        var contract = TestHarness.Contract(new CapabilityAction[] { SetDword(1, "A", "99") });
+        var context = harness.Context(ExecutionMode.DryRun);
 
-        var report = await journal.RollbackAsync(BuildContext(
-            registry, new FakeServiceAccessor(), new FakeTaskAccessor(), new FakeProcessAccessor(), new FakeCommandRunner(), dryRun: true));
+        var summary = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contract, new CapabilityAction[] { SetDword(1, "A", "99") }), ExecutionMode.DryRun, context);
 
-        Assert.Empty(report.Restored);
-        Assert.Single(report.NotReversible); // en DryRun no se restaura de verdad
-        Assert.Empty(report.Failed);
-        Assert.True(report.Success);
-        // En DryRun el diario no se vacía ni se muta
-        Assert.False(journal.IsEmpty);
-        Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
+        Assert.False(summary.Mutated);
+        Assert.Empty(summary.UndoJournalEntry);
+        Assert.Null(summary.RollbackReport);
+        Assert.Equal(RollbackOutcome.None, summary.RollbackOutcome);
+        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
+
+        // RollbackAsync con contexto DryRun sobre journal (vacío): informe vacío.
+        var emptyJournal = new UndoJournal();
+        var dryReport = await emptyJournal.RollbackAsync(BuildContext(
+            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands, dryRun: true));
+        Assert.True(dryReport.Success);
+        Assert.Equal(0, dryReport.Count);
+        Assert.Empty(dryReport.Restored);
+        Assert.Empty(dryReport.NotReversible);
+        Assert.Empty(dryReport.Failed);
     }
 
     // ---------------- Helpers ----------------
@@ -364,6 +484,31 @@ public sealed class CancellationAndHonestRollbackTests
                 Result = UndoRestoreResult.Failed,
                 FailureMessage = "boom",
             };
+    }
+
+    /// <summary>Entra fallida la primera vez, restaurada la segunda.</summary>
+    private sealed record RetryEntry : UndoJournalEntry
+    {
+        public int[] RestoreCalls { get; init; } = Array.Empty<int>();
+
+        public override UndoEntryOutcome Restore(IUndoContext context)
+        {
+            RestoreCalls[0]++;
+            return RestoreCalls[0] == 1
+                ? new UndoEntryOutcome
+                {
+                    ActionKey = ActionKey,
+                    Description = Description,
+                    Result = UndoRestoreResult.Failed,
+                    FailureMessage = "primera vez falla",
+                }
+                : new UndoEntryOutcome
+                {
+                    ActionKey = ActionKey,
+                    Description = Description,
+                    Result = UndoRestoreResult.Restored,
+                };
+        }
     }
 
     private sealed record CounterEntry : UndoJournalEntry
@@ -382,7 +527,6 @@ public sealed class CancellationAndHonestRollbackTests
         }
     }
 
-    /// <summary>Entrada de prueba que nunca se puede revertir (devuelve NotReversible).</summary>
     private sealed record NotReversibleEntry : UndoJournalEntry
     {
         public override UndoEntryOutcome Restore(IUndoContext context) =>
@@ -394,23 +538,26 @@ public sealed class CancellationAndHonestRollbackTests
             };
     }
 
+    private sealed record ThrowingEntry : UndoJournalEntry
+    {
+        public override UndoEntryOutcome Restore(IUndoContext context) =>
+            throw new InvalidOperationException("boom");
+    }
+
     private static RollbackOutcome ComputeOutcome(RollbackReport report)
     {
         if (report.Failed.Count > 0 && report.Restored.Count == 0)
         {
             return RollbackOutcome.RollbackFailed;
         }
-
         if (report.Failed.Count > 0)
         {
             return RollbackOutcome.PartiallyRolledBack;
         }
-
         if (report.NotReversible.Count > 0)
         {
             return RollbackOutcome.RolledBackWithUnrestorable;
         }
-
         return RollbackOutcome.RolledBack;
     }
 }

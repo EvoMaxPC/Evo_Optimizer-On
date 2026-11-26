@@ -54,6 +54,13 @@ public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReade
     /// <summary>Reinicia el contador de llamadas a <see cref="SetValue"/>.</summary>
     public void ResetSetValueCounter() => SetValueCallCount = 0;
 
+    /// <summary>
+    /// Hook opcional invocado al inicio de cada <see cref="SetValue"/> con el
+    /// número de llamada (1-based). Permite inyectar cancelación en el momento
+    /// exacto (etapa 1, H1/H2).
+    /// </summary>
+    public Action<int>? OnSetValue { get; set; }
+
     /// <summary>Llamadas registradas, en orden.</summary>
     public List<string> Log { get; } = [];
 
@@ -104,6 +111,7 @@ public sealed class FakeRegistryAccessor : IRegistryAccessor, IRegistryKindReade
     public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind)
     {
         SetValueCallCount++;
+        OnSetValue?.Invoke(SetValueCallCount);
         if (ThrowOnSetValueCall > 0 && SetValueCallCount == ThrowOnSetValueCall)
         {
             ThrowOnSetValueCall = 0;

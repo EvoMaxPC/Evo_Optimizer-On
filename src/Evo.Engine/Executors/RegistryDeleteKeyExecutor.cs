@@ -99,6 +99,12 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
         {
             snapshot = TakeSnapshot(reader, hive, deleteAction.KeyPath);
         }
+        catch (OperationCanceledException)
+        {
+            // Nunca se traga una cancelación: la deja propagar al coordinador,
+            // que la trata como cancelación honesta (H1).
+            throw;
+        }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             return Task.FromResult(ActionResult.Fail(

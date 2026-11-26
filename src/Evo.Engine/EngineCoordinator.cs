@@ -230,96 +230,107 @@ public sealed class EngineCoordinator
         var restorePointWaived = false;
         var confirmationType = plan.Capability.Confirmation;
         var confirmed = false;
+        var canceled = false;
 
         if (mode == ExecutionMode.Execute)
         {
-            if (confirmationType != ConfirmationType.None)
+            try
             {
-                if (_confirmations is null)
+                if (confirmationType != ConfirmationType.None)
                 {
-                    return Aborted(
-                        plan, mode, stopwatch, planned,
-                        "No hay proveedor de confirmación configurado y el contrato exige " +
-                        $"{confirmationType}: se aborta sin mutar nada.");
-                }
-
-                var pointAvailableForPrompt = requiresRestorePoint
-                    && _restorePoints is not null
-                    && await IsRestorePointAvailableAsync(cancellationToken);
-
-                var response = await _confirmations.ConfirmAsync(
-                    new ConfirmationRequest
-                    {
-                        CapabilityId = plan.Capability.Id,
-                        CapabilityName = plan.Capability.Name,
-                        Type = confirmationType,
-                        Risk = plan.Capability.Risk,
-                        Summary = planned,
-                        RestorePointAvailable = pointAvailableForPrompt,
-                    },
-                    cancellationToken).ConfigureAwait(false);
-
-                if (!response.Approved)
-                {
-                    return Aborted(
-                        plan, mode, stopwatch, planned,
-                        $"Confirmación rechazada: {response.Reason}".TrimEnd(' ', ':'),
-                        confirmationType: confirmationType);
-                }
-
-                if (confirmationType == ConfirmationType.TypeOperationName &&
-                    !string.Equals(response.TypedText, plan.Capability.Id, StringComparison.Ordinal))
-                {
-                    return Aborted(
-                        plan, mode, stopwatch, planned,
-                        $"El texto escrito ('{response.TypedText}') no es el nombre exacto " +
-                        $"'{plan.Capability.Id}': se aborta sin mutar nada.",
-                        confirmationType: confirmationType);
-                }
-
-                confirmed = true;
-            }
-
-            if (requiresRestorePoint)
-            {
-                if (template.AcceptNoRestorePoint)
-                {
-                    // Declarado: el usuario asume el riesgo. Se registra en el resumen.
-                    restorePointWaived = true;
-                }
-                else if (_restorePoints is null)
-                {
-                    return Aborted(
-                        plan, mode, stopwatch, planned,
-                        "El contrato exige punto de restauración y el motor no tiene " +
-                        "servicio de puntos configurado: se aborta sin mutar nada.",
-                        confirmed: confirmed, confirmationType: confirmationType);
-                }
-                else if (!await IsRestorePointAvailableAsync(cancellationToken))
-                {
-                    return Aborted(
-                        plan, mode, stopwatch, planned,
-                        "La Protección del sistema no está disponible: no se puede crear el " +
-                        "punto de restauración y el contrato lo exige. Se aborta sin mutar nada " +
-                        "(fail-closed).",
-                        confirmed: confirmed, confirmationType: confirmationType);
-                }
-                else
-                {
-                    var created = await _restorePoints.CreateAsync(
-                        $"EVO CLEAN — {plan.Capability.Id}", cancellationToken).ConfigureAwait(false);
-
-                    if (!created.Success || string.IsNullOrWhiteSpace(created.Id))
+                    if (_confirmations is null)
                     {
                         return Aborted(
                             plan, mode, stopwatch, planned,
-                            $"No se pudo crear el punto de restauración " +
-                            $"({created.ErrorMessage}): se aborta sin mutar nada (fail-closed).",
-                            confirmed: confirmed, confirmationType: confirmationType);
+                            "No hay proveedor de confirmación configurado y el contrato exige " +
+                            $"{confirmationType}: se aborta sin mutar nada.");
                     }
 
-                    restorePointId = created.Id;
+                    var pointAvailableForPrompt = requiresRestorePoint
+                        && _restorePoints is not null
+                        && await IsRestorePointAvailableAsync(cancellationToken);
+
+                    var response = await _confirmations.ConfirmAsync(
+                        new ConfirmationRequest
+                        {
+                            CapabilityId = plan.Capability.Id,
+                            CapabilityName = plan.Capability.Name,
+                            Type = confirmationType,
+                            Risk = plan.Capability.Risk,
+                            Summary = planned,
+                            RestorePointAvailable = pointAvailableForPrompt,
+                        },
+                        cancellationToken).ConfigureAwait(false);
+
+                    if (!response.Approved)
+                    {
+                        return Aborted(
+                            plan, mode, stopwatch, planned,
+                            $"Confirmación rechazada: {response.Reason}".TrimEnd(' ', ':'),
+                            confirmationType: confirmationType);
+                    }
+
+                    if (confirmationType == ConfirmationType.TypeOperationName &&
+                        !string.Equals(response.TypedText, plan.Capability.Id, StringComparison.Ordinal))
+                    {
+                        return Aborted(
+                            plan, mode, stopwatch, planned,
+                            $"El texto escrito ('{response.TypedText}') no es el nombre exacto " +
+                            $"'{plan.Capability.Id}': se aborta sin mutar nada.",
+                            confirmationType: confirmationType);
+                    }
+
+                    confirmed = true;
                 }
+
+                if (requiresRestorePoint)
+                {
+                    if (template.AcceptNoRestorePoint)
+                    {
+                        // Declarado: el usuario asume el riesgo. Se registra en el resumen.
+                        restorePointWaived = true;
+                    }
+                    else if (_restorePoints is null)
+                    {
+                        return Aborted(
+                            plan, mode, stopwatch, planned,
+                            "El contrato exige punto de restauración y el motor no tiene " +
+                            "servicio de puntos configurado: se aborta sin mutar nada.",
+                            confirmed: confirmed, confirmationType: confirmationType);
+                    }
+                    else if (!await IsRestorePointAvailableAsync(cancellationToken))
+                    {
+                        return Aborted(
+                            plan, mode, stopwatch, planned,
+                            "La Protección del sistema no está disponible: no se puede crear el " +
+                            "punto de restauración y el contrato lo exige. Se aborta sin mutar nada " +
+                            "(fail-closed).",
+                            confirmed: confirmed, confirmationType: confirmationType);
+                    }
+                    else
+                    {
+                        var created = await _restorePoints.CreateAsync(
+                            $"EVO CLEAN — {plan.Capability.Id}", cancellationToken).ConfigureAwait(false);
+
+                        if (!created.Success || string.IsNullOrWhiteSpace(created.Id))
+                        {
+                            return Aborted(
+                                plan, mode, stopwatch, planned,
+                                $"No se pudo crear el punto de restauración " +
+                                $"({created.ErrorMessage}): se aborta sin mutar nada (fail-closed).",
+                                confirmed: confirmed, confirmationType: confirmationType);
+                        }
+
+                        restorePointId = created.Id;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancelación en la puerta previa (confirmación / punto de
+                // restauración con token ya cancelado): se trata como cancelación
+                // honesta (H1). Nunca se deja escapar una OCE del coordinador.
+                canceled = true;
             }
         }
 
@@ -332,9 +343,10 @@ public sealed class EngineCoordinator
 
         var context = template with { Mode = mode, Journal = journal, CapabilityId = plan.Capability.Id };
         var failed = false;
-        var canceled = false;
 
-        foreach (var step in plan.Steps)
+        if (!canceled)
+        {
+            foreach (var step in plan.Steps)
         {
             try
             {
@@ -373,6 +385,7 @@ public sealed class EngineCoordinator
                 failed = true;
                 break;
             }
+        }
         }
 
         var rollbackEntries = journal.Entries.ToList();

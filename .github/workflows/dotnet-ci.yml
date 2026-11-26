@@ -133,7 +133,8 @@ jobs:
             dotnet test $proj.FullName --no-build --configuration Release --verbosity normal `
               --logger "trx;LogFileName=$name.trx" `
               --results-directory $out 2>&1 |
-              Tee-Object -FilePath "ci-out/test-$name.txt" -Append
+              Tee-Object -FilePath "ci-out/test-$name.txt" -Append |
+              Tee-Object -FilePath ci-out/test-console.txt -Append
             if ($LASTEXITCODE -ne 0) { $failed++ }
           }
           if ($failed -ne 0) { throw "dotnet test fallo en $failed proyecto(s)" }
@@ -156,6 +157,39 @@ jobs:
           $perProject | Tee-Object -FilePath ci-out/test-per-project.txt
           $line = "total=$total passed=$passed failed=$failed"
           $line | Tee-Object -FilePath ci-out/test-summary.txt
+
+          # test-failures.txt: por cada .trx, tests Failed con nombre, mensaje y
+          # primeras 15 líneas de pila. Si no hay .trx, lo dice explícitamente.
+          if (-not $files) {
+            "no hay ficheros .trx" | Out-File -FilePath ci-out/test-failures.txt -Encoding utf8
+          } else {
+            $failures = @()
+            foreach ($f in $files) {
+              [xml]$trx = Get-Content -Raw $f.FullName
+              $results = $trx.TestRun.Results.UnitTestResult
+              if ($results) {
+                foreach ($r in $results) {
+                  if ($r.outcome -eq 'Failed') {
+                    $msg = ''
+                    $stack = ''
+                    if ($r.Output -and $r.Output.ErrorInfo) {
+                      $msg = $r.Output.ErrorInfo.Message
+                      $stack = $r.Output.ErrorInfo.StackTrace
+                    }
+                    $failures += "{0} ({1}): {2}" -f $r.testName, $f.BaseName, $msg
+                    if ($stack) { $stack -split "`n" | Select-Object -First 15 | ForEach-Object { $failures += $_ } }
+                    $failures += ''
+                  }
+                }
+              }
+            }
+            if ($failures.Count -gt 0) {
+              $failures | Out-File -FilePath ci-out/test-failures.txt -Encoding utf8
+            } else {
+              "sin tests fallidos" | Out-File -FilePath ci-out/test-failures.txt -Encoding utf8
+            }
+          }
+
           if ($failed -ne 0) { throw "tests fallidos: $failed" }
 
       - name: SHA de artefactos

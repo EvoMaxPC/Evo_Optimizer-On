@@ -475,6 +475,18 @@ public sealed class UndoJournal
     {
         ArgumentNullException.ThrowIfNull(context);
 
+        if (context.DryRun)
+        {
+            // En DryRun no se procesa ni se toca ninguna entrada: informe vacío
+            // (Success=true, Count=0), sin NotReversible fabricado.
+            return Task.FromResult(new RollbackReport
+            {
+                Restored = [],
+                NotReversible = [],
+                Failed = [],
+            });
+        }
+
         var restored = new List<UndoEntryOutcome>();
         var notReversible = new List<UndoEntryOutcome>();
         var failed = new List<UndoEntryOutcome>();
