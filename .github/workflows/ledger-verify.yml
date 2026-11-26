@@ -794,14 +794,14 @@ jobs:
                                         "system.network.location-wizard.disable"]
                 and all(len(v) == 1 for v in creates.values())
                 # La lista cerrada de Specified de la seccion 9 (R1 + R3).
-                # La lista cerrada de Specified de la seccion 9 (R1 + R3).
-                # 12c/G2: ntp-servers pasa a Implemented (outside=0: registro y
-                # arranque de w32time se declaran); quedan 5 Specified.
+                # 12h: ntp-servers es Specified (R1: w32tm /config /update y
+                # /resync sin accion equivalente en el motor), quedan 6 Specified.
                 and specified9 == ["system.hibernation.hide",
                                    "system.location.consent-deny",
                                    "system.mitigations.disable",
                                    "system.oem-information.identify",
-                                   "system.registry-backup.enable"]
+                                   "system.registry-backup.enable",
+                                   "system.time.ntp-servers"]
                 # R3: lo que INSTALA algo persistente con privilegios altos (una
                 # tarea programada o un servicio) no puede ser Safe ni quedar sin
                 # confirmacion. Las escrituras de registro quedan fuera del
