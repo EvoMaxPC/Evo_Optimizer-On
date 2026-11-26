@@ -80,7 +80,8 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
         Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B"));
         // Informe de rollback: solo A (1 entrada) restaurada, sin fallos
-        var report = Assert.NotNull(summary.RollbackReport);
+        Assert.NotNull(summary.RollbackReport);
+        var report = summary.RollbackReport!;
         Assert.Single(report.Restored);
         Assert.Empty(report.NotReversible);
         Assert.Empty(report.Failed);
@@ -113,7 +114,8 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.True(summary.Aborted);
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A"));
         Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B"));
-        var report = Assert.NotNull(summary.RollbackReport);
+        Assert.NotNull(summary.RollbackReport);
+        var report = summary.RollbackReport!;
         Assert.Single(report.Restored);
         Assert.Empty(report.Failed);
         Assert.Equal(RollbackOutcome.RolledBack, summary.RollbackOutcome);
@@ -206,10 +208,9 @@ public sealed class CancellationAndHonestRollbackTests
             Hive = RegistryHive.LocalMachine, KeyPath = @"SOFTWARE\Evo\X", ValueName = "V",
             ExistedBefore = true, PreviousValue = 1, PreviousKind = RegistryValueKind.DWord,
         });
-        journal.Add(new ProcessUndoEntry
+        journal.Add(new NotReversibleEntry
         {
             CapabilityId = "c", ActionKey = "proc", Description = "proc", PreviousState = "Running",
-            ProcessName = "SearchHost",
         });
 
         var report = await journal.RollbackAsync(BuildContext(
@@ -221,7 +222,7 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Empty(report.Failed);
         Assert.True(report.HasUnrestorable);
         Assert.False(report.AllReversible);
-        // El registro sí se restauró; el proceso no se reinicia (no hay Started)
+        // El registro sí se restauró; la entrada no reversible no se restauró
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
         Assert.Empty(processes.Started);
         // Diario vacío: todo se procesó y nada falló
@@ -274,10 +275,9 @@ public sealed class CancellationAndHonestRollbackTests
             Hive = RegistryHive.LocalMachine, KeyPath = @"SOFTWARE\Evo\X", ValueName = "V",
             ExistedBefore = true, PreviousValue = 1, PreviousKind = RegistryValueKind.DWord,
         });
-        journal.Add(new ProcessUndoEntry
+        journal.Add(new NotReversibleEntry
         {
             CapabilityId = "c", ActionKey = "second", Description = "second", PreviousState = "Running",
-            ProcessName = "SearchHost",
         });
         journal.Add(new FailingEntry { CapabilityId = "c", ActionKey = "third", Description = "third", PreviousState = null });
 
@@ -291,7 +291,7 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Single(report.Failed);
         Assert.False(report.Success);
         Assert.Equal(RollbackOutcome.PartiallyRolledBack, ComputeOutcome(report));
-        // Estado real: registro restaurado, proceso no reiniciado
+        // Estado real: registro restaurado, la no reversible no se tocó
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.LocalMachine, @"SOFTWARE\Evo\X", "V"));
         Assert.Empty(processes.Started);
     }
@@ -306,8 +306,6 @@ public sealed class CancellationAndHonestRollbackTests
         journal.Add(new CounterEntry
         {
             CapabilityId = "c", ActionKey = "ok", Description = "ok", PreviousState = "1",
-            Hive = RegistryHive.LocalMachine, KeyPath = @"SOFTWARE\Evo\X", ValueName = "V",
-            ExistedBefore = true, PreviousValue = 1, PreviousKind = RegistryValueKind.DWord,
             Calls = calls,
         });
         journal.Add(new FailingEntry { CapabilityId = "c", ActionKey = "fail", Description = "fail", PreviousState = null });
@@ -382,6 +380,18 @@ public sealed class CancellationAndHonestRollbackTests
                 Result = UndoRestoreResult.Restored,
             };
         }
+    }
+
+    /// <summary>Entrada de prueba que nunca se puede revertir (devuelve NotReversible).</summary>
+    private sealed record NotReversibleEntry : UndoJournalEntry
+    {
+        public override UndoEntryOutcome Restore(IUndoContext context) =>
+            new()
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+            };
     }
 
     private static RollbackOutcome ComputeOutcome(RollbackReport report)
