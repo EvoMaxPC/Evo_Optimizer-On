@@ -1,0 +1,118 @@
+=== (a) Capacidades Specified en HEAD (motivo literal) ===
+
+id | sección | motivo literal
+----------------------------------------------------------------------------------------------------
+cleanup.winsxs.resetbase | sec1 | Ejecuta DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase, que ademas de limpiar marca la linea base de componentes: las actualizaciones ya instaladas dejan de poder desinstalarse y el pun
+debloat.copilot.remove | sec2 | Aplica la política RemoveMicrosoftCopilotApp=1, quita el paquete Copilot de todos los usuarios y oculta su botón de la barra de tareas. Quitar el paquete es irreversible (ni el diario ni un punto de r
+debloat.drivers.logitech | sec2 | Mata logi_download_assistant y vacia 'LogiDownloadAssistant' en Program Files, recreando la carpeta con una ACL que niega la escritura a Todos (S-1-1-0), como hace WinUtil. El pin solo lo expresa como
+debloat.drivers.razer | sec2 | Pone SearchOrderConfig=0 y DisableCoInstallers=1 para que Windows no busque ni ejecute co-instaladores de fabricante, y vacia la carpeta de instaladores de Razer si existe. El vaciado de carpeta no ti
+debloat.edge.remove | sec2 | Ejecuta el desinstalador de Edge que WinUtil descubre bajo 'Program Files (x86)\Microsoft\Edge\Application\*\Installer\setup.exe' y, si no lo encuentra, quita el paquete AppX. El pin solo lo expresa c
+debloat.explorer.auto-folder-discovery | sec2 | WinUtil borra la base de vistas del Explorador (claves Bags y BagMRU) para que no aplique tipos de carpeta descubiertos automaticamente. Borrar esas claves pierde las vistas guardadas por el usuario y
+debloat.network.adobe-blocklist | sec2 | Descarga la lista de hosts de Adobe del repositorio de terceros que usa WinUtil, la anexa al fichero hosts del sistema y vacia la cache DNS. Escribe un fichero del sistema fuera del registro: CommandA
+debloat.start.layout | sec2 | El efecto de la linea 2:74 es la funcion Set-AtlasStartLayout del modulo Atlas.Shell, que importa una plantilla de diseno de Inicio. El ledger no la expresa como valores de registro ni como fichero es
+debloat.store.search | sec2 | WinUtil deniega a Todos (S-1-1-0) la escritura sobre store.db de la Store, con lo que la app no puede escribir sus busquedas recomendadas. Es una ACL sobre un fichero de usuario, no un valor de regist
+debloat.windows.ai.recall | sec2 | Desactiva el análisis de datos de IA (Recall) con DisableAIDataAnalysis=1 y AllowRecallEnablement=0, el agente de IA de Configuración, Click To Do, las funciones de IA del Bloc de notas y oculta la pá
+explorer.recent-items.disable | sec10 | ina para la página de Configuración que no es de registro y aquí no se declara. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Set-AtlasRecentItemsSettingsPage (Interface/RecentItems.psd1:18), que OCULTA la pagina privacy-general de Configuracion escribiendo la
+privacy.telemetry.dmwappush | sec3 | Fija Start=4 (deshabilitado) en el servicio Device Management WAP Push, que WinUtil desactiva en su script de ISO. En este pin WinUtil es la única fuente que lo toca: ni el catálogo de tweaks ni los p
+system.hibernation.hide | sec9 | youtMenuSettings: la entrada «Hibernar» deja de aparecer en el menú de energía. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Set-AtlasHibernationPowerState (General/Hibernation.psd1:15 y :25), que ejecuta `powercfg /h off` y `powercfg /h on` (Hibernation.ps1)
+system.location.consent-deny | sec9 | nguna proteccion de seguridad: quita una capacidad del sistema, no una defensa. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Disable-AtlasLocation (General/Location.psd1:6) y ese script, ADEMAS de los dos servicios ya declarados, escribe la politica de Buscar
+system.mitigations.disable | sec9 | r eso el riesgo es High y la confirmación pide resumen y punto de restauración. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Disable-AtlasMitigations (Security/Mitigations.psd1:21), que hace tres cosas que no son valores de registro y no se declaran: `Set-Pro
+system.oem-information.identify | sec9 | les son los del pin (atribución de Atlas), no una identidad inventada para EVO. FUERA DE ESTA CAPACIDAD (R1): ejecuta `config-oem-information.ps1` (config-oem-information.psd1, bloque `Script`) que rellena valores dinámicos (versión/modelo de Atlas) no expresados como acción
+system.registry-backup.enable | sec9 | y una clave danada deja de ser una reinstalacion. No reduce ninguna proteccion. FUERA DE ESTA CAPACIDAD (R1): la tarea del pin se registra SIN `-RunLevel`: `Register-ScheduledTask -Action $action -Trigger $trigger -TaskName 'AutoRegBackup' -Description 'Create System Registry Bac
+ui.context-menu.classic | sec? | indows 11: en Windows 10 ese CLSID no interviene y por eso no se declara 19045. FUERA DE ESTA CAPACIDAD (R1): en la variante WinUtil el pin hace dos cosas MAS que no se declaran: crea la clave de workaround HKCU\Software\Classes\CLSID\{51668040-5e31-4023-bbe3-149163bd80f1} con el
+
+Total Specified en HEAD: 18
+
+=== (b) State de cada capacidad por commit ===
+
+id | 830290c | 0d72efa | cb75abe34a4feb256f57f8de76b03bbd05a08e0b | 231564b7764499d086eb6c06a31af29a79b95c39 | HEAD
+--------------------------------------------------------------------------------
+cleanup.delivery.optimization | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.memory.dumps | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.recycle.bin | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.temp.system | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.temp.user | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.wer.reports | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.winsxs.component | Implemented | Implemented | Implemented | Implemented | Implemented
+cleanup.winsxs.resetbase | Specified | Specified | Specified | Specified | Specified
+debloat.appx.consumer | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.content.delivery | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.copilot.remove | Specified | Specified | Specified | Specified | Specified
+debloat.cortana.remove | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.devices.companion-apps | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.drivers.logitech | Specified | Specified | Specified | Specified | Specified
+debloat.drivers.razer | Specified | Specified | Specified | Specified | Specified
+debloat.edge.policies | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.edge.remove | Specified | Specified | Specified | Specified | Specified
+debloat.explorer.auto-folder-discovery | Specified | Specified | Specified | Specified | Specified
+debloat.explorer.home-gallery | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.network.adobe-blocklist | Specified | Specified | Specified | Specified | Specified
+debloat.onedrive.uninstall | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.settings.home | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.start.layout | Specified | Specified | Specified | Specified | Specified
+debloat.start.recommendations | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.start.websearch | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.store.search | Specified | Specified | Specified | Specified | Specified
+debloat.telemetry.appx | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.widgets.disable | Implemented | Implemented | Implemented | Implemented | Implemented
+debloat.windows.ai.recall | Specified | Specified | Specified | Specified | Specified
+explorer.app-icon-thumbnails.hide | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.check-boxes.disable | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.compact-view.enable | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.extract-context-menu.add | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.file-extensions.show | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.gallery.hide | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.hidden-files.show | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.home.hide | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.home.restore | no existía | no existía | no existía | Implemented | Implemented
+explorer.long-paths.enable | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.quick-access.hide | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.recent-items.disable | Implemented | Implemented | Implemented | Specified | Specified
+explorer.removable-drives.sidebar | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.shortcut-icon.classic | Implemented | Implemented | Implemented | Implemented | Implemented
+explorer.shortcut-text.hide | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.activity.history | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.advertising.id | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.browser.brave-debloat | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.ceip.tasks | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.diagnostic.data.level | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.feedback.frequency | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.kms.activation.telemetry | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.location.sensors | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.telemetry.diagtrack | Implemented | Implemented | Implemented | Implemented | Implemented
+privacy.telemetry.dmwappush | Specified | Specified | Specified | Specified | Specified
+system.error-reporting.crash-control | no existía | Implemented | Implemented | Implemented | Implemented
+system.error-reporting.wpbt-disable | no existía | Implemented | Implemented | Implemented | Implemented
+system.game-mode.enable | no existía | Implemented | Implemented | Implemented | Implemented
+system.hibernation.hide | no existía | Implemented | Implemented | Specified | Specified
+system.keyboard-shortcuts.disable | no existía | Implemented | Implemented | Implemented | Implemented
+system.location.consent-deny | no existía | Implemented | Implemented | Specified | Specified
+system.menu-delay.disable | no existía | Implemented | Implemented | Implemented | Implemented
+system.mitigations.disable | no existía | Implemented | Implemented | Specified | Specified
+system.mouse-acceleration.enable | no existía | Implemented | Implemented | Implemented | Implemented
+system.network.location-wizard.disable | no existía | no existía | no existía | Implemented | Implemented
+system.oem-information.identify | no existía | Implemented | Implemented | Implemented | Specified
+system.registry-backup.enable | no existía | Specified | Implemented | Specified | Specified
+system.search-indexing.disable | no existía | Implemented | Implemented | Implemented | Implemented
+system.services.manual-profile | no existía | Implemented | Implemented | Implemented | Implemented
+system.settings-page-visibility.hide | no existía | Implemented | Implemented | Implemented | Implemented
+system.sleep.s0-network-keep | no existía | Implemented | Implemented | Implemented | Implemented
+system.sleep.s3-enable | no existía | Implemented | Implemented | Implemented | Implemented
+system.time.ntp-servers | no existía | Specified | Implemented | Implemented | Implemented
+system.time.utc-rtc | no existía | Implemented | Implemented | Implemented | Implemented
+ui.context-menu.classic | Implemented | Implemented | Implemented | Specified | Specified
+ui.lockscreen.hide | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.logon.acrylic-blur | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.notifications.center-hide | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.numlock.startup | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.scrollbars.always-visible | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.snap-layouts.disable | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.snapping.windows | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.taskbar.end-task | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.taskbar.icons-centered | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.taskbar.search-icon | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.taskbar.task-view-button | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.theme.dark | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.verbose-messages.enable | Implemented | Implemented | Implemented | Implemented | Implemented
+ui.visual-effects.minimal | Implemented | Implemented | Implemented | Implemented | Implemented
+
