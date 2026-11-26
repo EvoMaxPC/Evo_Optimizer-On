@@ -93,5 +93,5 @@ FAILED tools/ledger_extract/tests/test_reproducibilidad_worktrees.py::test_par_d
   
 assert 1 == 0
  +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
-4 failed, 569 passed, 2 warnings in 9.10s
+4 failed, 569 passed, 2 warnings in 9.02s
 pytest_exit=1
