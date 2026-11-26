@@ -1,0 +1,97 @@
+........................................................................ [ 12%]
+........................................................................ [ 25%]
+...............................................................F..FFF... [ 37%]
+........................................................................ [ 50%]
+........................................................................ [ 62%]
+........................................................................ [ 75%]
+........................................................................ [ 87%]
+.....................................................................    [100%]
+=================================== FAILURES ===================================
+______________________ test_ntp_servers_estado_por_commit ______________________
+
+    def test_ntp_servers_estado_por_commit() -> None:
+        """system.time.ntp-servers: no es Specified en commits antiguos, sí en HEAD."""
+        resultado = _run()
+        filas = _tabla_b(resultado)
+        for celdas in filas:
+            if celdas[0] == "system.time.ntp-servers":
+                # celdas[1]=830290c, celdas[2]=0d72efa, celdas[3]=cb75abe, celdas[4]=231564b, celdas[5]=HEAD
+                # 0d72efa: Specified, cb75abe: Implemented, 231564b: Implemented, HEAD: Specified
+>               assert celdas[2] == "Specified", f"0d72efa debería tener ntp-servers como Specified: {celdas}"
+E               AssertionError: 0d72efa debería tener ntp-servers como Specified: ['system.time.ntp-servers', 'no existía', 'no existía', 'no existía', 'no existía', 'Implemented']
+E               assert 'no existía' == 'Specified'
+E                 
+E                 - Specified
+E                 + no existía
+
+tools/ledger_extract/tests/test_report_specified_history.py:132: AssertionError
+___________________________ test_ejecuta_sin_errores ___________________________
+
+    def test_ejecuta_sin_errores() -> None:
+        resultado = _run()
+>       assert resultado.returncode == 0, resultado.stderr
+E       AssertionError: no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c
+E         
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
+
+tools/ledger_extract/tests/test_reproducibilidad_worktrees.py:23: AssertionError
+_____________________ test_pares_iguales_son_reproducibles _____________________
+
+    def test_pares_iguales_son_reproducibles() -> None:
+        """Pares iguales (A/A) deben producir salida idéntica."""
+        resultado = _run()
+>       assert resultado.returncode == 0, resultado.stderr
+E       AssertionError: no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c
+E         
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
+
+tools/ledger_extract/tests/test_reproducibilidad_worktrees.py:30: AssertionError
+_______________________ test_par_distinto_puede_diferir ________________________
+
+    def test_par_distinto_puede_diferir() -> None:
+        resultado = _run()
+>       assert resultado.returncode == 0, resultado.stderr
+E       AssertionError: no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c
+E         
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
+
+tools/ledger_extract/tests/test_reproducibilidad_worktrees.py:39: AssertionError
+=============================== warnings summary ===============================
+tools/ledger_extract/build_section10_catalog.py:257
+  /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:257: SyntaxWarning: "\B" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\B"? A raw string is also an option.
+    "(HKLM Shell Extensions\Blocked), que es como Windows desactiva el menú "
+
+tools/ledger_extract/build_section10_catalog.py:375
+  /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:375: SyntaxWarning: "\{" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\{"? A raw string is also an option.
+    - las rutas llevan llaves dentro de comillas (`CLSID\{e88865ea-…}`), así que
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tools/ledger_extract/tests/test_report_specified_history.py::test_ntp_servers_estado_por_commit - AssertionError: 0d72efa debería tener ntp-servers como Specified: ['system.time.ntp-servers', 'no existía', 'no existía', 'no existía', 'no existía', 'Implemented']
+assert 'no existía' == 'Specified'
+  
+  - Specified
+  + no existía
+FAILED tools/ledger_extract/tests/test_reproducibilidad_worktrees.py::test_ejecuta_sin_errores - AssertionError: no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c
+  
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
+FAILED tools/ledger_extract/tests/test_reproducibilidad_worktrees.py::test_pares_iguales_son_reproducibles - AssertionError: no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c
+  
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
+FAILED tools/ledger_extract/tests/test_reproducibilidad_worktrees.py::test_par_distinto_puede_diferir - AssertionError: no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c
+  
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/r...es.py'], returncode=1, stdout='', stderr='no se pudo hacer worktree de 830290c: fatal: invalid reference: 830290c\n\n').returncode
+4 failed, 569 passed, 2 warnings in 8.96s
+pytest_exit=1
