@@ -678,11 +678,12 @@ jobs:
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
                 and len(caps9) == 19 and acts9 == 47
-                # 12c/G2: ntp-servers paso a Implemented (outside=0), por eso la
-                # lista cerrada de Specified de la seccion 9 tiene 5 entradas.
+                # 12h: ntp-servers es Specified (R1: w32tm /config /update y
+                # /resync sin accion equivalente en el motor), asi que la lista
+                # cerrada de Specified de la seccion 9 tiene 6 entradas.
                 and new9 == ["system.hibernation.hide", "system.location.consent-deny",
                              "system.mitigations.disable", "system.oem-information.identify",
-                             "system.registry-backup.enable"]
+                             "system.registry-backup.enable", "system.time.ntp-servers"]
                 and acts10 == 60
                 and {"registryDeleteKey", "taskCreate", "service"} <= set(kinds)
                 and len(task) == 1 and task[0]["taskName"] == "AutoRegBackup"
