@@ -866,6 +866,12 @@ jobs:
           python3 -m pip install --quiet --break-system-packages pytest pyyaml
           python3 -c "import pytest, yaml; print('pytest', pytest.__version__, '| pyyaml', yaml.__version__)"
 
+      - name: Reproducir upstream en el SHA fijado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/fetch_upstream.py --dest /tmp/upstream
+
       - name: G1 - historia de Specified de la seccion 9
         shell: bash
         run: |
