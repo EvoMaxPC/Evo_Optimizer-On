@@ -32,8 +32,8 @@ _______________ test_proyectos_nuevos_existen_y_estan_en_la_sln ________________
 >       assert len(re.findall(r'"(src|tests)\\[^"]+\.csproj"', sln)) == 9
 E       assert 11 == 9
 E        +  where 11 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
-E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7d3514defb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
-E        +      where <function findall at 0x7d3514defb60> = re.findall
+E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7cdce3aebb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+E        +      where <function findall at 0x7cdce3aebb60> = re.findall
 
 tests/test_paso7.py:86: AssertionError
 =============================== warnings summary ===============================
@@ -50,7 +50,7 @@ tools/ledger_extract/build_section10_catalog.py:375
 FAILED tests/test_paso7.py::test_validador_reconoce_los_9_proyectos - assert 11 == 9
 FAILED tests/test_paso7.py::test_proyectos_nuevos_existen_y_estan_en_la_sln - assert 11 == 9
  +  where 11 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
- +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7d3514defb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
- +      where <function findall at 0x7d3514defb60> = re.findall
-2 failed, 571 passed, 2 warnings in 13.65s
+ +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7cdce3aebb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+ +      where <function findall at 0x7cdce3aebb60> = re.findall
+2 failed, 571 passed, 2 warnings in 18.43s
 pytest_exit=1
