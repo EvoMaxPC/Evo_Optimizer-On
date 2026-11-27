@@ -735,8 +735,16 @@ public sealed class ExecutorTests
         public void Seed(string name, bool running = true) => _inner.Seed(name, running);
 
         public bool IsRunning(string processName) => _inner.IsRunning(processName);
-        public bool TerminateProcess(string processName) => false;
-        public bool StopProcess(string processName) => false;
+        public bool TerminateProcess(string processName)
+        {
+            _inner.Terminated.Add(processName);
+            return false;
+        }
+        public bool StopProcess(string processName)
+        {
+            _inner.Stopped.Add(processName);
+            return false;
+        }
         public int StartProcess(string fileName, IReadOnlyList<string> arguments) => _inner.StartProcess(fileName, arguments);
     }
 
