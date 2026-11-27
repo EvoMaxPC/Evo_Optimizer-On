@@ -69,8 +69,9 @@ Siga este orden:
 Estas funcionalidades existen en el diseño pero **no están habilitadas** en esta versión preliminar:
 
 - **Capacidades Críticas:** están bloqueadas (requieren respaldo completo).
-- **Punto de restauración:** no disponible todavía en esta versión.
-- **Tareas programadas y comandos externos:** se indican como "no disponible todavía".
+- **Punto de restauración:** no disponible todavía en esta versión. En producción la aplicación funciona **fail-closed**: si una capacidad exige punto de restauración y no hay servicio disponible, no se aplica nada (no muta el sistema).
+- **Confirmación real:** al aplicar una capacidad que la requiera se muestra un cuadro de diálogo de Windows (`MessageBox`) con nombre, riesgo y resumen de las acciones; si el usuario elige "No", la operación se cancela.
+- **Tareas programadas y comandos externos:** se indican como "no disponible todavía" (el ejecutor devuelve error sin ejecutar nada real).
 - **TrustedInstaller:** no disponible.
 
 ---
