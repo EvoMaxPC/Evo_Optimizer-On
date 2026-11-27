@@ -1,0 +1,47 @@
+Build started 11/27/2026 2:34:06 AM.
+Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.10]   Discovering: Evo.Windows.Tests
+[xUnit.net 00:00:00.14]   Discovered:  Evo.Windows.Tests
+[xUnit.net 00:00:00.14]   Starting:    Evo.Windows.Tests
+[xUnit.net 00:00:00.26]       System.InvalidOperationException : El proceso 'ping' sigue en ejecución tras intentar terminarlo.
+[xUnit.net 00:00:00.26]     Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping [FAIL]
+[xUnit.net 00:00:00.26]       Stack Trace:
+[xUnit.net 00:00:00.26]         /_/src/Evo.Windows/WindowsProcessAccessor.cs(44,0): at Evo.Windows.WindowsProcessAccessor.TerminateProcess(String processName)
+[xUnit.net 00:00:00.26]         /_/tests/Evo.Windows.Tests/WindowsAccessorsTests.cs(195,0): at Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping()
+[xUnit.net 00:00:00.26]         --- End of stack trace from previous location ---
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds [31 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Binary_ZeroAndFF [1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_NestedKey_AncestorsCreated [1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_MissingKeyAndValue_ReturnNull [< 1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_ExpandString_NotExpanded [< 1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_DefaultValue_EmptyName [< 1 ms]
+  Failed Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping [25 ms]
+  Error Message:
+   System.InvalidOperationException : El proceso 'ping' sigue en ejecución tras intentar terminarlo.
+  Stack Trace:
+     at Evo.Windows.WindowsProcessAccessor.TerminateProcess(String processName) in /_/src/Evo.Windows/WindowsProcessAccessor.cs:line 44
+   at Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping() in /_/tests/Evo.Windows.Tests/WindowsAccessorsTests.cs:line 195
+--- End of stack trace from previous location ---
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly [629 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException [6 ms]
+[xUnit.net 00:00:00.93]   Finished:    Evo.Windows.Tests
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree [20 ms]
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Windows.Tests\Evo.Windows.Tests.trx
+
+Test Run Failed.
+Total tests: 10
+     Passed: 9
+     Failed: 1
+ Total time: 1.4724 Seconds
+     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\Evo.Windows.Tests.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\Evo.Windows.Tests.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.17
