@@ -1,0 +1,128 @@
+name: release-exe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'arena/ab2d6de7-evo-optimizer-on'
+    paths:
+      - 'src/**'
+      - 'catalog/**'
+      - '.github/workflows/release-exe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish-win-x64:
+    name: Publicar .exe (win-x64)
+    runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      DOTNET_NOLOGO: '1'
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: '1'
+      CI: 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Instalar .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Version del SDK
+        shell: pwsh
+        run: |
+          dotnet --version
+
+      - name: Publicar Evo.App (win-x64, self-contained, single file)
+        shell: pwsh
+        run: |
+          dotnet publish src/Evo.App -c Release -r win-x64 --self-contained true `
+            -p:PublishSingleFile=true `
+            -p:IncludeNativeLibrariesForSelfExtract=true `
+            -o publish/win-x64
+
+      - name: Verificar salida de publish
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Path publish/win-x64 -Filter *.exe -File -ErrorAction SilentlyContinue
+          if (-not $exe) {
+            Write-Error "No se encontr� ning�n .exe en publish/win-x64. Falla de publish."
+            exit 1
+          }
+          Write-Host "EXE encontrado: $($exe.Name) ($($exe.Length) bytes)"
+
+          $catalogDir = Join-Path -Path (Get-Location) -ChildPath 'publish/win-x64/catalog'
+          if (-not (Test-Path -Path $catalogDir)) {
+            Write-Error "No se encontr� la carpeta catalog/ dentro de publish/win-x64. El .exe no podr� cargar capacidades."
+            exit 1
+          }
+          Write-Host "Carpeta catalog/ presente en la salida de publish."
+
+      - name: Crear zip y sha256
+        shell: pwsh
+        run: |
+          $zipPath = 'EvoClean-preview-win-x64.zip'
+          if (Test-Path -Path $zipPath) { Remove-Item -Path $zipPath -Force }
+          Compress-Archive -Path 'publish/win-x64/*' -DestinationPath $zipPath -Force
+          $hash = Get-FileHash -Path $zipPath -Algorithm SHA256
+          $hash.Hash | Out-File -FilePath "$zipPath.sha256" -Encoding ascii -NoNewline
+          Write-Host "ZIP: $zipPath"
+          Write-Host "SHA256: $($hash.Hash)"
+          Write-Host "Tamaño: $((Get-Item $zipPath).Length) bytes"
+
+      - name: Resumen del job
+        shell: pwsh
+        run: |
+          $zipPath = 'EvoClean-preview-win-x64.zip'
+          $size = (Get-Item $zipPath).Length
+          $sha256 = Get-Content -Path "$zipPath.sha256" -Raw
+          $files = Get-ChildItem -Path 'publish/win-x64' -Recurse | Select-Object -ExpandProperty Name
+          $fileList = ($files -join "  \n  ")
+          @"
+## release-exe — resumen
+
+- Artefacto: `EvoClean-preview-win-x64.zip`
+- Tamaño: $size bytes
+- SHA256: `$sha256`
+- Archivos en el zip:
+  $fileList
+
+Descargue el artefacto desde la pestaña **Actions** de esta corrida, o desde el pre-release en borrador en **Releases**.
+"@ | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
+
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: EvoClean-preview-win-x64
+          path: |
+            EvoClean-preview-win-x64.zip
+            EvoClean-preview-win-x64.zip.sha256
+          retention-days: 30
+
+      - name: Crear pre-release en borrador
+        shell: pwsh
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $runNumber = "${{ github.run_number }}"
+          $tagName = "preview-$runNumber"
+          $sha = "${{ github.sha }}"
+          $zip = "EvoClean-preview-win-x64.zip"
+          $sha256 = "EvoClean-preview-win-x64.zip.sha256"
+          gh release create "$tagName" `
+            --draft `
+            --prerelease `
+            --target "$sha" `
+            --title "EVO Clean preview $runNumber" `
+            --notes "Pre-release en borrador generado por release-exe (run $runNumber). SHA: $sha" `
+            "$zip" `
+            "$sha256"
+          Write-Host "Pre-release creado: $tagName"

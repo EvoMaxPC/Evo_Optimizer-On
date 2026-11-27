@@ -211,7 +211,7 @@ public sealed class MainViewModel
     {
         var bySection = capabilities
             .GroupBy(c => c.SectionId)
-            .ToDictionary(g => g.Key, g => g.ToList(), System.StringComparer.OrdinalIgnoreCase);
+            .ToDictionary(g => g.Key, g => g.ToList());
 
         var sections = new ObservableCollection<SectionViewModel>();
 
