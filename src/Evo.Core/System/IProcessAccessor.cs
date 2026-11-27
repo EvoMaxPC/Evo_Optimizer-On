@@ -8,6 +8,9 @@ public interface IProcessAccessor
     /// <summary>Termina el proceso. Devuelve true si lo encontró y lo cerró.</summary>
     bool TerminateProcess(string processName);
 
+    /// <summary>Detiene el proceso (petitorio graceful). Devuelve true si lo encontró y lo detuvo.</summary>
+    bool StopProcess(string processName);
+
     /// <summary>Arranca un proceso y devuelve su id (-1 si no arrancó).</summary>
     int StartProcess(string fileName, IReadOnlyList<string> arguments);
 }

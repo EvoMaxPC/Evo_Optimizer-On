@@ -33,31 +33,49 @@ public sealed class ProcessActionExecutor : IActionExecutor
                 Describe(processAction)));
         }
 
-        if (context.Mutates && processAction.Terminate)
+        if (!context.Mutates)
         {
-            if (!context.Processes.TerminateProcess(processAction.ProcessName))
-            {
-                return Task.FromResult(ActionResult.Fail(
-                    action.Key,
-                    $"No se pudo terminar '{processAction.ProcessName}'.",
-                    previous,
-                    Describe(processAction)));
-            }
-
-            // Se registra en el diario con estado previo "Running" pero el
-            // rollback de procesos es informativo (no se reinician solos).
-            context.Journal.Add(new ProcessUndoEntry
-            {
-                CapabilityId = context.CapabilityId,
-                ActionKey = action.Key,
-                Description = Describe(processAction),
-                PreviousState = previous,
-                ProcessName = processAction.ProcessName,
-            });
+            // DryRun / Audit: no muta, solo informa.
+            return Task.FromResult(ActionResult.Ok(
+                action.Key, previous, "Stopped", false, Describe(processAction)));
         }
 
+        bool stopped;
+        if (processAction.Terminate)
+        {
+            stopped = context.Processes.TerminateProcess(processAction.ProcessName);
+        }
+        else
+        {
+            stopped = context.Processes.StopProcess(processAction.ProcessName);
+        }
+
+        // Reporte honesto: si la acción reporta éxito pero el proceso sigue
+        // corriendo, es un fallo real, nunca Ok.
+        if (!stopped || context.Processes.IsRunning(processAction.ProcessName))
+        {
+            return Task.FromResult(ActionResult.Fail(
+                action.Key,
+                processAction.Terminate
+                    ? $"El proceso '{processAction.ProcessName}' no se pudo detener."
+                    : $"El proceso '{processAction.ProcessName}' no se detuvo con Stop (Terminate=false).",
+                previous,
+                Describe(processAction)));
+        }
+
+        // Se registra en el diario con estado previo "Running" pero el
+        // rollback de procesos es informativo (no se reinician solos).
+        context.Journal.Add(new ProcessUndoEntry
+        {
+            CapabilityId = context.CapabilityId,
+            ActionKey = action.Key,
+            Description = Describe(processAction),
+            PreviousState = previous,
+            ProcessName = processAction.ProcessName,
+        });
+
         return Task.FromResult(ActionResult.Ok(
-            action.Key, previous, "Stopped", context.Mutates, Describe(processAction)));
+            action.Key, previous, "Stopped", true, Describe(processAction)));
     }
 
     public string? ReadCurrentState(CapabilityAction action, ActionContext context)

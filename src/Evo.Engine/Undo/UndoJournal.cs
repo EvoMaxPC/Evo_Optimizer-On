@@ -333,7 +333,8 @@ public sealed record RegistryCreateKeyUndoEntry : UndoJournalEntry
 
 /// <summary>
 /// Deshacer la creación de una tarea programada (paso 11): se borra la tarea
-/// creada o se restaura el estado previo de la que ya existía.
+/// creada o se restaura el estado previo de la que ya existente, incluida su
+/// definición cuando se guardó.
 /// </summary>
 public sealed record TaskCreateUndoEntry : UndoJournalEntry
 {
@@ -346,6 +347,9 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
 
     /// <summary>Estado previo de la tarea si ya existía.</summary>
     public required bool WasEnabled { get; init; }
+
+    /// <summary>Definición guardada al crear la tarea (null si no se guardó).</summary>
+    public required TaskDefinition? Definition { get; init; }
 
     public override UndoEntryOutcome Restore(IUndoContext context)
     {
@@ -372,11 +376,23 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
             };
         }
 
-        if (WasEnabled)
+        // Sin definición guardada no se puede restaurar la tarea completa.
+        if (Definition is null)
         {
-            context.Tasks.EnableTask(TaskPath, TaskName);
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.NotReversible,
+                FailureMessage = "TaskDefinition no se guardo: no se puede restaurar",
+            };
         }
-        else
+
+        // Restaurar definición (CreateTask la pone habilitada).
+        context.Tasks.CreateTask(Definition);
+
+        // Ajustar estado de habilitación previo (preserva la definición).
+        if (!WasEnabled)
         {
             context.Tasks.DisableTask(TaskPath, TaskName);
         }

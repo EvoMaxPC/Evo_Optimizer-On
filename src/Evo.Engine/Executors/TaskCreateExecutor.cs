@@ -94,6 +94,19 @@ public sealed class TaskCreateExecutor : IActionExecutor
                     Describe(createAction)));
             }
 
+            var taskDefinition = new TaskDefinition
+            {
+                TaskPath = createAction.TaskPath,
+                TaskName = createAction.TaskName,
+                Execute = createAction.Execute,
+                Arguments = createAction.Arguments,
+                Trigger = createAction.Trigger,
+                TriggerAt = createAction.TriggerAt,
+                UserId = createAction.UserId,
+                RunLevel = createAction.RunLevel,
+                Description = createAction.TaskDescription,
+            };
+
             context.Journal.Add(new TaskCreateUndoEntry
             {
                 CapabilityId = context.CapabilityId,
@@ -104,6 +117,7 @@ public sealed class TaskCreateExecutor : IActionExecutor
                 TaskName = createAction.TaskName,
                 ExistedBefore = existed,
                 WasEnabled = wasEnabled,
+                Definition = taskDefinition,
             });
         }
 
