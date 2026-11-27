@@ -449,7 +449,243 @@ public sealed class ExecutorTests
         Assert.Empty(harness.Processes.Terminated);
     }
 
-        // ---------------- H5: RegistryDeleteKey fail-closed ----------------
+    // ---------------- H4: Tareas con definición ORIGINAL ----------------
+
+    /// <summary>
+    /// H4.1: TaskCreate con tarea nueva → journal entry con PreviousDefinition=null
+    /// (no existía antes) → Restore borra la tarea.
+    /// </summary>
+    [Fact]
+    public async Task TaskCreateNueva_PreviousDefinitionNull_RestoreBorraTarea()
+    {
+        var harness = TestHarness.Create();
+        var journal = new UndoJournal();
+
+        var result = await new TaskCreateExecutor().ExecuteAsync(new TaskCreateAction
+        {
+            Order = 1,
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "TestTask",
+            Execute = "cmd.exe",
+            Arguments = "/c echo hola",
+            Trigger = "OnLogon",
+            UserId = "System",
+            RunLevel = "Highest",
+            TaskDescription = "Tarea de prueba",
+        }, ContextFor(harness, journal: journal));
+
+        Assert.True(result.Success);
+        Assert.True(harness.Tasks.Exists(@"\\Microsoft\Windows\\Test", "TestTask"));
+
+        var entry = Assert.Single(journal.Entries);
+        var tce = Assert.IsType<TaskCreateUndoEntry>(entry);
+        Assert.False(tce.ExistedBefore);
+        Assert.Null(tce.PreviousDefinition);
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
+
+        Assert.True(report.Success);
+        Assert.Single(report.Restored);
+        Assert.False(harness.Tasks.Exists(@"\\Microsoft\Windows\\Test", "TestTask"));
+    }
+
+    /// <summary>
+    /// H4.2: TaskCreate sobre tarea existente (Overwrite=true) → guarda
+    /// PreviousDefinition (la ORIGINAL) → Restore restaura definición original
+    /// y WasEnabled original.
+    /// </summary>
+    [Fact]
+    public async Task TaskCreateExistente_PreviousDefinitionOriginal_RestoreRestauraOriginal()
+    {
+        var harness = TestHarness.Create();
+        var definicionOriginal = new TaskDefinition
+        {
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "ExistingTask",
+            Execute = "orig.exe",
+            Arguments = "/orig",
+            Trigger = "Daily",
+            TriggerAt = "08:00",
+            UserId = "System",
+            RunLevel = "Highest",
+            Description = "Original",
+        };
+        harness.Tasks.Seed(@"\\Microsoft\Windows\\Test", "ExistingTask", enabled: false, definition: definicionOriginal);
+        var journal = new UndoJournal();
+
+        var result = await new TaskCreateExecutor().ExecuteAsync(new TaskCreateAction
+        {
+            Order = 1,
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "ExistingTask",
+            Execute = "nuevo.exe",
+            Arguments = "/nuevo",
+            Trigger = "OnLogon",
+            UserId = "Admin",
+            RunLevel = "Limited",
+            TaskDescription = "Nueva",
+            Overwrite = true,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.True(result.Success);
+        var entry = Assert.Single(journal.Entries);
+        var tce = Assert.IsType<TaskCreateUndoEntry>(entry);
+        Assert.True(tce.ExistedBefore);
+        Assert.False(tce.WasEnabled);
+        Assert.NotNull(tce.PreviousDefinition);
+        Assert.Equal("orig.exe", tce.PreviousDefinition.Execute);
+        Assert.Equal("Daily", tce.PreviousDefinition.Trigger);
+        Assert.Equal("System", tce.PreviousDefinition.UserId);
+        Assert.Equal("/orig", tce.PreviousDefinition.Arguments);
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
+
+        Assert.True(report.Success);
+        Assert.Single(report.Restored);
+        Assert.True(harness.Tasks.Exists(@"\\Microsoft\Windows\\Test", "ExistingTask"));
+        Assert.False(harness.Tasks.IsTaskEnabled(@"\\Microsoft\Windows\\Test", "ExistingTask"));
+        var restored = harness.Tasks.Snapshot().Values
+            .FirstOrDefault(t => t.Path == @"\\Microsoft\Windows\\Test" && t.Name == "ExistingTask");
+        Assert.NotNull(restored);
+        Assert.NotNull(restored.Definition);
+        Assert.Equal("orig.exe", restored.Definition.Execute);
+        Assert.Equal("Daily", restored.Definition.Trigger);
+        Assert.Equal("System", restored.Definition.UserId);
+    }
+
+    /// <summary>
+    /// H4.3: GetDefinition devuelve null → Fail sin mutar, tarea intacta.
+    /// </summary>
+    [Fact]
+    public async Task TaskCreateExistente_GetDefinitionNull_FailSinMutar()
+    {
+        var harness = TestHarness.Create();
+        harness.Tasks.Seed(@"\\Microsoft\Windows\\Test", "SinDef", enabled: true);
+        var journal = new UndoJournal();
+
+        var result = await new TaskCreateExecutor().ExecuteAsync(new TaskCreateAction
+        {
+            Order = 1,
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "SinDef",
+            Execute = "nuevo.exe",
+            Trigger = "OnLogon",
+            UserId = "Admin",
+            RunLevel = "Limited",
+            Overwrite = true,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.Contains("no es legible", result.ErrorMessage);
+        Assert.True(harness.Tasks.Exists(@"\\Microsoft\Windows\\Test", "SinDef"));
+        Assert.Empty(journal.Entries);
+    }
+
+    /// <summary>
+    /// H4.4: GetDefinition lanza → Fail sin mutar.
+    /// </summary>
+    [Fact]
+    public async Task TaskCreateExistente_GetDefinitionLanza_FailSinMutar()
+    {
+        var harness = TestHarness.Create();
+        harness.Tasks.Seed(@"\\Microsoft\Windows\\Test", "Fallida", enabled: true);
+        harness.Tasks.FailGetDefinitionWith = "error de lectura";
+        var journal = new UndoJournal();
+
+        var result = await new TaskCreateExecutor().ExecuteAsync(new TaskCreateAction
+        {
+            Order = 1,
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "Fallida",
+            Execute = "nuevo.exe",
+            Trigger = "OnLogon",
+            UserId = "Admin",
+            RunLevel = "Limited",
+            Overwrite = true,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.Contains("error de lectura", result.ErrorMessage);
+        Assert.True(harness.Tasks.Exists(@"\\Microsoft\Windows\\Test", "Fallida"));
+        Assert.Empty(journal.Entries);
+    }
+
+    /// <summary>
+    /// H4.5: ExistedBefore=true + PreviousDefinition=null → Restore → NotReversible.
+    /// </summary>
+    [Fact]
+    public async Task TaskCreateSinPreviousDefinition_RestoreNotReversible()
+    {
+        var journal = new UndoJournal();
+        journal.Add(new TaskCreateUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "task",
+            Description = "task",
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "TestTask",
+            ExistedBefore = true,
+            WasEnabled = true,
+            PreviousDefinition = null,
+            PreviousState = null,
+        });
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            new FakeRegistryAccessor(), new FakeServiceAccessor(), new FakeTaskAccessor(),
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.True(report.Success);
+        Assert.Single(report.NotReversible);
+        Assert.Equal("task", report.NotReversible[0].ActionKey);
+        Assert.Contains("TaskDefinition no se guardo", report.NotReversible[0].FailureMessage);
+    }
+
+    /// <summary>
+    /// H4.6: CreateTask lanza durante rollback → Failed, entrada conservada.
+    /// </summary>
+    [Fact]
+    public async Task TaskCreateCreateTaskLanzaDuranteRollback_FailedEntradaConservada()
+    {
+        var journal = new UndoJournal();
+        var definicionOriginal = new TaskDefinition
+        {
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "TestTask",
+            Execute = "orig.exe",
+            Trigger = "OnLogon",
+            UserId = "System",
+            RunLevel = "Highest",
+        };
+        journal.Add(new TaskCreateUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "task",
+            Description = "task",
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "TestTask",
+            ExistedBefore = true,
+            WasEnabled = true,
+            PreviousDefinition = definicionOriginal,
+            PreviousState = null,
+        });
+
+        var tasks = new FakeTaskAccessor();
+        tasks.FailCreateWith = "error al crear";
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            new FakeRegistryAccessor(), new FakeServiceAccessor(), tasks,
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.False(report.Success);
+        Assert.Single(report.Failed);
+        Assert.Equal("task", report.Failed[0].ActionKey);
+        Assert.Single(journal.Entries);
+        Assert.Equal("task", journal.Entries[0].ActionKey);
+    }
+
+    // ---------------- H5: RegistryDeleteKey fail-closed ----------------
 
     /// <summary>
     /// H5.1: Clave con valores y subclaves → snapshot → rollback restaura árbol completo.
@@ -607,7 +843,7 @@ public sealed class ExecutorTests
     public async Task RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada()
     {
         var registry = new FakeRegistryAccessor();
-        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\\Evo\\Test", "Val1", 1);
+        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
         var journal = new UndoJournal();
         var ctx = new ActionContext
         {
@@ -625,7 +861,7 @@ public sealed class ExecutorTests
         {
             Order = 1,
             Hive = RegistryHiveKind.LocalMachine,
-            KeyPath = @"SOFTWARE\\Evo\\Test",
+            KeyPath = @"SOFTWARE\Evo\Test",
             Recursive = true,
         }, ctx);
 
@@ -634,7 +870,7 @@ public sealed class ExecutorTests
 
         // Rollback con un registry que falla en SetValue
         var failingRegistry = new FailingRegistryAccessor();
-        failingRegistry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\\Evo\\Test", "Val1", 1);
+        failingRegistry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
 
         var report = await journal.RollbackAsync(new UndoContext(
             failingRegistry, new FakeServiceAccessor(), new FakeTaskAccessor(),
@@ -759,6 +995,73 @@ public sealed class ExecutorTests
         Assert.Empty(journal.Entries);
     }
 
+    // ---------------- PASO 1: Rollback por identidad ----------------
+
+    /// <summary>
+    /// PASO 1: Rollback por identidad — dos entradas con el mismo ActionKey,
+    /// una Restored y otra Failed → RollbackAsync conserva solo la entrada
+    /// fallida (por índice), la exitosa se elimina del diario.
+    /// </summary>
+    [Fact]
+    public async Task RollbackPorIdentidad_SoloEntradaFallida_SeConserva()
+    {
+        var journal = new UndoJournal();
+        var definicionOriginal = new TaskDefinition
+        {
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "TestTask",
+            Execute = "orig.exe",
+            Trigger = "OnLogon",
+            UserId = "System",
+            RunLevel = "Highest",
+        };
+
+        // Entrada 1: ExistedBefore=false → DeleteTask → siempre exitoso → Restored
+        journal.Add(new TaskCreateUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "task",
+            Description = "task",
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "TestTask",
+            ExistedBefore = false,
+            WasEnabled = false,
+            PreviousDefinition = null,
+            PreviousState = null,
+        });
+
+        // Entrada 2: mismo ActionKey, ExistedBefore=true + PreviousDefinition → CreateTask → falla
+        journal.Add(new TaskCreateUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "task",
+            Description = "task",
+            TaskPath = @"\\Microsoft\Windows\\Test",
+            TaskName = "OtraTarea",
+            ExistedBefore = true,
+            WasEnabled = true,
+            PreviousDefinition = definicionOriginal,
+            PreviousState = null,
+        });
+
+        var tasks = new FakeTaskAccessor();
+        tasks.FailCreateWith = "error al crear"; // La segunda falla (CreateTask), la primera no (DeleteTask)
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            new FakeRegistryAccessor(), new FakeServiceAccessor(), tasks,
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.True(report.Success);
+        Assert.Single(report.Restored);
+        Assert.Single(report.Failed);
+        Assert.Equal("task", report.Restored[0].ActionKey);
+        Assert.Equal("task", report.Failed[0].ActionKey);
+
+        // Solo la entrada fallida se conserva (por índice); la exitosa se elimina.
+        Assert.Single(journal.Entries);
+        Assert.Equal("task", journal.Entries[0].ActionKey);
+    }
+
     // ---------------- Helpers ----------------
 
     /// <summary>
@@ -830,68 +1133,4 @@ public sealed class ExecutorTests
             base.SetValue(hive, keyPath, valueName, value, kind);
         }
     }
-
-    /// <summary>
-    /// PASO 1: Rollback por identidad — dos entradas con el mismo ActionKey,
-    /// una Restored y otra Failed → RollbackAsync conserva solo la entrada
-    /// fallida (por índice), la exitosa se elimina del diario.
-    /// </summary>
-    [Fact]
-    public async Task RollbackPorIdentidad_SoloEntradaFallida_SeConserva()
-    {
-        var journal = new UndoJournal();
-        var definicionOriginal = new TaskDefinition
-        {
-            TaskPath = @"\\Microsoft\\Windows\\Test",
-            TaskName = "TestTask",
-            Execute = "orig.exe",
-            Trigger = "OnLogon",
-            UserId = "System",
-            RunLevel = "Highest",
-        };
-
-        // Entrada 1: ExistedBefore=false → DeleteTask → siempre exitoso → Restored
-        journal.Add(new TaskCreateUndoEntry
-        {
-            CapabilityId = "c",
-            ActionKey = "task",
-            Description = "task",
-            TaskPath = @"\\Microsoft\\Windows\\Test",
-            TaskName = "TestTask",
-            ExistedBefore = false,
-            WasEnabled = false,
-            PreviousDefinition = null,
-            PreviousState = null,
-        });
-
-        // Entrada 2: mismo ActionKey, ExistedBefore=true + PreviousDefinition → CreateTask → falla
-        journal.Add(new TaskCreateUndoEntry
-        {
-            CapabilityId = "c",
-            ActionKey = "task",
-            Description = "task",
-            TaskPath = @"\\Microsoft\\Windows\\Test",
-            TaskName = "OtraTarea",
-            ExistedBefore = true,
-            WasEnabled = true,
-            PreviousDefinition = definicionOriginal,
-            PreviousState = null,
-        });
-
-        var tasks = new FakeTaskAccessor();
-        tasks.FailCreateWith = "error al crear"; // La segunda falla (CreateTask), la primera no (DeleteTask)
-
-        var report = await journal.RollbackAsync(new UndoContext(
-            new FakeRegistryAccessor(), new FakeServiceAccessor(), tasks,
-            new FakeProcessAccessor(), new FakeCommandRunner()));
-
-        Assert.True(report.Success);
-        Assert.Single(report.Restored);
-        Assert.Single(report.Failed);
-        Assert.Equal("task", report.Restored[0].ActionKey);
-        Assert.Equal("task", report.Failed[0].ActionKey);
-
-        // Solo la entrada fallida se conserva (por índice); la exitosa se elimina.
-        Assert.Single(journal.Entries);
-        Assert.Equal("task", journal.Entries[0].ActionKey);
-    }
+}
