@@ -162,11 +162,35 @@ public sealed class Wave4EngineTests
             DeleteKeyAction(recursive: true), ContextFor(harness, new UndoJournal()));
 
         Assert.False(result.Success);
-        // El aborto temprano en TakeSnapshot lanza InvalidOperationException por
-        // exceso de valores/profundidad; el executor lo envuelve en
-        // "No se pudo tomar la instantánea de..." (fail-closed, sin borrar).
-        Assert.Contains("No se pudo tomar la instantánea", result.ErrorMessage, StringComparison.Ordinal);
+        // TakeSnapshot lanza SnapshotLimitExceededException por exceso de
+        // valores (MaxValues=2 con 3 valores siembrados). El executor la captura
+        // con catch propio y devuelve Fail con el mensaje del límite, sin borrar.
+        Assert.Contains("Límite de valores excedido", result.ErrorMessage, StringComparison.Ordinal);
         Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
+    }
+
+    /// <summary>T1 fail-closed: si el lector lanza InvalidOperationException al
+    /// enumerar subclaves, el motor devuelve Fail con el mensaje generico del
+    /// lector (no del límite), sin borrar y sin entrada de diario.</summary>
+    [Fact]
+    public async Task DeleteKey_ReaderThrowsOnSubKeyNames_GenericMessageNoLimit()
+    {
+        var harness = TestHarness.Create();
+        var failing = new FailingTreeReader(harness.Registry);
+        failing.SetValue(RegistryHive.LocalMachine, KeyPath, "Str", "texto",
+            RegistryValueKind.String);
+        var journal = new UndoJournal();
+
+        var result = await new RegistryDeleteKeyExecutor().ExecuteAsync(
+            DeleteKeyAction(recursive: true),
+            ContextFor(harness, journal, registry: failing));
+
+        Assert.False(result.Success);
+        Assert.Contains("No se pudo tomar la instantánea", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.DoesNotContain("límite", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
+        Assert.Empty(journal.Entries);
+        Assert.Equal(0, failing.DeleteKeyCalls);
     }
 
     /// <summary>T1: en Execute el borrado NO se hace sin instantánea, y con ella

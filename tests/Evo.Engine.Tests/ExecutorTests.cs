@@ -1592,6 +1592,7 @@ public sealed class ExecutorTests
         {
             if (!_valuesByKey.Remove(keyPath)) return false;
             _subKeysByKey.Remove(keyPath);
+            _knownKeys.Remove((hive, keyPath));
             return true;
         }
         public object? GetValue(RegistryHive hive, string keyPath, string valueName) =>

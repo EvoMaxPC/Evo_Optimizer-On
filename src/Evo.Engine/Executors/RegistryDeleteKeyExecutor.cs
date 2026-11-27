@@ -25,6 +25,18 @@ public sealed record RegistrySnapshotLimits
 }
 
 /// <summary>
+/// Excepcion propia lanzada por <see cref="TakeSnapshot"/> cuando el recorrido
+/// supera un limite de <see cref="RegistrySnapshotLimits"/> (profundidad,
+/// valores o claves). El executor la captura por separado de las fallas del
+/// lector para informar exactamente que limite se excedio, sin confundirla
+/// con un error de lectura del arbol.
+/// </summary>
+internal sealed class SnapshotLimitExceededException : Exception
+{
+    public SnapshotLimitExceededException(string message) : base(message) { }
+}
+
+/// <summary>
 /// Borra una clave completa del registro con deshacer exacto (paso 11).
 /// </summary>
 /// <remarks>
@@ -115,7 +127,18 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
             // que la trata como cancelación honesta (H1).
             throw;
         }
-        catch (Exception ex) when (ex is not OutOfMemoryException)
+        catch (SnapshotLimitExceededException ex)
+    {
+        // Límite de snapshot excedido: se informa el límite concreto y no se
+        // borra (fail-closed). No se envuelve en el mensaje genérico del
+        // lector para distinguirlo de una falla de lectura del árbol.
+        return Task.FromResult(ActionResult.Fail(
+            action.Key,
+            ex.Message + " No se borra (fail-closed).",
+            "present",
+            Describe(deleteAction)));
+    }
+catch (Exception ex) when (ex is not OutOfMemoryException)
         {
             return Task.FromResult(ActionResult.Fail(
                 action.Key,
@@ -186,7 +209,7 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
     /// <param name="hive">Colmena del registro (HKLM, HKCU, etc.).</param>
     /// <param name="keyPath">Ruta de la clave a instantanear.</param>
     /// <param name="limits">Límites opcionales. Si se exceden durante el recorrido,
-    /// se lanza <see cref="InvalidOperationException"/> y se deja de leer.</param>
+    /// se lanza <see cref="SnapshotLimitExceededException"/> y se deja de leer.</param>
     public static RegistryKeySnapshot TakeSnapshot(
         IRegistryTreeReader reader, RegistryHive hive, string keyPath,
         RegistrySnapshotLimits? limits = null)
@@ -209,8 +232,8 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
             // no seguimos leyendo este nodo ni sus hijos.
             if (lim is not null && depth > lim.MaxDepth)
             {
-                throw new InvalidOperationException(
-                    $"profundidad {depth} > {lim.MaxDepth}");
+                throw new SnapshotLimitExceededException(
+                    $"Límite de profundidad excedido: {depth} > {lim.MaxDepth}");
             }
 
             var values = new List<RegistryValueSnapshot>();
@@ -224,8 +247,8 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
                 totalValues++;
                 if (lim is not null && totalValues > lim.MaxValues)
                 {
-                    throw new InvalidOperationException(
-                        $"{totalValues} valores > {lim.MaxValues}");
+                    throw new SnapshotLimitExceededException(
+                        $"Límite de valores excedido: {totalValues} > {lim.MaxValues}");
                 }
             }
 
@@ -242,8 +265,8 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
                 totalKeys++;
                 if (lim is not null && totalKeys > lim.MaxKeys)
                 {
-                    throw new InvalidOperationException(
-                        $"{totalKeys} claves > {lim.MaxKeys}");
+                    throw new SnapshotLimitExceededException(
+                        $"Límite de claves excedido: {totalKeys} > {lim.MaxKeys}");
                 }
 
                 children.Add(Walk($"{path}\\{child}", depth + 1));
@@ -258,8 +281,8 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
         // profundidad se excede sin haber entrado a un nodo hijo adicional.
         if (lim is not null && maxDepthReached > lim.MaxDepth)
         {
-            throw new InvalidOperationException(
-                $"profundidad {maxDepthReached} > {lim.MaxDepth}");
+            throw new SnapshotLimitExceededException(
+                $"Límite de profundidad excedido: {maxDepthReached} > {lim.MaxDepth}");
         }
 
         return new RegistryKeySnapshot(root);
