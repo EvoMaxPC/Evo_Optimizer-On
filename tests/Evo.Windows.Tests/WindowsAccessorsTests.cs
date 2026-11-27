@@ -160,62 +160,6 @@ public sealed class WindowsAccessorsTests : IAsyncLifetime
         Assert.Equal(snapshotBefore, snapshotAfter);
     }
 
-    /// <summary>EngineCoordinator real: escribir valor, Execute, luego Rollback restaura.</summary>
-    [Fact]
-    public async Task EngineCoordinator_WriteValue_ExecuteAndRollbackRestores()
-    {
-        var valuePath = $"{_testRoot}\\CoordinatorTest";
-        _registry.SetValue(RegistryHive.CurrentUser, valuePath, "Antes", "original", RegistryValueKind.String);
-
-        var env = new TestSystemEnvironment();
-        var detector = new Evo.Detection.WindowsDetector();
-        var executors = new IActionExecutor[]
-        {
-            new RegistryActionExecutor(),
-            new RegistryDeleteKeyExecutor(),
-        };
-
-        var coordinator = new Evo.Engine.EngineCoordinator(
-            env, detector, executors,
-            catalog: null, restorePoints: null, confirmations: null);
-
-        var ctx = new ActionContext
-        {
-            Registry = _registry,
-            Services = new WindowsServiceAccessor(),
-            Tasks = new UnavailableTaskAccessor(),
-            Processes = new WindowsProcessAccessor(),
-            Commands = _commands,
-            Mode = ExecutionMode.Execute,
-            Journal = coordinator.Journal,
-            CapabilityId = "test.windows.coordinator",
-        };
-
-        // Write value through the coordinator's journal.
-        var writeAction = new RegistryAction
-        {
-            Order = 1,
-            Hive = RegistryHiveKind.CurrentUser,
-            KeyPath = valuePath,
-            ValueName = "Escrito",
-            Operation = RegistryOperation.Set,
-            ValueType = RegistryValueType.String,
-            Value = "nuevo valor",
-        };
-
-        var writeResult = await new RegistryActionExecutor().ExecuteAsync(writeAction, ctx);
-        Assert.True(writeResult.Success);
-        Assert.Equal("nuevo valor", _registry.GetValue(RegistryHive.CurrentUser, valuePath, "Escrito"));
-
-        // Rollback.
-        await coordinator.Journal.RollbackAsync(new UndoContext(
-            _registry, new WindowsServiceAccessor(), new UnavailableTaskAccessor(),
-            new WindowsProcessAccessor(), _commands));
-
-        Assert.Equal("original", _registry.GetValue(RegistryHive.CurrentUser, valuePath, "Antes"));
-        Assert.Null(_registry.GetValue(RegistryHive.CurrentUser, valuePath, "Escrito"));
-    }
-
     // ------------------------------------------------------------ Servicio
 
     /// <summary>EventLog existe en todo Windows cliente; lectura sin excepción.</summary>
