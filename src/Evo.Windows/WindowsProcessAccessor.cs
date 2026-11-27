@@ -37,14 +37,17 @@ public sealed class WindowsProcessAccessor : IProcessAccessor
             }
         }
 
-        // Verificar que ya no estén vivos.
-        var stillAlive = Process.GetProcessesByName(processName).Length > 0;
-        if (stillAlive)
+        // Verificar que ya no estén vivos (esperar hasta 5 s, el proceso puede tardar en morir).
+        for (int i = 0; i < 25; i++)
         {
-            throw new InvalidOperationException($"El proceso '{processName}' sigue en ejecución tras intentar terminarlo.");
+            if (Process.GetProcessesByName(processName).Length == 0)
+            {
+                return true;
+            }
+            Thread.Sleep(200);
         }
 
-        return true;
+        throw new InvalidOperationException($"El proceso '{processName}' sigue en ejecución tras intentar terminarlo.");
     }
 
     /// <summary>Arranca un proceso y devuelve su id.</summary>
