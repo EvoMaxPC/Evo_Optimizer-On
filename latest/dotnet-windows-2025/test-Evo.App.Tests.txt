@@ -1,73 +1,32 @@
-Build started 11/27/2026 11:09:02 PM.
+Build started 11/27/2026 11:13:29 PM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\bin\Release\net10.0-windows\Evo.App.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.12]   Discovering: Evo.App.Tests
-[xUnit.net 00:00:00.19]   Discovered:  Evo.App.Tests
-[xUnit.net 00:00:00.19]   Starting:    Evo.App.Tests
-[xUnit.net 00:00:00.38]     Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [FAIL]
-[xUnit.net 00:00:00.38]       Assert.Contains() Failure: Sub-string not found
-[xUnit.net 00:00:00.38]       String:    "[Execute] cap.rp\r\n  Acciones: 0 | Éxito: "···
-[xUnit.net 00:00:00.38]       Not found: "Restore"
-[xUnit.net 00:00:00.39]       Stack Trace:
-[xUnit.net 00:00:00.39]         /_/tests/Evo.App.Tests/Tests.cs(233,0): at Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio()
-[xUnit.net 00:00:00.39]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:00.39]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Passed Evo.App.Tests.Tests.TrustedInstaller_No_Disponible [40 ms]
-  Passed Evo.App.Tests.Tests.Simular_DryRun_No_Muta_Fake [40 ms]
+[xUnit.net 00:00:00.10]   Discovering: Evo.App.Tests
+[xUnit.net 00:00:00.15]   Discovered:  Evo.App.Tests
+[xUnit.net 00:00:00.15]   Starting:    Evo.App.Tests
+  Passed Evo.App.Tests.Tests.TrustedInstaller_No_Disponible [22 ms]
+  Passed Evo.App.Tests.Tests.Simular_DryRun_No_Muta_Fake [29 ms]
   Passed Evo.App.Tests.Tests.Build_Conocido_Cliente_Compatible [3 ms]
   Passed Evo.App.Tests.Tests.Specified_No_Ejecutable [2 ms]
-  Failed Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [13 ms]
-  Error Message:
-   Assert.Contains() Failure: Sub-string not found
-String:    "[Execute] cap.rp\r\n  Acciones: 0 | Éxito: "···
-Not found: "Restore"
-  Stack Trace:
-     at Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio() in /_/tests/Evo.App.Tests/Tests.cs:line 233
-   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Passed Evo.App.Tests.Tests.Critical_Bloqueada [4 ms]
+  Passed Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [2 ms]
+  Passed Evo.App.Tests.Tests.Critical_Bloqueada [2 ms]
   Passed Evo.App.Tests.Tests.Diecisiete_Secciones_Titulos_Exactos [< 1 ms]
-  Passed Evo.App.Tests.Tests.Privilege_Admin_NoAdmin_Muestra_Aviso [1 ms]
-  Passed Evo.App.Tests.Tests.Build_Desconocido_NoAplicaNada [2 ms]
-[xUnit.net 00:00:00.45]     Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada [FAIL]
-[xUnit.net 00:00:00.45]       Assert.All() Failure: 1 out of 1 items in the collection did not pass.
-[xUnit.net 00:00:00.45]       [0]: Item:  CapabilityViewModel { CanApply = True, CanSimulate = True, CanUndo = True, Confirmation = None, Description = "Descripción de cap.a", ··· }
-[xUnit.net 00:00:00.45]            Error: Assert.False() Failure
-[xUnit.net 00:00:00.45]                   Expected: False
-[xUnit.net 00:00:00.45]                   Actual:   True
-[xUnit.net 00:00:00.45]       Stack Trace:
-[xUnit.net 00:00:00.45]         /_/tests/Evo.App.Tests/Tests.cs(167,0): at Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada()
-[xUnit.net 00:00:00.45]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-[xUnit.net 00:00:00.45]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-[xUnit.net 00:00:00.45]   Finished:    Evo.App.Tests
-  Failed Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada [11 ms]
-  Error Message:
-   Assert.All() Failure: 1 out of 1 items in the collection did not pass.
-[0]: Item:  CapabilityViewModel { CanApply = True, CanSimulate = True, CanUndo = True, Confirmation = None, Description = "Descripción de cap.a", ··· }
-     Error: Assert.False() Failure
-            Expected: False
-            Actual:   True
-  Stack Trace:
-     at Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada() in /_/tests/Evo.App.Tests/Tests.cs:line 167
-   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-  Passed Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original [7 ms]
+  Passed Evo.App.Tests.Tests.Privilege_Admin_NoAdmin_Muestra_Aviso [< 1 ms]
+  Passed Evo.App.Tests.Tests.Build_Desconocido_NoAplicaNada [1 ms]
+[xUnit.net 00:00:00.29]   Finished:    Evo.App.Tests
+  Passed Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada [< 1 ms]
+  Passed Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original [16 ms]
   Passed Evo.App.Tests.Tests.Seccion_Sin_Capacidades_Muestra_Sin_Capacidades_Todavia [< 1 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.App.Tests\Evo.App.Tests.trx
 
-Test Run Failed.
+Test Run Successful.
 Total tests: 12
-     Passed: 10
-     Failed: 2
- Total time: 1.0435 Seconds
-     1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\Evo.App.Tests.csproj" on node 1 (VSTest target(s)).
-     1>_VSTestConsole:
-         MSB4181: The "VSTestTask" task returned false but did not log an error.
-     1>Done Building Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\Evo.App.Tests.csproj" (VSTest target(s)) -- FAILED.
+     Passed: 12
+ Total time: 0.7391 Seconds
 
-Build FAILED.
+Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.29
+Time Elapsed 00:00:01.72
