@@ -182,6 +182,9 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
     }
 
     /// <summary>Instantánea recursiva del subárbol (valores, tipos y subclaves).</summary>
+    /// <param name="reader">Lector del árbol de claves del registro.</param>
+    /// <param name="hive">Colmena del registro (HKLM, HKCU, etc.).</param>
+    /// <param name="keyPath">Ruta de la clave a instantanear.</param>
     /// <param name="limits">Límites opcionales. Si se exceden durante el recorrido,
     /// se lanza <see cref="InvalidOperationException"/> y se deja de leer.</param>
     public static RegistryKeySnapshot TakeSnapshot(
