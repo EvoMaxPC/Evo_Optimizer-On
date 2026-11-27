@@ -179,8 +179,8 @@ public sealed class MainViewModel
         var releaseCatalog = compatibility.Build > 0
             ? new WindowsReleaseCatalog
             {
-                Releases =
-                [
+                Releases = new List<WindowsRelease>
+                {
                     new WindowsRelease
                     {
                         Id = $"win{compatibility.Build}",
@@ -190,7 +190,7 @@ public sealed class MainViewModel
                         InstallationType = compatibility.InstallationType,
                         Architectures = ["x64"],
                     },
-                ],
+                },
             }
             : new WindowsReleaseCatalog();
         var detector = new WindowsDetector(environment, new FakeRegistryAccessor(), releaseCatalog);
@@ -317,7 +317,7 @@ public sealed class MainViewModel
         var plan = new ExecutionPlan(contract, steps);
         var coordinator = new EngineCoordinator(
             _environment, _detector, _executors.Values,
-            catalog: _catalog,
+            catalog: _catalog.Values,
             restorePoints: _restorePoints,
             confirmations: _confirmations);
 
