@@ -1166,7 +1166,7 @@ public sealed class ExecutorTests
         // Árbol grande: cadena de 20 niveles (mucho más que MaxDepth=0).
         var path = @"ROOT";
         for (int i = 1; i <= 20; i++)
-            path = $"{path}\Nivel{i}";
+            path = $"{path}\\Nivel{i}";
         registry.Seed(RegistryHive.LocalMachine, path, "V", 1);
         var journal = new UndoJournal();
         var ctx = new ActionContext
