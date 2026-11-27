@@ -107,7 +107,7 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
         RegistryKeySnapshot snapshot;
         try
         {
-            snapshot = TakeSnapshot(reader, hive, deleteAction.KeyPath);
+            snapshot = TakeSnapshot(reader, hive, deleteAction.KeyPath, _limits);
         }
         catch (OperationCanceledException)
         {
@@ -182,15 +182,34 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
     }
 
     /// <summary>Instantánea recursiva del subárbol (valores, tipos y subclaves).</summary>
+    /// <param name="limits">Límites opcionales. Si se exceden durante el recorrido,
+    /// se lanza <see cref="InvalidOperationException"/> y se deja de leer.</param>
     public static RegistryKeySnapshot TakeSnapshot(
-        IRegistryTreeReader reader, RegistryHive hive, string keyPath)
+        IRegistryTreeReader reader, RegistryHive hive, string keyPath,
+        RegistrySnapshotLimits? limits = null)
     {
         ArgumentNullException.ThrowIfNull(reader);
 
         var kinds = reader as IRegistryKindReader;
+        var lim = limits;
+
+        // Contadores acumulativos durante el recorrido para abortar temprano.
+        int totalKeys = 1; // la raíz cuenta como clave
+        int totalValues = 0;
+        int maxDepthReached = 0;
 
         RegistryKeyNode Walk(string path, int depth)
         {
+            maxDepthReached = Math.Max(maxDepthReached, depth);
+
+            // Aborto temprano por profundidad: si ya estamos por encima del límite,
+            // no seguimos leyendo este nodo ni sus hijos.
+            if (lim is not null && depth > lim.MaxDepth)
+            {
+                throw new InvalidOperationException(
+                    $"profundidad {depth} > {lim.MaxDepth}");
+            }
+
             var values = new List<RegistryValueSnapshot>();
             foreach (var name in reader.GetValueNames(hive, path))
             {
@@ -199,25 +218,48 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
                     : null;
                 var kind = kinds is null ? RegistryValueKind.Unknown : kinds.GetKind(hive, path, name);
                 values.Add(new RegistryValueSnapshot(name, value, kind));
+                totalValues++;
+                if (lim is not null && totalValues > lim.MaxValues)
+                {
+                    throw new InvalidOperationException(
+                        $"{totalValues} valores > {lim.MaxValues}");
+                }
             }
 
             var children = new List<RegistryKeyNode>();
             // Tope duro de recursión del propio recorrido: los límites de tamaño
-            // se comprueban DESPUÉS, sobre la instantánea ya tomada, pero un árbol
-            // patológico no debe poder colgar el recorrido.
+            // se comprueban durante el recorrido, pero un árbol patológico no debe
+            // poder colgar el recorrido.
             IReadOnlyList<string> childNames = depth >= 64
                 ? Array.Empty<string>()
                 : reader.GetSubKeyNames(hive, path);
 
             foreach (var child in childNames.OrderBy(c => c, StringComparer.OrdinalIgnoreCase))
             {
+                totalKeys++;
+                if (lim is not null && totalKeys > lim.MaxKeys)
+                {
+                    throw new InvalidOperationException(
+                        $"{totalKeys} claves > {lim.MaxKeys}");
+                }
+
                 children.Add(Walk($"{path}\\{child}", depth + 1));
             }
 
             return new RegistryKeyNode(path, values, children);
         }
 
-        return new RegistryKeySnapshot(Walk(keyPath, 0));
+        var root = Walk(keyPath, 0);
+
+        // Comprobación final de profundidad (Deepest) por si el límite de
+        // profundidad se excede sin haber entrado a un nodo hijo adicional.
+        if (lim is not null && maxDepthReached > lim.MaxDepth)
+        {
+            throw new InvalidOperationException(
+                $"profundidad {maxDepthReached} > {lim.MaxDepth}");
+        }
+
+        return new RegistryKeySnapshot(root);
     }
 
     private static string Describe(RegistryDeleteKeyAction action) =>

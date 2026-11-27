@@ -881,6 +881,53 @@ public sealed class ExecutorTests
         Assert.Single(journal.Entries);
     }
 
+    /// <summary>
+    /// H5.7: EnsureKey lanza durante restauración de árbol → Failed, entrada conservada.
+    /// </summary>
+    [Fact]
+    public async Task RegistryDeleteKey_EnsureKeyLanzaRestauracion_FailedEntradaConservada()
+    {
+        var registry = new FakeRegistryAccessor();
+        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
+        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test\Sub", "Val2", 2);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor().ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"SOFTWARE\Evo\Test",
+            Recursive = true,
+        }, ctx);
+
+        Assert.True(result.Success);
+        Assert.Single(journal.Entries);
+
+        // Rollback con un registry que falla en EnsureKey (primera llamada).
+        var failingRegistry = new FailingEnsureKeyRegistryAccessor();
+        failingRegistry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
+        failingRegistry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test\Sub", "Val2", 2);
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            failingRegistry, new FakeServiceAccessor(), new FakeTaskAccessor(),
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.False(report.Success);
+        Assert.Single(report.Failed);
+        Assert.Single(journal.Entries); // Entrada conservada para reintento
+    }
+
     // ---------------- H7: Límites del snapshot ----------------
 
     /// <summary>
@@ -960,12 +1007,13 @@ public sealed class ExecutorTests
 
     /// <summary>
     /// H7.3: Snapshot excede MaxDepth (profundidad > límite) → Fail, clave intacta.
+    /// Con MaxDepth=0, un hijo directo (profundidad 1) ya excede el límite.
     /// </summary>
     [Fact]
     public async Task SnapshotExcedeMaxDepth_FailClaveIntacta()
     {
-        var reader = new TestTreeReader(_ => ["Child"]); // Siempre tiene hijo → excede depth
-        var registry = new FakeRegistryAccessor();
+        var registry = new CountingRegistryAccessor();
+        registry.SetSubKeyOverride(path => path == @"ROOT" ? ["Child"] : []);
         registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V", 1);
         var journal = new UndoJournal();
         var ctx = new ActionContext
@@ -993,6 +1041,256 @@ public sealed class ExecutorTests
         Assert.Equal(ActionStatus.Failed, result.Status);
         Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
         Assert.Empty(journal.Entries);
+    }
+
+    /// <summary>
+    /// H7.4: Snapshot exactamente en el límite MaxDepth (0) → se borra, sin hijos.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotEnLimiteMaxDepth_SeBorra()
+    {
+        var registry = new CountingRegistryAccessor();
+        registry.SetSubKeyOverride(_ => []);
+        registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 0, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.True(result.Success);
+        Assert.False(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Single(journal.Entries);
+    }
+
+    /// <summary>
+    /// H7.5: Snapshot excede MaxKeys (1025 claves, límite 1024) → Fail, clave intacta.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotExcedeMaxKeys_FailClaveIntacta()
+    {
+        var registry = new CountingRegistryAccessor();
+        // Crear 1025 subclaves directas de ROOT (más la raíz = 1026 claves > 1024).
+        for (int i = 0; i < 1025; i++)
+            registry.Seed(RegistryHive.LocalMachine, $@"ROOT\Clave{i}", "V", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 16, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Empty(journal.Entries);
+    }
+
+    /// <summary>
+    /// H7.6: Snapshot exactamente en el límite MaxKeys (1024 claves totales) → se borra.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotEnLimiteMaxKeys_SeBorra()
+    {
+        var registry = new CountingRegistryAccessor();
+        // 1023 subclaves + la raíz = 1024 claves totales = límite exacto.
+        for (int i = 0; i < 1023; i++)
+            registry.Seed(RegistryHive.LocalMachine, $@"ROOT\Clave{i}", "V", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 16, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.True(result.Success);
+        Assert.False(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Single(journal.Entries);
+    }
+
+    /// <summary>
+    /// H7.7: MaxDepth límite+1 con contador → lecturas estrictamente menores que el total.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotExcedeMaxDepth_ConContador_LecturasParciales()
+    {
+        var registry = new CountingRegistryAccessor();
+        // Árbol grande: cadena de 20 niveles (mucho más que MaxDepth=0).
+        var path = @"ROOT";
+        for (int i = 1; i <= 20; i++)
+            path = $"{path}\Nivel{i}";
+        registry.Seed(RegistryHive.LocalMachine, path, "V", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 0, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Empty(journal.Entries);
+
+        // Lecturas necesarias para leer TODO el árbol: 21 GetSubKeyNames (una por nivel)
+        // más 21 GetValueNames (una por nodo). Con aborto temprano en profundidad 1,
+        // se leen mucho menos.
+        var totalNecesarias = 21 + 21;
+        Assert.True(registry.SubKeyReads < totalNecesarias,
+            $"SubKeyReads={registry.SubKeyReads} debería ser < {totalNecesarias}");
+        Assert.True(registry.ValueReads < totalNecesarias,
+            $"ValueReads={registry.ValueReads} debería ser < {totalNecesarias}");
+    }
+
+    /// <summary>
+    /// H7.8: MaxKeys límite+1 con contador → lecturas estrictamente menores que el total.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotExcedeMaxKeys_ConContador_LecturasParciales()
+    {
+        var registry = new CountingRegistryAccessor();
+        // 2000 subclaves directas (mucho más que MaxKeys=1024).
+        for (int i = 0; i < 2000; i++)
+            registry.Seed(RegistryHive.LocalMachine, $@"ROOT\Clave{i}", "V", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 16, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Empty(journal.Entries);
+
+        // Para leer TODO el árbol haría falta 1 GetSubKeyNames(ROOT) + 2000 GetValueNames.
+        // Con aborto temprano al llegar a 1025 claves, se leen mucho menos.
+        var totalNecesarias = 1 + 2000;
+        Assert.True(registry.SubKeyReads < totalNecesarias,
+            $"SubKeyReads={registry.SubKeyReads} debería ser < {totalNecesarias}");
+    }
+
+    /// <summary>
+    /// H7.9: MaxValues límite+1 con contador → lecturas estrictamente menores que el total.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotExcedeMaxValues_ConContador_LecturasParciales()
+    {
+        var registry = new CountingRegistryAccessor();
+        // 5000 valores en ROOT (mucho más que MaxValues=4096).
+        for (int i = 0; i < 5000; i++)
+            registry.Seed(RegistryHive.LocalMachine, @"ROOT", $"Val{i}", i);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 16, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Empty(journal.Entries);
+
+        // Para leer TODO el árbol haría falta 1 GetSubKeyNames(ROOT) + 5000 GetValueNames.
+        // Con aborto temprano al llegar a 4097 valores, se leen mucho menos.
+        var totalNecesarias = 1 + 5000;
+        Assert.True(registry.ValueReads < totalNecesarias,
+            $"ValueReads={registry.ValueReads} debería ser < {totalNecesarias}");
     }
 
     // ---------------- PASO 1: Rollback por identidad ----------------
@@ -1060,7 +1358,21 @@ public sealed class ExecutorTests
 
         // Solo la entrada fallida se conserva (por índice); la exitosa se elimina.
         Assert.Single(journal.Entries);
-        Assert.Equal("task", journal.Entries[0].ActionKey);
+        var entradaConservada = Assert.IsType<TaskCreateUndoEntry>(journal.Entries[0]);
+        Assert.Equal("task", entradaConservada.ActionKey);
+        Assert.Equal("OtraTarea", entradaConservada.TaskName); // la que falló
+
+        // Segundo RollbackAsync: la entrada restaurada NO se reprocesa (ya salió del diario).
+        // Si la fallida ahora funciona, el diario queda vacío.
+        tasks.FailCreateWith = null;
+        var report2 = await journal.RollbackAsync(new UndoContext(
+            new FakeRegistryAccessor(), new FakeServiceAccessor(), tasks,
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.True(report2.Success);
+        Assert.Single(report2.Restored);
+        Assert.Empty(report2.Failed);
+        Assert.True(journal.IsEmpty);
     }
 
     // ---------------- Helpers ----------------
@@ -1152,6 +1464,40 @@ public sealed class ExecutorTests
     }
 
     /// <summary>
+    /// Decorador de FakeRegistryAccessor que hace fallar EnsureKey en la primera
+    /// llamada. Se usa para verificar que el rollback de RegistryDeleteKey
+    /// devuelve Failed y conserva la entrada cuando EnsureKey lanza.
+    /// FakeRegistryAccessor es sealed, así que se usa composición.
+    /// </summary>
+    private sealed class FailingEnsureKeyRegistryAccessor : IRegistryAccessor, IRegistryTreeReader, IRegistryKeyCreator
+    {
+        private readonly FakeRegistryAccessor _inner = new();
+        private int _ensureKeyCalls;
+
+        public void Seed(RegistryHive hive, string keyPath, string valueName, object value,
+            RegistryValueKind kind = RegistryValueKind.DWord)
+        {
+            _inner.Seed(hive, keyPath, valueName, value, kind);
+        }
+
+        public bool KeyExists(RegistryHive hive, string keyPath) => _inner.KeyExists(hive, keyPath);
+        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive) => _inner.DeleteKey(hive, keyPath, recursive);
+        public object? GetValue(RegistryHive hive, string keyPath, string valueName) => _inner.GetValue(hive, keyPath, valueName);
+        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind) => _inner.SetValue(hive, keyPath, valueName, value, kind);
+        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) => _inner.DeleteValue(hive, keyPath, valueName);
+        public IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath) => _inner.GetSubKeyNames(hive, keyPath);
+        public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath) => _inner.GetValueNames(hive, keyPath);
+
+        public void EnsureKey(RegistryHive hive, string keyPath)
+        {
+            _ensureKeyCalls++;
+            if (_ensureKeyCalls == 1)
+                throw new InvalidOperationException("EnsureKey falló");
+            _inner.EnsureKey(hive, keyPath);
+        }
+    }
+
+    /// <summary>
     /// Entrada de diario que siempre falla al restaurarse: usada para verificar
     /// que RollbackAsync continúa tras un error y conserva la entrada fallida.
     /// </summary>
@@ -1165,5 +1511,58 @@ public sealed class ExecutorTests
                 Result = UndoRestoreResult.Failed,
                 FailureMessage = "rollback imposible",
             };
+    }
+
+    /// <summary>
+    /// Decorador de FakeRegistryAccessor que implementa IRegistryTreeReader,
+    /// IRegistryKeyCreator e IRegistryKindReader y cuenta las lecturas de árbol
+    /// (GetSubKeyNames / GetValueNames). FakeRegistryAccessor es sealed, así que
+    /// se usa composición, no herencia.
+    /// </summary>
+    private sealed class CountingRegistryAccessor : IRegistryAccessor, IRegistryTreeReader, IRegistryKeyCreator, IRegistryKindReader
+    {
+        private readonly FakeRegistryAccessor _inner = new();
+        private int _subKeyReads;
+        private int _valueReads;
+
+        private Func<string, IReadOnlyList<string>>? _subKeyOverride;
+        private Func<string, IReadOnlyList<string>>? _valueOverride;
+
+        public int SubKeyReads => _subKeyReads;
+        public int ValueReads => _valueReads;
+        public FakeRegistryAccessor Inner => _inner;
+
+        public void SetSubKeyOverride(Func<string, IReadOnlyList<string>> fn) => _subKeyOverride = fn;
+        public void SetValueOverride(Func<string, IReadOnlyList<string>> fn) => _valueOverride = fn;
+
+        public void Seed(RegistryHive hive, string keyPath, string valueName, object value,
+            RegistryValueKind kind = RegistryValueKind.DWord)
+        {
+            _inner.Seed(hive, keyPath, valueName, value, kind);
+        }
+
+        public bool KeyExists(RegistryHive hive, string keyPath) => _inner.KeyExists(hive, keyPath);
+        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive) => _inner.DeleteKey(hive, keyPath, recursive);
+        public object? GetValue(RegistryHive hive, string keyPath, string valueName) => _inner.GetValue(hive, keyPath, valueName);
+        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind) => _inner.SetValue(hive, keyPath, valueName, value, kind);
+        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) => _inner.DeleteValue(hive, keyPath, valueName);
+        public void EnsureKey(RegistryHive hive, string keyPath) => _inner.EnsureKey(hive, keyPath);
+
+        public IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath)
+        {
+            _subKeyReads++;
+            var names = _subKeyOverride is not null ? _subKeyOverride(keyPath) : _inner.GetSubKeyNames(hive, keyPath);
+            return names ?? [];
+        }
+
+        public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath)
+        {
+            _valueReads++;
+            var names = _valueOverride is not null ? _valueOverride(keyPath) : _inner.GetValueNames(hive, keyPath);
+            return names ?? [];
+        }
+
+        public RegistryValueKind GetKind(RegistryHive hive, string keyPath, string valueName) =>
+            _inner.GetKind(hive, keyPath, valueName);
     }
 }
