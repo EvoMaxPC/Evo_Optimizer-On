@@ -567,6 +567,7 @@ public sealed class ExecutorTests
             ExistedBefore = true,
             WasEnabled = true,
             Definition = null,
+            PreviousState = null,
         });
 
         var report = await journal.RollbackAsync(new UndoContext(
@@ -707,6 +708,7 @@ public sealed class ExecutorTests
             Recursive = true,
             ExistedBefore = true,
             Snapshot = snapshot,
+            PreviousState = null,
         };
 
         var outcome = entry.Restore(new UndoContext(
