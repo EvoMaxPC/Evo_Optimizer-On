@@ -9,7 +9,7 @@ namespace Evo.Windows;
 /// para estado y arranque/detención, y mediante el registro de Windows para
 /// el tipo de inicio (desviación frente a <c>ChangeServiceConfig</c>:
 /// se escribe directamente en
-/// <c>HKLM\SYSTEM\CurrentControlSet\Services\<nombre>\Start</c> y
+/// <c>HKLM\SYSTEM\CurrentControlSet\Services\&lt;nombre&gt;\Start</c> y
 /// <c>DelayedAutostart</c>).
 /// </summary>
 public sealed class WindowsServiceAccessor : IServiceAccessor
@@ -69,7 +69,7 @@ public sealed class WindowsServiceAccessor : IServiceAccessor
     /// <param name="startupType">Tipo de arranque a establecer.</param>
     /// <remarks>
     /// Desviación: no se usa <c>ChangeServiceConfig</c>; se escribe directamente
-    /// en <c>HKLM\SYSTEM\CurrentControlSet\Services\<nombre>\Start</c> y
+    /// en <c>HKLM\SYSTEM\CurrentControlSet\Services\&lt;nombre&gt;\Start</c> y
     /// <c>DelayedAutostart</c>.
     /// </remarks>
     public void SetStartupType(string serviceName, ServiceStartupType startupType)
