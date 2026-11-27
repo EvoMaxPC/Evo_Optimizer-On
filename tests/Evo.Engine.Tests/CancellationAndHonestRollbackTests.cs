@@ -84,7 +84,7 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Equal("Cancelado", summary.AbortedReason);
         Assert.True(summary.Aborted);
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A")); // vuelve al original
-        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó
+        Assert.Equal(2, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó: queda en el valor sembrado
         Assert.NotNull(summary.RollbackReport);
         var report = summary.RollbackReport!;
         Assert.Single(report.Restored);
@@ -170,7 +170,7 @@ public sealed class CancellationAndHonestRollbackTests
         Assert.Equal("Cancelado", summary.AbortedReason);
         Assert.True(summary.Aborted);
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "A")); // deshecho
-        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó
+        Assert.Equal(2, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "B")); // nunca se aplicó: queda en el valor sembrado
         Assert.NotNull(summary.RollbackReport);
         var report = summary.RollbackReport!;
         Assert.Single(report.Restored);
