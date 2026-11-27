@@ -5,7 +5,7 @@
 .FF..................................................................... [ 62%]
 ........................................................................ [ 75%]
 ........................................................................ [ 87%]
-.....................................................................    [100%]
+.........................................F...........................    [100%]
 =================================== FAILURES ===================================
 ___________________ test_validador_reconoce_los_9_proyectos ____________________
 
@@ -15,7 +15,7 @@ ___________________ test_validador_reconoce_los_9_proyectos ____________________
         data = json.loads(res.stdout)
         assert data["ok"] is True
 >       assert data["ca_proyectos"] == 9
-E       assert 11 == 9
+E       assert 13 == 9
 
 tests/test_paso7.py:72: AssertionError
 _______________ test_proyectos_nuevos_existen_y_estan_en_la_sln ________________
@@ -30,12 +30,41 @@ _______________ test_proyectos_nuevos_existen_y_estan_en_la_sln ________________
             names = {n.text.strip() for n in root.iter("AssemblyName") if n.text}
             assert names == {assembly}
 >       assert len(re.findall(r'"(src|tests)\\[^"]+\.csproj"', sln)) == 9
-E       assert 11 == 9
-E        +  where 11 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
-E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7cdce3aebb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
-E        +      where <function findall at 0x7cdce3aebb60> = re.findall
+E       assert 13 == 9
+E        +  where 13 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
+E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x71949c2ebb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+E        +      where <function findall at 0x71949c2ebb60> = re.findall
 
 tests/test_paso7.py:86: AssertionError
+_______ test_el_adr_0004_esta_propuesto_y_no_implementa_la_llamada_real ________
+
+    def test_el_adr_0004_esta_propuesto_y_no_implementa_la_llamada_real() -> None:
+        text = ADR.read_text(encoding="utf-8")
+        assert "Estado**: propuesto" in text
+        assert "NO VERIFICADO" in text
+        assert "Checkpoint-Computer" in text
+        assert "SystemRestore.CreateRestorePoint" in text
+        assert "VM del responsable" in text
+        # No se ha escrito ningún servicio real en src: sólo la interfaz y los fakes.
+        implementers = []
+        for path in (ROOT / "src").rglob("*.cs"):
+            content = path.read_text(encoding="utf-8")
+            for line in content.splitlines():
+                if "IRestorePointService" in line and "class " in line:
+                    implementers.append(path.name)
+>       assert implementers == ["FakeRestorePointService.cs"], implementers
+E       AssertionError: ['FakeRestorePointService.cs', 'WpfRestorePointService.cs']
+E       assert ['FakeRestore...ntService.cs'] == ['FakeRestorePointService.cs']
+E         
+E         Left contains one more item: 'WpfRestorePointService.cs'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               'FakeRestorePointService.cs',
+E         +     'WpfRestorePointService.cs',
+E           ]
+
+tests/test_paso8d.py:261: AssertionError
 =============================== warnings summary ===============================
 tools/ledger_extract/build_section10_catalog.py:257
   /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:257: SyntaxWarning: "\B" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\B"? A raw string is also an option.
@@ -47,10 +76,20 @@ tools/ledger_extract/build_section10_catalog.py:375
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ============================
-FAILED tests/test_paso7.py::test_validador_reconoce_los_9_proyectos - assert 11 == 9
-FAILED tests/test_paso7.py::test_proyectos_nuevos_existen_y_estan_en_la_sln - assert 11 == 9
- +  where 11 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
- +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7cdce3aebb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
- +      where <function findall at 0x7cdce3aebb60> = re.findall
-2 failed, 571 passed, 2 warnings in 18.43s
+FAILED tests/test_paso7.py::test_validador_reconoce_los_9_proyectos - assert 13 == 9
+FAILED tests/test_paso7.py::test_proyectos_nuevos_existen_y_estan_en_la_sln - assert 13 == 9
+ +  where 13 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
+ +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x71949c2ebb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+ +      where <function findall at 0x71949c2ebb60> = re.findall
+FAILED tests/test_paso8d.py::test_el_adr_0004_esta_propuesto_y_no_implementa_la_llamada_real - AssertionError: ['FakeRestorePointService.cs', 'WpfRestorePointService.cs']
+assert ['FakeRestore...ntService.cs'] == ['FakeRestorePointService.cs']
+  
+  Left contains one more item: 'WpfRestorePointService.cs'
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    [
+        'FakeRestorePointService.cs',
+  +     'WpfRestorePointService.cs',
+    ]
+3 failed, 570 passed, 2 warnings in 20.32s
 pytest_exit=1
