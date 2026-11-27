@@ -1,58 +1,13 @@
-Build started 11/27/2026 2:31:05 AM.
+Build started 11/27/2026 2:31:06 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Catalog.Tests\bin\Release\net10.0-windows\Evo.Catalog.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.09]   Discovering: Evo.Catalog.Tests
-[xUnit.net 00:00:00.16]   Discovered:  Evo.Catalog.Tests
-[xUnit.net 00:00:00.16]   Starting:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoDanglingReferences [147 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_LoadsAndValidates [175 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [181 ms]
-  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [10 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_PrivilegeMatchesTheHivesItWrites [16 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk [14 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [12 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [4 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [1 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay [65 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [3 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EveryActionTouchesExactlyOneValue [28 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyCreations [21 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ClassicContextMenuIsWindows11Only [9 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LocationDeclaresStartupTypeAndStop [8 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EngineContractIsClean [5 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ValuesAreCopiedFromThePinLiterally [38 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants [6 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NewActionTypesRoundTripThroughTheLoader [1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "execute") [1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "trigger") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "runLevel") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "userId") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "taskName") [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_LoadsAndValidates [6 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_IdsFollowTheContract [16 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_AtlasCapabilitiesQuoteTheirState [5 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut [13 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ValueDeviationsAreDeclared [3 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsBadTriggersAndTimes [2 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorKeepsServiceOperationsSeparate [1 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_UndoRestoresPreviousValuesExactly [10 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions [11 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine [3 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_UndoRestoresPreviousValuesExactly [35 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified [6 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LoaderReadsKeyCreationActions [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ProvenanceQuotesPinAndToggleState [7 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EveryRegistryActionTouchesExactlyOneValue [3 ms]
-  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide [15 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EngineContractIsClean [9 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [< 1 ms]
+[xUnit.net 00:00:00.08]   Discovering: Evo.Catalog.Tests
+[xUnit.net 00:00:00.13]   Discovered:  Evo.Catalog.Tests
+[xUnit.net 00:00:00.14]   Starting:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.DanglingDependencyFailsValidation [103 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoDanglingReferences [106 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy..telemetry") [3 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry.") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry/DiagTrack") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: ".privacy.telemetry") [< 1 ms]
@@ -60,13 +15,17 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy telemetry") [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestInvalidId_FailsValidation(id: "privacy.telemetry_diagtrack") [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCyclicDependency_FailsValidation [1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SymmetricConflictPassesValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ThrowIfInvalidLanzaConDetalle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.SelfDependencyIsACycle [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.DuplicateIdsFailValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestValidCatalog_LoadsAndIndexes [< 1 ms]
-  Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForReversibleRiskFails [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.ContractProjectionKeepsEveryField [117 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.UnknownEnumValueThrows [3 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingSecurityImpactThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingIdThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogValidatorTests.InsufficientRestoreForReversibleRiskFails [8 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.ValidIdWithDashesPassesThePattern [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.IrreversibleHighWithNoneIsValidUnderAdr0003 [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.UnknownBuildIsAWarningNotAnError [< 1 ms]
@@ -76,217 +35,215 @@ A total of 1 test files matched the specified pattern.
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestCriticalRiskWithoutTypeConfirmation_FailsValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.TestAsymmetricConflict_FailsValidation [< 1 ms]
   Passed Evo.Catalog.Tests.CatalogValidatorTests.MissingReversibilityFailsValidation [< 1 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SecurityReductionIsDeclaredAndBounded [13 ms]
-  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SupportedBuildsAreExplicitAndJustified [51 ms]
-[xUnit.net 00:00:00.61]   Finished:    Evo.Catalog.Tests
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceActionsCarryTheStartupType [29 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_PrivilegeMatchesWhatItTouches [7 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsAllActionTypesAndMetadata [8 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.InvalidJsonThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.LoadsFromStreamAndFile [2 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingNameThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.CatalogLoaderTests.MissingDirectoryThrows [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates [15 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyCreations [15 ms]
+  Passed Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_IdsAreUniqueAndActionsAreSupported [7 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_NoSpecifiedLeftAndThePinLiteralsStay [60 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_LoadsAndValidates [16 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LocationDeclaresStartupTypeAndStop [21 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants [6 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NewActionTypesRoundTripThroughTheLoader [1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "execute") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "trigger") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "runLevel") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "userId") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsIncompleteTasks(field: "taskName") [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_PrivilegeMatchesTheHivesItWrites [11 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_TimeServersStartTheServiceAndSayWhatIsLeftOut [2 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsBadTriggersAndTimes [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorKeepsServiceOperationsSeparate [1 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SecurityReductionIsNeverUnderMediumRisk [6 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_ValidatorRejectsMalformedKeyDeletions [7 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_NetworkLocationWizardCoversItsManifestLine [2 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EveryActionTouchesExactlyOneValue [9 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_RegistryBackupDeclaresItsTaskAndStaysSpecified [4 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_LoaderReadsKeyCreationActions [< 1 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ValuesAreCopiedFromThePinLiterally [20 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ClassicContextMenuIsWindows11Only [8 ms]
+  Passed Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_HomeRestoreIsTheExactInverseOfHomeHide [7 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_LoadsAndValidates [3 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_EngineContractIsClean [5 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_IdsFollowTheContract [5 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_UndoRestoresPreviousValuesExactly [11 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_AtlasCapabilitiesQuoteTheirState [3 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_ValueDeviationsAreDeclared [2 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ProvenanceQuotesPinAndToggleState [4 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EveryRegistryActionTouchesExactlyOneValue [2 ms]
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_UndoRestoresPreviousValuesExactly [6 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_EngineContractIsClean [2 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SecurityReductionIsDeclaredAndBounded [11 ms]
+[xUnit.net 00:00:00.46]   Finished:    Evo.Catalog.Tests
+  Passed Evo.Catalog.Tests.Wave2CatalogTests.TestWave2Catalog_SupportedBuildsAreExplicitAndJustified [22 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceActionsCarryTheStartupType [18 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_PrivilegeMatchesWhatItTouches [5 ms]
   Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_ServiceUndoRestoresTheStartupType [5 ms]
   Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SettingsPageVisibilityIsTheWholePinList [2 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SupportedBuildsAreExplicitAndJustified [10 ms]
-  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_IdsFollowTheContract [4 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_SupportedBuildsAreExplicitAndJustified [8 ms]
+  Passed Evo.Catalog.Tests.Wave3CatalogTests.TestWave3Catalog_IdsFollowTheContract [3 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Catalog.Tests\Evo.Catalog.Tests.trx
 
 Test Run Successful.
 Total tests: 79
      Passed: 79
- Total time: 1.0228 Seconds
+ Total time: 0.7864 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.94
+Time Elapsed 00:00:01.61
 Build started 11/27/2026 2:31:08 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Core.Tests\bin\Release\net10.0-windows\Evo.Core.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.06]   Discovering: Evo.Core.Tests
-[xUnit.net 00:00:00.11]   Discovered:  Evo.Core.Tests
-[xUnit.net 00:00:00.11]   Starting:    Evo.Core.Tests
-  Passed Evo.Core.Tests.ReversibilityTests.ReversibleConRiesgoMedioExigeRestorePoint [10 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [10 ms]
+[xUnit.net 00:00:00.04]   Discovering: Evo.Core.Tests
+[xUnit.net 00:00:00.08]   Discovered:  Evo.Core.Tests
+[xUnit.net 00:00:00.08]   Starting:    Evo.Core.Tests
+  Passed Evo.Core.Tests.ReversibilityTests.ReversibleConRiesgoMedioExigeRestorePoint [7 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Low, confirmation: SimpleClick, restore: SessionUndo) [7 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Safe, confirmation: None, restore: None) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Critical, confirmation: TypeOperationName, restore: FullBackup) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: High, confirmation: SummaryAndRestorePoint, restore: RestorePoint) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.MinimosPorRiesgoSonLosEsperados(risk: Medium, confirmation: Summary, restore: RestorePoint) [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.ReversibleConRestoreNoneEsInvalido [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConRiesgoAltoYConfirmacionDeResumenEsValido [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.VariantsVacioFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConRestorePointEsInvalido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.VariantsVacioFalla [1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReversibleNoAdmiteRestoreNone(risk: High) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReversibleNoAdmiteRestoreNone(risk: Low) [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReversibleNoAdmiteRestoreNone(risk: Critical) [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.IdEnConflictoYDependenciaFalla [1 ms]
-  Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConConfirmacionSimpleClickEsInvalido [3 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoMedioYNoneEsValido [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.ConfirmacionPorDebajoDelMinimoFalla [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.ContratoValidoNoTieneErrores [< 1 ms]
+  Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConConfirmacionSimpleClickEsInvalido [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreConRestoreDistintoDeNoneEsInvalido [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.IdEnConflictoYDependenciaFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreSeAdmiteHastaRiesgoMedium [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.TrustedInstallerExigeRiesgoAlto [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoAltoFalla [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.SectionIdFueraDeRangoFalla [< 1 ms]
-  Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConRiesgoBajoEsInvalido [3 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoMedioYNoneEsValido [< 1 ms]
+  Passed Evo.Core.Tests.ReversibilityTests.IrreversibleConRiesgoBajoEsInvalido [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.ConfirmacionPorDebajoDelMinimoFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreConRiesgoAltoEsInvalido [< 1 ms]
-[xUnit.net 00:00:00.21]   Finished:    Evo.Core.Tests
+  Passed Evo.Core.Tests.CapabilityContractTests.ContratoValidoNoTieneErrores [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.NothingToRestoreConNoneYRiesgoSafeEsValido [< 1 ms]
-  Passed Evo.Core.Tests.ReversibilityTests.MinimumRestoreDependeDeLaReversibilidad [2 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.TrustedInstallerExigeRiesgoAlto [< 1 ms]
+  Passed Evo.Core.Tests.ReversibilityTests.MinimumRestoreDependeDeLaReversibilidad [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.NothingToRestoreConRiesgoAltoFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.ReversibleConSessionUndoYRiesgoBajoEsValido [< 1 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.SectionIdFueraDeRangoFalla [< 1 ms]
   Passed Evo.Core.Tests.ReversibilityTests.IrreversibleCriticalSigueExigiendoTypeOperationName [< 1 ms]
-  Passed Evo.Core.Tests.CapabilityContractTests.EnumsTienenLosValoresExigidos [10 ms]
+  Passed Evo.Core.Tests.CapabilityContractTests.EnumsTienenLosValoresExigidos [8 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.CriticalConTypeOperationNameYFullBackupEsValido [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.AutoConflictoYAutoDependenciaFAllan [< 1 ms]
   Passed Evo.Core.Tests.CapabilityContractTests.ReducirSeguridadConRiesgoBajoFalla [< 1 ms]
+[xUnit.net 00:00:00.15]   Finished:    Evo.Core.Tests
   Passed Evo.Core.Tests.CapabilityContractTests.CriticalExigeTypeOperationName [< 1 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Core.Tests\Evo.Core.Tests.trx
 
 Test Run Successful.
 Total tests: 34
      Passed: 34
- Total time: 0.6314 Seconds
+ Total time: 0.5238 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.21
+Time Elapsed 00:00:00.96
 Build started 11/27/2026 2:31:09 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Detection.Tests\bin\Release\net10.0-windows\Evo.Detection.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.06]   Discovering: Evo.Detection.Tests
-[xUnit.net 00:00:00.11]   Discovered:  Evo.Detection.Tests
-[xUnit.net 00:00:00.11]   Starting:    Evo.Detection.Tests
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [50 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [50 ms]
+[xUnit.net 00:00:00.04]   Discovering: Evo.Detection.Tests
+[xUnit.net 00:00:00.09]   Discovered:  Evo.Detection.Tests
+[xUnit.net 00:00:00.09]   Starting:    Evo.Detection.Tests
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildDesconocida99999_EsRechazada [40 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27999, id: "win11-26h2", esu: False) [40 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26200, id: "win11-25h2", esu: False) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 26100, id: "win11-24h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 19045, id: "win10-22h2", esu: True) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 22621) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 19044) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 22631, id: "win11-23h2", esu: False) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 26120) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsDelCatalogoCasanConSuEntrada(build: 27600, id: "win11-26h2", esu: False) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 26120) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 28000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 30000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildsFueraDeRangoSonRechazadas(build: 99999) [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.SchemaVersionDistintaSeRechaza [1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.SchemaVersionDistintaSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 28000) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 99999) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.BuildsFueraDelCatalogoNoCasan(build: 19044) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.RangoSolapadoSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.ElTopeDeLaPoliticaAcotaElRangoAbierto [2 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [4 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win11_24H2_Client_EsSoportado [3 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.ArquitecturaNoDeclaradaSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.InstallationTypeVacioSeRechaza [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 19045, architecture: "arm64", expected: SupportedWithWarning) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26200, architecture: "ARM64", expected: Supported) [< 1 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.Arm64Yx64SeNormalizan(build: 26100, architecture: "arm64", expected: Supported) [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [2 ms]
   Passed Evo.Detection.Tests.WindowsDetectorTests.BuildSeLeeDelRegistroAunqueElEntornoDigaOtraCosa [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.CatalogoDelRepoEsValido [3 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.InstallationTypeServerNoEsValidoEnElCatalogo [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
-  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [1 ms]
-  Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [< 1 ms]
-[xUnit.net 00:00:00.25]   Finished:    Evo.Detection.Tests
+  Passed Evo.Detection.Tests.WindowsDetectorTests.Win10_22H2_Client_EsSoportadoConAvisoEsu [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.JsonInvalidoLanzaInvalidData [< 1 ms]
   Passed Evo.Detection.Tests.WindowsReleaseCatalogTests.OpenEndedYBuildMaxDebenSerCoherentes [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.SinBuildLegibleElResultadoEsIndeterminado [< 1 ms]
+  Passed Evo.Detection.Tests.WindowsDetectorTests.ServerLanzaExcepcionConEnsureSupported [< 1 ms]
+[xUnit.net 00:00:00.19]   Finished:    Evo.Detection.Tests
   Passed Evo.Detection.Tests.WindowsDetectorTests.WindowsServer2025_Datacenter_EsRechazado [< 1 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Detection.Tests\Evo.Detection.Tests.trx
 
 Test Run Successful.
 Total tests: 35
      Passed: 35
- Total time: 0.6756 Seconds
+ Total time: 0.5343 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.28
-Build started 11/27/2026 2:31:11 AM.
+Time Elapsed 00:00:01.00
+Build started 11/27/2026 2:31:10 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.06]   Discovering: Evo.Engine.Tests
-[xUnit.net 00:00:00.10]   Discovered:  Evo.Engine.Tests
-[xUnit.net 00:00:00.11]   Starting:    Evo.Engine.Tests
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_SnapshotOverTheLimitAbortsWithoutDeleting [77 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_DryRunDoesNotMutate [16 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_GoesThroughTheRestorePointGate [3 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion [108 ms]
+[xUnit.net 00:00:00.05]   Discovering: Evo.Engine.Tests
+[xUnit.net 00:00:00.08]   Discovered:  Evo.Engine.Tests
+[xUnit.net 00:00:00.08]   Starting:    Evo.Engine.Tests
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackTodoRestored_InformeTodosRestauradosYEstadoReal [20 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio [3 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunCancelado_CanceladoSinMutar [32 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackMezclaLifo_InformeExactoYOrdenVerificado [1 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionEntreAcciones_RollbackDeLaPrimera [1 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunSinJournalNiInforme_ExecuteYRollbackVacían [1 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.TokenCanceladoDuranteLaAccion_RollbackSeCompletaConTokenNone [1 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionTrasMutacionReversible_FakeRegistryVuelveAlOriginal [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion [71 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionDuranteElRollback_SeIgnoraYElRollbackSeCompleta [3 ms]
   Passed Evo.Engine.Tests.RestorePointGateTests.AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen [1 ms]
   Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible [< 1 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua [4 ms]
   Passed Evo.Engine.Tests.RestorePointGateTests.CapacidadSinRequisitoDePunto_NoLoCrea [2 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackConNotReversible_NoCuentaComoRestaurada [< 1 ms]
   Passed Evo.Engine.Tests.RestorePointGateTests.UnPuntoPorPlan_NoUnoPorAccion [1 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionAntes_RetornaCanceladoSinRollback [1 ms]
   Passed Evo.Engine.Tests.RestorePointGateTests.DryRun_NoCreaPuntoNiPideConfirmacion [< 1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_RestoresTheWholeSubtreeWithTypesAndData [15 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos [13 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_RejectsUnsupportedTriggersAndBadTimes [10 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion [4 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AuditReportsStateWithoutMutating [4 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithoutOverwriteFailsUntouched [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion [2 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState [3 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ReadCurrentStateReportsPresence [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_NonRecursiveLeavesTheSubtreeInPlace [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DryRunSaysWhatItWouldDelete [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_UndoAddsNothingToTheExistingParentSubtree [2 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto [13 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar [2 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias [< 1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto [10 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStartFailure_RollsBackTheWholeCapability [19 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.UndoInLifoOrderRestoresTheServiceCompletely [6 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreatesAndUndoDeletes [1 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [4 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [3 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [1 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [1 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [1 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [1 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DepthOverTheLimitAbortsBeforeDeleting [19 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_OnDisabledServiceFailsLikeWindows [< 1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_TwiceInARowIsIdempotent [1 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [20 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.HomeRestore_RunsThroughTheCoordinatorAndRollsBackTheWholeTree [10 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_ThroughTheCoordinator_RollsBackCompletely [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_UndoStopsItAgain [< 1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AccessorWithoutTreeReaderAbortsWithoutDeleting [1 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_LargestCapability_RoundTrips [214 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.UndoInTheOppositeOrderWouldFailAndIsNotWhatTheCatalogDeclares [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_GoesThroughTheRestorePointGate [< 1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreationFailureLeavesNoJournalEntry [< 1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceSetStartup_DoesNotTouchTheRuntimeStatus [9 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [18 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.RegistryBackupCapability_CreatesTheTaskAndRollsItBack [8 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_WithoutKeyCreatorFailsClosed [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_MissingKeyIsANoOpAndUndoCreatesNothing [< 1 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [11 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_AdminCapabilityRequiresElevation [26 ms]
-[xUnit.net 00:00:00.42]     Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed [FAIL]
-[xUnit.net 00:00:00.42]       Assert.True() Failure
-[xUnit.net 00:00:00.42]       Expected: True
-[xUnit.net 00:00:00.42]       Actual:   False
-[xUnit.net 00:00:00.42]       Stack Trace:
-[xUnit.net 00:00:00.42]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(395,0): at Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed()
-[xUnit.net 00:00:00.42]         --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.Wave4EngineTests.LocationCapability_StopsServicesAndRestoresBothStates [8 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [5 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ExecuteAndRollback_RestoresState [16 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [17 ms]
-  Failed Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [2 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos [9 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion [5 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada [4 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion [1 ms]
+[xUnit.net 00:00:00.24]       Assert.True() Failure
+[xUnit.net 00:00:00.24]       Expected: True
+[xUnit.net 00:00:00.24]       Actual:   False
+[xUnit.net 00:00:00.24]       Stack Trace:
+[xUnit.net 00:00:00.24]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(395,0): at Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed()
+[xUnit.net 00:00:00.24]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:00.23]     Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed [FAIL]
+  Failed Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed [5 ms]
   Error Message:
    Assert.True() Failure
 Expected: True
@@ -294,21 +251,27 @@ Actual:   False
   Stack Trace:
      at Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConStop_TerminateFalse_Failed() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 395
 --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [2 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ClaveInexistente_NoOpSinJournal [< 1 ms]
-[xUnit.net 00:00:00.46]     Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed [FAIL]
-[xUnit.net 00:00:00.46]       Assert.True() Failure
-[xUnit.net 00:00:00.46]       Expected: True
-[xUnit.net 00:00:00.46]       Actual:   False
-[xUnit.net 00:00:00.46]       Stack Trace:
-[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(431,0): at Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed()
-[xUnit.net 00:00:00.46]         --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [29 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RestoreSnapshotTruncado_RestauraLoQueHay [4 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto [5 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias [< 1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [8 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto [5 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ClaveInexistente_NoOpSinJournal [2 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada [< 1 ms]
+[xUnit.net 00:00:00.25]     Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed [FAIL]
+[xUnit.net 00:00:00.25]       Assert.True() Failure
+[xUnit.net 00:00:00.25]       Expected: True
+[xUnit.net 00:00:00.25]       Actual:   False
+[xUnit.net 00:00:00.25]       Stack Trace:
+[xUnit.net 00:00:00.25]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(431,0): at Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed()
+[xUnit.net 00:00:00.25]         --- End of stack trace from previous location ---
+  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RestoreSnapshotTruncado_RestauraLoQueHay [5 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessTerminateFalse_LlamaStop_YVerifica [2 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [6 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessTerminateTrue_LlamaTerminate_YVerifica [1 ms]
-  Failed Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed [< 1 ms]
+  Failed Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed [1 ms]
   Error Message:
    Assert.True() Failure
 Expected: True
@@ -316,56 +279,93 @@ Actual:   False
   Stack Trace:
      at Evo.Engine.Tests.ExecutorTests.ProcessNoSeDetieneConTerminate_TerminateTrue_Failed() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 431
 --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateSinDefinition_RestoreNotReversible [< 1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [< 1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateSinDefinition_RestoreNotReversible [1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.SnapshotProfundidadMayor64_SeTrunca_TruncatedTrue [< 1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [6 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [3 ms]
   Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.SnapshotProfundidadBaja64_NoTruncado [2 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ClaveExiste_SnapshotYRestoreRecrea [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.SnapshotProfundidadBaja64_NoTruncado [< 1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ClaveExiste_SnapshotYRestoreRecrea [7 ms]
   Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning [< 1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_JournalConWasEnabledYDefinition_RestoreRestaura [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning [4 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_LargestCapability_RoundTrips [46 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [161 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_JournalConWasEnabledYDefinition_RestoreRestaura [10 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessInexistente_SkipSinJournal [< 1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.TaskCreateNueva_JournalConDefinition_RestoreBorraTarea [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [3 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [93 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.SnapshotConMasDe1000SubclavesPorNivel_SeTrunca [24 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackTodoRestored_InformeTodosRestauradosYEstadoReal [1 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_DryRun_NoSystemMutation [107 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [15 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunCancelado_CanceladoSinMutar [4 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_MitigationsWritesAllFourValues [9 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackMezclaLifo_InformeExactoYOrdenVerificado [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionEntreAcciones_RollbackDeLaPrimera [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunSinJournalNiInforme_ExecuteYRollbackVacían [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.TokenCanceladoDuranteLaAccion_RollbackSeCompletaConTokenNone [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionTrasMutacionReversible_FakeRegistryVuelveAlOriginal [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionDuranteElRollback_SeIgnoraYElRollbackSeCompleta [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackConNotReversible_NoCuentaComoRestaurada [< 1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionAntes_RetornaCanceladoSinRollback [1 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_UnsupportedBuildIsBlockedBeforeMutating [15 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_PowerAndSettingsPolicyRoundTrip [14 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_SearchIndexingDisablesWSearch [7 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_RestorePointIsRequiredBeforeTouchingHklm [7 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_TypedValuesAreWrittenAndRestored [11 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.SearchIndexing_StopsBeforeDisablingSoUndoCanRestart [7 ms]
-[xUnit.net 00:00:00.65]   Finished:    Evo.Engine.Tests
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ServicesChangeStartupAndRollBack [8 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [91 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [15 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [4 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [10 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [6 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [8 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [17 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.SnapshotConMasDe1000SubclavesPorNivel_SeTrunca [3 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_SnapshotOverTheLimitAbortsWithoutDeleting [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_DryRunDoesNotMutate [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_GoesThroughTheRestorePointGate [1 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [21 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_RestoresTheWholeSubtreeWithTypesAndData [2 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_RejectsUnsupportedTriggersAndBadTimes [2 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_AdminCapabilityRequiresElevation [36 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AuditReportsStateWithoutMutating [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithoutOverwriteFailsUntouched [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ReadCurrentStateReportsPresence [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_NonRecursiveLeavesTheSubtreeInPlace [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DryRunSaysWhatItWouldDelete [< 1 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [11 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_UndoAddsNothingToTheExistingParentSubtree [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStartFailure_RollsBackTheWholeCapability [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.UndoInLifoOrderRestoresTheServiceCompletely [3 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ExecuteAndRollback_RestoresState [12 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreatesAndUndoDeletes [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DepthOverTheLimitAbortsBeforeDeleting [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_OnDisabledServiceFailsLikeWindows [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_TwiceInARowIsIdempotent [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.HomeRestore_RunsThroughTheCoordinatorAndRollsBackTheWholeTree [6 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_ThroughTheCoordinator_RollsBackCompletely [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_UndoStopsItAgain [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AccessorWithoutTreeReaderAbortsWithoutDeleting [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.UndoInTheOppositeOrderWouldFailAndIsNotWhatTheCatalogDeclares [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_GoesThroughTheRestorePointGate [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreationFailureLeavesNoJournalEntry [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceSetStartup_DoesNotTouchTheRuntimeStatus [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.RegistryBackupCapability_CreatesTheTaskAndRollsItBack [9 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_WithoutKeyCreatorFailsClosed [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_MissingKeyIsANoOpAndUndoCreatesNothing [< 1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.LocationCapability_StopsServicesAndRestoresBothStates [4 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [5 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [< 1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [< 1 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [60 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [1 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_DryRun_NoSystemMutation [54 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_MitigationsWritesAllFourValues [5 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [9 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_UnsupportedBuildIsBlockedBeforeMutating [12 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_PowerAndSettingsPolicyRoundTrip [7 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_SearchIndexingDisablesWSearch [5 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_RestorePointIsRequiredBeforeTouchingHklm [5 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_TypedValuesAreWrittenAndRestored [7 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [46 ms]
+[xUnit.net 00:00:00.46]   Finished:    Evo.Engine.Tests
+  Passed Evo.Engine.Tests.Wave3EngineTests.SearchIndexing_StopsBeforeDisablingSoUndoCanRestart [5 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ServicesChangeStartupAndRollBack [6 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [14 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [3 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [6 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [4 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Engine.Tests\Evo.Engine.Tests.trx
 
 Test Run Failed.
 Total tests: 117
      Passed: 115
      Failed: 2
- Total time: 1.0866 Seconds
+ Total time: 0.8134 Seconds
      1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" on node 1 (VSTest target(s)).
      1>_VSTestConsole:
          MSB4181: The "VSTestTask" task returned false but did not log an error.
@@ -375,4 +375,4 @@ Build FAILED.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:01.65
+Time Elapsed 00:00:01.29
