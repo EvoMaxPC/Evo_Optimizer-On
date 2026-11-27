@@ -1,5 +1,0 @@
-Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping (Evo.Windows.Tests): System.InvalidOperationException : El proceso 'ping' sigue en ejecución tras intentar terminarlo.
-   at Evo.Windows.WindowsProcessAccessor.TerminateProcess(String processName) in /_/src/Evo.Windows/WindowsProcessAccessor.cs:line 44
-   at Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping() in /_/tests/Evo.Windows.Tests/WindowsAccessorsTests.cs:line 195
---- End of stack trace from previous location ---
-
