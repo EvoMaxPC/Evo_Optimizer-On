@@ -1149,4 +1149,20 @@ public sealed class ExecutorTests
         public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath) => _inner.GetValueNames(hive, keyPath);
         public void EnsureKey(RegistryHive hive, string keyPath) => _inner.EnsureKey(hive, keyPath);
     }
+
+    /// <summary>
+    /// Entrada de diario que siempre falla al restaurarse: usada para verificar
+    /// que RollbackAsync continúa tras un error y conserva la entrada fallida.
+    /// </summary>
+    private sealed record ThrowingEntry : UndoJournalEntry
+    {
+        public override UndoEntryOutcome Restore(IUndoContext context) =>
+            new()
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.Failed,
+                FailureMessage = "rollback imposible",
+            };
+    }
 }
