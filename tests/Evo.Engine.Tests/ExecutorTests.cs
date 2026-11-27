@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Evo.Core.Actions;
 using Evo.Core.Enums;
@@ -1013,7 +1014,7 @@ public sealed class ExecutorTests
     public async Task SnapshotExcedeMaxDepth_FailClaveIntacta()
     {
         var registry = new CountingRegistryAccessor();
-        registry.SetSubKeyOverride(path => path == @"ROOT" ? ["Child"] : []);
+        registry.SeedSubKey(@"ROOT", @"ROOT\Child");
         registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V", 1);
         var journal = new UndoJournal();
         var ctx = new ActionContext
@@ -1050,7 +1051,6 @@ public sealed class ExecutorTests
     public async Task SnapshotEnLimiteMaxDepth_SeBorra()
     {
         var registry = new CountingRegistryAccessor();
-        registry.SetSubKeyOverride(_ => []);
         registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V", 1);
         var journal = new UndoJournal();
         var ctx = new ActionContext
@@ -1514,55 +1514,122 @@ public sealed class ExecutorTests
     }
 
     /// <summary>
-    /// Decorador de FakeRegistryAccessor que implementa IRegistryTreeReader,
-    /// IRegistryKeyCreator e IRegistryKindReader y cuenta las lecturas de árbol
-    /// (GetSubKeyNames / GetValueNames). FakeRegistryAccessor es sealed, así que
-    /// se usa composición, no herencia.
+    /// Implementación en memoria propia de IRegistryAccessor, IRegistryTreeReader,
+    /// IRegistryKeyCreator e IRegistryKindReader que cuenta las lecturas de árbol
+    /// (GetSubKeyNames / GetValueNames) y permite controlar exactamente cuántas
+    /// claves y valores existen por clave, para que los tests de límites de
+    /// snapshot (MaxKeys / MaxValues / MaxDepth) sean determinísticos.
     /// </summary>
     private sealed class CountingRegistryAccessor : IRegistryAccessor, IRegistryTreeReader, IRegistryKeyCreator, IRegistryKindReader
     {
-        private readonly FakeRegistryAccessor _inner = new();
+        // Clave → diccionario de nombre de valor → (valor, kind)
+        private readonly Dictionary<string, Dictionary<string, (object? Value, RegistryValueKind Kind)>> _valuesByKey = new(StringComparer.OrdinalIgnoreCase);
+        // Clave → lista de nombres de subclaves
+        private readonly Dictionary<string, List<string>> _subKeysByKey = new(StringComparer.OrdinalIgnoreCase);
+        // Claves conocidas (para KeyExists / GetValue / etc.)
+        private readonly HashSet<(RegistryHive, string)> _knownKeys = new();
+
         private int _subKeyReads;
         private int _valueReads;
 
-        private Func<string, IReadOnlyList<string>>? _subKeyOverride;
-        private Func<string, IReadOnlyList<string>>? _valueOverride;
-
         public int SubKeyReads => _subKeyReads;
         public int ValueReads => _valueReads;
-        public FakeRegistryAccessor Inner => _inner;
-
-        public void SetSubKeyOverride(Func<string, IReadOnlyList<string>> fn) => _subKeyOverride = fn;
-        public void SetValueOverride(Func<string, IReadOnlyList<string>> fn) => _valueOverride = fn;
 
         public void Seed(RegistryHive hive, string keyPath, string valueName, object value,
             RegistryValueKind kind = RegistryValueKind.DWord)
         {
-            _inner.Seed(hive, keyPath, valueName, value, kind);
+            var parts = keyPath.Split('\\');
+            // Registrar cada nivel intermedio como subclave de su padre, para que
+            // GetSubKeyNames devuelva el árbol completo y los límites de snapshot
+            // (MaxKeys / MaxDepth) se disparen de forma determinística.
+            for (int i = 1; i < parts.Length; i++)
+            {
+                var parent = string.Join("\\", parts, 0, i);
+                var child = string.Join("\\", parts, 0, i + 1);
+                if (!_valuesByKey.ContainsKey(parent))
+                {
+                    _valuesByKey[parent] = new(StringComparer.OrdinalIgnoreCase);
+                    _subKeysByKey[parent] = new();
+                }
+                if (!_subKeysByKey[parent].Contains(child))
+                    _subKeysByKey[parent].Add(child);
+                if (!_valuesByKey.ContainsKey(child))
+                {
+                    _valuesByKey[child] = new(StringComparer.OrdinalIgnoreCase);
+                    _subKeysByKey[child] = new();
+                }
+                _knownKeys.Add((RegistryHive.LocalMachine, child));
+            }
+            // Registrar el valor en el nodo final.
+            if (!_valuesByKey.ContainsKey(keyPath))
+            {
+                _valuesByKey[keyPath] = new(StringComparer.OrdinalIgnoreCase);
+                _subKeysByKey[keyPath] = new();
+            }
+            _knownKeys.Add((hive, keyPath));
+            _valuesByKey[keyPath][valueName] = (value, kind);
         }
 
-        public bool KeyExists(RegistryHive hive, string keyPath) => _inner.KeyExists(hive, keyPath);
-        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive) => _inner.DeleteKey(hive, keyPath, recursive);
-        public object? GetValue(RegistryHive hive, string keyPath, string valueName) => _inner.GetValue(hive, keyPath, valueName);
-        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind) => _inner.SetValue(hive, keyPath, valueName, value, kind);
-        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) => _inner.DeleteValue(hive, keyPath, valueName);
-        public void EnsureKey(RegistryHive hive, string keyPath) => _inner.EnsureKey(hive, keyPath);
+        public void SeedSubKey(string parentKeyPath, string childKeyPath)
+        {
+            if (!_valuesByKey.ContainsKey(parentKeyPath))
+            {
+                _valuesByKey[parentKeyPath] = new(StringComparer.OrdinalIgnoreCase);
+                _subKeysByKey[parentKeyPath] = new();
+            }
+            if (!_subKeysByKey[parentKeyPath].Contains(childKeyPath))
+                _subKeysByKey[parentKeyPath].Add(childKeyPath);
+            if (!_valuesByKey.ContainsKey(childKeyPath))
+            {
+                _valuesByKey[childKeyPath] = new(StringComparer.OrdinalIgnoreCase);
+                _subKeysByKey[childKeyPath] = new();
+            }
+            _knownKeys.Add((RegistryHive.LocalMachine, childKeyPath));
+        }
 
+        public bool KeyExists(RegistryHive hive, string keyPath) => _knownKeys.Contains((hive, keyPath)) || _valuesByKey.ContainsKey(keyPath);
+        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive)
+        {
+            if (!_valuesByKey.Remove(keyPath)) return false;
+            _subKeysByKey.Remove(keyPath);
+            return true;
+        }
+        public object? GetValue(RegistryHive hive, string keyPath, string valueName) =>
+            _valuesByKey.TryGetValue(keyPath, out var vals) && vals.TryGetValue(valueName, out var entry)
+                ? entry.Value : null;
+        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind)
+        {
+            if (!_valuesByKey.ContainsKey(keyPath))
+            {
+                _valuesByKey[keyPath] = new(StringComparer.OrdinalIgnoreCase);
+                _subKeysByKey[keyPath] = new();
+            }
+            _knownKeys.Add((hive, keyPath));
+            _valuesByKey[keyPath][valueName] = (value, kind);
+        }
+        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) =>
+            _valuesByKey.TryGetValue(keyPath, out var vals) && vals.Remove(valueName);
+        public void EnsureKey(RegistryHive hive, string keyPath)
+        {
+            if (!_valuesByKey.ContainsKey(keyPath))
+            {
+                _valuesByKey[keyPath] = new(StringComparer.OrdinalIgnoreCase);
+                _subKeysByKey[keyPath] = new();
+            }
+            _knownKeys.Add((hive, keyPath));
+        }
         public IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath)
         {
             _subKeyReads++;
-            var names = _subKeyOverride is not null ? _subKeyOverride(keyPath) : _inner.GetSubKeyNames(hive, keyPath);
-            return names ?? [];
+            return _subKeysByKey.TryGetValue(keyPath, out var list) ? list : Array.Empty<string>();
         }
-
         public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath)
         {
             _valueReads++;
-            var names = _valueOverride is not null ? _valueOverride(keyPath) : _inner.GetValueNames(hive, keyPath);
-            return names ?? [];
+            return _valuesByKey.TryGetValue(keyPath, out var vals) ? new List<string>(vals.Keys) : Array.Empty<string>();
         }
-
         public RegistryValueKind GetKind(RegistryHive hive, string keyPath, string valueName) =>
-            _inner.GetKind(hive, keyPath, valueName);
+            _valuesByKey.TryGetValue(keyPath, out var vals) && vals.TryGetValue(valueName, out var entry)
+                ? entry.Kind : RegistryValueKind.Unknown;
     }
 }

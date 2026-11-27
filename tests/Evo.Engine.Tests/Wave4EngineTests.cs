@@ -162,7 +162,10 @@ public sealed class Wave4EngineTests
             DeleteKeyAction(recursive: true), ContextFor(harness, new UndoJournal()));
 
         Assert.False(result.Success);
-        Assert.Contains("supera el límite", result.ErrorMessage, StringComparison.Ordinal);
+        // El aborto temprano en TakeSnapshot lanza InvalidOperationException por
+        // exceso de valores/profundidad; el executor lo envuelve en
+        // "No se pudo tomar la instantánea de..." (fail-closed, sin borrar).
+        Assert.Contains("No se pudo tomar la instantánea", result.ErrorMessage, StringComparison.Ordinal);
         Assert.True(harness.Registry.KeyExists(RegistryHive.LocalMachine, KeyPath));
     }
 
