@@ -19,6 +19,12 @@ public interface ITaskAccessor
 
     /// <summary>Borra la tarea; devuelve true si existía.</summary>
     bool DeleteTask(string taskPath, string taskName);
+
+    /// <summary>
+    /// Devuelve la definición guardada de la tarea, o null si no existe o si
+    /// el accesor no puede leerla.
+    /// </summary>
+    TaskDefinition? GetDefinition(string taskPath, string taskName);
 }
 
 /// <summary>

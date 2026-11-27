@@ -40,25 +40,31 @@ public sealed class ProcessActionExecutor : IActionExecutor
                 action.Key, previous, "Stopped", false, Describe(processAction)));
         }
 
-        bool stopped;
-        if (processAction.Terminate)
+        if (!processAction.Terminate)
         {
-            stopped = context.Processes.TerminateProcess(processAction.ProcessName);
-        }
-        else
-        {
-            stopped = context.Processes.StopProcess(processAction.ProcessName);
+            // La acción no solicita terminarlo: no muta, no hay journal,
+            // se reporta como Skipped (applied=false).
+            return Task.FromResult(ActionResult.Skip(
+                action.Key,
+                $"El proceso '{processAction.ProcessName}' está activo; la acción no solicita terminarlo.",
+                Describe(processAction)));
         }
 
-        // Reporte honesto: si la acción reporta éxito pero el proceso sigue
-        // corriendo, es un fallo real, nunca Ok.
-        if (!stopped || context.Processes.IsRunning(processAction.ProcessName))
+        // Terminate=true: terminar y verificar que realmente se detuvo.
+        if (!context.Processes.TerminateProcess(processAction.ProcessName))
         {
             return Task.FromResult(ActionResult.Fail(
                 action.Key,
-                processAction.Terminate
-                    ? $"El proceso '{processAction.ProcessName}' no se pudo detener."
-                    : $"El proceso '{processAction.ProcessName}' no se detuvo con Stop (Terminate=false).",
+                $"El proceso '{processAction.ProcessName}' no se pudo detener.",
+                previous,
+                Describe(processAction)));
+        }
+
+        if (context.Processes.IsRunning(processAction.ProcessName))
+        {
+            return Task.FromResult(ActionResult.Fail(
+                action.Key,
+                $"El proceso '{processAction.ProcessName}' no se pudo detener.",
                 previous,
                 Describe(processAction)));
         }

@@ -1,4 +1,5 @@
 using Evo.Core.System;
+using System.IO;
 
 namespace Evo.Testing;
 
@@ -13,9 +14,6 @@ public sealed class FakeProcessAccessor : IProcessAccessor
 
     /// <summary>Terminaciones pedidas, en orden.</summary>
     public List<string> Terminated { get; } = [];
-
-    /// <summary>Detenciones pedidas, en orden.</summary>
-    public List<string> Stopped { get; } = [];
 
     /// <summary>Arranques pedidos, en orden.</summary>
     public List<string> Started { get; } = [];
@@ -47,26 +45,6 @@ public sealed class FakeProcessAccessor : IProcessAccessor
         {
             _processes[_processes.IndexOf(process)] = process with { Running = false };
             Terminated.Add(process.Name);
-        }
-
-        return true;
-    }
-
-    public bool StopProcess(string processName)
-    {
-        var matches = _processes
-            .Where(p => p.Running && string.Equals(p.Name, processName, StringComparison.OrdinalIgnoreCase))
-            .ToList();
-
-        if (matches.Count == 0)
-        {
-            return false;
-        }
-
-        foreach (var process in matches)
-        {
-            _processes[_processes.IndexOf(process)] = process with { Running = false };
-            Stopped.Add(process.Name);
         }
 
         return true;

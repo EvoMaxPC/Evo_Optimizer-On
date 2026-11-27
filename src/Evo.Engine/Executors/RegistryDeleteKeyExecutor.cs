@@ -94,6 +94,16 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
                 Describe(deleteAction)));
         }
 
+        if (context.Registry is not IRegistryKeyCreator)
+        {
+            return Task.FromResult(ActionResult.Fail(
+                action.Key,
+                "El accesor de registro no sabe crear claves: no se puede deshacer el borrado, " +
+                "así que no se borra (fail-closed).",
+                "present",
+                Describe(deleteAction)));
+        }
+
         RegistryKeySnapshot snapshot;
         try
         {
@@ -178,7 +188,6 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
         ArgumentNullException.ThrowIfNull(reader);
 
         var kinds = reader as IRegistryKindReader;
-        bool truncated = false;
 
         RegistryKeyNode Walk(string path, int depth)
         {
@@ -200,18 +209,6 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
                 ? Array.Empty<string>()
                 : reader.GetSubKeyNames(hive, path);
 
-            // Tope de nodos por nivel: máx. 1000 subclaves directas por clave.
-            if (childNames.Count > 1000)
-            {
-                truncated = true;
-                childNames = childNames.Take(1000).ToList();
-            }
-
-            if (depth >= 64)
-            {
-                truncated = true;
-            }
-
             foreach (var child in childNames.OrderBy(c => c, StringComparer.OrdinalIgnoreCase))
             {
                 children.Add(Walk($"{path}\\{child}", depth + 1));
@@ -220,14 +217,7 @@ public sealed class RegistryDeleteKeyExecutor : IActionExecutor
             return new RegistryKeyNode(path, values, children);
         }
 
-        var root = Walk(keyPath, 0);
-        return new RegistryKeySnapshot(root)
-        {
-            Truncated = truncated,
-            TruncationMessage = truncated
-                ? "Instantánea truncada (profundidad >= 64 o más de 1000 subclaves por nivel)."
-                : null,
-        };
+        return new RegistryKeySnapshot(Walk(keyPath, 0));
     }
 
     private static string Describe(RegistryDeleteKeyAction action) =>
@@ -250,12 +240,6 @@ public sealed record RegistryKeyNode(
 /// </summary>
 public sealed record RegistryKeySnapshot(RegistryKeyNode Root)
 {
-    /// <summary>True si el recorrido se truncó (profundidad >= 64 o más de 1000 subclaves por nivel).</summary>
-    public bool Truncated { get; init; }
-
-    /// <summary>Motivo del truncamiento cuando <see cref="Truncated"/> es true.</summary>
-    public string? TruncationMessage { get; init; }
-
     /// <summary>Número total de valores de la instantánea.</summary>
     public int ValueCount => CountValues(Root);
 

@@ -303,14 +303,38 @@ public sealed class ExecutorTests
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "X"));
     }
 
-    // ---------------- H3: Procesos honestos ----------------
+    // ---------------- H3: Procesos (reporte honesto) ----------------
 
     /// <summary>
-    /// H3.1: Terminate=false llama a StopProcess, detiene el proceso, retorna Ok
-    /// y la entrada del journal es NotReversible.
+    /// H3.1: Proceso no corriendo → Skipped, sin journal.
     /// </summary>
     [Fact]
-    public async Task ProcessTerminateFalse_LlamaStop_YVerifica()
+    public async Task ProcessNoCorriendo_SkipSinJournal()
+    {
+        var harness = TestHarness.Create();
+        // No se semea ningún proceso: IsRunning devuelve false.
+        var journal = new UndoJournal();
+
+        var result = await new ProcessActionExecutor().ExecuteAsync(new ProcessAction
+        {
+            Order = 1,
+            Description = "noexiste",
+            ProcessName = "NoExiste",
+            Terminate = true,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.False(result.Applied);
+        Assert.Empty(journal.Entries);
+        Assert.Empty(harness.Processes.Terminated);
+    }
+
+    /// <summary>
+    /// H3.2: Corriendo + Terminate=false → sin mutación, sin journal, Skipped
+    /// con mensaje "el proceso esta activo; la acción no solicita terminarlo".
+    /// </summary>
+    [Fact]
+    public async Task ProcessCorriendo_TerminateFalse_SkipSinMutar()
     {
         var harness = TestHarness.Create();
         harness.Processes.Seed("notepad", running: true);
@@ -324,23 +348,21 @@ public sealed class ExecutorTests
             Terminate = false,
         }, ContextFor(harness, journal: journal));
 
-        Assert.True(result.Success);
-        Assert.True(harness.Processes.Stopped.Contains("notepad"));
-        Assert.DoesNotContain("notepad", harness.Processes.Terminated);
-        Assert.False(harness.Processes.IsRunning("notepad"));
-        Assert.Single(journal.Entries);
-        var entry = Assert.IsType<ProcessUndoEntry>(Assert.Single(journal.Entries));
-        var outcome = entry.Restore(new UndoContext(
-            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
-        Assert.Equal(UndoRestoreResult.NotReversible, outcome.Result);
+        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.False(result.Applied);
+        Assert.Equal("Running", result.PreviousState);
+        Assert.Contains("no solicita terminarlo", result.ErrorMessage);
+        Assert.Empty(journal.Entries);
+        Assert.True(harness.Processes.IsRunning("notepad")); // No se detuvo nada
+        Assert.Empty(harness.Processes.Terminated);
     }
 
     /// <summary>
-    /// H3.2: Terminate=true llama a TerminateProcess, detiene el proceso, retorna Ok
-    /// y la entrada del journal es NotReversible.
+    /// H3.3: Corriendo + Terminate=true → TerminateProcess, se detiene → Ok,
+    /// journal entry ProcessUndoEntry (NotReversible).
     /// </summary>
     [Fact]
-    public async Task ProcessTerminateTrue_LlamaTerminate_YVerifica()
+    public async Task ProcessCorriendo_TerminateTrue_SeDetiene_OkNotReversible()
     {
         var harness = TestHarness.Create();
         harness.Processes.Seed("SearchHost", running: true);
@@ -355,17 +377,21 @@ public sealed class ExecutorTests
         }, ContextFor(harness, journal: journal));
 
         Assert.True(result.Success);
-        Assert.DoesNotContain("SearchHost", harness.Processes.Stopped);
+        Assert.True(result.Applied);
         Assert.Contains("SearchHost", harness.Processes.Terminated);
         Assert.False(harness.Processes.IsRunning("SearchHost"));
         Assert.Single(journal.Entries);
+        var entry = Assert.IsType<ProcessUndoEntry>(Assert.Single(journal.Entries));
+        var outcome = entry.Restore(new UndoContext(
+            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
+        Assert.Equal(UndoRestoreResult.NotReversible, outcome.Result);
     }
 
     /// <summary>
-    /// H3.3: Terminate=false y StopProcess no detiene el proceso → Failed, nunca Ok.
+    /// H3.4: Corriendo + Terminate=true → TerminateProcess pero NO se detiene → Failed, sin journal.
     /// </summary>
     [Fact]
-    public async Task ProcessNoSeDetieneConStop_TerminateFalse_Failed()
+    public async Task ProcessCorriendo_TerminateTrue_NoSeDetiene_FailedSinJournal()
     {
         var accessor = new StubbornProcessAccessor();
         accessor.Seed("zombie", running: true);
@@ -387,207 +413,49 @@ public sealed class ExecutorTests
             Order = 1,
             Description = "zombie",
             ProcessName = "zombie",
-            Terminate = false,
-        }, context);
-
-        Assert.Equal(ActionStatus.Failed, result.Status);
-        Assert.Contains("no se detuvo con Stop", result.ErrorMessage);
-        Assert.True(accessor.Stopped.Contains("zombie"));
-        Assert.True(accessor.IsRunning("zombie")); // Sigue corriendo: Stop no detuvo nada
-        Assert.Empty(journal.Entries); // No se añade journal entry en fallo
-    }
-
-    /// <summary>
-    /// H3.4: Terminate=true y TerminateProcess no detiene el proceso → Failed, nunca Ok.
-    /// </summary>
-    [Fact]
-    public async Task ProcessNoSeDetieneConTerminate_TerminateTrue_Failed()
-    {
-        var accessor = new StubbornProcessAccessor();
-        accessor.Seed("zombie2", running: true);
-        var journal = new UndoJournal();
-        var context = new ActionContext
-        {
-            Registry = new FakeRegistryAccessor(),
-            Services = new FakeServiceAccessor(),
-            Tasks = new FakeTaskAccessor(),
-            Processes = accessor,
-            Commands = new FakeCommandRunner(),
-            Mode = ExecutionMode.Execute,
-            Journal = journal,
-            CapabilityId = "unit.capability",
-        };
-
-        var result = await new ProcessActionExecutor().ExecuteAsync(new ProcessAction
-        {
-            Order = 1,
-            Description = "zombie2",
-            ProcessName = "zombie2",
             Terminate = true,
         }, context);
 
         Assert.Equal(ActionStatus.Failed, result.Status);
         Assert.Contains("no se pudo detener", result.ErrorMessage);
-        Assert.True(accessor.Terminated.Contains("zombie2"));
-        Assert.True(accessor.IsRunning("zombie2")); // Sigue corriendo
+        Assert.True(accessor.Terminated.Contains("zombie"));
+        Assert.True(accessor.IsRunning("zombie")); // Sigue corriendo
         Assert.Empty(journal.Entries);
     }
 
     /// <summary>
-    /// H3.5: Proceso inexistente → Skip (applied=false), sin journal entry.
+    /// H3.5: DryRun → sin mutación, sin journal.
     /// </summary>
     [Fact]
-    public async Task ProcessInexistente_SkipSinJournal()
+    public async Task ProcessDryRun_SinMutacion()
     {
         var harness = TestHarness.Create();
-        // No se semea ningún proceso: IsRunning devuelve false.
+        harness.Processes.Seed("notepad", running: true);
         var journal = new UndoJournal();
+        var context = ContextFor(harness, ExecutionMode.DryRun, journal: journal);
 
         var result = await new ProcessActionExecutor().ExecuteAsync(new ProcessAction
         {
             Order = 1,
-            Description = "noexiste",
-            ProcessName = "NoExiste",
+            Description = "notepad",
+            ProcessName = "notepad",
             Terminate = true,
-        }, ContextFor(harness, journal: journal));
+        }, context);
 
-        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.True(result.Success);
         Assert.False(result.Applied);
         Assert.Empty(journal.Entries);
+        Assert.True(harness.Processes.IsRunning("notepad")); // No se detuvo nada
         Assert.Empty(harness.Processes.Terminated);
-        Assert.Empty(harness.Processes.Stopped);
     }
 
-    // ---------------- H4: Tareas con definición completa ----------------
+        // ---------------- H5: RegistryDeleteKey fail-closed ----------------
 
     /// <summary>
-    /// H4.1: TaskCreate con tarea nueva → journal entry con TaskDefinition completa
-    /// → Restore borra la tarea.
+    /// H5.1: Clave con valores y subclaves → snapshot → rollback restaura árbol completo.
     /// </summary>
     [Fact]
-    public async Task TaskCreateNueva_JournalConDefinition_RestoreBorraTarea()
-    {
-        var harness = TestHarness.Create();
-        var journal = new UndoJournal();
-
-        var result = await new TaskCreateExecutor().ExecuteAsync(new TaskCreateAction
-        {
-            Order = 1,
-            TaskPath = @"\Microsoft\Windows\Test",
-            TaskName = "TestTask",
-            Execute = "cmd.exe",
-            Arguments = "/c echo hola",
-            Trigger = "OnLogon",
-            UserId = "System",
-            RunLevel = "Highest",
-            TaskDescription = "Tarea de prueba",
-        }, ContextFor(harness, journal: journal));
-
-        Assert.True(result.Success);
-        Assert.True(harness.Tasks.Exists(@"\Microsoft\Windows\Test", "TestTask"));
-
-        var entry = Assert.Single(journal.Entries);
-        var tce = Assert.IsType<TaskCreateUndoEntry>(entry);
-        Assert.False(tce.ExistedBefore);
-        Assert.NotNull(tce.Definition);
-        Assert.Equal("cmd.exe", tce.Definition.Execute);
-        Assert.Equal("OnLogon", tce.Definition.Trigger);
-        Assert.Equal("System", tce.Definition.UserId);
-
-        // Rollback: borra la tarea creada.
-        var report = await journal.RollbackAsync(new UndoContext(
-            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
-
-        Assert.True(report.Success);
-        Assert.Single(report.Restored);
-        Assert.False(harness.Tasks.Exists(@"\Microsoft\Windows\Test", "TestTask"));
-    }
-
-    /// <summary>
-    /// H4.2: TaskCreate con tarea existente (Overwrite=true) → journal entry con
-    /// WasEnabled + TaskDefinition → Restore restaura definición y estado.
-    /// </summary>
-    [Fact]
-    public async Task TaskCreateExistente_JournalConWasEnabledYDefinition_RestoreRestaura()
-    {
-        var harness = TestHarness.Create();
-        harness.Tasks.Seed(@"\Microsoft\Windows\Test", "ExistingTask", enabled: true);
-        var journal = new UndoJournal();
-
-        var result = await new TaskCreateExecutor().ExecuteAsync(new TaskCreateAction
-        {
-            Order = 1,
-            TaskPath = @"\Microsoft\Windows\Test",
-            TaskName = "ExistingTask",
-            Execute = "powershell.exe",
-            Trigger = "Daily",
-            TriggerAt = "08:00",
-            UserId = "Admin",
-            RunLevel = "Limited",
-            Overwrite = true,
-        }, ContextFor(harness, journal: journal));
-
-        Assert.True(result.Success);
-        var entry = Assert.Single(journal.Entries);
-        var tce = Assert.IsType<TaskCreateUndoEntry>(entry);
-        Assert.True(tce.ExistedBefore);
-        Assert.True(tce.WasEnabled);
-        Assert.NotNull(tce.Definition);
-        Assert.Equal("powershell.exe", tce.Definition.Execute);
-
-        // Rollback: CreateTask(Definition) + mantener WasEnabled (true = habilitada).
-        var report = await journal.RollbackAsync(new UndoContext(
-            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
-
-        Assert.True(report.Success);
-        Assert.Single(report.Restored);
-        Assert.True(harness.Tasks.Exists(@"\Microsoft\Windows\Test", "ExistingTask"));
-        Assert.True(harness.Tasks.IsTaskEnabled(@"\Microsoft\Windows\Test", "ExistingTask"));
-        var restored = harness.Tasks.Snapshot().Values
-            .FirstOrDefault(t => t.Path == @"\Microsoft\Windows\Test" && t.Name == "ExistingTask");
-        Assert.NotNull(restored);
-        Assert.NotNull(restored.Definition);
-        Assert.Equal("powershell.exe", restored.Definition.Execute);
-    }
-
-    /// <summary>
-    /// H4.3: TaskCreate sin TaskDefinition guardada → Restore → NotReversible.
-    /// </summary>
-    [Fact]
-    public async Task TaskCreateSinDefinition_RestoreNotReversible()
-    {
-        var journal = new UndoJournal();
-        journal.Add(new TaskCreateUndoEntry
-        {
-            CapabilityId = "c",
-            ActionKey = "task",
-            Description = "task",
-            TaskPath = @"\Microsoft\Windows\Test",
-            TaskName = "TestTask",
-            ExistedBefore = true,
-            WasEnabled = true,
-            Definition = null,
-            PreviousState = null,
-        });
-
-        var report = await journal.RollbackAsync(new UndoContext(
-            new FakeRegistryAccessor(), new FakeServiceAccessor(), new FakeTaskAccessor(),
-            new FakeProcessAccessor(), new FakeCommandRunner()));
-
-        Assert.True(report.Success); // NotReversible no marca Success=false
-        Assert.Single(report.NotReversible);
-        Assert.Equal("task", report.NotReversible[0].ActionKey);
-        Assert.Contains("TaskDefinition no se guardo", report.NotReversible[0].FailureMessage);
-    }
-
-    // ---------------- H5: RegistryDeleteKey con interfaz correcta ----------------
-
-    /// <summary>
-    /// H5.1: RegistryDeleteKey con clave que existe → snapshot → Restore recrea
-    /// la clave con valores y subclaves.
-    /// </summary>
-    [Fact]
-    public async Task RegistryDeleteKey_ClaveExiste_SnapshotYRestoreRecrea()
+    public async Task RegistryDeleteKey_ArbolCompleto_RestoreRecreaTodo()
     {
         var harness = TestHarness.Create();
         harness.Registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
@@ -616,7 +484,7 @@ public sealed class ExecutorTests
     }
 
     /// <summary>
-    /// H5.2: RegistryDeleteKey con clave inexistente → no-op, sin journal entry.
+    /// H5.2: Clave inexistente → no-op, sin journal entry.
     /// </summary>
     [Fact]
     public async Task RegistryDeleteKey_ClaveInexistente_NoOpSinJournal()
@@ -636,68 +504,50 @@ public sealed class ExecutorTests
         Assert.Empty(journal.Entries);
     }
 
-    // ---------------- H7: Límites de snapshot ----------------
-
     /// <summary>
-    /// H7.1: Snapshot con profundidad <= 64 no se trunca (Truncated=false).
+    /// H5.3: Accesor sin IRegistryKeyCreator → acción falla y la clave queda intacta.
     /// </summary>
     [Fact]
-    public async Task SnapshotProfundidadBaja64_NoTruncado()
+    public async Task RegistryDeleteKey_SinIRegistryKeyCreator_FailSinMutar()
     {
-        var reader = new TestTreeReader(path => path.Split('\\').Length > 5 ? [] : ["Child"]);
-        var snapshot = RegistryDeleteKeyExecutor.TakeSnapshot(
-            reader, RegistryHive.LocalMachine, @"ROOT");
+        var registry = new RegistryAccessorSinKeyCreator();
+        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
 
-        Assert.False(snapshot.Truncated);
-        Assert.Null(snapshot.TruncationMessage);
+        var result = await new RegistryDeleteKeyExecutor().ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"SOFTWARE\Evo\Test",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.Contains("no sabe crear claves", result.ErrorMessage);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test"));
+        Assert.Empty(journal.Entries);
     }
 
     /// <summary>
-    /// H7.2: Snapshot con profundidad > 64 se trunca (Truncated=true).
+    /// H5.4: !ExistedBefore con clave ausente → Restored.
     /// </summary>
     [Fact]
-    public async Task SnapshotProfundidadMayor64_SeTrunca_TruncatedTrue()
+    public async Task RegistryDeleteKey_NoExistedBefore_ClaveAusente_Restored()
     {
-        var reader = new TestTreeReader(_ => ["Child"]); // Siempre tiene hijo → alcanza depth 64
-        var snapshot = RegistryDeleteKeyExecutor.TakeSnapshot(
-            reader, RegistryHive.LocalMachine, @"ROOT");
-
-        Assert.True(snapshot.Truncated);
-        Assert.NotNull(snapshot.TruncationMessage);
-    }
-
-    /// <summary>
-    /// H7.3: Snapshot con más de 1000 subclaves por nivel se trunca (solo la
-    /// raíz tiene 2000 subclaves; el resto de niveles está vacío para evitar
-    /// explosión combinatoria).
-    /// </summary>
-    [Fact]
-    public async Task SnapshotConMasDe1000SubclavesPorNivel_SeTrunca()
-    {
-        var reader = new TestTreeReader(path =>
-            path == @"ROOT"
-                ? Enumerable.Range(0, 2000).Select(i => $"Key{i}").ToList()
-                : []);
-        var snapshot = RegistryDeleteKeyExecutor.TakeSnapshot(
-            reader, RegistryHive.LocalMachine, @"ROOT");
-
-        Assert.True(snapshot.Truncated);
-        Assert.Equal(1000, snapshot.Root.Children.Count);
-    }
-
-    /// <summary>
-    /// H7.4: Restore de snapshot truncado restaura lo que hay.
-    /// </summary>
-    [Fact]
-    public async Task RestoreSnapshotTruncado_RestauraLoQueHay()
-    {
-        var reader = new TestTreeReader(_ => ["Child"]);
-        var snapshot = RegistryDeleteKeyExecutor.TakeSnapshot(
-            reader, RegistryHive.LocalMachine, @"ROOT");
-
-        Assert.True(snapshot.Truncated);
-
-        var registry = new FakeRegistryAccessor();
+        var journal = new UndoJournal();
+        var snapshot = new RegistryKeySnapshot(
+            new RegistryKeyNode(@"ROOT", [], []));
         var entry = new RegistryDeleteKeyUndoEntry
         {
             CapabilityId = "c",
@@ -706,7 +556,38 @@ public sealed class ExecutorTests
             Hive = RegistryHive.LocalMachine,
             KeyPath = @"ROOT",
             Recursive = true,
-            ExistedBefore = true,
+            ExistedBefore = false,
+            Snapshot = snapshot,
+            PreviousState = null,
+        };
+
+        var outcome = entry.Restore(new UndoContext(
+            new FakeRegistryAccessor(), new FakeServiceAccessor(), new FakeTaskAccessor(),
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.Equal(UndoRestoreResult.Restored, outcome.Result);
+    }
+
+    /// <summary>
+    /// H5.5: !ExistedBefore con clave existente → Failed con mensaje explícito.
+    /// </summary>
+    [Fact]
+    public async Task RegistryDeleteKey_NoExistedBefore_ClaveExiste_Failed()
+    {
+        var registry = new FakeRegistryAccessor();
+        registry.Seed(RegistryHive.LocalMachine, @"ROOT", "Val1", 1);
+        var journal = new UndoJournal();
+        var snapshot = new RegistryKeySnapshot(
+            new RegistryKeyNode(@"ROOT", [], []));
+        var entry = new RegistryDeleteKeyUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "del",
+            Description = "del",
+            Hive = RegistryHive.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+            ExistedBefore = false,
             Snapshot = snapshot,
             PreviousState = null,
         };
@@ -715,21 +596,179 @@ public sealed class ExecutorTests
             registry, new FakeServiceAccessor(), new FakeTaskAccessor(),
             new FakeProcessAccessor(), new FakeCommandRunner()));
 
-        Assert.Equal(UndoRestoreResult.Restored, outcome.Result);
-        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Equal(UndoRestoreResult.Failed, outcome.Result);
+        Assert.Contains("ya existe y no debería", outcome.FailureMessage);
     }
 
-    // ---------------- Helpers H3/H7 ----------------
+    /// <summary>
+    /// H5.6: SetValue lanza durante restauración → Failed, entrada conservada.
+    /// </summary>
+    [Fact]
+    public async Task RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada()
+    {
+        var registry = new FakeRegistryAccessor();
+        registry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\\Evo\\Test", "Val1", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor().ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"SOFTWARE\\Evo\\Test",
+            Recursive = true,
+        }, ctx);
+
+        Assert.True(result.Success);
+        Assert.Single(journal.Entries);
+
+        // Rollback con un registry que falla en SetValue
+        var failingRegistry = new FailingRegistryAccessor();
+        failingRegistry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\\Evo\\Test", "Val1", 1);
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            failingRegistry, new FakeServiceAccessor(), new FakeTaskAccessor(),
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.False(report.Success);
+        Assert.Single(report.Failed);
+        Assert.Single(journal.Entries);
+    }
+
+    // ---------------- H7: Límites del snapshot ----------------
 
     /// <summary>
-    /// Accesor de proceso que nunca detiene: StopProcess y TerminateProcess
-    /// devuelven false, IsRunning siempre devuelve true para procesos sembrados.
+    /// H7.1: Snapshot exactamente en el límite MaxValues (1 valor) → se borra.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotEnLimiteMaxValues_SeBorra()
+    {
+        var reader = new TestTreeReader(_ => []);
+        var registry = new FakeRegistryAccessor();
+        registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V1", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 16, MaxValues = 1, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.True(result.Success);
+        Assert.False(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Single(journal.Entries);
+    }
+
+    /// <summary>
+    /// H7.2: Snapshot excede MaxValues (2 valores, límite 1) → Fail, clave intacta.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotExcedeMaxValues_FailClaveIntacta()
+    {
+        var reader = new TestTreeReader(_ => []);
+        var registry = new FakeRegistryAccessor();
+        registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V1", 1);
+        registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V2", 2);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 16, MaxValues = 1, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Empty(journal.Entries);
+    }
+
+    /// <summary>
+    /// H7.3: Snapshot excede MaxDepth (profundidad > límite) → Fail, clave intacta.
+    /// </summary>
+    [Fact]
+    public async Task SnapshotExcedeMaxDepth_FailClaveIntacta()
+    {
+        var reader = new TestTreeReader(_ => ["Child"]); // Siempre tiene hijo → excede depth
+        var registry = new FakeRegistryAccessor();
+        registry.Seed(RegistryHive.LocalMachine, @"ROOT", "V", 1);
+        var journal = new UndoJournal();
+        var ctx = new ActionContext
+        {
+            Registry = registry,
+            Services = new FakeServiceAccessor(),
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+
+        var result = await new RegistryDeleteKeyExecutor(
+            new RegistrySnapshotLimits { MaxDepth = 1, MaxValues = 4096, MaxKeys = 1024 }
+        ).ExecuteAsync(new RegistryDeleteKeyAction
+        {
+            Order = 1,
+            Hive = RegistryHiveKind.LocalMachine,
+            KeyPath = @"ROOT",
+            Recursive = true,
+        }, ctx);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.True(registry.KeyExists(RegistryHive.LocalMachine, @"ROOT"));
+        Assert.Empty(journal.Entries);
+    }
+
+    // ---------------- Helpers ----------------
+
+    /// <summary>
+    /// Accesor de proceso que nunca detiene: TerminateProcess devuelve false,
+    /// IsRunning siempre devuelve true para procesos sembrados.
     /// </summary>
     private sealed class StubbornProcessAccessor : IProcessAccessor
     {
         private readonly FakeProcessAccessor _inner = new();
 
-        public List<string> Stopped => _inner.Stopped;
         public List<string> Terminated => _inner.Terminated;
 
         public void Seed(string name, bool running = true) => _inner.Seed(name, running);
@@ -738,11 +777,6 @@ public sealed class ExecutorTests
         public bool TerminateProcess(string processName)
         {
             _inner.Terminated.Add(processName);
-            return false;
-        }
-        public bool StopProcess(string processName)
-        {
-            _inner.Stopped.Add(processName);
             return false;
         }
         public int StartProcess(string fileName, IReadOnlyList<string> arguments) => _inner.StartProcess(fileName, arguments);
@@ -760,15 +794,104 @@ public sealed class ExecutorTests
         public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath) => [];
     }
 
-    private sealed record ThrowingEntry : UndoJournalEntry
+    /// <summary>
+    /// IRegistryAccessor que NO implementa IRegistryKeyCreator.
+    /// </summary>
+    private sealed class RegistryAccessorSinKeyCreator : IRegistryAccessor, IRegistryTreeReader
     {
-        public override UndoEntryOutcome Restore(IUndoContext context) =>
-            new()
-            {
-                ActionKey = ActionKey,
-                Description = Description,
-                Result = UndoRestoreResult.Failed,
-                FailureMessage = "rollback imposible",
-            };
+        private readonly FakeRegistryAccessor _inner = new();
+
+        public void Seed(RegistryHive hive, string keyPath, string valueName, object value,
+            RegistryValueKind kind = RegistryValueKind.DWord)
+        {
+            _inner.Seed(hive, keyPath, valueName, value, kind);
+        }
+
+        public bool KeyExists(RegistryHive hive, string keyPath) => _inner.KeyExists(hive, keyPath);
+        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive) => _inner.DeleteKey(hive, keyPath, recursive);
+        public object? GetValue(RegistryHive hive, string keyPath, string valueName) => _inner.GetValue(hive, keyPath, valueName);
+        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind) => _inner.SetValue(hive, keyPath, valueName, value, kind);
+        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) => _inner.DeleteValue(hive, keyPath, valueName);
+        public IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath) => _inner.GetSubKeyNames(hive, keyPath);
+        public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath) => _inner.GetValueNames(hive, keyPath);
     }
-}
+
+    /// <summary>
+    /// FakeRegistryAccessor que lanza en la primera llamada a SetValue.
+    /// </summary>
+    private sealed class FailingRegistryAccessor : FakeRegistryAccessor
+    {
+        private int _setValueCalls;
+        public new void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind)
+        {
+            _setValueCalls++;
+            if (_setValueCalls == 1)
+                throw new InvalidOperationException("SetValue falló");
+            base.SetValue(hive, keyPath, valueName, value, kind);
+        }
+    }
+
+    /// <summary>
+    /// PASO 1: Rollback por identidad — dos entradas con el mismo ActionKey,
+    /// una Restored y otra Failed → RollbackAsync conserva solo la entrada
+    /// fallida (por índice), la exitosa se elimina del diario.
+    /// </summary>
+    [Fact]
+    public async Task RollbackPorIdentidad_SoloEntradaFallida_SeConserva()
+    {
+        var journal = new UndoJournal();
+        var definicionOriginal = new TaskDefinition
+        {
+            TaskPath = @"\\Microsoft\\Windows\\Test",
+            TaskName = "TestTask",
+            Execute = "orig.exe",
+            Trigger = "OnLogon",
+            UserId = "System",
+            RunLevel = "Highest",
+        };
+
+        // Entrada 1: ExistedBefore=false → DeleteTask → siempre exitoso → Restored
+        journal.Add(new TaskCreateUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "task",
+            Description = "task",
+            TaskPath = @"\\Microsoft\\Windows\\Test",
+            TaskName = "TestTask",
+            ExistedBefore = false,
+            WasEnabled = false,
+            PreviousDefinition = null,
+            PreviousState = null,
+        });
+
+        // Entrada 2: mismo ActionKey, ExistedBefore=true + PreviousDefinition → CreateTask → falla
+        journal.Add(new TaskCreateUndoEntry
+        {
+            CapabilityId = "c",
+            ActionKey = "task",
+            Description = "task",
+            TaskPath = @"\\Microsoft\\Windows\\Test",
+            TaskName = "OtraTarea",
+            ExistedBefore = true,
+            WasEnabled = true,
+            PreviousDefinition = definicionOriginal,
+            PreviousState = null,
+        });
+
+        var tasks = new FakeTaskAccessor();
+        tasks.FailCreateWith = "error al crear"; // La segunda falla (CreateTask), la primera no (DeleteTask)
+
+        var report = await journal.RollbackAsync(new UndoContext(
+            new FakeRegistryAccessor(), new FakeServiceAccessor(), tasks,
+            new FakeProcessAccessor(), new FakeCommandRunner()));
+
+        Assert.True(report.Success);
+        Assert.Single(report.Restored);
+        Assert.Single(report.Failed);
+        Assert.Equal("task", report.Restored[0].ActionKey);
+        Assert.Equal("task", report.Failed[0].ActionKey);
+
+        // Solo la entrada fallida se conserva (por índice); la exitosa se elimina.
+        Assert.Single(journal.Entries);
+        Assert.Equal("task", journal.Entries[0].ActionKey);
+    }

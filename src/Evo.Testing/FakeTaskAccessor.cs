@@ -21,9 +21,9 @@ public sealed class FakeTaskAccessor : ITaskAccessor
     public IReadOnlyDictionary<string, FakeTask> Snapshot() =>
         new Dictionary<string, FakeTask>(_tasks, StringComparer.OrdinalIgnoreCase);
 
-    public FakeTaskAccessor Seed(string taskPath, string taskName, bool enabled)
+    public FakeTaskAccessor Seed(string taskPath, string taskName, bool enabled, TaskDefinition? definition = null)
     {
-        _tasks[Key(taskPath, taskName)] = new FakeTask(taskPath, taskName, enabled);
+        _tasks[Key(taskPath, taskName)] = new FakeTask(taskPath, taskName, enabled) { Definition = definition };
         Log.Clear();
         return this;
     }
@@ -39,6 +39,9 @@ public sealed class FakeTaskAccessor : ITaskAccessor
     /// <summary>Si no es null, la siguiente creación lanza este error.</summary>
     public string? FailCreateWith { get; set; }
 
+    /// <summary>Si no es null, la siguiente lectura de definición lanza este error.</summary>
+    public string? FailGetDefinitionWith { get; set; }
+
     public void CreateTask(TaskDefinition definition)
     {
         ArgumentNullException.ThrowIfNull(definition);
@@ -52,7 +55,7 @@ public sealed class FakeTaskAccessor : ITaskAccessor
             new FakeTask(definition.TaskPath, definition.TaskName, true) { Definition = definition };
         Created.Add(definition);
         MutationCount++;
-        Log.Add($"create {definition.TaskPath}\\{definition.TaskName}");
+        Log.Add($"create {definition.TaskPath}\\\\{definition.TaskName}");
     }
 
     public bool DeleteTask(string taskPath, string taskName)
@@ -63,7 +66,7 @@ public sealed class FakeTaskAccessor : ITaskAccessor
         }
 
         MutationCount++;
-        Log.Add($"delete {taskPath}\\{taskName}");
+        Log.Add($"delete {taskPath}\\\\{taskName}");
         return true;
     }
 
@@ -71,14 +74,24 @@ public sealed class FakeTaskAccessor : ITaskAccessor
 
     public void DisableTask(string taskPath, string taskName) => Set(taskPath, taskName, false);
 
+    public TaskDefinition? GetDefinition(string taskPath, string taskName)
+    {
+        if (FailGetDefinitionWith is not null)
+        {
+            throw new InvalidOperationException(FailGetDefinitionWith);
+        }
+
+        return _tasks.TryGetValue(Key(taskPath, taskName), out var task) ? task.Definition : null;
+    }
+
     private void Set(string taskPath, string taskName, bool enabled)
     {
         var previous = _tasks.GetValueOrDefault(Key(taskPath, taskName));
         _tasks[Key(taskPath, taskName)] =
             new FakeTask(taskPath, taskName, enabled) { Definition = previous?.Definition };
         MutationCount++;
-        Log.Add($"{(enabled ? "enable" : "disable")} {taskPath}\\{taskName}");
+        Log.Add($"{(enabled ? "enable" : "disable")} {taskPath}\\\\{taskName}");
     }
 
-    private static string Key(string taskPath, string taskName) => $"{taskPath.TrimEnd('\\')}\\{taskName}";
+    private static string Key(string taskPath, string taskName) => $"{taskPath.TrimEnd('\\')}\\\\{taskName}";
 }

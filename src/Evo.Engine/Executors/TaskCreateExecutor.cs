@@ -65,6 +65,37 @@ public sealed class TaskCreateExecutor : IActionExecutor
                 Describe(createAction)));
         }
 
+        // Si la tarea existe y se va a sobrescribir, leer la definición ORIGINAL
+        // ANTES de reemplazar. Si no se puede leer, fail-closed: no mutar.
+        TaskDefinition? previousDefinition = null;
+        if (existed && createAction.Overwrite)
+        {
+            try
+            {
+                previousDefinition = context.Tasks.GetDefinition(
+                    createAction.TaskPath, createAction.TaskName);
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException and not OutOfMemoryException)
+            {
+                return Task.FromResult(ActionResult.Fail(
+                    action.Key,
+                    $"No se pudo leer la definición previa de '{createAction.TaskPath}\\\\{createAction.TaskName}': " +
+                    ex.Message + ". No se pisa la tarea (fail-closed).",
+                    previous,
+                    Describe(createAction)));
+            }
+
+            if (previousDefinition is null)
+            {
+                return Task.FromResult(ActionResult.Fail(
+                    action.Key,
+                    $"La definición previa de '{createAction.TaskPath}\\\\{createAction.TaskName}' no es legible: " +
+                    "no se pisa la tarea (fail-closed).",
+                    previous,
+                    Describe(createAction)));
+            }
+        }
+
         if (context.Mutates)
         {
             try
@@ -94,19 +125,6 @@ public sealed class TaskCreateExecutor : IActionExecutor
                     Describe(createAction)));
             }
 
-            var taskDefinition = new TaskDefinition
-            {
-                TaskPath = createAction.TaskPath,
-                TaskName = createAction.TaskName,
-                Execute = createAction.Execute,
-                Arguments = createAction.Arguments,
-                Trigger = createAction.Trigger,
-                TriggerAt = createAction.TriggerAt,
-                UserId = createAction.UserId,
-                RunLevel = createAction.RunLevel,
-                Description = createAction.TaskDescription,
-            };
-
             context.Journal.Add(new TaskCreateUndoEntry
             {
                 CapabilityId = context.CapabilityId,
@@ -117,7 +135,7 @@ public sealed class TaskCreateExecutor : IActionExecutor
                 TaskName = createAction.TaskName,
                 ExistedBefore = existed,
                 WasEnabled = wasEnabled,
-                Definition = taskDefinition,
+                PreviousDefinition = previousDefinition,
             });
         }
 

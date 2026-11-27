@@ -247,13 +247,37 @@ public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
     {
         ArgumentNullException.ThrowIfNull(context);
 
-        if (context.DryRun || !ExistedBefore)
+        if (context.DryRun)
         {
             return new UndoEntryOutcome
             {
                 ActionKey = ActionKey,
                 Description = Description,
                 Result = UndoRestoreResult.NotReversible,
+            };
+        }
+
+        if (!ExistedBefore)
+        {
+            // No-op original: la clave no existía al borrar. Si sigue sin
+            // existir, el estado es correcto (Restored). Si alguien la creó
+            // entre medio, es un fallo explícito.
+            if (!context.Registry.KeyExists(Hive, KeyPath))
+            {
+                return new UndoEntryOutcome
+                {
+                    ActionKey = ActionKey,
+                    Description = Description,
+                    Result = UndoRestoreResult.Restored,
+                };
+            }
+
+            return new UndoEntryOutcome
+            {
+                ActionKey = ActionKey,
+                Description = Description,
+                Result = UndoRestoreResult.Failed,
+                FailureMessage = $"La clave '{Hive}\\\\{KeyPath}' ya existe y no debería: no se puede deshacer un no-op.",
             };
         }
 
@@ -272,10 +296,13 @@ public sealed record RegistryDeleteKeyUndoEntry : UndoJournalEntry
     {
         // Las claves vacías también se recrean: un borrado recursivo se deshace
         // con el árbol exacto, incluidas las ramas sin valores.
-        if (registry is Evo.Core.System.IRegistryKeyCreator creator)
+        if (registry is not Evo.Core.System.IRegistryKeyCreator creator)
         {
-            creator.EnsureKey(hive, node.Path);
+            throw new InvalidOperationException(
+                $"El accesor de registro no implementa IRegistryKeyCreator: no se puede recrear '{node.Path}'.");
         }
+
+        creator.EnsureKey(hive, node.Path);
 
         foreach (var value in node.Values)
         {
@@ -348,8 +375,8 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
     /// <summary>Estado previo de la tarea si ya existía.</summary>
     public required bool WasEnabled { get; init; }
 
-    /// <summary>Definición guardada al crear la tarea (null si no se guardó).</summary>
-    public required TaskDefinition? Definition { get; init; }
+    /// <summary>Definición ORIGINAL guardada al crear la tarea (null si no se pudo leer).</summary>
+    public required TaskDefinition? PreviousDefinition { get; init; }
 
     public override UndoEntryOutcome Restore(IUndoContext context)
     {
@@ -377,7 +404,7 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
         }
 
         // Sin definición guardada no se puede restaurar la tarea completa.
-        if (Definition is null)
+        if (PreviousDefinition is null)
         {
             return new UndoEntryOutcome
             {
@@ -388,8 +415,8 @@ public sealed record TaskCreateUndoEntry : UndoJournalEntry
             };
         }
 
-        // Restaurar definición (CreateTask la pone habilitada).
-        context.Tasks.CreateTask(Definition);
+        // Restaurar definición original (CreateTask la pone habilitada).
+        context.Tasks.CreateTask(PreviousDefinition);
 
         // Ajustar estado de habilitación previo (preserva la definición).
         if (!WasEnabled)
@@ -506,6 +533,7 @@ public sealed class UndoJournal
         var restored = new List<UndoEntryOutcome>();
         var notReversible = new List<UndoEntryOutcome>();
         var failed = new List<UndoEntryOutcome>();
+        var failedIndices = new HashSet<int>();
 
         for (var index = _entries.Count - 1; index >= 0; index--)
         {
@@ -536,17 +564,21 @@ public sealed class UndoJournal
                     break;
                 case UndoRestoreResult.Failed:
                     failed.Add(outcome);
+                    failedIndices.Add(index);
                     break;
             }
         }
 
         if (!context.DryRun)
         {
-            // Se conservan SOLO las entradas que fallaron: un segundo
-            // RollbackAsync las reintentará. Las restauradas y no reversibles
-            // ya se procesaron y se descardan del diario.
-            var failedKeys = failed.Select(f => f.ActionKey).ToHashSet(StringComparer.Ordinal);
-            _entries.RemoveAll(e => !failedKeys.Contains(e.ActionKey));
+            // Se conservan SOLO las entradas que fallaron, identificadas por
+            // ÍNDICE (no por ActionKey): si dos entradas distintas comparten el
+            // mismo ActionKey y una falló mientras otra se restauró, la
+            // restaurada se descarta y la fallida permanece en el diario para
+            // que un segundo RollbackAsync la reintente.
+            _entries = _entries
+                .Where((entry, index) => failedIndices.Contains(index))
+                .ToList();
         }
 
         return Task.FromResult(new RollbackReport
