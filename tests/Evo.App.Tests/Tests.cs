@@ -1,6 +1,8 @@
 using Evo.Core.Actions;
+using Evo.Core.Confirmation;
 using Evo.Core.Enums;
 using Evo.Core.Models;
+using Evo.Core.Restore;
 using Evo.Core.System;
 using Evo.Catalog.Model;
 using Evo.Detection;
