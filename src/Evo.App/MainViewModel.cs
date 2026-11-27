@@ -30,6 +30,7 @@ public sealed class MainViewModel
     private readonly IConfirmationProvider _confirmations;
     private readonly IRestorePointService _restorePoints;
     private readonly ICommandRunner _commands;
+    private readonly IRegistryAccessor? _registry;
     private readonly IReadOnlyDictionary<ActionKind, IActionExecutor> _executors;
     private readonly IReadOnlyDictionary<string, CapabilityContract> _catalog;
     private readonly UndoJournal _journal = new();
@@ -48,7 +49,8 @@ public sealed class MainViewModel
         ObservableCollection<SectionViewModel> sections,
         string resultsText,
         bool hasResults,
-        bool canApplyAny)
+        bool canApplyAny,
+        IRegistryAccessor? registry = null)
     {
         _environment = environment;
         _detector = detector;
@@ -57,6 +59,7 @@ public sealed class MainViewModel
         _commands = commands;
         _executors = executors;
         _catalog = catalog;
+        _registry = registry;
 
         CurrentBuild = compatibility.Build;
         UBR = compatibility.Ubr;
@@ -158,7 +161,8 @@ public sealed class MainViewModel
         IReadOnlyList<CapabilityDefinition> capabilities,
         IConfirmationProvider confirmations,
         IRestorePointService restorePoints,
-        ICommandRunner commands)
+        ICommandRunner commands,
+        IRegistryAccessor? registry = null)
     {
         var executors = new IActionExecutor[]
         {
@@ -205,7 +209,7 @@ public sealed class MainViewModel
         return new MainViewModel(
             environment, detector, confirmations, restorePoints, commands,
             executors, contracts, compatibility, capabilities,
-            sections, string.Empty, false, canApplyAny);
+            sections, string.Empty, false, canApplyAny, registry);
     }
 
     private static ObservableCollection<SectionViewModel> BuildSections(
@@ -285,6 +289,16 @@ public sealed class MainViewModel
         if (!IsWindowsCompatible) return this;
         if (!capability.CanApply) return this;
 
+        // Punto de restauración: fail-closed antes de llamar al motor.
+        bool requiereRestauracion = capability.Restore == RestoreLevel.RestorePoint
+            || ConfirmationLadder.RequiresRestorePoint(capability.Confirmation);
+        if (requiereRestauracion
+            && !_restorePoints.IsAvailableAsync().GetAwaiter().GetResult())
+        {
+            AppendResult($"Requiere punto de restauración: pendiente ({capability.Id}).");
+            return this;
+        }
+
         ExecuteCapability(capability, ExecutionMode.Execute);
         return this;
     }
@@ -307,6 +321,16 @@ public sealed class MainViewModel
         if (!_byCapabilityId.TryGetValue(capability.Id, out var definition))
             return;
 
+        // Tareas programadas y comandos externos: no disponibles todavía.
+        foreach (var accion in definition.Actions)
+        {
+            if (accion is TaskAction or CommandAction)
+            {
+                AppendResult($"{capability.Name}: no disponible todavía.");
+                return;
+            }
+        }
+
         var contract = definition.ToContract();
         var steps = definition.Actions
             .Select((a, i) => new PlannedStep
@@ -327,7 +351,7 @@ public sealed class MainViewModel
 
         var context = new ActionContext
         {
-            Registry = new WindowsRegistryAccessor(),
+            Registry = _registry ?? new WindowsRegistryAccessor(),
             Services = new WindowsServiceAccessor(),
             Tasks = new UnavailableTaskAccessor(),
             Processes = new WindowsProcessAccessor(),

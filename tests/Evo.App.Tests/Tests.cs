@@ -372,5 +372,90 @@ public class Tests
         // TrustedInstaller no se puede asumir desde el proceso actual
     }
 
+    [Fact]
+    public void Confirmacion_No_Impide_Mutar_Fake()
+    {
+        var caps = new List<CapabilityDefinition>
+        {
+            SafeCapability("cap.confirm-no", sectionId: 1)
+                with { Risk = RiskLevel.Low, Confirmation = ConfirmationType.SimpleClick },
+        };
+        var registry = new FakeRegistryAccessor();
+        var confirmations = new FakeConfirmationProvider { Approve = false };
+        var vm = MainViewModel.CreateForTest(
+            ClientEnv(), SupportedResult(), caps,
+            confirmations, new FakeRestorePointService { Available = true },
+            new FakeCommandRunner(), registry);
+
+        var cap = Assert.Single(vm.Sections.SelectMany(s => s.Capabilities));
+        Assert.True(cap.CanApply);
+
+        var result = vm.Apply(cap);
+
+        // El fake no debió mutar: confirmación rechazada → sin ejecutar acciones.
+        Assert.Equal(0, registry.MutationCount);
+        Assert.DoesNotContain("Éxito: 1", result.ResultsText);
+    }
+
+    [Fact]
+    public void Restauracion_Pendiente_No_Llama_Al_Motor()
+    {
+        var caps = new List<CapabilityDefinition>
+        {
+            SafeCapability("cap.rp2", sectionId: 1)
+                with { Restore = RestoreLevel.RestorePoint },
+        };
+        var restorePoints = new FakeRestorePointService { Available = false };
+        var vm = CreateVm(SupportedResult(), caps, restorePoints: restorePoints);
+
+        var cap = Assert.Single(vm.Sections.SelectMany(s => s.Capabilities));
+        var result = vm.Apply(cap);
+
+        Assert.Contains("Requiere punto de restauración: pendiente", result.ResultsText);
+        Assert.Equal(0, restorePoints.CreatedCount);
+    }
+
+    [Fact]
+    public void Tarea_O_Comando_No_Disponible_Todavia()
+    {
+        var capsTarea = new List<CapabilityDefinition>
+        {
+            SafeCapability("cap.tarea", sectionId: 1)
+                with
+                {
+                    Actions = new List<CapabilityAction>
+                    {
+                        new TaskAction
+                        {
+                            Order = 1,
+                            TaskPath = @"\\",
+                            TaskName = "t",
+                            Enabled = false,
+                        },
+                    },
+                },
+        };
+        var vmTarea = CreateVm(SupportedResult(), capsTarea);
+        var capTarea = Assert.Single(vmTarea.Sections.SelectMany(s => s.Capabilities));
+        var resultTarea = vmTarea.Apply(capTarea);
+        Assert.Contains("no disponible todavía", resultTarea.ResultsText);
+
+        var capsComando = new List<CapabilityDefinition>
+        {
+            SafeCapability("cap.comando", sectionId: 1)
+                with
+                {
+                    Actions = new List<CapabilityAction>
+                    {
+                        new CommandAction { Order = 1, FileName = "cmd.exe" },
+                    },
+                },
+        };
+        var vmComando = CreateVm(SupportedResult(), capsComando);
+        var capComando = Assert.Single(vmComando.Sections.SelectMany(s => s.Capabilities));
+        var resultComando = vmComando.Apply(capComando);
+        Assert.Contains("no disponible todavía", resultComando.ResultsText);
+    }
+
     #endregion
 }

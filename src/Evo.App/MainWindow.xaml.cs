@@ -21,7 +21,9 @@ public partial class MainWindow : Window
         var environment = new WindowsSystemEnvironment();
         var registry = new WindowsRegistryAccessor();
         var confirmations = new WpfConfirmationProvider();
-        var restorePoints = new FakeRestorePointService();
+        // Fall-closed: en producción el servicio de punto de restauración no
+        // está disponible, así que ninguna capacidad que lo requiera se ejecuta.
+        var restorePoints = new FakeRestorePointService { Available = false };
         var commands = new WpfCommandRunner();
 
         _viewModel = MainViewModel.Create(environment, registry, confirmations, restorePoints, commands);
