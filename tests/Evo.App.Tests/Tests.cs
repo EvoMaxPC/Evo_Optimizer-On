@@ -64,7 +64,7 @@ public class Tests
                 {
                     Order = 1,
                     Description = $"Set {id}",
-                    Hive = Evo.Core.System.RegistryHiveKind.CurrentUser,
+                    Hive = RegistryHiveKind.CurrentUser,
                     KeyPath = @"Software\Evo\Test",
                     ValueName = id,
                     Operation = RegistryOperation.Set,
