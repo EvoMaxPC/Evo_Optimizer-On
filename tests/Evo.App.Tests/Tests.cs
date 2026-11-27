@@ -230,7 +230,8 @@ public class Tests
 
         // El motor fall-closed: sin servicio de restauración disponible, aborta.
         var result = vm.Apply(cap);
-        Assert.Contains("Restore", result.ResultsText);
+        Assert.Contains("restauración", result.ResultsText,
+            StringComparison.OrdinalIgnoreCase);
         Assert.False(restorePoints.CreatedCount > 0, "No se creó punto de restauración.");
     }
 

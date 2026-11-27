@@ -139,7 +139,8 @@ public sealed class MainViewModel
             new CommandActionExecutor(),
         }.ToDictionary(e => e.Kind, e => e);
 
-        var sections = BuildSections(capabilities, compatibility.Build);
+        var sections = BuildSections(capabilities, compatibility.Build,
+            compatibility.IsSupported);
         var canApplyAny = sections
             .SelectMany(s => s.Capabilities)
             .Any(c => c.IsExecutable && c.CanApply);
@@ -195,7 +196,8 @@ public sealed class MainViewModel
             : new WindowsReleaseCatalog();
         var detector = new WindowsDetector(environment, new FakeRegistryAccessor(), releaseCatalog);
 
-        var sections = BuildSections(capabilities, compatibility.Build);
+        var sections = BuildSections(capabilities, compatibility.Build,
+            compatibility.IsSupported);
         var canApplyAny = sections
             .SelectMany(s => s.Capabilities)
             .Any(c => c.IsExecutable && c.CanApply);
@@ -207,7 +209,8 @@ public sealed class MainViewModel
     }
 
     private static ObservableCollection<SectionViewModel> BuildSections(
-        IReadOnlyList<CapabilityDefinition> capabilities, int currentBuild)
+        IReadOnlyList<CapabilityDefinition> capabilities, int currentBuild,
+        bool isWindowsCompatible)
     {
         var bySection = capabilities
             .GroupBy(c => c.SectionId)
@@ -225,7 +228,8 @@ public sealed class MainViewModel
             var vms = sectionCaps.Select(c =>
             {
                 var buildCompatible = c.SupportedBuilds.Contains(currentBuild);
-                bool executable = c.State == CapabilityState.Implemented && buildCompatible;
+                bool executable = c.State == CapabilityState.Implemented &&
+                    buildCompatible && isWindowsCompatible;
 
                 string notExecutableReason;
                 if (c.State != CapabilityState.Implemented)
