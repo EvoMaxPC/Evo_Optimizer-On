@@ -77,13 +77,14 @@ jobs:
           $zipPath = 'EvoClean-preview-win-x64.zip'
           $size = (Get-Item $zipPath).Length
           $sha256 = Get-Content -Path "$zipPath.sha256" -Raw
-          $files = Get-ChildItem -Path 'publish/win-x64' -Recurse | Select-Object -ExpandProperty Name
+          $files = Get-ChildItem -Path 'publish/win-x64' -File -Recurse | Select-Object -ExpandProperty Name
           $fileList = ($files -join ", ")
-          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "## release-exe - summary"
-          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ("- Artifact: `EvoClean-preview-win-x64.zip`")
-          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ("- Size: $size bytes")
-          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ("- SHA256: $sha256")
-          Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value ("- Files: $fileList")
+          $summary = "## release-exe - summary`n`n- Artifact: `EvoClean-preview-win-x64.zip`n- Size: $size bytes`n- SHA256: $sha256`n- Files: $fileList"
+          if ($env:GITHUB_STEP_SUMMARY) {
+            Add-Content -Path "$env:GITHUB_STEP_SUMMARY" -Value $summary
+          } else {
+            Write-Host $summary
+          }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
