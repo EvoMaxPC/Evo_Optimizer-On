@@ -52,17 +52,25 @@ INHERITED = ("TargetFramework", "Nullable", "ImplicitUsings",
 
 MIN_RELEASES = 5
 
-# Proyectos exigidos por los pasos 6 y 7 (nombre de ensamblado -> ruta).
+# Proyectos exigidos por los pasos 6, 7 y 8 (nombre de ensamblado -> ruta).
+# 7 de src: Evo.Core, Evo.Detection, Evo.Testing, Evo.Engine, Evo.Catalog,
+#           Evo.Windows, Evo.App
+# 6 de tests: Evo.Core.Tests, Evo.Detection.Tests, Evo.Engine.Tests,
+#             Evo.Catalog.Tests, Evo.Windows.Tests, Evo.App.Tests
 EXPECTED_PROJECTS = {
     "Evo.Core": "src/Evo.Core/Evo.Core.csproj",
     "Evo.Detection": "src/Evo.Detection/Evo.Detection.csproj",
     "Evo.Testing": "src/Evo.Testing/Evo.Testing.csproj",
     "Evo.Engine": "src/Evo.Engine/Evo.Engine.csproj",
     "Evo.Catalog": "src/Evo.Catalog/Evo.Catalog.csproj",
+    "Evo.Windows": "src/Evo.Windows/Evo.Windows.csproj",
+    "Evo.App": "src/Evo.App/Evo.App.csproj",
     "Evo.Core.Tests": "tests/Evo.Core.Tests/Evo.Core.Tests.csproj",
     "Evo.Detection.Tests": "tests/Evo.Detection.Tests/Evo.Detection.Tests.csproj",
     "Evo.Engine.Tests": "tests/Evo.Engine.Tests/Evo.Engine.Tests.csproj",
     "Evo.Catalog.Tests": "tests/Evo.Catalog.Tests/Evo.Catalog.Tests.csproj",
+    "Evo.Windows.Tests": "tests/Evo.Windows.Tests/Evo.Windows.Tests.csproj",
+    "Evo.App.Tests": "tests/Evo.App.Tests/Evo.App.Tests.csproj",
 }
 
 # Dependencias permitidas entre proyectos de producto (sin ciclos).
@@ -72,6 +80,9 @@ ALLOWED_REFERENCES = {
     "Evo.Testing": {"Evo.Core"},
     "Evo.Engine": {"Evo.Core", "Evo.Detection"},
     "Evo.Catalog": {"Evo.Core"},
+    "Evo.Windows": {"Evo.Core"},
+    "Evo.App": {"Evo.Core", "Evo.Catalog", "Evo.Detection", "Evo.Engine",
+                "Evo.Testing", "Evo.Windows"},
 }
 
 
@@ -225,7 +236,7 @@ def project_name(path: Path) -> str:
 
 
 def check_expected_projects(errors: list[str]) -> None:
-    """Los 9 proyectos esperados existen y estan en la solucion."""
+    """Los 13 proyectos esperados existen y estan en la solucion."""
     found = {rel(p): project_name(p) for p in find_csprojs()}
     for name, path in EXPECTED_PROJECTS.items():
         if path not in found:

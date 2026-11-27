@@ -64,13 +64,13 @@ def _text(project: str) -> str:
 
 
 # --------------------------------------------------------------- estructura
-def test_validador_reconoce_los_9_proyectos():
+def test_validador_reconoce_los_13_proyectos():
     res = _validador("--json")
     assert res.returncode == 0, res.stdout + res.stderr
     data = json.loads(res.stdout)
     assert data["ok"] is True
-    assert data["ca_proyectos"] == 9
-    assert data["proyectos_esperados"] == 9
+    assert data["ca_proyectos"] == 13
+    assert data["proyectos_esperados"] == 13
     assert data["errores"] == []
 
 
@@ -83,7 +83,7 @@ def test_proyectos_nuevos_existen_y_estan_en_la_sln():
         assert root.get("Sdk") == "Microsoft.NET.Sdk"
         names = {n.text.strip() for n in root.iter("AssemblyName") if n.text}
         assert names == {assembly}
-    assert len(re.findall(r'"(src|tests)\\[^"]+\.csproj"', sln)) == 9
+    assert len(re.findall(r'"(src|tests)\\[^"]+\.csproj"', sln)) == 13
 
 
 def test_dependencias_entre_proyectos_son_las_esperadas():
@@ -264,7 +264,7 @@ def test_validador_detecta_dependencia_no_permitida(monkeypatch, tmp_path):
     assert errors == [], errors
 
 
-def test_validador_declara_los_9_proyectos_esperados():
-    assert len(vds.EXPECTED_PROJECTS) == 9
+def test_validador_declara_los_13_proyectos_esperados():
+    assert len(vds.EXPECTED_PROJECTS) == 13
     for path in vds.EXPECTED_PROJECTS.values():
         assert (ROOT / path).is_file(), path

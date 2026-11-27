@@ -22,7 +22,7 @@ sys.path.insert(0, str(DOTNET_TOOLS))
 import validate_dotnet_structure as vds  # noqa: E402
 
 # Los cuatro proyectos del paso 6: se comprueba que siguen existiendo y que
-# forman parte de la solucion (que ahora tiene 9 proyectos, ver test_paso7.py).
+# forman parte de la solucion (que ahora tiene 13 proyectos, ver test_paso7.py).
 CSPROJ = [
     "src/Evo.Core/Evo.Core.csproj",
     "src/Evo.Detection/Evo.Detection.csproj",
