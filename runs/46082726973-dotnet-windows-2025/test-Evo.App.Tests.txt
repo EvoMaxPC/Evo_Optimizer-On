@@ -1,0 +1,35 @@
+Build started 11/27/2026 11:30:22 PM.
+Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\bin\Release\net10.0-windows\Evo.App.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.02] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.28]   Discovering: Evo.App.Tests
+[xUnit.net 00:00:00.42]   Discovered:  Evo.App.Tests
+[xUnit.net 00:00:00.43]   Starting:    Evo.App.Tests
+  Passed Evo.App.Tests.Tests.TrustedInstaller_No_Disponible [28 ms]
+  Passed Evo.App.Tests.Tests.Simular_DryRun_No_Muta_Fake [29 ms]
+  Passed Evo.App.Tests.Tests.Build_Conocido_Cliente_Compatible [3 ms]
+  Passed Evo.App.Tests.Tests.Specified_No_Ejecutable [2 ms]
+  Passed Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [1 ms]
+  Passed Evo.App.Tests.Tests.Critical_Bloqueada [3 ms]
+  Passed Evo.App.Tests.Tests.Confirmacion_No_Impide_Mutar_Fake [10 ms]
+  Passed Evo.App.Tests.Tests.Diecisiete_Secciones_Titulos_Exactos [< 1 ms]
+  Passed Evo.App.Tests.Tests.Privilege_Admin_NoAdmin_Muestra_Aviso [< 1 ms]
+[xUnit.net 00:00:00.60]   Finished:    Evo.App.Tests
+  Passed Evo.App.Tests.Tests.Build_Desconocido_NoAplicaNada [2 ms]
+  Passed Evo.App.Tests.Tests.Restauracion_Pendiente_No_Llama_Al_Motor [< 1 ms]
+  Passed Evo.App.Tests.Tests.Tarea_O_Comando_No_Disponible_Todavia [1 ms]
+  Passed Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada [< 1 ms]
+  Passed Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original [8 ms]
+  Passed Evo.App.Tests.Tests.Seccion_Sin_Capacidades_Muestra_Sin_Capacidades_Todavia [< 1 ms]
+Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.App.Tests\Evo.App.Tests.trx
+
+Test Run Successful.
+Total tests: 15
+     Passed: 15
+ Total time: 1.2332 Seconds
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.06
