@@ -25,7 +25,7 @@ public sealed record RegistrySnapshotLimits
 }
 
 /// <summary>
-/// Excepcion propia lanzada por <see cref="TakeSnapshot"/> cuando el recorrido
+/// Excepcion propia lanzada por <see cref="RegistryDeleteKeyExecutor.TakeSnapshot"/> cuando el recorrido
 /// supera un limite de <see cref="RegistrySnapshotLimits"/> (profundidad,
 /// valores o claves). El executor la captura por separado de las fallas del
 /// lector para informar exactamente que limite se excedio, sin confundirla
