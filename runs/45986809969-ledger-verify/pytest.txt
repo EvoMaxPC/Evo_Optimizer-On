@@ -15,7 +15,7 @@ ___________________ test_validador_reconoce_los_9_proyectos ____________________
         data = json.loads(res.stdout)
         assert data["ok"] is True
 >       assert data["ca_proyectos"] == 9
-E       assert 11 == 9
+E       assert 13 == 9
 
 tests/test_paso7.py:72: AssertionError
 _______________ test_proyectos_nuevos_existen_y_estan_en_la_sln ________________
@@ -30,10 +30,10 @@ _______________ test_proyectos_nuevos_existen_y_estan_en_la_sln ________________
             names = {n.text.strip() for n in root.iter("AssemblyName") if n.text}
             assert names == {assembly}
 >       assert len(re.findall(r'"(src|tests)\\[^"]+\.csproj"', sln)) == 9
-E       assert 11 == 9
-E        +  where 11 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
-E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7d3514defb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
-E        +      where <function findall at 0x7d3514defb60> = re.findall
+E       assert 13 == 9
+E        +  where 13 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
+E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x70cdd4debb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+E        +      where <function findall at 0x70cdd4debb60> = re.findall
 
 tests/test_paso7.py:86: AssertionError
 =============================== warnings summary ===============================
@@ -47,10 +47,10 @@ tools/ledger_extract/build_section10_catalog.py:375
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ============================
-FAILED tests/test_paso7.py::test_validador_reconoce_los_9_proyectos - assert 11 == 9
-FAILED tests/test_paso7.py::test_proyectos_nuevos_existen_y_estan_en_la_sln - assert 11 == 9
- +  where 11 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
- +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x7d3514defb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
- +      where <function findall at 0x7d3514defb60> = re.findall
-2 failed, 571 passed, 2 warnings in 13.65s
+FAILED tests/test_paso7.py::test_validador_reconoce_los_9_proyectos - assert 13 == 9
+FAILED tests/test_paso7.py::test_proyectos_nuevos_existen_y_estan_en_la_sln - assert 13 == 9
+ +  where 13 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
+ +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x70cdd4debb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+ +      where <function findall at 0x70cdd4debb60> = re.findall
+2 failed, 571 passed, 2 warnings in 15.71s
 pytest_exit=1
