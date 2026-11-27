@@ -21,7 +21,7 @@ public partial class MainWindow : Window
         var environment = new WindowsSystemEnvironment();
         var registry = new WindowsRegistryAccessor();
         var confirmations = new WpfConfirmationProvider();
-        var restorePoints = new WpfRestorePointService();
+        var restorePoints = new FakeRestorePointService();
         var commands = new WpfCommandRunner();
 
         _viewModel = MainViewModel.Create(environment, registry, confirmations, restorePoints, commands);

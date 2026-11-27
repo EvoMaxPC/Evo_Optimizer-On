@@ -5,7 +5,7 @@ namespace Evo.App;
 /// Coinciden con <c>docs/requirements/INVENTARIO_USUARIO.md</c> y con el
 /// catálogo de capacidades (<c>catalog/capabilities/section*.json</c>).
 /// </remarks>
-public static partial class SectionTitles
+public static class SectionTitles
 {
     private static readonly Dictionary<string, string> _titles = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -29,7 +29,7 @@ public static partial class SectionTitles
     };
 
     /// <summary>Obtiene el título de una sección por su identificador (cadena).</summary>
-    public static string this[string sectionId] => _titles[sectionId];
+    public static string GetTitle(string sectionId) => _titles[sectionId];
 
     /// <summary>Identificadores de sección ordenados (1-17).</summary>
     public static IReadOnlyList<string> Ids => _titles.Keys.OrderBy(int.Parse).ToList();

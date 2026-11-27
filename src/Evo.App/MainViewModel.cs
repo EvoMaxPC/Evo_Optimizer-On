@@ -1,6 +1,8 @@
 using Evo.Core.Actions;
+using Evo.Core.Confirmation;
 using Evo.Core.Enums;
 using Evo.Core.Models;
+using Evo.Core.Restore;
 using Evo.Core.System;
 using Evo.Catalog;
 using Evo.Catalog.Model;
@@ -215,7 +217,7 @@ public sealed class MainViewModel
 
         foreach (var sectionId in SectionTitles.Ids)
         {
-            var title = SectionTitles[sectionId];
+            var title = SectionTitles.GetTitle(sectionId);
             var sectionCaps = bySection.TryGetValue(int.Parse(sectionId), out var caps)
                 ? caps
                 : new List<CapabilityDefinition>();
