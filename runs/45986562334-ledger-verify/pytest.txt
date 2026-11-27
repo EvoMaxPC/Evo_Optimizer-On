@@ -1,0 +1,56 @@
+........................................................................ [ 12%]
+........................................................................ [ 25%]
+........................................................................ [ 37%]
+........................................................................ [ 50%]
+.FF..................................................................... [ 62%]
+........................................................................ [ 75%]
+........................................................................ [ 87%]
+.....................................................................    [100%]
+=================================== FAILURES ===================================
+___________________ test_validador_reconoce_los_9_proyectos ____________________
+
+    def test_validador_reconoce_los_9_proyectos():
+        res = _validador("--json")
+        assert res.returncode == 0, res.stdout + res.stderr
+        data = json.loads(res.stdout)
+        assert data["ok"] is True
+>       assert data["ca_proyectos"] == 9
+E       assert 13 == 9
+
+tests/test_paso7.py:72: AssertionError
+_______________ test_proyectos_nuevos_existen_y_estan_en_la_sln ________________
+
+    def test_proyectos_nuevos_existen_y_estan_en_la_sln():
+        sln = (ROOT / "Evo.sln").read_text(encoding="utf-8-sig")
+        for path, assembly in NEW_PROJECTS.items():
+            assert (ROOT / path).is_file(), path
+            assert path.replace("/", "\\") in sln, path
+            root = ET.parse(ROOT / path).getroot()
+            assert root.get("Sdk") == "Microsoft.NET.Sdk"
+            names = {n.text.strip() for n in root.iter("AssemblyName") if n.text}
+            assert names == {assembly}
+>       assert len(re.findall(r'"(src|tests)\\[^"]+\.csproj"', sln)) == 9
+E       assert 13 == 9
+E        +  where 13 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
+E        +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x727f150efb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+E        +      where <function findall at 0x727f150efb60> = re.findall
+
+tests/test_paso7.py:86: AssertionError
+=============================== warnings summary ===============================
+tools/ledger_extract/build_section10_catalog.py:257
+  /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:257: SyntaxWarning: "\B" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\B"? A raw string is also an option.
+    "(HKLM Shell Extensions\Blocked), que es como Windows desactiva el menú "
+
+tools/ledger_extract/build_section10_catalog.py:375
+  /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:375: SyntaxWarning: "\{" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\{"? A raw string is also an option.
+    - las rutas llevan llaves dentro de comillas (`CLSID\{e88865ea-…}`), así que
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_paso7.py::test_validador_reconoce_los_9_proyectos - assert 13 == 9
+FAILED tests/test_paso7.py::test_proyectos_nuevos_existen_y_estan_en_la_sln - assert 13 == 9
+ +  where 13 = len(['src', 'src', 'src', 'src', 'src', 'tests', ...])
+ +    where ['src', 'src', 'src', 'src', 'src', 'tests', ...] = <function findall at 0x727f150efb60>('"(src|tests)\\\\[^"]+\\.csproj"', 'Microsoft Visual Studio Solution File, Format Version 12.00\n# Visual Studio Version 17\nVisualStudioVersion = 17.0.3...tion\n\tGlobalSection(SolutionProperties) = preSolution\n\t\tHideSolutionNode = FALSE\n\tEndGlobalSection\nEndGlobal\n')
+ +      where <function findall at 0x727f150efb60> = re.findall
+2 failed, 571 passed, 2 warnings in 20.78s
+pytest_exit=1
