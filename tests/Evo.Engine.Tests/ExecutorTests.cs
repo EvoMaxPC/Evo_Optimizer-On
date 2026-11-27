@@ -1121,16 +1121,32 @@ public sealed class ExecutorTests
 
     /// <summary>
     /// FakeRegistryAccessor que lanza en la primera llamada a SetValue.
+    /// (FakeRegistryAccessor es sealed, así que se usa composición.)
     /// </summary>
-    private sealed class FailingRegistryAccessor : FakeRegistryAccessor
+    private sealed class FailingRegistryAccessor : IRegistryAccessor, IRegistryTreeReader, IRegistryKeyCreator
     {
+        private readonly FakeRegistryAccessor _inner = new();
         private int _setValueCalls;
-        public new void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind)
+
+        public void Seed(RegistryHive hive, string keyPath, string valueName, object value,
+            RegistryValueKind kind = RegistryValueKind.DWord)
+        {
+            _inner.Seed(hive, keyPath, valueName, value, kind);
+        }
+
+        public bool KeyExists(RegistryHive hive, string keyPath) => _inner.KeyExists(hive, keyPath);
+        public bool DeleteKey(RegistryHive hive, string keyPath, bool recursive) => _inner.DeleteKey(hive, keyPath, recursive);
+        public object? GetValue(RegistryHive hive, string keyPath, string valueName) => _inner.GetValue(hive, keyPath, valueName);
+        public void SetValue(RegistryHive hive, string keyPath, string valueName, object value, RegistryValueKind kind)
         {
             _setValueCalls++;
             if (_setValueCalls == 1)
                 throw new InvalidOperationException("SetValue falló");
-            base.SetValue(hive, keyPath, valueName, value, kind);
+            _inner.SetValue(hive, keyPath, valueName, value, kind);
         }
+        public bool DeleteValue(RegistryHive hive, string keyPath, string valueName) => _inner.DeleteValue(hive, keyPath, valueName);
+        public IReadOnlyList<string> GetSubKeyNames(RegistryHive hive, string keyPath) => _inner.GetSubKeyNames(hive, keyPath);
+        public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath) => _inner.GetValueNames(hive, keyPath);
+        public void EnsureKey(RegistryHive hive, string keyPath) => _inner.EnsureKey(hive, keyPath);
     }
 }
