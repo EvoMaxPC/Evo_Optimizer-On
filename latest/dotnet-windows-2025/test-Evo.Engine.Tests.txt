@@ -1,120 +1,69 @@
-Build started 11/27/2026 3:51:25 AM.
+Build started 11/27/2026 3:57:18 AM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\bin\Release\net10.0-windows\Evo.Engine.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.10]   Discovering: Evo.Engine.Tests
+[xUnit.net 00:00:00.09]   Discovering: Evo.Engine.Tests
 [xUnit.net 00:00:00.14]   Discovered:  Evo.Engine.Tests
 [xUnit.net 00:00:00.15]   Starting:    Evo.Engine.Tests
-[xUnit.net 00:00:00.27]     Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio [FAIL]
-[xUnit.net 00:00:00.28]       Assert.Single() Failure: The collection was empty
-[xUnit.net 00:00:00.28]       Stack Trace:
-[xUnit.net 00:00:00.28]         /_/tests/Evo.Engine.Tests/CancellationAndHonestRollbackTests.cs(435,0): at Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio()
-[xUnit.net 00:00:00.28]         --- End of stack trace from previous location ---
   Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackTodoRestored_InformeTodosRestauradosYEstadoReal [37 ms]
-  Failed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio [6 ms]
-  Error Message:
-   Assert.Single() Failure: The collection was empty
-  Stack Trace:
-     at Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio() in /_/tests/Evo.Engine.Tests/CancellationAndHonestRollbackTests.cs:line 435
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [94 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunCancelado_CanceladoSinMutar [40 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackReintento_EntradaFallaYLuegoFunciona_JournalVacio [6 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [89 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_SnapshotOverTheLimitAbortsWithoutDeleting [94 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_DryRunDoesNotMutate [3 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting [2 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_GoesThroughTheRestorePointGate [7 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunCancelado_CanceladoSinMutar [58 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateFalse_SkipSinMutar [20 ms]
   Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackMezclaLifo_InformeExactoYOrdenVerificado [2 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [17 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionEntreAcciones_RollbackDeLaPrimera [7 ms]
-[xUnit.net 00:00:00.38]     Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua [FAIL]
-[xUnit.net 00:00:00.38]       Assert.False() Failure
-[xUnit.net 00:00:00.38]       Expected: False
-[xUnit.net 00:00:00.38]       Actual:   True
-[xUnit.net 00:00:00.38]       Stack Trace:
-[xUnit.net 00:00:00.38]         /_/tests/Evo.Engine.Tests/CancellationAndHonestRollbackTests.cs(361,0): at Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua()
-[xUnit.net 00:00:00.38]         --- End of stack trace from previous location ---
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateTrue_NoSeDetiene_FailedSinJournal [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_NoExistedBefore_ClaveExiste_Failed [9 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionEntreAcciones_RollbackDeLaPrimera [11 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.SnapshotEnLimiteMaxValues_SeBorra [1 ms]
   Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.DryRunSinJournalNiInforme_ExecuteYRollbackVacían [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.TokenCanceladoDuranteLaAccion_RollbackSeCompletaConTokenNone [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionTrasMutacionReversible_FakeRegistryVuelveAlOriginal [1 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionDuranteElRollback_SeIgnoraYElRollbackSeCompleta [2 ms]
-  Failed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua [2 ms]
-  Error Message:
-   Assert.False() Failure
-Expected: False
-Actual:   True
-  Stack Trace:
-     at Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua() in /_/tests/Evo.Engine.Tests/CancellationAndHonestRollbackTests.cs:line 361
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion [124 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackConNotReversible_NoCuentaComoRestaurada [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible [2 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.CapacidadSinRequisitoDePunto_NoLoCrea [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.UnPuntoPorPlan_NoUnoPorAccion [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.DryRun_NoCreaPuntoNiPideConfirmacion [1 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [24 ms]
-  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionAntes_RetornaCanceladoSinRollback [11 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [7 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [5 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [2 ms]
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos [28 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto [8 ms]
-[xUnit.net 00:00:00.43]     Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateFalse_SkipSinMutar [FAIL]
-[xUnit.net 00:00:00.43]       Assert.Equal() Failure: Strings differ
-[xUnit.net 00:00:00.43]       Expected: "Running"
-[xUnit.net 00:00:00.43]       Actual:   null
-[xUnit.net 00:00:00.43]       Stack Trace:
-[xUnit.net 00:00:00.43]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(353,0): at Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateFalse_SkipSinMutar()
-[xUnit.net 00:00:00.43]         --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [22 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar [4 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias [< 1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto [2 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada [1 ms]
-  Passed Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto [2 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorTerminatesAndLogs [23 ms]
-  Failed Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateFalse_SkipSinMutar [6 ms]
-  Error Message:
-   Assert.Equal() Failure: Strings differ
-Expected: "Running"
-Actual:   null
-  Stack Trace:
-     at Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateFalse_SkipSinMutar() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 353
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateTrue_NoSeDetiene_FailedSinJournal [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_NoExistedBefore_ClaveExiste_Failed [6 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.SnapshotEnLimiteMaxValues_SeBorra [8 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateTrue_SeDetiene_OkNotReversible [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ProcessCorriendo_TerminateTrue_SeDetiene_OkNotReversible [4 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessDryRun_SinMutacion [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SinIRegistryKeyCreator_FailSinMutar [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [4 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.TokenCanceladoDuranteLaAccion_RollbackSeCompletaConTokenNone [5 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SinIRegistryKeyCreator_FailSinMutar [2 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionTrasMutacionReversible_FakeRegistryVuelveAlOriginal [4 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionDuranteElRollback_SeIgnoraYElRollbackSeCompleta [3 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorTogglesAndRestores [7 ms]
   Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ClaveInexistente_NoOpSinJournal [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [1 ms]
-[xUnit.net 00:00:00.46]     Evo.Engine.Tests.ExecutorTests.TaskCreateCreateTaskLanzaDuranteRollback_FailedEntradaConservada [FAIL]
-[xUnit.net 00:00:00.46]       Assert.Single() Failure: The collection was empty
-[xUnit.net 00:00:00.46]       Stack Trace:
-[xUnit.net 00:00:00.46]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(684,0): at Evo.Engine.Tests.ExecutorTests.TaskCreateCreateTaskLanzaDuranteRollback_FailedEntradaConservada()
-[xUnit.net 00:00:00.46]         --- End of stack trace from previous location ---
-[xUnit.net 00:00:00.48]     Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta [FAIL]
-[xUnit.net 00:00:00.48]       Assert.Equal() Failure: Values differ
-[xUnit.net 00:00:00.48]       Expected: Failed
-[xUnit.net 00:00:00.48]       Actual:   Success
-[xUnit.net 00:00:00.48]       Stack Trace:
-[xUnit.net 00:00:00.48]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(993,0): at Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta()
-[xUnit.net 00:00:00.48]         --- End of stack trace from previous location ---
-  Failed Evo.Engine.Tests.ExecutorTests.TaskCreateCreateTaskLanzaDuranteRollback_FailedEntradaConservada [3 ms]
-  Error Message:
-   Assert.Single() Failure: The collection was empty
-  Stack Trace:
-     at Evo.Engine.Tests.ExecutorTests.TaskCreateCreateTaskLanzaDuranteRollback_FailedEntradaConservada() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 684
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateNueva_PreviousDefinitionNull_RestoreBorraTarea [4 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_GetDefinitionLanza_FailSinMutar [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_RestoresTheWholeSubtreeWithTypesAndData [33 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackExcepcionQuedaFailed_SeConservaYSeContinua [2 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.RollbackConNotReversible_NoCuentaComoRestaurada [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RollbackIsLifoAndContinuesAfterError [2 ms]
+  Passed Evo.Engine.Tests.CancellationAndHonestRollbackTests.CancelacionAntes_RetornaCanceladoSinRollback [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateCreateTaskLanzaDuranteRollback_FailedEntradaConservada [4 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_RejectsUnsupportedTriggersAndBadTimes [8 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AuditReportsStateWithoutMutating [2 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithoutOverwriteFailsUntouched [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.ServiceExecutorRestoresStatusAndStartup [11 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateNueva_PreviousDefinitionNull_RestoreBorraTarea [3 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_GetDefinitionLanza_FailSinMutar [4 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessNoCorriendo_SkipSinJournal [1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.TaskExecutorFailsOnMissingTask [1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_NoExistedBefore_ClaveAusente_Restored [< 1 ms]
-  Failed Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta [2 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState [13 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ReadCurrentStateReportsPresence [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_NonRecursiveLeavesTheSubtreeInPlace [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DryRunSaysWhatItWouldDelete [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_UndoAddsNothingToTheExistingParentSubtree [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStartFailure_RollsBackTheWholeCapability [3 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.UndoInLifoOrderRestoresTheServiceCompletely [1 ms]
+[xUnit.net 00:00:00.44]     Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta [FAIL]
+[xUnit.net 00:00:00.44]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.44]       Expected: Failed
+[xUnit.net 00:00:00.44]       Actual:   Success
+[xUnit.net 00:00:00.44]       Stack Trace:
+[xUnit.net 00:00:00.45]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(993,0): at Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta()
+[xUnit.net 00:00:00.45]         --- End of stack trace from previous location ---
+  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreatesAndUndoDeletes [2 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DepthOverTheLimitAbortsBeforeDeleting [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_OnDisabledServiceFailsLikeWindows [1 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_TwiceInARowIsIdempotent [1 ms]
+  Failed Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta [23 ms]
   Error Message:
    Assert.Equal() Failure: Values differ
 Expected: Failed
@@ -122,131 +71,86 @@ Actual:   Success
   Stack Trace:
      at Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxDepth_FailClaveIntacta() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 993
 --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateSinPreviousDefinition_RestoreNotReversible [< 1 ms]
-[xUnit.net 00:00:00.49]     Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada [FAIL]
-[xUnit.net 00:00:00.49]       Assert.Single() Failure: The collection was empty
-[xUnit.net 00:00:00.49]       Stack Trace:
-[xUnit.net 00:00:00.49]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(881,0): at Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada()
-[xUnit.net 00:00:00.49]         --- End of stack trace from previous location ---
-[xUnit.net 00:00:00.50]     Evo.Engine.Tests.ExecutorTests.RollbackPorIdentidad_SoloEntradaFallida_SeConserva [FAIL]
-[xUnit.net 00:00:00.51]       Assert.True() Failure
-[xUnit.net 00:00:00.51]       Expected: True
-[xUnit.net 00:00:00.51]       Actual:   False
-[xUnit.net 00:00:00.51]       Stack Trace:
-[xUnit.net 00:00:00.51]         /_/tests/Evo.Engine.Tests/ExecutorTests.cs(1054,0): at Evo.Engine.Tests.ExecutorTests.RollbackPorIdentidad_SoloEntradaFallida_SeConserva()
-[xUnit.net 00:00:00.51]         --- End of stack trace from previous location ---
-  Failed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada [6 ms]
-  Error Message:
-   Assert.Single() Failure: The collection was empty
-  Stack Trace:
-     at Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 881
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [5 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateSinPreviousDefinition_RestoreNotReversible [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_SetValueLanzaRestauracion_FailedEntradaConservada [10 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorRecordsNewValueAsDeleteOnRollback [18 ms]
   Passed Evo.Engine.Tests.ExecutorTests.SnapshotExcedeMaxValues_FailClaveIntacta [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorDoesNotRunInDryRun [4 ms]
   Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_GetDefinitionNull_FailSinMutar [1 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [2 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ArbolCompleto_RestoreRecreaTodo [2 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.CommandExecutorRespectsAllowedExitCodes [3 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.RegistryDeleteKey_ArbolCompleto_RestoreRecreaTodo [1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.ProcessExecutorSkipsWhenNotRunning [1 ms]
-  Failed Evo.Engine.Tests.ExecutorTests.RollbackPorIdentidad_SoloEntradaFallida_SeConserva [1 ms]
-  Error Message:
-   Assert.True() Failure
-Expected: True
-Actual:   False
-  Stack Trace:
-     at Evo.Engine.Tests.ExecutorTests.RollbackPorIdentidad_SoloEntradaFallida_SeConserva() in /_/tests/Evo.Engine.Tests/ExecutorTests.cs:line 1054
---- End of stack trace from previous location ---
-[xUnit.net 00:00:00.52]     Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting [FAIL]
-[xUnit.net 00:00:00.52]       Assert.Contains() Failure: Sub-string not found
-[xUnit.net 00:00:00.52]       String:    "El accesor de registro no sabe crear clav"···
-[xUnit.net 00:00:00.52]       Not found: "No se pudo tomar la instantánea"
-[xUnit.net 00:00:00.52]       Stack Trace:
-[xUnit.net 00:00:00.52]         /_/tests/Evo.Engine.Tests/Wave4EngineTests.cs(147,0): at Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting()
-[xUnit.net 00:00:00.52]         --- End of stack trace from previous location ---
+  Passed Evo.Engine.Tests.ExecutorTests.RollbackPorIdentidad_SoloEntradaFallida_SeConserva [1 ms]
   Passed Evo.Engine.Tests.ExecutorTests.RegistryExecutorSupportsAllValueTypes [5 ms]
-  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_PreviousDefinitionOriginal_RestoreRestauraOriginal [3 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_SnapshotOverTheLimitAbortsWithoutDeleting [2 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_DryRunDoesNotMutate [2 ms]
-  Failed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting [1 ms]
-  Error Message:
-   Assert.Contains() Failure: Sub-string not found
-String:    "El accesor de registro no sabe crear clav"···
-Not found: "No se pudo tomar la instantánea"
-  Stack Trace:
-     at Evo.Engine.Tests.Wave4EngineTests.DeleteKey_FailingSnapshotAbortsWithoutDeleting() in /_/tests/Evo.Engine.Tests/Wave4EngineTests.cs:line 147
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_GoesThroughTheRestorePointGate [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_RestoresTheWholeSubtreeWithTypesAndData [4 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_RejectsUnsupportedTriggersAndBadTimes [3 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AuditReportsStateWithoutMutating [1 ms]
-[xUnit.net 00:00:00.54]     Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState [FAIL]
-[xUnit.net 00:00:00.54]       La definición previa de '\\\AutoRegBackup' no es legible: no se pisa la tarea (fail-closed).
-[xUnit.net 00:00:00.54]       Stack Trace:
-[xUnit.net 00:00:00.54]         /_/tests/Evo.Engine.Tests/Wave4EngineTests.cs(331,0): at Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState()
-[xUnit.net 00:00:00.54]         --- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithoutOverwriteFailsUntouched [3 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_AuditModeReportsTheRealStateAndDoesNotMutate [2 ms]
-  Failed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState [1 ms]
-  Error Message:
-   La definición previa de '\\\AutoRegBackup' no es legible: no se pisa la tarea (fail-closed).
-  Stack Trace:
-     at Evo.Engine.Tests.Wave4EngineTests.TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState() in /_/tests/Evo.Engine.Tests/Wave4EngineTests.cs:line 331
---- End of stack trace from previous location ---
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ReadCurrentStateReportsPresence [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_NonRecursiveLeavesTheSubtreeInPlace [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DryRunSaysWhatItWouldDelete [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_UndoAddsNothingToTheExistingParentSubtree [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStartFailure_RollsBackTheWholeCapability [2 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.UndoInLifoOrderRestoresTheServiceCompletely [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreatesAndUndoDeletes [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_DepthOverTheLimitAbortsBeforeDeleting [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_ExistingKeyIsANoOpAndUndoDoesNotDeleteIt [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_OnDisabledServiceFailsLikeWindows [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_TwiceInARowIsIdempotent [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.HomeRestore_RunsThroughTheCoordinatorAndRollsBackTheWholeTree [18 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_ThroughTheCoordinator_RollsBackCompletely [1 ms]
+  Passed Evo.Engine.Tests.ExecutorTests.TaskCreateExistente_PreviousDefinitionOriginal_RestoreRestauraOriginal [6 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.HomeRestore_RunsThroughTheCoordinatorAndRollsBackTheWholeTree [168 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_ThroughTheCoordinator_RollsBackCompletely [2 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.ServiceStart_UndoStopsItAgain [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_AccessorWithoutTreeReaderAbortsWithoutDeleting [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.UndoInTheOppositeOrderWouldFailAndIsNotWhatTheCatalogDeclares [1 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_LargestCapability_RoundTrips [234 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_CreatesTheEmptyKeyAndUndoDeletesIt [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_GoesThroughTheRestorePointGate [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.TaskCreate_CreationFailureLeavesNoJournalEntry [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.ServiceSetStartup_DoesNotTouchTheRuntimeStatus [1 ms]
-  Passed Evo.Engine.Tests.Wave4EngineTests.RegistryBackupCapability_CreatesTheTaskAndRollsItBack [17 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [109 ms]
+  Passed Evo.Engine.Tests.Wave4EngineTests.RegistryBackupCapability_CreatesTheTaskAndRollsItBack [36 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [15 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.CreateKey_WithoutKeyCreatorFailsClosed [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.DeleteKey_MissingKeyIsANoOpAndUndoCreatesNothing [1 ms]
   Passed Evo.Engine.Tests.Wave4EngineTests.LocationCapability_StopsServicesAndRestoresBothStates [15 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_AdminCapabilityRequiresElevation [42 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_LargestCapability_RoundTrips [29 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ExecuteAndRollback_RestoresState [34 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ToggleSemanticsMatchThePin [25 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [22 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [38 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [388 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [44 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [23 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_DryRun_NoSystemMutation [180 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_MitigationsWritesAllFourValues [23 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [39 ms]
-  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [23 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_UnsupportedBuildIsBlockedBeforeMutating [38 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_PowerAndSettingsPolicyRoundTrip [21 ms]
-[xUnit.net 00:00:01.03]   Finished:    Evo.Engine.Tests
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [201 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_SearchIndexingDisablesWSearch [18 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.Execute_CreaElPuntoAntesDeLaPrimeraMutacion [5 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.AcceptNoRestorePoint_EjecutaYLoDeclaraEnElResumen [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElServicioLanzaAlConsultar_SeTrataComoNoDisponible [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.CapacidadSinRequisitoDePunto_NoLoCrea [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.UnPuntoPorPlan_NoUnoPorAccion [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.DryRun_NoCreaPuntoNiPideConfirmacion [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionRechazada_CeroMutacionesYCeroPuntos [1 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_AdminCapabilityRequiresElevation [35 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.Audit_NoCreaPuntoNiPideConfirmacion [7 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiLaCreacionFalla_NoMutaNada [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RestorePointAvailable_LlegaALaConfirmacion [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.ConfirmacionSePideAntesDeCrearElPunto [8 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.SinProveedorDeConfirmacion_SeAbortaSinMutar [2 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RequiresRestorePoint_CubreLasDosVias [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.RollbackAutomaticoSigueFuncionandoConPunto [2 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.FailClosed_SiElPuntoNoEstaDisponible_NoMutaNada [1 ms]
+  Passed Evo.Engine.Tests.RestorePointGateTests.TypeOperationName_ExigeElNombreExacto [2 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.IncompatibleSystemBlocksExecution [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPrivilegeEnforcement [1 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_UnsupportedBuildIsBlockedBeforeMutating [35 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestRollback_RestoresOriginalStateExactly [2 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestExecute_MutatesSystemAndCreatesUndo [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.AuditModeReportsStateWithoutMutating [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.PreflightChecksDependenciesAndConflicts [< 1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestDryRun_DoesNotMutateSystem [1 ms]
+  Passed Evo.Engine.Tests.EngineCoordinatorTests.TestPartialFailure_TriggersRollback [2 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_LargestCapability_RoundTrips [46 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_DryRun_NoSystemMutation [415 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_AdminCapabilityRequiresElevation [39 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WindowsAiSplit_RecallAndCopilotAreSeparate [48 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ExecuteAndRollback_RestoresState [36 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_WebSearchCapability_ReallyDisablesBing [15 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_DryRun_NoSystemMutation [175 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_ExecuteAndRollback_RestoresState [42 ms]
+  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [35 ms]
+  Passed Evo.Engine.Tests.Wave1EngineTests.TestWave1Catalog_CommandCapability_UsesInjectedRunnerOnly [35 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_DryRun_NoSystemMutation [145 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_MitigationsWritesAllFourValues [17 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_UnsupportedBuildIsBlockedBeforeMutating [30 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_PowerAndSettingsPolicyRoundTrip [25 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_SearchIndexingDisablesWSearch [16 ms]
   Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_RestorePointIsRequiredBeforeTouchingHklm [15 ms]
-  Passed Evo.Engine.Tests.Wave2EngineTests.TestWave2Catalog_ExecuteAndRollback_RestoresState [37 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_TypedValuesAreWrittenAndRestored [24 ms]
+[xUnit.net 00:00:01.15]   Finished:    Evo.Engine.Tests
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_TypedValuesAreWrittenAndRestored [23 ms]
   Passed Evo.Engine.Tests.Wave3EngineTests.SearchIndexing_StopsBeforeDisablingSoUndoCanRestart [16 ms]
-  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ServicesChangeStartupAndRollBack [17 ms]
+  Passed Evo.Engine.Tests.Wave3EngineTests.TestWave3Catalog_ServicesChangeStartupAndRollBack [16 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Engine.Tests\Evo.Engine.Tests.trx
 
-Total tests: 124
 Test Run Failed.
-     Passed: 115
-     Failed: 9
- Total time: 1.5905 Seconds
+Total tests: 124
+     Passed: 123
+     Failed: 1
+ Total time: 1.7007 Seconds
      1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Engine.Tests\Evo.Engine.Tests.csproj" on node 1 (VSTest target(s)).
      1>_VSTestConsole:
          MSB4181: The "VSTestTask" task returned false but did not log an error.
@@ -256,4 +160,4 @@ Build FAILED.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.29
+Time Elapsed 00:00:02.46
