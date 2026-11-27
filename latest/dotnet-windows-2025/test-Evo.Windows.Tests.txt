@@ -1,31 +1,31 @@
-Build started 11/27/2026 11:30:35 PM.
+Build started 11/27/2026 11:44:43 PM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.08]   Discovering: Evo.Windows.Tests
-[xUnit.net 00:00:00.13]   Discovered:  Evo.Windows.Tests
-[xUnit.net 00:00:00.13]   Starting:    Evo.Windows.Tests
-  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds [30 ms]
+[xUnit.net 00:00:00.05]   Discovering: Evo.Windows.Tests
+[xUnit.net 00:00:00.09]   Discovered:  Evo.Windows.Tests
+[xUnit.net 00:00:00.09]   Starting:    Evo.Windows.Tests
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds [24 ms]
   Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Binary_ZeroAndFF [1 ms]
   Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_NestedKey_AncestorsCreated [1 ms]
   Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_MissingKeyAndValue_ReturnNull [< 1 ms]
+  Passed Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU [31 ms]
   Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_ExpandString_NotExpanded [< 1 ms]
   Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_DefaultValue_EmptyName [< 1 ms]
-  Passed Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU [50 ms]
-  Passed Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping [239 ms]
-  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly [708 ms]
-[xUnit.net 00:00:01.21]   Finished:    Evo.Windows.Tests
-  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException [7 ms]
-  Passed Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree [15 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping [14 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly [589 ms]
+[xUnit.net 00:00:00.78]   Finished:    Evo.Windows.Tests
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException [4 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree [9 ms]
 Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Windows.Tests\Evo.Windows.Tests.trx
 
 Test Run Successful.
 Total tests: 11
      Passed: 11
- Total time: 1.7028 Seconds
+ Total time: 1.1302 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.37
+Time Elapsed 00:00:01.59
