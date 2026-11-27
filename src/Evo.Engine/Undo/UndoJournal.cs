@@ -1,3 +1,4 @@
+using System.Linq;
 using Evo.Core.Actions;
 using Evo.Core.System;
 using Microsoft.Win32;
