@@ -868,9 +868,9 @@ public sealed class ExecutorTests
         Assert.True(result.Success);
         Assert.Single(journal.Entries);
 
-        // Rollback con un registry que falla en SetValue
+        // Rollback con un registry que falla en SetValue (sin Seed: Seed llama
+        // a SetValue internamente y consumiría el contador de fallo).
         var failingRegistry = new FailingRegistryAccessor();
-        failingRegistry.Seed(RegistryHive.LocalMachine, @"SOFTWARE\Evo\Test", "Val1", 1);
 
         var report = await journal.RollbackAsync(new UndoContext(
             failingRegistry, new FakeServiceAccessor(), new FakeTaskAccessor(),
@@ -981,7 +981,7 @@ public sealed class ExecutorTests
         };
 
         var result = await new RegistryDeleteKeyExecutor(
-            new RegistrySnapshotLimits { MaxDepth = 1, MaxValues = 4096, MaxKeys = 1024 }
+            new RegistrySnapshotLimits { MaxDepth = 0, MaxValues = 4096, MaxKeys = 1024 }
         ).ExecuteAsync(new RegistryDeleteKeyAction
         {
             Order = 1,
@@ -1051,7 +1051,8 @@ public sealed class ExecutorTests
             new FakeRegistryAccessor(), new FakeServiceAccessor(), tasks,
             new FakeProcessAccessor(), new FakeCommandRunner()));
 
-        Assert.True(report.Success);
+        // Hay una entrada Fallida, así que Success es false.
+        Assert.False(report.Success);
         Assert.Single(report.Restored);
         Assert.Single(report.Failed);
         Assert.Equal("task", report.Restored[0].ActionKey);

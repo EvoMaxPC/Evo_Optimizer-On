@@ -61,12 +61,13 @@ public sealed record ActionResult
         };
 
     /// <summary>Crea un resultado omitido.</summary>
-    public static ActionResult Skip(string key, string reason, string description = "") =>
+    public static ActionResult Skip(string key, string reason, string description = "", string? previous = null) =>
         new()
         {
             ActionKey = key,
             Status = ActionStatus.Skipped,
             ErrorMessage = reason,
+            PreviousState = previous,
             Description = description,
         };
 

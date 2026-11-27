@@ -577,9 +577,11 @@ public sealed class UndoJournal
             // mismo ActionKey y una falló mientras otra se restauró, la
             // restaurada se descarta y la fallida permanece en el diario para
             // que un segundo RollbackAsync la reintente.
+            var soloFallidas = _entries
+                .Where((entry, index) => failedIndices.Contains(index))
+                .ToList();
             _entries.Clear();
-            _entries.AddRange(_entries
-                .Where((entry, index) => failedIndices.Contains(index)));
+            _entries.AddRange(soloFallidas);
         }
 
         return Task.FromResult(new RollbackReport

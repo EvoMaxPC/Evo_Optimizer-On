@@ -322,7 +322,18 @@ public sealed class Wave4EngineTests
     public async Task TaskCreate_ExistingTaskWithOverwriteRestoresPreviousState()
     {
         var harness = TestHarness.Create();
-        harness.Tasks.Seed(@"\", "AutoRegBackup", enabled: false);
+        harness.Tasks.Seed(@"\", "AutoRegBackup", enabled: false, new TaskDefinition
+        {
+            TaskPath = @"\\",
+            TaskName = "AutoRegBackup",
+            Execute = "schtasks",
+            Arguments = "/run /i /tn \"\\Microsoft\\Windows\\Registry\\RegIdleBackup\"",
+            Trigger = "Daily",
+            TriggerAt = "00:30",
+            UserId = "System",
+            RunLevel = "Highest",
+            Description = "Create System Registry Backups",
+        });
         var journal = new UndoJournal();
 
         var result = await new TaskCreateExecutor().ExecuteAsync(
@@ -1104,7 +1115,7 @@ public sealed class Wave4EngineTests
     }
 
     /// <summary>Accesor cuya enumeración del árbol falla (instantánea imposible).</summary>
-    private sealed class FailingTreeReader : IRegistryAccessor, IRegistryTreeReader
+    private sealed class FailingTreeReader : IRegistryAccessor, IRegistryTreeReader, IRegistryKeyCreator
     {
         private readonly FakeRegistryAccessor _inner;
 
@@ -1135,6 +1146,9 @@ public sealed class Wave4EngineTests
 
         public IReadOnlyList<string> GetValueNames(RegistryHive hive, string keyPath) =>
             throw new InvalidOperationException("El registro no responde.");
+
+        public void EnsureKey(RegistryHive hive, string keyPath) =>
+            _inner.EnsureKey(hive, keyPath);
     }
 
     private static IReadOnlyList<CapabilityDefinition> LoadAll()

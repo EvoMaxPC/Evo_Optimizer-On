@@ -47,7 +47,8 @@ public sealed class ProcessActionExecutor : IActionExecutor
             return Task.FromResult(ActionResult.Skip(
                 action.Key,
                 $"El proceso '{processAction.ProcessName}' está activo; la acción no solicita terminarlo.",
-                Describe(processAction)));
+                Describe(processAction),
+                previous));
         }
 
         // Terminate=true: terminar y verificar que realmente se detuvo.
