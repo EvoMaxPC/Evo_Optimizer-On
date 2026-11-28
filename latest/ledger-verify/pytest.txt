@@ -1,0 +1,527 @@
+........................................................................ [ 12%]
+........................................................................ [ 25%]
+........................................................................ [ 37%]
+........F..F........F......FF.........F.......F......................... [ 50%]
+........................................................................ [ 62%]
+........................................................................ [ 75%]
+..............................................................F....F.... [ 87%]
+................F.F...........................................F....FF    [100%]
+=================================== FAILURES ===================================
+________ test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9 ________
+
+    def test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9() -> None:
+        assert vcc.main([]) == 0
+        report = coverage_json()
+        assert "9" in report["secciones_terminadas"]
+        assert report["por_seccion"]["9"] == {"lineas_mapped": 31, "cubiertas": 31,
+                                             "huecos": 0}
+        assert report["huecos"] == 0
+        assert report["huecos_no_declarados"] == 0
+        # Paso 12: 86 -> 88 capacidades; paso 7: +12 seccion 4 +1 bateria seccion 9 = 101.
+>       assert report["capacidades"] == 101
+E       assert 106 == 101
+
+tests/test_paso10.py:266: AssertionError
+----------------------------- Captured stdout call -----------------------------
+capacidades del catalogo : 106
+lineas Mapped 1+2+3+4+9+10+12   : 104
+  cubiertas             : 104
+  huecos declarados     : 0 (de 0 declarados)
+  seccion 1: 3 Mapped, 3 cubiertas, 0 huecos
+  seccion 2: 17 Mapped, 17 cubiertas, 0 huecos
+  seccion 3: 6 Mapped, 6 cubiertas, 0 huecos
+  seccion 4: 13 Mapped, 13 cubiertas, 0 huecos
+  seccion 9: 31 Mapped, 31 cubiertas, 0 huecos
+  seccion 10: 29 Mapped, 29 cubiertas, 0 huecos
+  seccion 12: 5 Mapped, 5 cubiertas, 0 huecos
+
+(cifra informativa) capacidades que no respaldan ninguna linea Mapped:
+  cleanup.delivery.optimization
+  cleanup.memory.dumps
+  cleanup.recycle.bin
+  cleanup.temp.system
+  cleanup.temp.user
+  cleanup.wer.reports
+  cleanup.winsxs.component
+  cleanup.winsxs.resetbase
+  debloat.appx.consumer
+  debloat.content.delivery
+  debloat.copilot.remove
+  debloat.cortana.remove
+  debloat.telemetry.appx
+  debloat.windows.ai.recall
+  explorer.check-boxes.disable
+  explorer.long-paths.enable
+  explorer.quick-access.hide
+  explorer.recent-items.disable
+  explorer.removable-drives.sidebar
+  explorer.shortcut-icon.classic
+  explorer.shortcut-text.hide
+  privacy.advertising.id
+  privacy.ceip.tasks
+  privacy.feedback.frequency
+  privacy.kms.activation.telemetry
+  privacy.telemetry.diagtrack
+  privacy.telemetry.dmwappush
+  system.error-reporting.crash-control
+  system.menu-delay.disable
+  system.network.location-wizard.disable
+  system.time.ntp-servers
+  system.time.utc-rtc
+  ui.snap-layouts.disable
+  ui.verbose-messages.enable
+
+veredicto: OK
+_____ test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3 _____
+
+    def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> None:
+        for script in ("build_section9_catalog.py", "build_wave_plan.py",
+                       "build_build_ranges_report.py"):
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "ledger_extract" / script), "--check"],
+                capture_output=True, text=True, check=False)
+>           assert result.returncode == 0, (script, result.stderr)
+E           AssertionError: ('build_wave_plan.py', 'plan-oleadas.md NO reproducible: el fichero del disco difiere
+E             ')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...lan.py', '--check'], returncode=1, stdout='', stderr='plan-oleadas.md NO reproducible: el fichero del disco difiere\n').returncode
+
+tests/test_paso10.py:317: AssertionError
+_________ test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano _________
+
+    def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
+        """73/13 -> 75/11: dos capacidades de §9 dejan de ser Specified.
+    
+        Se comprueba contra el informe generado (no contra un literal suelto) y
+        contra los dos JSON que cambian, para que la cifra no pueda quedarse vieja.
+        """
+        text = RANGES.read_text(encoding="utf-8")
+        assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in text
+        for path in sorted(CATALOG.glob("*.json")):
+            document = json.loads(path.read_text(encoding="utf-8"))
+            for cap in document["capabilities"]:
+                assert cap["state"] in ("Implemented", "Specified"), cap["id"]
+    
+        total = sum(len(json.loads(p.read_text(encoding="utf-8"))["capabilities"])
+                    for p in sorted(CATALOG.glob("*.json")))
+        # Paso 12: 86 -> 88 capacidades y 238 -> 243 acciones. Las cinco de más son
+        # Explorer y sistema: 3 de `explorer.home.restore` (crear la clave + 2 valores),
+        # 1 `ServiceAction Stop` de WSearch y 1 `registryCreateKey` de
+        # `system.network.location-wizard.disable`.
+>       assert total == 101
+E       assert 106 == 101
+
+tests/test_paso11.py:182: AssertionError
+________________ test_la_cobertura_sigue_en_85_de_85_sin_huecos ________________
+
+    def test_la_cobertura_sigue_en_85_de_85_sin_huecos() -> None:
+        assert vcc.main([]) == 0
+        report = json.loads(subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
+             "--json"], capture_output=True, text=True, check=False).stdout)
+>       assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
+E       AssertionError: assert ['1', '2', '3...9', '10', ...] == ['1', '2', '3...4', '9', '10']
+E         
+E         Left contains one more item: '12'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               '1',
+E               '2',
+E               '3',
+E               '4',
+E               '9',
+E               '10',
+E         +     '12',
+E           ]
+
+tests/test_paso11.py:297: AssertionError
+----------------------------- Captured stdout call -----------------------------
+capacidades del catalogo : 106
+lineas Mapped 1+2+3+4+9+10+12   : 104
+  cubiertas             : 104
+  huecos declarados     : 0 (de 0 declarados)
+  seccion 1: 3 Mapped, 3 cubiertas, 0 huecos
+  seccion 2: 17 Mapped, 17 cubiertas, 0 huecos
+  seccion 3: 6 Mapped, 6 cubiertas, 0 huecos
+  seccion 4: 13 Mapped, 13 cubiertas, 0 huecos
+  seccion 9: 31 Mapped, 31 cubiertas, 0 huecos
+  seccion 10: 29 Mapped, 29 cubiertas, 0 huecos
+  seccion 12: 5 Mapped, 5 cubiertas, 0 huecos
+
+(cifra informativa) capacidades que no respaldan ninguna linea Mapped:
+  cleanup.delivery.optimization
+  cleanup.memory.dumps
+  cleanup.recycle.bin
+  cleanup.temp.system
+  cleanup.temp.user
+  cleanup.wer.reports
+  cleanup.winsxs.component
+  cleanup.winsxs.resetbase
+  debloat.appx.consumer
+  debloat.content.delivery
+  debloat.copilot.remove
+  debloat.cortana.remove
+  debloat.telemetry.appx
+  debloat.windows.ai.recall
+  explorer.check-boxes.disable
+  explorer.long-paths.enable
+  explorer.quick-access.hide
+  explorer.recent-items.disable
+  explorer.removable-drives.sidebar
+  explorer.shortcut-icon.classic
+  explorer.shortcut-text.hide
+  privacy.advertising.id
+  privacy.ceip.tasks
+  privacy.feedback.frequency
+  privacy.kms.activation.telemetry
+  privacy.telemetry.diagtrack
+  privacy.telemetry.dmwappush
+  system.error-reporting.crash-control
+  system.menu-delay.disable
+  system.network.location-wizard.disable
+  system.time.ntp-servers
+  system.time.utc-rtc
+  ui.snap-layouts.disable
+  ui.verbose-messages.enable
+
+veredicto: OK
+____________ test_las_cifras_de_los_informes_generados_estan_al_dia ____________
+
+    def test_las_cifras_de_los_informes_generados_estan_al_dia() -> None:
+        for script in ("build_wave_plan.py", "build_build_ranges_report.py"):
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "ledger_extract" / script), "--check"],
+                capture_output=True, text=True, check=False)
+>           assert result.returncode == 0, (script, result.stderr)
+E           AssertionError: ('build_wave_plan.py', 'plan-oleadas.md NO reproducible: el fichero del disco difiere
+E             ')
+E           assert 1 == 0
+E            +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...lan.py', '--check'], returncode=1, stdout='', stderr='plan-oleadas.md NO reproducible: el fichero del disco difiere\n').returncode
+
+tests/test_paso11.py:316: AssertionError
+______________________ test_r1_no_queda_ninguna_violacion ______________________
+
+    def test_r1_no_queda_ninguna_violacion() -> None:
+        """`Implemented` sólo si la capacidad expresa TODO el efecto del pin. El
+        medidor es el que manda: se ejecuta de verdad, no se lee el TSV a ciegas."""
+        rows = mcc.measure()
+        violations = [r for r in rows if r["verdict"] == "R1-VIOLATION"]
+        assert violations == []
+>       assert len(rows) == 101
+E       AssertionError: assert 106 == 101
+E        +  where 106 = len([{'capability_id': 'explorer.app-icon-thumbnails.hide', 'section': '10', 'state': 'Implemented', 'source': 'atlas', ........}, {'capability_id': 'explorer.gallery.hide', 'section': '10', 'state': 'Implemented', 'source': 'atlas', ...}, ...])
+
+tests/test_paso12.py:169: AssertionError
+__________________ test_las_cifras_del_ledger_son_las_medidas __________________
+
+    def test_las_cifras_del_ledger_son_las_medidas() -> None:
+        """88 capacidades, 243 acciones; §9 19/47 y §10 30/60. Ninguna cifra del
+        paso 11 (86 / 238 / 45 / 57) puede sobrevivir donde importa."""
+        caps = all_capabilities()
+>       assert len(caps) == 101
+E       assert 106 == 101
+E        +  where 106 = len({'explorer.app-icon-thumbnails.hide': {'id': 'explorer.app-icon-thumbnails.hide', 'name': 'Quitar el icono de la aplic...lo contrario: escribe una cadena vacía en esos mismos valores, que es lo que los bloquea.", 'sectionId': 10, ...}, ...})
+
+tests/test_paso12.py:325: AssertionError
+_____________ test_las_ramas_de_reversibilidad_cumplen_la_adr_0003 _____________
+
+    def test_las_ramas_de_reversibilidad_cumplen_la_adr_0003() -> None:
+        restore = ["None", "SessionUndo", "RestorePoint", "FullBackup"]
+        confirmation = ["None", "SimpleClick", "Summary", "SummaryAndRestorePoint",
+                        "TypeOperationName"]
+        minimum_restore = {"Safe": 0, "Low": 1, "Medium": 2, "High": 2, "Critical": 3}
+        minimum_confirmation = {"Safe": 0, "Low": 1, "Medium": 2, "High": 3, "Critical": 4}
+    
+        for cap in catalog_capabilities():
+            risk = cap["risk"]
+            rest = restore.index(cap["restore"])
+            conf = confirmation.index(cap["confirmation"])
+    
+>           assert conf >= minimum_confirmation[risk], f"{cap['id']}: confirmación por debajo del mínimo"
+E           AssertionError: services.atlas.cbs-repair-source-policy: confirmación por debajo del mínimo
+E           assert 0 >= 1
+
+tests/test_paso8b.py:141: AssertionError
+___ test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada ___
+
+    def test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada() -> None:
+        caps = {c["id"]: c for c in catalog_capabilities()}
+        # dmwappush: única fuente no verificada como tweak -> Specified.
+        assert caps["privacy.telemetry.dmwappush"]["state"] == "Specified"
+        assert "NO VERIFICADO" in caps["privacy.telemetry.dmwappush"]["provenance"]
+        # Las que solo existen como script en el pin -> Specified.
+        for capability_id in ("cleanup.winsxs.resetbase", "debloat.windows.ai.recall", "debloat.edge.remove",
+                              "debloat.store.search", "debloat.explorer.auto-folder-discovery",
+                              "debloat.drivers.razer", "debloat.drivers.logitech",
+                              "debloat.network.adobe-blocklist", "debloat.start.layout"):
+            assert caps[capability_id]["state"] == "Specified", capability_id
+    
+        implemented = [c for c in caps.values() if c["state"] == "Implemented"]
+        specified = [c for c in caps.values() if c["state"] == "Specified"]
+        # Paso 8d: Copilot baja a Specified porque el pin no fija el rango de su
+        # política por build (RANGO NO VERIFICADO).
+        assert caps["debloat.copilot.remove"]["state"] == "Specified"
+        assert "RANGO NO VERIFICADO" in caps["debloat.copilot.remove"]["provenance"]
+    
+        # Paso 9 (oleada 2) llevó el catálogo de 39 a 68 capacidades con la sección 10
+        # y el paso 10 (oleada 3) a 86 con las 18 de la sección 9. El paso 12 suma dos
+        # (88): `explorer.home.restore` y `system.network.location-wizard.disable`. El
+        # resto de la comprobación no cambia: toda capacidad está en Implemented o en
+        # Specified, y ninguna en otro estado.
+>       assert len(implemented) + len(specified) == len(caps) == 101
+E       assert 106 == 101
+E        +  where 106 = len({'explorer.app-icon-thumbnails.hide': {'id': 'explorer.app-icon-thumbnails.hide', 'name': 'Quitar el icono de la aplic...lo contrario: escribe una cadena vacía en esos mismos valores, que es lo que los bloquea.", 'sectionId': 10, ...}, ...})
+
+tests/test_paso8b.py:215: AssertionError
+_______ test_el_plan_de_oleadas_es_reproducible_y_cubre_las_17_secciones _______
+
+    def test_el_plan_de_oleadas_es_reproducible_y_cubre_las_17_secciones() -> None:
+>       assert bwp.main(["--check"]) == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = <function main at 0x7d1f7f1b0300>(['--check'])
+E        +    where <function main at 0x7d1f7f1b0300> = bwp.main
+
+tests/test_paso8c.py:190: AssertionError
+----------------------------- Captured stderr call -----------------------------
+plan-oleadas.md NO reproducible: el fichero del disco difiere
+_________________ test_la_cobertura_1_3_sigue_siendo_26_de_26 __________________
+
+    def test_la_cobertura_1_3_sigue_siendo_26_de_26() -> None:
+        assert vcc.main([]) == 0
+        report = json.loads(subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
+             "--json"], capture_output=True, text=True, check=False).stdout)
+        # Paso 9 sumó la sección 10 (26 de 1-3 + 29) y el paso 10 la sección 9
+        # (30 Mapped tras las seis correcciones medidas), así que el campo vale 82.
+        # Lo que este test protege sigue siendo lo mismo: que 1+2+3 no pierdan ni
+        # una línea Mapped al añadir secciones al verificador.
+        # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): sec 4 pasa de 12 a 13 Mapped.
+>       assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 13 + 31 + 29  # 99: sec 1-3 + sec 4 + sec 9 + sec 10
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 104 == (((((3 + 17) + 6) + 13) + 31) + 29)
+
+tests/test_paso8c.py:215: AssertionError
+----------------------------- Captured stdout call -----------------------------
+capacidades del catalogo : 106
+lineas Mapped 1+2+3+4+9+10+12   : 104
+  cubiertas             : 104
+  huecos declarados     : 0 (de 0 declarados)
+  seccion 1: 3 Mapped, 3 cubiertas, 0 huecos
+  seccion 2: 17 Mapped, 17 cubiertas, 0 huecos
+  seccion 3: 6 Mapped, 6 cubiertas, 0 huecos
+  seccion 4: 13 Mapped, 13 cubiertas, 0 huecos
+  seccion 9: 31 Mapped, 31 cubiertas, 0 huecos
+  seccion 10: 29 Mapped, 29 cubiertas, 0 huecos
+  seccion 12: 5 Mapped, 5 cubiertas, 0 huecos
+
+(cifra informativa) capacidades que no respaldan ninguna linea Mapped:
+  cleanup.delivery.optimization
+  cleanup.memory.dumps
+  cleanup.recycle.bin
+  cleanup.temp.system
+  cleanup.temp.user
+  cleanup.wer.reports
+  cleanup.winsxs.component
+  cleanup.winsxs.resetbase
+  debloat.appx.consumer
+  debloat.content.delivery
+  debloat.copilot.remove
+  debloat.cortana.remove
+  debloat.telemetry.appx
+  debloat.windows.ai.recall
+  explorer.check-boxes.disable
+  explorer.long-paths.enable
+  explorer.quick-access.hide
+  explorer.recent-items.disable
+  explorer.removable-drives.sidebar
+  explorer.shortcut-icon.classic
+  explorer.shortcut-text.hide
+  privacy.advertising.id
+  privacy.ceip.tasks
+  privacy.feedback.frequency
+  privacy.kms.activation.telemetry
+  privacy.telemetry.diagtrack
+  privacy.telemetry.dmwappush
+  system.error-reporting.crash-control
+  system.menu-delay.disable
+  system.network.location-wizard.disable
+  system.time.ntp-servers
+  system.time.utc-rtc
+  ui.snap-layouts.disable
+  ui.verbose-messages.enable
+
+veredicto: OK
+_______ test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10 ________
+
+    def test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10() -> None:
+        assert vcc.main([]) == 0
+        report = json.loads(subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
+             "--json"], capture_output=True, text=True, check=False).stdout)
+        # Paso 10 suma la sección 9 y sus 18 capacidades al mismo verificador.
+>       assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
+E       AssertionError: assert ['1', '2', '3...9', '10', ...] == ['1', '2', '3...4', '9', '10']
+E         
+E         Left contains one more item: '12'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               '1',
+E               '2',
+E               '3',
+E               '4',
+E               '9',
+E               '10',
+E         +     '12',
+E           ]
+
+tests/test_paso9.py:335: AssertionError
+----------------------------- Captured stdout call -----------------------------
+capacidades del catalogo : 106
+lineas Mapped 1+2+3+4+9+10+12   : 104
+  cubiertas             : 104
+  huecos declarados     : 0 (de 0 declarados)
+  seccion 1: 3 Mapped, 3 cubiertas, 0 huecos
+  seccion 2: 17 Mapped, 17 cubiertas, 0 huecos
+  seccion 3: 6 Mapped, 6 cubiertas, 0 huecos
+  seccion 4: 13 Mapped, 13 cubiertas, 0 huecos
+  seccion 9: 31 Mapped, 31 cubiertas, 0 huecos
+  seccion 10: 29 Mapped, 29 cubiertas, 0 huecos
+  seccion 12: 5 Mapped, 5 cubiertas, 0 huecos
+
+(cifra informativa) capacidades que no respaldan ninguna linea Mapped:
+  cleanup.delivery.optimization
+  cleanup.memory.dumps
+  cleanup.recycle.bin
+  cleanup.temp.system
+  cleanup.temp.user
+  cleanup.wer.reports
+  cleanup.winsxs.component
+  cleanup.winsxs.resetbase
+  debloat.appx.consumer
+  debloat.content.delivery
+  debloat.copilot.remove
+  debloat.cortana.remove
+  debloat.telemetry.appx
+  debloat.windows.ai.recall
+  explorer.check-boxes.disable
+  explorer.long-paths.enable
+  explorer.quick-access.hide
+  explorer.recent-items.disable
+  explorer.removable-drives.sidebar
+  explorer.shortcut-icon.classic
+  explorer.shortcut-text.hide
+  privacy.advertising.id
+  privacy.ceip.tasks
+  privacy.feedback.frequency
+  privacy.kms.activation.telemetry
+  privacy.telemetry.diagtrack
+  privacy.telemetry.dmwappush
+  system.error-reporting.crash-control
+  system.menu-delay.disable
+  system.network.location-wizard.disable
+  system.time.ntp-servers
+  system.time.utc-rtc
+  ui.snap-layouts.disable
+  ui.verbose-messages.enable
+
+veredicto: OK
+___________ test_el_plan_de_oleadas_marca_la_seccion_10_como_cerrada ___________
+
+    def test_el_plan_de_oleadas_marca_la_seccion_10_como_cerrada() -> None:
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "ledger_extract" / "build_wave_plan.py"), "--check"],
+            capture_output=True, text=True, check=False)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: plan-oleadas.md NO reproducible: el fichero del disco difiere
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...lan.py', '--check'], returncode=1, stdout='', stderr='plan-oleadas.md NO reproducible: el fichero del disco difiere\n').returncode
+
+tests/test_paso9.py:413: AssertionError
+__________ test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido __________
+
+    def test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido() -> None:
+        result = subprocess.run(
+            [sys.executable, str(ROOT / "tools" / "ledger_extract"
+                                 / "build_build_ranges_report.py"), "--check"],
+            capture_output=True, text=True, check=False)
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: rangos-build.md NO reproducible: el fichero del disco difiere
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...ort.py', '--check'], returncode=1, stdout='', stderr='rangos-build.md NO reproducible: el fichero del disco difiere\n').returncode
+
+tests/test_paso9.py:429: AssertionError
+=============================== warnings summary ===============================
+tools/ledger_extract/build_section10_catalog.py:257
+  /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:257: SyntaxWarning: "\B" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\B"? A raw string is also an option.
+    "(HKLM Shell Extensions\Blocked), que es como Windows desactiva el menú "
+
+tools/ledger_extract/build_section10_catalog.py:375
+  /home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/build_section10_catalog.py:375: SyntaxWarning: "\{" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\{"? A raw string is also an option.
+    - las rutas llevan llaves dentro de comillas (`CLSID\{e88865ea-…}`), así que
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_paso10.py::test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9 - assert 106 == 101
+FAILED tests/test_paso10.py::test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3 - AssertionError: ('build_wave_plan.py', 'plan-oleadas.md NO reproducible: el fichero del disco difiere
+  ')
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...lan.py', '--check'], returncode=1, stdout='', stderr='plan-oleadas.md NO reproducible: el fichero del disco difiere\n').returncode
+FAILED tests/test_paso11.py::test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano - assert 106 == 101
+FAILED tests/test_paso11.py::test_la_cobertura_sigue_en_85_de_85_sin_huecos - AssertionError: assert ['1', '2', '3...9', '10', ...] == ['1', '2', '3...4', '9', '10']
+  
+  Left contains one more item: '12'
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    [
+        '1',
+        '2',
+        '3',
+        '4',
+        '9',
+        '10',
+  +     '12',
+    ]
+FAILED tests/test_paso11.py::test_las_cifras_de_los_informes_generados_estan_al_dia - AssertionError: ('build_wave_plan.py', 'plan-oleadas.md NO reproducible: el fichero del disco difiere
+  ')
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...lan.py', '--check'], returncode=1, stdout='', stderr='plan-oleadas.md NO reproducible: el fichero del disco difiere\n').returncode
+FAILED tests/test_paso12.py::test_r1_no_queda_ninguna_violacion - AssertionError: assert 106 == 101
+ +  where 106 = len([{'capability_id': 'explorer.app-icon-thumbnails.hide', 'section': '10', 'state': 'Implemented', 'source': 'atlas', ........}, {'capability_id': 'explorer.gallery.hide', 'section': '10', 'state': 'Implemented', 'source': 'atlas', ...}, ...])
+FAILED tests/test_paso12.py::test_las_cifras_del_ledger_son_las_medidas - assert 106 == 101
+ +  where 106 = len({'explorer.app-icon-thumbnails.hide': {'id': 'explorer.app-icon-thumbnails.hide', 'name': 'Quitar el icono de la aplic...lo contrario: escribe una cadena vacía en esos mismos valores, que es lo que los bloquea.", 'sectionId': 10, ...}, ...})
+FAILED tests/test_paso8b.py::test_las_ramas_de_reversibilidad_cumplen_la_adr_0003 - AssertionError: services.atlas.cbs-repair-source-policy: confirmación por debajo del mínimo
+assert 0 >= 1
+FAILED tests/test_paso8b.py::test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada - assert 106 == 101
+ +  where 106 = len({'explorer.app-icon-thumbnails.hide': {'id': 'explorer.app-icon-thumbnails.hide', 'name': 'Quitar el icono de la aplic...lo contrario: escribe una cadena vacía en esos mismos valores, que es lo que los bloquea.", 'sectionId': 10, ...}, ...})
+FAILED tests/test_paso8c.py::test_el_plan_de_oleadas_es_reproducible_y_cubre_las_17_secciones - AssertionError: assert 1 == 0
+ +  where 1 = <function main at 0x7d1f7f1b0300>(['--check'])
+ +    where <function main at 0x7d1f7f1b0300> = bwp.main
+FAILED tests/test_paso8c.py::test_la_cobertura_1_3_sigue_siendo_26_de_26 - assert 104 == (((((3 + 17) + 6) + 13) + 31) + 29)
+FAILED tests/test_paso9.py::test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10 - AssertionError: assert ['1', '2', '3...9', '10', ...] == ['1', '2', '3...4', '9', '10']
+  
+  Left contains one more item: '12'
+  
+  Full diff: (-: missing in left side, +: extra in left side)
+    [
+        '1',
+        '2',
+        '3',
+        '4',
+        '9',
+        '10',
+  +     '12',
+    ]
+FAILED tests/test_paso9.py::test_el_plan_de_oleadas_marca_la_seccion_10_como_cerrada - AssertionError: plan-oleadas.md NO reproducible: el fichero del disco difiere
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...lan.py', '--check'], returncode=1, stdout='', stderr='plan-oleadas.md NO reproducible: el fichero del disco difiere\n').returncode
+FAILED tests/test_paso9.py::test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido - AssertionError: rangos-build.md NO reproducible: el fichero del disco difiere
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...ort.py', '--check'], returncode=1, stdout='', stderr='rangos-build.md NO reproducible: el fichero del disco difiere\n').returncode
+14 failed, 559 passed, 2 warnings in 18.20s
+pytest_exit=1
