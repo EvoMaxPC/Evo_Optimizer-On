@@ -59,8 +59,11 @@ public partial class MainWindow : Window
 
     private void Undo_Click(object sender, RoutedEventArgs e)
     {
-        _viewModel.Undo();
-        RefreshResults();
+        if (sender is Button button && button.DataContext is CapabilityViewModel capability)
+        {
+            _viewModel.Undo(capability.Id);
+            RefreshResults();
+        }
     }
 
     private void RefreshResults()
