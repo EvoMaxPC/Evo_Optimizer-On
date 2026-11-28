@@ -1,6 +1,6 @@
 # Etapa 7 — Cierre: sección 4 (servicios), sección 9 (registro/batería), CI y evidencias
 
-Rama: `arena/ab2d6de7-evo-optimizer-on`. PR #1: `isDraft:true`, `mergedAt:null`. Commit final de código: `2a42a5721f57a18a170f3f33ec00043206ccf6e5`.
+Rama: `arena/ab2d6de7-evo-optimizer-on`. PR #1: `isDraft:true`, `mergedAt:null`. Commit final de código: `e76742f1bc16a5e34b3201e383db68603cab39e2`. Commit de docs pendente (este documento).
 
 ---
 
@@ -16,7 +16,7 @@ Entregables:
 3. `inventory/ledger/inventory-reconciliation.tsv` — regenerado con `build_final_reconciliation.py`.
 4. `tests/Evo.Catalog.Tests/Wave4CatalogTests.cs` — 101 caps, secciones `[1,2,3,4,9,10]`, test de batería.
 5. `docs/reports/rangos-build.md`, `plan-oleadas.md`, `matriz-cobertura.md` — regenerados.
-6. `docs/reports/etapa7.md` — este documento (único; `docs/etapa7.md` eliminado con `git mv`/`git rm`).
+6. `docs/reports/etapa7.md` — este documento (único; `docs/etapa7.md` eliminado con `git rm`).
 
 ---
 
@@ -57,11 +57,21 @@ Desfase de numeración: el reporte intermedio mencionó "122-135" de forma conti
 
 Resumen §4: **12 Mapped** (122-127, 130-135), **8 Absent-At-Pin** (121, 128, 136-144), **3 Informative-Header** (120, 129, 145), 0 huecos.
 
-### Contradicciones resueltas
+### Contradicciones resueltas (E)
 
-**Línea 121** ("Services — configuración de inicio Manual"): permaneció `Absent-At-Pin`. Evidencia: `grep -rn "Set-WinUtilService" /tmp/upstream/winutil/config/tweaks.json` → 0 hits. La línea agrupa los 5 servicios ya mapeados individualmente (122-126); no es una operación propia del pin. `MAPPED_OVERRIDES` no la incluye.
+**Línea 121** ("Services — configuración de inicio Manual"): permaneció `Absent-At-Pin`.
+Evidencia grep en ambos pins:
+- `grep -rn "Set-WinUtilService" /tmp/upstream/winutil/config/tweaks.json` → 0 hits (no existe `Set-WinUtilService` en el pin).
+- `grep -rn "WPFTweaksServices" /tmp/upstream/winutil/config/tweaks.json` → tweaks.json:146 define `WPFTweaksServices`; `config/preset.json:8,19,29` lo referencian.
+- Las capacidades `services.winutil.diagtrack` / `mapsbroker` / `storsvc` / `sharedaccess` / `cscservice` declaran `winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices`, y las TSV líneas 122-126 están ya `Mapped` a operaciones `WPFTweaksServices:service:N`.
+Decisión: WPFTweaksServices SÍ se expresa en el pin (criterio de E.2 satisfecho: las capacidades lo expresan y las líneas 122-126 están Mapped). La línea 121 es un **encabezado de sub-bloque** que agrupa esos servicios ya mapeados, no es una operación propia del pin, por REQ-002 no se inventa una operación para ella → se queda `Absent-At-Pin`. No se añadió a `MAPPED_OVERRIDES`.
 
-**Línea 136** ("Windows Update Services"): permaneció `Absent-At-Pin`. Evidencia: `grep -rn "wuauserv" /tmp/upstream/atlas/` → aparece en `app/src/` (código fuente de Atlas, no en toggles `.psd1`); `grep -rn "Windows Update" /tmp/upstream/atlas/package/Executables/AtlasModules/Toggles/Services/` → 0 hits. El pin tiene toggles generales de actualización (`ToggleWindowsUpdates.psd1`, `AutomaticUpdates.psd1`) pero no un toggle específico "Windows Update Services". No hay candidato de ledger (REQ-002: no inventar). Antes figuraba Mapped en el paso 4e por error; se corrigió a Absent-At-Pin en `ABSENT_OVERRIDES` con motivo literal.
+**Línea 136** ("Windows Update Services"): permaneció `Absent-At-Pin`.
+Evidencia grep en ambos pins:
+- `grep -rn "wuauserv" /tmp/upstream/atlas/` → aparece solo en `app/src/` (código fuente de Atlas, no en toggles `.psd1`).
+- `grep -rn "Windows Update" /tmp/upstream/atlas/package/Executables/AtlasModules/Toggles/Services/` → 0 hits.
+- En winutil: `wuauserv` aparece en `docs/.../features/Fixes/Update.mdx:56` (lista de servicios de un script de reparación, no como toggle expresable) y `SPEC.md:96`/`AGENTS.md:98` (documentación de riesgo).
+Decisión: el pin tiene toggles generales de actualización (`ToggleWindowsUpdates.psd1`, `AutomaticUpdates.psd1`) pero **no** un toggle específico llamado "Windows Update Services", y no hay candidato de ledger (REQ-002: no inventar). Antes figuraba `Mapped` en el paso 4e por error (regla R3 contra tests de Atlas, no producto); se corrigió a `Absent-At-Pin` en `ABSENT_OVERRIDES` con motivo literal.
 
 ---
 
@@ -127,7 +137,7 @@ Acción: `registry Set` — `HKCU\Software\Microsoft\Windows\CurrentVersion\Expl
 - `HKLM\SOFTWARE\Policies\Microsoft\FindMyDevice\AllowFindMyDevice` / `LocationSyncEnabled` (Location.ps1:118-120) — no hay acción de registro.
 - Ocultar páginas de configuración `privacy-location` y `findmydevice` (Location.ps1:122-123) — no es acción de registro/servicio/start/stop del motor.
 
-Solo las 4 acciones de servicio (lfsvc×2, MapsBroker×2) están expresadas. Como R1 exige que `Implemented` exprese TODO el efecto del pin, `system.location.consent-deny` permanece `Specified` con el motivo escrito en su descripción y provenance.
+Solo las 4 acciones de servicio (lfsvc×2, MapsBroker×2) están expresadas. Como R1 exige que `Implemented` exprese TODO el efecto del pin, `system.location.consent-deny` permanece `Specified` con el motivo escrito en su descripción y provenance. (Nota: el servicio correcto es `lfsvc`, no `lsfvc` — typo corregido en el análisis.)
 
 ---
 
@@ -171,6 +181,11 @@ Todos son DESVIACIONES autorizadas. Ningún invariante se relajó ni se borró t
 | tools/ledger_extract/build_section9_catalog.py | WINUTIL_REGISTRY_SPECS | — | batería (línea 278, 1 acción registry Set) | PASO D-A |
 | tools/ledger_extract/measure_capability_completeness.py | winutil_service_pairs | devolve set | devolve lista ordenada + filtro tweak-op:service:N | R1 sin violaciones en §4 |
 
+Explicación T3 OK 2 → 7 y PENDIENTE 15 → 16 (datos de `inventory/ledger/toggle-state-audit.tsv`):
+- OK +5: `services.atlas.lanmanworkstation`, `services.atlas.networkdiscovery`, `services.atlas.nvidiadisplaycontainer`, `services.atlas.printing`, `services.atlas.superfetch` (todas §4, `estado=Disable`, `operaciones_contrarias_no_reproducidas` vacía → OK).
+- PENDIENTE +1: `services.atlas.bluetooth` (§4, `estado=Disable`, `no_reproducidas=[Set HKLM:...\AllowBluetooth value=2]` → PENDIENTE).
+- CONTRARIO se mantiene en 3 (explorer.home.hide, explorer.home.restore, explorer.removable-drives.sidebar).
+
 ---
 
 ## 6. Archivos del ledger commiteados y script oficial que los produce
@@ -187,33 +202,49 @@ Todos son DESVIACIONES autorizadas. Ningún invariante se relajó ni se borró t
 | docs/reports/plan-oleadas.md | `tools/ledger_extract/build_wave_plan.py` | plan de oleadas |
 | docs/reports/matriz-cobertura.md | `tools/ledger_extract/generate_coverage_matrix.py` | matriz de cobertura |
 
-Los `.tsv` se regeneran con sus scripts oficiales (no se editan a mano). Los `.tsv que solo se ensucian por correr pytest no se commitean.
+Los `.tsv` se regeneran con sus scripts oficiales (no se editan a mano). Los `.tsv` que solo se ensucian por correr pytest no se commitean.
 
 ---
 
-## 7. CI — tabla final de runs (commit `2a42a5721f57a18a170f3f33ec00043206ccf6e5`)
+## 7. CI — tabla final de runs (commits `e76742f1` y `4d79968`)
 
 | id | workflow | sha (40 chars) | evento | conclusión |
 |----|----------|----------------|--------|------------|
-| 46125236752 | dotnet-ci | 2a42a5721f57a18a170f3f33ec00043206ccf6e5 | pull_request | **success** ✅ |
-| 46125232132 | dotnet-ci | 2a42a5721f57a18a170f3f33ec00043206ccf6e5 | push | **success** ✅ |
-| 46125232095 | ledger-verify | 2a42a5721f57a18a170f3f33ec00043206ccf6e5 | push | failure ❌ |
+| 46133100955 | dotnet-ci | e76742f1bc16a5e34b3201e383db68603cab39e2 | pull_request | **success** ✅ |
+| 46133096689 | ledger-verify | e76742f1bc16a5e34b3201e383db68603cab39e2 | push | **success** ✅ |
+| 46131002780 | dotnet-ci | 4d79968528c2b2e8e824b87e8dbd364c6b4b39af | pull_request | **success** ✅ |
+| 46130999562 | dotnet-ci | 4d79968528c2b2e8e824b87e8dbd364c6b4b39af | push | **success** ✅ |
+| 46130999582 | ledger-verify | 4d79968528c2b2e8e824b87e8dbd364c6b4b39af | push | **success** ✅ |
 
 - **dotnet-ci (push y PR, ambos runners windows-2025 y windows-11-arm): success**. Compilación .NET limpia (0 errores CS), tests pasan.
-- **release-exe**: success en commits anteriores; artefacto no listable con mi token (API 404).
-- **ledger-verify**: failure. pytest 573 passed / 0 failed localmente; determinismo OK; partition_check OK; coverage OK. El meta.json de CI reporta `status: failure` pero ningún archivo individual de ci-report (`pytest.txt`, `determinism.txt`, `coverage.txt`, `partition_check.txt`) muestra error específico. No se pudo descargar el log del job (EOF en la URL de Azure Blob).
+- **ledger-verify: success** en `e76742f1` (run 46133096689) y en `4d79968` (run 46130999582). La causa raíz del rojo fue que el paso 10 del workflow hardcodeaba valores del paso 6 (88 capacidades, sec9 mapped 30, secciones `[1,2,3,9,10]`); se corrigieron a los valores del paso 7 (101 capacidades, sec9 mapped 31, secciones +`4`, paso 12c: caps9 20/acts9 48, auditoría 198 filas, G2/G3 actualizados). Ninguna verificación se relajó: `assert` y `sys.exit` idénticos antes/después (workflow 3/13, test_paso12.py 136/0).
+- **release-exe**: success en run 46123330924 (sha `41f03ddf636ca9c1b7aecb73a18d27ab20e382f3`). `git diff --stat 41f03ddf636ca9c1b7aecb73a18d27ab20e382f3 origin/arena/ab2d6de7-evo-optimizer-on -- src catalog Directory.Build.props global.json` → **vacío**, por tanto el artefacto `EvoClean-preview-win-x64` de ese run equivale al código final (incluye los catálogos §4 y §9). Link: https://github.com/EvoMaxPC/Evo_Optimizer-On/actions/runs/46123330924 (el artifact no es listable vía `gh api .../artifacts` por limitación del token → 404, no se reporta como "expirado").
 
-Total de tests por proyecto (test-per-project.txt, ambos runners): se confirma en CI. Suma ≥ 326 (incluye el test de batería nuevo). pytest local: **573 passed, 0 failed**.
+**test-per-project.txt** (`ci-report/latest/dotnet-windows-*/test-per-project.txt`, ambos runners):
+```
+Evo.App.Tests: total=28 passed=28 failed=0
+Evo.Catalog.Tests: total=80 passed=80 failed=0
+Evo.Core.Tests: total=34 passed=34 failed=0
+Evo.Detection.Tests: total=35 passed=35 failed=0
+Evo.Engine.Tests: total=135 passed=135 failed=0
+Evo.Windows.Tests: total=14 passed=14 failed=0
+```
+Total = 326, fallos = 0, en **ambos** runners (≥ 326, 0 fallos). ✅
 
-grep -n literal de test-console.txt por runner para `TestWave4Catalog_BatteryPercentageImplemented`, test de total (101) y tests de sección 4 / location: pendiente de descarga de logs de CI (no accesibles desde sandbox).
+**grep -n de test-console.txt** (ambos runners, `Passed`):
+- `TestWave4Catalog_BatteryPercentageImplemented` (PASO D-A, línea 278 Mapped).
+- `TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants` (`Assert.Equal(101, all.Count)`).
+- `TestWave1CatalogTests.TestWave1Catalog_LoadsAndValidates` (`Assert.Equal(101, catalog.Count)`).
+- `TestWave4Catalog_LocationDeclaresStartupTypeAndStop` (sección 4 servicios, `Assert.Equal(4, services.Count)`).
+- `TestWave4Catalog_LocationDeclaresStartupTypeAndStop` / `LocationCapability_StopsServicesAndRestoresBothStates` (location).
+
+pytest local: **573 passed, 0 failed**.
 
 ---
 
 ## 8. Qué NO se probó
 
 - Nada se probó en Windows real. Los tests .NET se ejecutan en GitHub Actions (windows-2025, windows-11-arm); la sandbox no tiene .NET SDK.
-- El artefacto release-exe no se verificó (sha256 no disponible: API 404).
-- Los logs de CI de ledger-verify no son descargables (token limitado, EOF en URL de Azure Blob).
 - Las capacidades Specified de §4 con 0 acciones (nvidia, printing, superfetch, svchostsplit) no se ejecutaron contra el motor real; su estado Specified se justifica por R1 (efectos no expresables).
 
 ---
@@ -222,20 +253,14 @@ grep -n literal de test-console.txt por runner para `TestWave4Catalog_BatteryPer
 
 | criterio | estado | evidencia |
 |----------|--------|-----------|
-| dotnet-ci (push y PR, ambos runners) success | CUMPLIDO | run 46125236752 (PR) y 46125232132 (push) = success |
-| ledger-verify success | NO VERIFICADO | run 46125232095 = failure (sin error identificable en ci-report) |
-| release-exe success | CUMPLIDO (previo) | run 46123330924 = success |
-| tests ≥ 326, 0 fallos | CUMPLIDO (pytest local) | 573 passed / 0 failed; .NET en CI |
-| 23 líneas §4 clasificadas con grep literal | CUMPLIDO | tabla en sección 2 |
-| contradicciones 121 y 136 resueltas | CUMPLIDO | ambas Absent-At-Pin con evidencia de pin |
-| tabla de capacidades desde JSON | CUMPLIDO | sección 3 |
-| ADR-0003 y R1–R3 cumplidas | CUMPLIDO | `--check` OK; R1 sin violaciones en §4 |
-| hardware/build caso por caso | CUMPLIDO | tabla en sección 3 |
-| location.consent-deny con tabla de efectos | CUMPLIDO | sección 4; lfsvc correcto (no lsfvc) |
-| constantes con before/after | CUMPLIDO | sección 5 |
-| docs/reports/etapa7.md único y completo | EN PROGRESO | `docs/etapa7.md` eliminado; este doc es el único |
-| PR isDraft:true, mergedAt:null | CUMPLIDO | PR #1 en Draft |
-| 6 de 17 secciones cerradas | CUMPLIDO | `[1,2,3,4,9,10]` |
+| 1. Diff 2475d024..origin solo toca workflow + test_paso12.py, sin basura | CUMPLIDO | `git diff --stat 2475d0245611732270baf772458c4cdfbc9072c2 origin/arena/ab2d6de7-evo-optimizer-on` → solo los 2 archivos |
+| 2. Cada constante cambiada tiene origen medido; ninguna verificación relajada | CUMPLIDO | assert/sys.exit iguales antes/después; valores de `measure_capability_completeness.py`, `audit_catalog_values.py`, `build_section9_catalog.py --check`, `measure_toggle_states.py` |
+| 3. T3 OK 2→7 explicado con datos | CUMPLIDO | 5 OK nuevas §4 (lanmanworkstation, networkdiscovery, nvidiadisplaycontainer, printing, superfetch) + 1 PENDIENTE (bluetooth), de `toggle-state-audit.tsv` |
+| 4. dotnet-ci (push y PR, ambos runners) y ledger-verify en success con ids y sha 40; test-per-project ≥ 326, 0 fallos | CUMPLIDO | runs 46133100955 / 46133096689 (e76742f1) y 46131002780 / 46130999562 / 46130999582 (4d79968), todos success; test-per-project 326/0 ambos runners |
+| 5. release-exe correspondiente al catálogo final con link, o equivalencia con diff vacío | CUMPLIDO | run 46123330924, diff vacío, link https://github.com/EvoMaxPC/Evo_Optimizer-On/actions/runs/46123330924 |
+| 6. Líneas 121 y 136 resueltas con grep literal en ambos pins | CUMPLIDO | tabla en sección 2 (E); WPFTweaksServices expresado (tweaks.json:146) para 121; wuauserv solo en docs Update.mdx:56, sin toggle "Windows Update Services" para 136 |
+| 7. Tablas de F presentes (23 líneas §4, 13 capacidades, efectos location, constantes antes/después) | CUMPLIDO | secciones 2, 3, 4, 5 |
+| 8. ledger-verify success también en el commit de docs; PR draft y sin merge | EN PROGRESO | PR #1 `isDraft:true`, `mergedAt:null`; docs push pendiente, luego verificar CI en el commit de docs |
 
 ---
 
@@ -246,19 +271,20 @@ grep -n literal de test-console.txt por runner para `TestWave4Catalog_BatteryPer
 3. `Assert.NotEmpty(definition.Actions)` en Wave1/Wave4 solo se aplica a `Implemented` (Specified de §4 puede tener 0 acciones por ADR-0003/R1). No se relajó ningún invariante de seguridad.
 4. PR se mantiene en Draft (`isDraft:true`, `mergedAt:null`). Nunca `gh pr ready`.
 5. No se usaron `git add -A`, commits vacíos, force-push ni `git reset`.
+6. **Riesgo declarado (no se arregla en esta etapa):** los números fijos (88, 30, 31, 19, 47, 197, 2, 15, …) están hardcodeados en el workflow y en `test_paso12.py`. Se actualizaron de paso 6 a paso 7, pero en cada etapa futura volverán a romperse hasta que se endurezcan (leer los valores dinámicamente de los JSON/TSV generados en lugar de literales). Queda para endurecimiento.
 
 ---
 
-## 11. Supuestos y riesgos
+## 11. Supuestos y riesgos (residuales)
 
 **Supuestos:**
-- `/tmp/upstream/winutil/config/tweaks.json` y `/tmp/upstream/atlas/…/Toggles/Services/*.psd1` son los pins fuente de verdad (sha256 de pins verificados en pasos previos).
+- `/tmp/upstream/winutil/config/tweaks.json` y `/tmp/upstream/atlas/…/Toggles/Services/*.psd1` son los pins fuente de verdad.
 - Los shas de git (40 chars) se obtienen de `git log` y `gh api`, no de memoria.
 
-**Riesgos (no "ninguno"):**
-- **ledger-verify falla en CI sin error identificable en ci-report.** No se pudo descargar el log del job (EOF en Azure Blob). pytest local pasa (573/0), determinismo OK, coverage OK. Riesgo medio: puede ser un problema transitorio de CI o un paso sin archivo de salida. Sin pushes de código restantes no se puede corregir desde la sandbox.
+**Riesgos residuales (cierran en esta etapa):**
+- **ledger-verify: RESUELTO.** Ahora success en `e76742f1` (46133096689) y `4d79968` (46130999582). La causa raíz (valores hardcodeados paso 6 en el workflow) fue corregida a valores del paso 7.
 - **Nada se probó en Windows real.** Los tests .NET corren en GitHub Actions; la sandbox no tiene .NET SDK.
-- **release-exe no verificable** (API 404 para el artefacto).
+- **release-exe artifact no listable vía `gh api .../artifacts`** (token limitado, 404). Equivalencia probada con diff vacío contra run 46123330924.
 
 ---
 
@@ -266,10 +292,11 @@ grep -n literal de test-console.txt por runner para `TestWave4Catalog_BatteryPer
 
 | commit | mensaje | tipo |
 |--------|---------|------|
-| 41f03ddf636ca9c1b7aecb73a18d27ab20e382f3 | feat: etapa 7 - catalogo secciones 4 y 9, ledger, informes y tests | código |
-| 967313430f5959fcd7a982ec153804b0b551d70a | docs: etapa 7 - resumen de etapa, evidencias y desviaciones | docs (eliminado, contenido movido aquí) |
-| 72a1b3db9b67959f4f329f9985d4c0330152f6a6 | fix: etapa 7 - RegistryHive -> RegistryHiveKind en test de batería | código |
-| 306949fa4b68470373197924d3a8ab9d086a547b | fix: etapa 7 - tests .NET sección 4 y orden Section9 | código |
-| 2a42a5721f57a18a170f3f33ec00043206ccf6e5 | fix: etapa 7 - NotEmpty solo para Implemented en Wave1 | código (HEAD) |
+| e76742f1bc16a5e34b3201e383db68603cab39e2 | docs: etapa 7 - documenta decision E lineas 121 y 136 en build_final_reconciliation | código (HEAD) |
+| 4d79968528c2b2e8e824b87e8dbd364c6b4b39af | fix: etapa 7 - sincroniza con remoto y aplica correccion de workflow paso 7 | código (merge) |
+| cc26732ef3c3b9e47f8373106a6bb6837e78718a | fix: etapa 7 - ledger-verify usa valores del paso 7 en workflow y test_paso12 | código |
+| b878c1f8753b4fdb43ca79a416998838412259a7 | feat: etapa 7 - catalogo secciones 4 y 9, tests .NET y python, herramientas y reconciliacion | código |
+| 737f6d89402be507927fc6b7d565b6e3ff3e0ea1 | docs: etapa 7 - informe completo con tabla de capacidades, efectos y desviaciones | docs |
+| 2475d0245611732270baf772458c4cdfbc9072c2 | docs: etapa 7 - cierre con tabla de 23 líneas, capacidades, efectos de location y CI | docs (origen) |
 
 FIN ETAPA 7
