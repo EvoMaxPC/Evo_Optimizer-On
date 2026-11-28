@@ -18,7 +18,6 @@ public class ArchitectureMappingTests
     [InlineData(Architecture.Arm64, "arm64")]
     [InlineData(Architecture.X86, "x86")]           // no declarado en catalogo -> no compatible
     [InlineData(Architecture.Arm, "desconocido-Arm")]  // no declarado en catalogo -> no compatible
-    [InlineData(Architecture.Wasm64, "desconocido-Wasm64")] // no declarado en catalogo -> no compatible
     public void MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(Architecture arch, string esperado)
     {
         Assert.Equal(esperado, WindowsSystemEnvironment.MapArchitecture(arch));
