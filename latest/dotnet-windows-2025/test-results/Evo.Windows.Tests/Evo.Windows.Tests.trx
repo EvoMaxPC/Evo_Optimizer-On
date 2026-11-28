@@ -1,98 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TestRun id="39b835ad-808a-4a5c-a209-d593e7232ab7" name="runneradmin@runnervmop6rv 2026-11-28 04:53:51" runUser="runnervmop6rv\runneradmin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
-  <Times creation="2026-11-28T04:53:51.1391783+00:00" queuing="2026-11-28T04:53:51.1391785+00:00" start="2026-11-28T04:53:50.5559825+00:00" finish="2026-11-28T04:53:52.1304136+00:00" />
-  <TestSettings name="default" id="0b25665f-111a-42fb-a26a-df8b2bd64d41">
-    <Deployment runDeploymentRoot="runneradmin_runnervmop6rv_2026-11-28_04_53_51" />
+<TestRun id="dd72029e-4ff8-48c7-a43d-761ff7dc8c53" name="runneradmin@runnervmop6rv 2026-11-28 04:54:15" runUser="runnervmop6rv\runneradmin" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-28T04:54:15.1794788+00:00" queuing="2026-11-28T04:54:15.1794794+00:00" start="2026-11-28T04:54:14.4682354+00:00" finish="2026-11-28T04:54:15.7938653+00:00" />
+  <TestSettings name="default" id="66cd91d2-ca5d-40a0-8a38-1a0d4ae1f5cd">
+    <Deployment runDeploymentRoot="runneradmin_runnervmop6rv_2026-11-28_04_54_15" />
   </TestSettings>
   <Results>
-    <UnitTestResult executionId="cc1030ee-64ca-4956-81e7-789af11796ea" testId="a3c05579-c51b-485c-82bc-c9572c7b7b08" testName="Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree" computerName="runnervmop6rv" duration="00:00:00.0048243" startTime="2026-11-28T04:53:52.0798658+00:00" endTime="2026-11-28T04:53:52.0798659+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cc1030ee-64ca-4956-81e7-789af11796ea" />
-    <UnitTestResult executionId="aa793ac6-94ff-4941-a992-2e5f5ba5570a" testId="41b2a899-6685-f05f-16de-177cb91cc0dd" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_ExpandString_NotExpanded" computerName="runnervmop6rv" duration="00:00:00.0005871" startTime="2026-11-28T04:53:51.0839364+00:00" endTime="2026-11-28T04:53:51.0839365+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="aa793ac6-94ff-4941-a992-2e5f5ba5570a" />
-    <UnitTestResult executionId="da8def06-8d70-492f-bb22-7a3f4a03e3fb" testId="577f659c-058a-21a9-f283-05e3b3274669" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_NestedKey_AncestorsCreated" computerName="runnervmop6rv" duration="00:00:00.0011538" startTime="2026-11-28T04:53:51.0838796+00:00" endTime="2026-11-28T04:53:51.0838796+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da8def06-8d70-492f-bb22-7a3f4a03e3fb" />
-    <UnitTestResult executionId="e2233551-0079-4eae-9663-c343b52b603d" testId="b66a90d4-4f8e-badb-1a85-c5669f9dea88" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds" computerName="runnervmop6rv" duration="00:00:00.0241038" startTime="2026-11-28T04:53:51.0786302+00:00" endTime="2026-11-28T04:53:51.0786621+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e2233551-0079-4eae-9663-c343b52b603d" />
-    <UnitTestResult executionId="dffc004a-d461-4f5a-a3c7-9fb485374168" testId="a7ddcaf6-ee51-5337-cc23-f86c4536e933" testName="Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU" computerName="runnervmop6rv" duration="00:00:00.0383922" startTime="2026-11-28T04:53:51.0878095+00:00" endTime="2026-11-28T04:53:51.0878096+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dffc004a-d461-4f5a-a3c7-9fb485374168" />
-    <UnitTestResult executionId="b00236c5-6bd2-45e9-bbd7-98a726892c17" testId="1f4d6d44-e525-b499-b4cb-c6e0d3e230f7" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_MissingKeyAndValue_ReturnNull" computerName="runnervmop6rv" duration="00:00:00.0007761" startTime="2026-11-28T04:53:51.0839096+00:00" endTime="2026-11-28T04:53:51.0839096+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b00236c5-6bd2-45e9-bbd7-98a726892c17" />
-    <UnitTestResult executionId="b325a1e0-9392-418a-9774-aa5f1cc732d4" testId="8fd134f9-6037-b5be-2749-5ccb1ef032ea" testName="Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping" computerName="runnervmop6rv" duration="00:00:00.2234890" startTime="2026-11-28T04:53:51.3070206+00:00" endTime="2026-11-28T04:53:51.3070213+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b325a1e0-9392-418a-9774-aa5f1cc732d4" />
-    <UnitTestResult executionId="2f49b8a9-6b0c-4fbf-9d94-66eb21190696" testId="10f91f9f-937f-5033-8a39-bbd78cbf6a43" testName="Evo.Windows.Tests.RegistryDeleteKeyRealRollbackTest.BorradoReal_RestauraValores_Kinds_Y_Subclave" computerName="runnervmop6rv" duration="00:00:00.0143101" startTime="2026-11-28T04:53:51.1169658+00:00" endTime="2026-11-28T04:53:51.1169659+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2f49b8a9-6b0c-4fbf-9d94-66eb21190696" />
-    <UnitTestResult executionId="19b54200-4027-4e73-9ea1-46e2928af073" testId="4daff7fe-6800-a3b5-62f5-0bc3b7e0597d" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_Binary_ZeroAndFF" computerName="runnervmop6rv" duration="00:00:00.0013337" startTime="2026-11-28T04:53:51.0833253+00:00" endTime="2026-11-28T04:53:51.0833254+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="19b54200-4027-4e73-9ea1-46e2928af073" />
-    <UnitTestResult executionId="3f18d489-2809-4514-bb47-823d3e7232c5" testId="e218efb6-4997-e4db-d40a-59fef966aa97" testName="Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia" computerName="runnervmop6rv" duration="00:00:00.0585039" startTime="2026-11-28T04:53:51.1171766+00:00" endTime="2026-11-28T04:53:51.1171766+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3f18d489-2809-4514-bb47-823d3e7232c5" />
-    <UnitTestResult executionId="e48640fc-b5cb-4dd7-b86e-4e1ff160db5b" testId="eda05dd4-188e-a214-fdd9-a6b3ce5b10e2" testName="Evo.Windows.Tests.UndoRealRegistryTest.AplicarYDeshacer_RegistroReal_RevierteValor" computerName="runnervmop6rv" duration="00:00:00.0152740" startTime="2026-11-28T04:53:51.1197821+00:00" endTime="2026-11-28T04:53:51.1197822+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e48640fc-b5cb-4dd7-b86e-4e1ff160db5b" />
-    <UnitTestResult executionId="3757b837-fcf6-441c-b28b-ddab1e35141e" testId="494e1b3a-cfcb-3201-3849-cadf36cb771d" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_DefaultValue_EmptyName" computerName="runnervmop6rv" duration="00:00:00.0005848" startTime="2026-11-28T04:53:51.0839647+00:00" endTime="2026-11-28T04:53:51.0839648+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3757b837-fcf6-441c-b28b-ddab1e35141e" />
-    <UnitTestResult executionId="a97596a1-24fd-475a-8c0f-acda0e79445d" testId="5b863aac-0239-6d9c-802d-6cd6ebcb83c6" testName="Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly" computerName="runnervmop6rv" duration="00:00:00.7624474" startTime="2026-11-28T04:53:52.0697454+00:00" endTime="2026-11-28T04:53:52.0697460+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a97596a1-24fd-475a-8c0f-acda0e79445d" />
-    <UnitTestResult executionId="a640873b-ec54-4966-86a7-dabd52bd9208" testId="55d22b59-7460-13a8-e919-cc2db97f3a4f" testName="Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException" computerName="runnervmop6rv" duration="00:00:00.0048499" startTime="2026-11-28T04:53:52.0747279+00:00" endTime="2026-11-28T04:53:52.0747280+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a640873b-ec54-4966-86a7-dabd52bd9208" />
+    <UnitTestResult executionId="ae6c2289-8009-421e-b153-2d806c2fdaa0" testId="577f659c-058a-21a9-f283-05e3b3274669" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_NestedKey_AncestorsCreated" computerName="runnervmop6rv" duration="00:00:00.0010552" startTime="2026-11-28T04:54:15.1198670+00:00" endTime="2026-11-28T04:54:15.1198673+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ae6c2289-8009-421e-b153-2d806c2fdaa0" />
+    <UnitTestResult executionId="7bb4d42f-9e38-4894-a98c-a2b9ba4bcf8c" testId="8fd134f9-6037-b5be-2749-5ccb1ef032ea" testName="Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping" computerName="runnervmop6rv" duration="00:00:00.0169128" startTime="2026-11-28T04:54:15.1480731+00:00" endTime="2026-11-28T04:54:15.1480731+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7bb4d42f-9e38-4894-a98c-a2b9ba4bcf8c" />
+    <UnitTestResult executionId="acf6877f-d56f-4817-8ea5-2a28a688f722" testId="5b863aac-0239-6d9c-802d-6cd6ebcb83c6" testName="Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly" computerName="runnervmop6rv" duration="00:00:00.5846792" startTime="2026-11-28T04:54:15.7240343+00:00" endTime="2026-11-28T04:54:15.7240349+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="acf6877f-d56f-4817-8ea5-2a28a688f722" />
+    <UnitTestResult executionId="88549b4a-e0b9-419a-b993-a368c17f589f" testId="41b2a899-6685-f05f-16de-177cb91cc0dd" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_ExpandString_NotExpanded" computerName="runnervmop6rv" duration="00:00:00.0004996" startTime="2026-11-28T04:54:15.1211240+00:00" endTime="2026-11-28T04:54:15.1211241+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="88549b4a-e0b9-419a-b993-a368c17f589f" />
+    <UnitTestResult executionId="37c8842c-4783-485e-b631-4305a12cfcda" testId="1f4d6d44-e525-b499-b4cb-c6e0d3e230f7" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_MissingKeyAndValue_ReturnNull" computerName="runnervmop6rv" duration="00:00:00.0004809" startTime="2026-11-28T04:54:15.1204627+00:00" endTime="2026-11-28T04:54:15.1204628+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="37c8842c-4783-485e-b631-4305a12cfcda" />
+    <UnitTestResult executionId="1520b2d6-ffd8-457a-afad-f7ea8e28cc63" testId="a3c05579-c51b-485c-82bc-c9572c7b7b08" testName="Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree" computerName="runnervmop6rv" duration="00:00:00.0054958" startTime="2026-11-28T04:54:15.7354370+00:00" endTime="2026-11-28T04:54:15.7354374+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1520b2d6-ffd8-457a-afad-f7ea8e28cc63" />
+    <UnitTestResult executionId="5e914fa8-abaf-488c-9c8d-82fa6537bf1e" testId="a7ddcaf6-ee51-5337-cc23-f86c4536e933" testName="Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU" computerName="runnervmop6rv" duration="00:00:00.0407719" startTime="2026-11-28T04:54:15.1019161+00:00" endTime="2026-11-28T04:54:15.1019679+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5e914fa8-abaf-488c-9c8d-82fa6537bf1e" />
+    <UnitTestResult executionId="d0694849-baae-4361-bbeb-94a6df1d1442" testId="eda05dd4-188e-a214-fdd9-a6b3ce5b10e2" testName="Evo.Windows.Tests.UndoRealRegistryTest.AplicarYDeshacer_RegistroReal_RevierteValor" computerName="runnervmop6rv" duration="00:00:00.0212551" startTime="2026-11-28T04:54:15.1480334+00:00" endTime="2026-11-28T04:54:15.1480334+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d0694849-baae-4361-bbeb-94a6df1d1442" />
+    <UnitTestResult executionId="8c034f20-ba2a-4904-afaf-e40e9c163cfc" testId="b66a90d4-4f8e-badb-1a85-c5669f9dea88" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds" computerName="runnervmop6rv" duration="00:00:00.0108594" startTime="2026-11-28T04:54:15.1171359+00:00" endTime="2026-11-28T04:54:15.1171365+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8c034f20-ba2a-4904-afaf-e40e9c163cfc" />
+    <UnitTestResult executionId="4ce71d6b-312c-48e0-9942-43db0320c15f" testId="e218efb6-4997-e4db-d40a-59fef966aa97" testName="Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia" computerName="runnervmop6rv" duration="00:00:00.0619545" startTime="2026-11-28T04:54:15.1188380+00:00" endTime="2026-11-28T04:54:15.1188380+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4ce71d6b-312c-48e0-9942-43db0320c15f" />
+    <UnitTestResult executionId="e28f099f-103f-49d6-909c-ab3640e55f23" testId="55d22b59-7460-13a8-e919-cc2db97f3a4f" testName="Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException" computerName="runnervmop6rv" duration="00:00:00.0052883" startTime="2026-11-28T04:54:15.7295331+00:00" endTime="2026-11-28T04:54:15.7295338+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e28f099f-103f-49d6-909c-ab3640e55f23" />
+    <UnitTestResult executionId="2e563233-2079-4f0b-bd0a-33eccf014550" testId="494e1b3a-cfcb-3201-3849-cadf36cb771d" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_DefaultValue_EmptyName" computerName="runnervmop6rv" duration="00:00:00.0007577" startTime="2026-11-28T04:54:15.1476937+00:00" endTime="2026-11-28T04:54:15.1476937+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e563233-2079-4f0b-bd0a-33eccf014550" />
+    <UnitTestResult executionId="244353a0-e7dc-4fcf-822c-bf543081785f" testId="10f91f9f-937f-5033-8a39-bbd78cbf6a43" testName="Evo.Windows.Tests.RegistryDeleteKeyRealRollbackTest.BorradoReal_RestauraValores_Kinds_Y_Subclave" computerName="runnervmop6rv" duration="00:00:00.0425313" startTime="2026-11-28T04:54:15.1065956+00:00" endTime="2026-11-28T04:54:15.1065956+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="244353a0-e7dc-4fcf-822c-bf543081785f" />
+    <UnitTestResult executionId="9c974ccf-b312-4a1b-b7c4-269df10c8b05" testId="4daff7fe-6800-a3b5-62f5-0bc3b7e0597d" testName="Evo.Windows.Tests.WindowsAccessorsTests.Registry_Binary_ZeroAndFF" computerName="runnervmop6rv" duration="00:00:00.0012539" startTime="2026-11-28T04:54:15.1185991+00:00" endTime="2026-11-28T04:54:15.1185995+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9c974ccf-b312-4a1b-b7c4-269df10c8b05" />
   </Results>
   <TestDefinitions>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="55d22b59-7460-13a8-e919-cc2db97f3a4f">
-      <Execution id="a640873b-ec54-4966-86a7-dabd52bd9208" />
+      <Execution id="e28f099f-103f-49d6-909c-ab3640e55f23" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Service_MissingService_NoException" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="8fd134f9-6037-b5be-2749-5ccb1ef032ea">
-      <Execution id="b325a1e0-9392-418a-9774-aa5f1cc732d4" />
+      <Execution id="7bb4d42f-9e38-4894-a98c-a2b9ba4bcf8c" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Process_StartAndTerminate_Ping" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Registry_Binary_ZeroAndFF" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="4daff7fe-6800-a3b5-62f5-0bc3b7e0597d">
-      <Execution id="19b54200-4027-4e73-9ea1-46e2928af073" />
+      <Execution id="9c974ccf-b312-4a1b-b7c4-269df10c8b05" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Registry_Binary_ZeroAndFF" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Registry_MissingKeyAndValue_ReturnNull" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="1f4d6d44-e525-b499-b4cb-c6e0d3e230f7">
-      <Execution id="b00236c5-6bd2-45e9-bbd7-98a726892c17" />
+      <Execution id="37c8842c-4783-485e-b631-4305a12cfcda" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Registry_MissingKeyAndValue_ReturnNull" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.RegistryDeleteKeyRealRollbackTest.BorradoReal_RestauraValores_Kinds_Y_Subclave" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="10f91f9f-937f-5033-8a39-bbd78cbf6a43">
-      <Execution id="2f49b8a9-6b0c-4fbf-9d94-66eb21190696" />
+      <Execution id="244353a0-e7dc-4fcf-822c-bf543081785f" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.RegistryDeleteKeyRealRollbackTest" name="BorradoReal_RestauraValores_Kinds_Y_Subclave" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="a3c05579-c51b-485c-82bc-c9572c7b7b08">
-      <Execution id="cc1030ee-64ca-4956-81e7-789af11796ea" />
+      <Execution id="1520b2d6-ffd8-457a-afad-f7ea8e28cc63" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="RegistryDeleteKey_RealExecutor_RollbackRestoresTree" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.UndoRealRegistryTest.AplicarYDeshacer_RegistroReal_RevierteValor" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="eda05dd4-188e-a214-fdd9-a6b3ce5b10e2">
-      <Execution id="e48640fc-b5cb-4dd7-b86e-4e1ff160db5b" />
+      <Execution id="d0694849-baae-4361-bbeb-94a6df1d1442" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.UndoRealRegistryTest" name="AplicarYDeshacer_RegistroReal_RevierteValor" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Registry_ExpandString_NotExpanded" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="41b2a899-6685-f05f-16de-177cb91cc0dd">
-      <Execution id="aa793ac6-94ff-4941-a992-2e5f5ba5570a" />
+      <Execution id="88549b4a-e0b9-419a-b993-a368c17f589f" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Registry_ExpandString_NotExpanded" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="b66a90d4-4f8e-badb-1a85-c5669f9dea88">
-      <Execution id="e2233551-0079-4eae-9663-c343b52b603d" />
+      <Execution id="8c034f20-ba2a-4904-afaf-e40e9c163cfc" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Registry_Roundtrip_AllSupportedKinds" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="a7ddcaf6-ee51-5337-cc23-f86c4536e933">
-      <Execution id="dffc004a-d461-4f5a-a3c7-9fb485374168" />
+      <Execution id="5e914fa8-abaf-488c-9c8d-82fa6537bf1e" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.EngineCoordinatorRealTest" name="Motor_Real_Escribe_Y_Deshace_En_HKCU" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="e218efb6-4997-e4db-d40a-59fef966aa97">
-      <Execution id="3f18d489-2809-4514-bb47-823d3e7232c5" />
+      <Execution id="4ce71d6b-312c-48e0-9942-43db0320c15f" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.DetectorRealArchitectureTests" name="DetectorReal_NoRechazaPorArquitecturaVacia" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="5b863aac-0239-6d9c-802d-6cd6ebcb83c6">
-      <Execution id="a97596a1-24fd-475a-8c0f-acda0e79445d" />
+      <Execution id="acf6877f-d56f-4817-8ea5-2a28a688f722" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Service_EventLog_ReadOnly" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Registry_DefaultValue_EmptyName" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="494e1b3a-cfcb-3201-3849-cadf36cb771d">
-      <Execution id="3757b837-fcf6-441c-b28b-ddab1e35141e" />
+      <Execution id="2e563233-2079-4f0b-bd0a-33eccf014550" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Registry_DefaultValue_EmptyName" />
     </UnitTest>
     <UnitTest name="Evo.Windows.Tests.WindowsAccessorsTests.Registry_NestedKey_AncestorsCreated" storage="d:\a\evo_optimizer-on\evo_optimizer-on\tests\evo.windows.tests\bin\release\net10.0-windows\evo.windows.tests.dll" id="577f659c-058a-21a9-f283-05e3b3274669">
-      <Execution id="da8def06-8d70-492f-bb22-7a3f4a03e3fb" />
+      <Execution id="ae6c2289-8009-421e-b153-2d806c2fdaa0" />
       <TestMethod codeBase="D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Evo.Windows.Tests.WindowsAccessorsTests" name="Registry_NestedKey_AncestorsCreated" />
     </UnitTest>
   </TestDefinitions>
   <TestEntries>
-    <TestEntry testId="a3c05579-c51b-485c-82bc-c9572c7b7b08" executionId="cc1030ee-64ca-4956-81e7-789af11796ea" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="41b2a899-6685-f05f-16de-177cb91cc0dd" executionId="aa793ac6-94ff-4941-a992-2e5f5ba5570a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="577f659c-058a-21a9-f283-05e3b3274669" executionId="da8def06-8d70-492f-bb22-7a3f4a03e3fb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="b66a90d4-4f8e-badb-1a85-c5669f9dea88" executionId="e2233551-0079-4eae-9663-c343b52b603d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="a7ddcaf6-ee51-5337-cc23-f86c4536e933" executionId="dffc004a-d461-4f5a-a3c7-9fb485374168" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="1f4d6d44-e525-b499-b4cb-c6e0d3e230f7" executionId="b00236c5-6bd2-45e9-bbd7-98a726892c17" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="8fd134f9-6037-b5be-2749-5ccb1ef032ea" executionId="b325a1e0-9392-418a-9774-aa5f1cc732d4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="10f91f9f-937f-5033-8a39-bbd78cbf6a43" executionId="2f49b8a9-6b0c-4fbf-9d94-66eb21190696" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="4daff7fe-6800-a3b5-62f5-0bc3b7e0597d" executionId="19b54200-4027-4e73-9ea1-46e2928af073" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="e218efb6-4997-e4db-d40a-59fef966aa97" executionId="3f18d489-2809-4514-bb47-823d3e7232c5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="eda05dd4-188e-a214-fdd9-a6b3ce5b10e2" executionId="e48640fc-b5cb-4dd7-b86e-4e1ff160db5b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="494e1b3a-cfcb-3201-3849-cadf36cb771d" executionId="3757b837-fcf6-441c-b28b-ddab1e35141e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="5b863aac-0239-6d9c-802d-6cd6ebcb83c6" executionId="a97596a1-24fd-475a-8c0f-acda0e79445d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
-    <TestEntry testId="55d22b59-7460-13a8-e919-cc2db97f3a4f" executionId="a640873b-ec54-4966-86a7-dabd52bd9208" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="577f659c-058a-21a9-f283-05e3b3274669" executionId="ae6c2289-8009-421e-b153-2d806c2fdaa0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8fd134f9-6037-b5be-2749-5ccb1ef032ea" executionId="7bb4d42f-9e38-4894-a98c-a2b9ba4bcf8c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5b863aac-0239-6d9c-802d-6cd6ebcb83c6" executionId="acf6877f-d56f-4817-8ea5-2a28a688f722" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="41b2a899-6685-f05f-16de-177cb91cc0dd" executionId="88549b4a-e0b9-419a-b993-a368c17f589f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1f4d6d44-e525-b499-b4cb-c6e0d3e230f7" executionId="37c8842c-4783-485e-b631-4305a12cfcda" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a3c05579-c51b-485c-82bc-c9572c7b7b08" executionId="1520b2d6-ffd8-457a-afad-f7ea8e28cc63" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a7ddcaf6-ee51-5337-cc23-f86c4536e933" executionId="5e914fa8-abaf-488c-9c8d-82fa6537bf1e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eda05dd4-188e-a214-fdd9-a6b3ce5b10e2" executionId="d0694849-baae-4361-bbeb-94a6df1d1442" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b66a90d4-4f8e-badb-1a85-c5669f9dea88" executionId="8c034f20-ba2a-4904-afaf-e40e9c163cfc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e218efb6-4997-e4db-d40a-59fef966aa97" executionId="4ce71d6b-312c-48e0-9942-43db0320c15f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="55d22b59-7460-13a8-e919-cc2db97f3a4f" executionId="e28f099f-103f-49d6-909c-ab3640e55f23" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="494e1b3a-cfcb-3201-3849-cadf36cb771d" executionId="2e563233-2079-4f0b-bd0a-33eccf014550" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="10f91f9f-937f-5033-8a39-bbd78cbf6a43" executionId="244353a0-e7dc-4fcf-822c-bf543081785f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4daff7fe-6800-a3b5-62f5-0bc3b7e0597d" executionId="9c974ccf-b312-4a1b-b7c4-269df10c8b05" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
   </TestEntries>
   <TestLists>
     <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
@@ -102,10 +102,10 @@
     <Counters total="14" executed="14" passed="14" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
     <Output>
       <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)&#xD;
-[xUnit.net 00:00:00.06]   Discovering: Evo.Windows.Tests&#xD;
-[xUnit.net 00:00:00.09]   Discovered:  Evo.Windows.Tests&#xD;
-[xUnit.net 00:00:00.09]   Starting:    Evo.Windows.Tests&#xD;
-[xUnit.net 00:00:01.16]   Finished:    Evo.Windows.Tests&#xD;
+[xUnit.net 00:00:00.07]   Discovering: Evo.Windows.Tests&#xD;
+[xUnit.net 00:00:00.11]   Discovered:  Evo.Windows.Tests&#xD;
+[xUnit.net 00:00:00.11]   Starting:    Evo.Windows.Tests&#xD;
+[xUnit.net 00:00:00.83]   Finished:    Evo.Windows.Tests&#xD;
 </StdOut>
     </Output>
   </ResultSummary>
