@@ -446,7 +446,7 @@ public sealed class ExecutorTests
     public async Task ServiceError_ConCadenaDeCausas_IncluyeInnerException()
     {
         var inner = new InvalidOperationException("el servicio está bloqueado por una dependencia");
-        var outer = new System.ServiceProcess.TimeoutException("tiempo de espera agotado", inner);
+        var outer = new TimeoutException("tiempo de espera agotado", inner);
 
         // Usamos un accessor personalizado que lanza la excepción anidada.
         var services = new FailingServiceAccessorWithInner();
