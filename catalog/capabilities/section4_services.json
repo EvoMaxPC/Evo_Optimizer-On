@@ -8,8 +8,8 @@
    "capabilities": [
       {
          "id": "services.atlas.bluetooth",
-         "name": "Desactivar Bluetooth (toggle de Atlas)",
-         "description": "Desactiva Bluetooth: pone AllowBluetooth=0 en la directiva de conectividad y pasa los servicios de Bluetooth (bthserv, BTHUSB, BluetoothUserService y los demas) a Deshabilitado, como el estado 'Disable' del toggle Bluetooth de Atlas. Reversible. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Disable-AtlasBluetoothDevices (ejecuta Bluetooth.ps1 para deshabilitar cada dispositivo Bluetooth) y UserAction Remove-AtlasBluetoothSendTo (quita la entrada «Enviar a» de Bluetooth). Esos efectos no son registro ni tipo de servicio expresables por el motor; por eso State=Specified.",
+         "name": "Desactivar Bluetooth",
+         "description": "Desactiva Bluetooth: el equipo deja de ser detectable por otros dispositivos y los servicios de Bluetooth se detienen. Reversible.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -30,7 +30,8 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/Bluetooth.psd1:13 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: value=Stop; BluetoothUserService=Stop; BTAGService=Stop; BthA2dp=Stop; BthAvctpSvc=Stop; BthEnum=Stop; BthHFEnum=Stop; BthLEEnum=Stop; BthMini=Stop; BTHMODEM=Stop; BTHPORT=Stop; bthserv=Stop; BTHUSB=Stop; HidBth=Stop; Microsoft_Bluetooth_AvrcpTransport=Stop; RFCOMM=Stop; BthPan=Stop; value=Disabled; BluetoothUserService=Disabled; BTAGService=Disabled; BthA2dp=Disabled; BthAvctpSvc=Disabled; BthEnum=Disabled; BthHFEnum=Disabled; BthLEEnum=Disabled; BthMini=Disabled; BTHMODEM=Disabled; BTHPORT=Disabled; bthserv=Disabled; BTHUSB=Disabled; HidBth=Disabled; Microsoft_Bluetooth_AvrcpTransport=Disabled; RFCOMM=Disabled; BthPan=Disabled. Builds: ConsentStore y servicios de Bluetooth presentes en 19045 y Windows 11. ledger_refs: atlas:toggle:Bluetooth Inventario sección 4: líneas 130 (130). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara ademas MachineAction Disable-AtlasBluetoothDevices (ejecuta Bluetooth.ps1 para deshabilitar cada dispositivo Bluetooth) y UserAction Remove-AtlasBluetoothSendTo (quita la entrada «Enviar a» de Bluetooth). Esos efectos no son registro ni tipo de servicio expresables por el motor; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/Bluetooth.psd1:13 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: value=Stop; BluetoothUserService=Stop; BTAGService=Stop; BthA2dp=Stop; BthAvctpSvc=Stop; BthEnum=Stop; BthHFEnum=Stop; BthLEEnum=Stop; BthMini=Stop; BTHMODEM=Stop; BTHPORT=Stop; bthserv=Stop; BTHUSB=Stop; HidBth=Stop; Microsoft_Bluetooth_AvrcpTransport=Stop; RFCOMM=Stop; BthPan=Stop; value=Disabled; BluetoothUserService=Disabled; BTAGService=Disabled; BthA2dp=Disabled; BthAvctpSvc=Disabled; BthEnum=Disabled; BthHFEnum=Disabled; BthLEEnum=Disabled; BthMini=Disabled; BTHMODEM=Disabled; BTHPORT=Disabled; bthserv=Disabled; BTHUSB=Disabled; HidBth=Disabled; Microsoft_Bluetooth_AvrcpTransport=Disabled; RFCOMM=Disabled; BthPan=Disabled. Builds: ConsentStore y servicios de Bluetooth presentes en 19045 y Windows 11. ledger_refs: atlas:toggle:Bluetooth Inventario sección 4: líneas 130 (130). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara además MachineAction Disable-AtlasBluetoothDevices (ejecuta Bluetooth.ps1 para deshabilitar cada dispositivo Bluetooth) y UserAction Remove-AtlasBluetoothSendTo (quita la entrada «Enviar a» de Bluetooth). Esos efectos no son registro ni tipo de servicio expresables por el motor; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
+         "technicalNote": "R1: el pin hace efectos adicionales que no son expresables como acciones del motor: el pin declara además MachineAction Disable-AtlasBluetoothDevices (ejecuta Bluetooth.ps1 para deshabilitar cada dispositivo Bluetooth) y UserAction Remove-AtlasBluetoothSendTo (quita la entrada «Enviar a» de Bluetooth). Esos efectos no son registro ni tipo de servicio expresables por el motor; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": [
             {
                "type": "service",
@@ -291,8 +292,8 @@
       },
       {
          "id": "services.atlas.lanmanworkstation",
-         "name": "Desactivar el servicio de Estacion de trabajo (LanmanWorkstation)",
-         "description": "Pasa LanmanWorkstation y los servicios de red relacionados (LanmanServer, mrxsmb, mrxsmb20, rdbss, srv2, KSecPkg) a Deshabilitado, como el estado 'Disable' del toggle Lanman Workstation de Atlas. Desactivar LanmanWorkstation puede romper el acceso a recursos de red; el coste se declara en la descripcion. FUERA DE ESTA CAPACIDAD (R1): el pin declara ademas MachineAction Set-AtlasLanmanWorkstationState que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor de registro ni tipo de servicio expresables (por ejemplo reglas de firewall o dependencias de red). Esos efectos no se declaran aqui; por eso State=Specified.",
+         "name": "Desactivar el servicio de Estación de trabajo",
+         "description": "Pasa el servicio de Estación de trabajo y los servicios de red relacionados a Deshabilitado. Desactivarlo puede romper el acceso a recursos de red; el coste se declara en la descripción.",
          "sectionId": 4,
          "risk": "Medium",
          "securityImpact": "Neutral",
@@ -313,7 +314,8 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/LanmanWorkstation.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: KSecPkg=Stop; LanmanServer=Stop; LanmanWorkstation=Stop; mrxsmb=Stop; mrxsmb20=Stop; rdbss=Stop; srv2=Stop; KSecPkg=Disabled; LanmanServer=Disabled; LanmanWorkstation=Disabled; mrxsmb=Disabled; mrxsmb20=Disabled; rdbss=Manual; srv2=Disabled. Builds: las claves de servicio de LanmanWorkstation existen en 19045 y Windows 11. ledger_refs: atlas:toggle:LanmanWorkstation Inventario sección 4: líneas 131 (131). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara ademas MachineAction Set-AtlasLanmanWorkstationState que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor de registro ni tipo de servicio expresables (por ejemplo reglas de firewall o dependencias de red). Esos efectos no se declaran aqui; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/LanmanWorkstation.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: KSecPkg=Stop; LanmanServer=Stop; LanmanWorkstation=Stop; mrxsmb=Stop; mrxsmb20=Stop; rdbss=Stop; srv2=Stop; KSecPkg=Disabled; LanmanServer=Disabled; LanmanWorkstation=Disabled; mrxsmb=Disabled; mrxsmb20=Disabled; rdbss=Manual; srv2=Disabled. Builds: las claves de servicio de LanmanWorkstation existen en 19045 y Windows 11. ledger_refs: atlas:toggle:LanmanWorkstation Inventario sección 4: líneas 131 (131). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara además MachineAction Set-AtlasLanmanWorkstationState que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor de registro ni tipo de servicio expresables (por ejemplo reglas de firewall o dependencias de red). Esos efectos no se declaran aquí; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
+         "technicalNote": "R1: el pin hace efectos adicionales que no son expresables como acciones del motor: el pin declara además MachineAction Set-AtlasLanmanWorkstationState que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor de registro ni tipo de servicio expresables (por ejemplo reglas de firewall o dependencias de red). Esos efectos no se declaran aquí; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": [
             {
                "type": "service",
@@ -424,8 +426,8 @@
       },
       {
          "id": "services.atlas.networkdiscovery",
-         "name": "Desactivar el descubrimiento de red (Network Discovery)",
-         "description": "Pasa fdPHost, FDResPub, lmhosts y SSDPSRV a Deshabilitado, como el estado 'Disable' del toggle Network Discovery de Atlas. El equipo deja de ser visible en la red y de descubrir otros equipos. Reversible.",
+         "name": "Desactivar el descubrimiento de red",
+         "description": "El equipo deja de ser visible en la red y de descubrir otros equipos. Reversible.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -447,6 +449,7 @@
             26200
          ],
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: fdPHost=Stop; FDResPub=Stop; lmhosts=Stop; SSDPSRV=Stop; fdPHost=Disabled; FDResPub=Disabled; lmhosts=Disabled; SSDPSRV=Disabled. Builds: los servicios de descubrimiento de red existen en 19045 y Windows 11. ledger_refs: atlas:toggle:NetworkDiscovery Inventario sección 4: líneas 132 (132).",
+         "technicalNote": "Origen: atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.psd1. Estado Disable: servicios fdPHost, FDResPub, lmhosts, SSDPSRV a Deshabilitado; registro AllowBluetooth=0. Acción del motor: servicio SetStartupType + registro. Reversible. Inventario sección 4: línea 132.",
          "actions": [
             {
                "type": "service",
@@ -512,8 +515,8 @@
       },
       {
          "id": "services.atlas.nvidiadisplaycontainer",
-         "name": "Desactivar NVIDIA Display Container LS (toggle de Atlas)",
-         "description": "El pin solo declara MachineAction Set-AtlasNVidiaDisplayContainerState para el estado 'Disable', sin valores de registro ni tipos de servicio expresables. No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance. FUERA DE ESTA CAPACIDAD (R1): el pin ejecuta Set-AtlasNVidiaDisplayContainerState via NVidiaDisplayContainer.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1",
+         "name": "Desactivar NVIDIA Display Container",
+         "description": "Desactiva el contenedor de pantalla de NVIDIA. El efecto del cambio no queda expresado entero como acciones del motor, por lo que la capacidad se marca como especificada (no ejecutable todavía).",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -534,13 +537,14 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainer.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: . Builds: Solo aplica mientras el controlador NVIDIA este instalado; no hay build minima garantizada. ledger_refs: atlas:toggle:NVidiaDisplayContainer Inventario sección 4: líneas 133 (133). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin ejecuta Set-AtlasNVidiaDisplayContainerState via NVidiaDisplayContainer.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainer.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: . Builds: Solo aplica mientras el controlador NVIDIA esté instalado; no hay build mínima garantizada. ledger_refs: atlas:toggle:NVidiaDisplayContainer Inventario sección 4: líneas 133 (133). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin ejecuta Set-AtlasNVidiaDisplayContainerState via NVidiaDisplayContainer.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
+         "technicalNote": "R1: el pin hace efectos adicionales que no son expresables como acciones del motor: el pin ejecuta Set-AtlasNVidiaDisplayContainerState via NVidiaDisplayContainer.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": []
       },
       {
          "id": "services.atlas.printing",
-         "name": "Desactivar impresion (toggle de Atlas)",
-         "description": "El pin solo declara MachineAction Set-AtlasPrintingMachineState y ContextAction para el estado 'Disable', sin valores de registro ni tipos de servicio expresables. No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance. FUERA DE ESTA CAPACIDAD (R1): el pin ejecuta Set-AtlasPrintingMachineState via Printing.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1",
+         "name": "Desactivar la impresión",
+         "description": "Desactiva el servicio de impresión. El efecto del cambio no queda expresado entero como acciones del motor, por lo que la capacidad se marca como especificada (no ejecutable todavía).",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -561,13 +565,14 @@
             26100,
             26200
          ],
-         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/Printing.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: . Builds: Depende del hardware de impresion; no hay build minima garantizada. ledger_refs: atlas:toggle:Printing Inventario sección 4: líneas 134 (134). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin ejecuta Set-AtlasPrintingMachineState via Printing.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/Printing.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: . Builds: Depende del hardware de impresión; no hay build mínima garantizada. ledger_refs: atlas:toggle:Printing Inventario sección 4: líneas 134 (134). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin ejecuta Set-AtlasPrintingMachineState via Printing.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
+         "technicalNote": "R1: el pin hace efectos adicionales que no son expresables como acciones del motor: el pin ejecuta Set-AtlasPrintingMachineState via Printing.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": []
       },
       {
          "id": "services.atlas.superfetch",
-         "name": "Desactivar SuperFetch/SysMain (toggle de Atlas)",
-         "description": "El pin solo declara MachineAction Set-AtlasSuperFetchMachineState para el estado 'Disable', sin valores de registro ni tipos de servicio expresables. No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance. FUERA DE ESTA CAPACIDAD (R1): el pin ejecuta Set-AtlasSuperFetchMachineState via SuperFetch.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1",
+         "name": "Desactivar SuperFetch/SysMain",
+         "description": "Desactiva SuperFetch/SysMain. El efecto del cambio no queda expresado entero como acciones del motor, por lo que la capacidad se marca como especificada (no ejecutable todavía).",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -589,12 +594,13 @@
             26200
          ],
          "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/SuperFetch.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: . Builds: SysMain depende del tipo de disco (HDD/SSD); candidato a SupportedBuilds reducido o Specified. ledger_refs: atlas:toggle:SuperFetch Inventario sección 4: líneas 135 (135). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin ejecuta Set-AtlasSuperFetchMachineState via SuperFetch.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
+         "technicalNote": "R1: el pin hace efectos adicionales que no son expresables como acciones del motor: el pin ejecuta Set-AtlasSuperFetchMachineState via SuperFetch.ps1; no hay registro ni tipo de servicio expresables en el estado Disable del .psd1 Como el efecto del pin no queda expresado entero, State=Specified.",
          "actions": []
       },
       {
          "id": "services.winutil.cscservice",
-         "name": "Deshabilitar CscService (archivos sin conexión)",
-         "description": "Pone el servicio CscService (Cliente de archivos sin conexión) en arranque Deshabilitado, como WinUtil. Quita la sincronización de archivos de red sin conexión; el coste se declara en la descripción.",
+         "name": "Deshabilitar los archivos sin conexión",
+         "description": "Pone el servicio de archivos sin conexión en arranque Deshabilitado. Quita la sincronización de archivos de red sin conexión; el coste se declara en la descripción.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -616,6 +622,7 @@
             26200
          ],
          "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: CscService StartupType=Disabled, OriginalType=Manual). Servicio y tipo de inicio tomados de la fuente: CscService=Stop; CscService=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: CscService existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:0 Inventario sección 4: línea 126 (CscService).",
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. Servicio CscService, SetStartupType=Disabled, OriginalType=2 (Automatic). Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 126.",
          "actions": [
             {
                "type": "service",
@@ -636,8 +643,8 @@
       },
       {
          "id": "services.winutil.diagtrack",
-         "name": "Deshabilitar DiagTrack (telemetría de WinUtil)",
-         "description": "Pone el servicio Connected User Experiences and Telemetry (DiagTrack) en arranque Deshabilitado, como WinUtil (WPFTweaksServices). Se detiene si estaba corriendo y el tipo de inicio previo se guarda para deshacer. Por que mejora la seguridad: MEJORA la privacidad: DiagTrack envía datos de uso y diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de diagnóstico) se declara en la descripción y no reduce ninguna protección.",
+         "name": "Deshabilitar el servicio de telemetría (DiagTrack)",
+         "description": "Pone el servicio de telemetría y diagnóstico en arranque Deshabilitado. Si estaba corriendo, se detiene. El tipo de inicio previo se guarda para poder deshacer el cambio. MEJORA la privacidad: el servicio de telemetría envía datos de uso y diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de diagnóstico) se declara en la descripción y no reduce ninguna protección.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Improves",
@@ -658,7 +665,8 @@
             26100,
             26200
          ],
-         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: DiagTrack StartupType=Disabled, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: DiagTrack=Stop; DiagTrack=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: DiagTrack existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:1 Inventario sección 4: línea 122 (DiagTrack). R2 (paso 12): SecurityImpact=Improves por: MEJORA la privacidad: DiagTrack envía datos de uso y diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de diagnóstico) se declara en la descripción y no reduce ninguna protección.",
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: DiagTrack StartupType=Disabled, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: DiagTrack=Stop; DiagTrack=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: DiagTrack existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:1 Inventario sección 4: línea 122 (DiagTrack). R2 (paso 12): SecurityImpact=Improves por: MEJORA la privacidad: el servicio de telemetría envía datos de uso y diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de diagnóstico) se declara en la descripción y no reduce ninguna protección.",
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. Servicio DiagTrack, SetStartupType=Disabled, OriginalType=1 (Automatic). Acción del motor: Stop + SetStartupType. Reversible: el motor guarda el tipo de inicio anterior y lo restaura al deshacer. Inventario sección 4: línea 122.",
          "actions": [
             {
                "type": "service",
@@ -679,8 +687,8 @@
       },
       {
          "id": "services.winutil.mapsbroker",
-         "name": "Pasar MapsBroker a inicio Manual",
-         "description": "Pone el servicio MapsBroker en arranque Manual (no se inicia solo). WinUtil lo deja en Manual desde su tipo predeterminado Automatic. Reversible: el motor guarda el tipo previo.",
+         "name": "Pasar el servicio de mapas a inicio Manual",
+         "description": "Pone el servicio de mapas en arranque Manual, para que no se inicie solo. Reversible: el motor guarda el tipo de inicio previo para deshacer.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -702,6 +710,7 @@
             26200
          ],
          "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: MapsBroker StartupType=Manual, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: MapsBroker=Stop; MapsBroker=Manual. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: MapsBroker existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:2 Inventario sección 4: línea 123 (MapsBroker).",
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. Servicio MapsBroker, SetStartupType=Manual, OriginalType=2 (Automatic). Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 123.",
          "actions": [
             {
                "type": "service",
@@ -722,8 +731,8 @@
       },
       {
          "id": "services.winutil.sharedaccess",
-         "name": "Deshabilitar SharedAccess (compartición de conexión)",
-         "description": "Pone el servicio SharedAccess (Compartición de conexión a Internet) en arranque Deshabilitado, como WinUtil. Puede impedir compartir la conexión a Internet por el equipo; el coste se declara en la descripción.",
+         "name": "Deshabilitar la compartición de conexión a Internet",
+         "description": "Pone el servicio de compartición de conexión a Internet en arranque Deshabilitado. Puede impedir compartir la conexión del equipo con otros dispositivos; el coste se declara en la descripción.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -745,6 +754,7 @@
             26200
          ],
          "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: SharedAccess StartupType=Disabled, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: SharedAccess=Stop; SharedAccess=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: SharedAccess existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:4 Inventario sección 4: línea 125 (SharedAccess).",
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. Servicio SharedAccess, SetStartupType=Disabled, OriginalType=2 (Automatic). Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 125.",
          "actions": [
             {
                "type": "service",
@@ -765,8 +775,8 @@
       },
       {
          "id": "services.winutil.storsvc",
-         "name": "Pasar StorSvc a inicio Manual",
-         "description": "Pone el servicio Almacenamiento (StorSvc) en arranque Manual, como WinUtil. Reversible: el motor guarda el tipo previo.",
+         "name": "Pasar el servicio de almacenamiento a inicio Manual",
+         "description": "Pone el servicio de almacenamiento en arranque Manual, para que no se inicie solo. Reversible: el motor guarda el tipo de inicio previo para deshacer.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -788,6 +798,7 @@
             26200
          ],
          "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: StorSvc StartupType=Manual, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: StorSvc=Stop; StorSvc=Manual. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: StorSvc existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:3 Inventario sección 4: línea 124 (StorSvc).",
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. Servicio StorSvc, SetStartupType=Manual, OriginalType=2 (Automatic). Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 124.",
          "actions": [
             {
                "type": "service",
@@ -808,8 +819,8 @@
       },
       {
          "id": "services.winutil.svchostsplit",
-         "name": "Service Host Splitting (svchost) - desactivar",
-         "description": "WPFTweaksSvcHostSplitting escribe SvcHostSplitThresholdInKB en HKLM\\SYSTEM\\CurrentControlSet\\Control con un valor que depende de la memoria fisica (no es un literal fijo). El motor no puede declarar un valor dinamico; queda en State=Specified con el motivo medido.",
+         "name": "División de host de servicios (svchost)",
+         "description": "Este ajuste escribe un valor en el registro del sistema que depende de la memoria RAM del equipo. Como el valor cambia en cada equipo, el motor no puede declararlo como una acción fija; queda a la espera con el motivo medido en la nota técnica.",
          "sectionId": 4,
          "risk": "Low",
          "securityImpact": "Neutral",
@@ -831,6 +842,7 @@
             26200
          ],
          "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksSvcHostSplitting (InvokeScript: SvcHostSplitThresholdInKB). Valor dinamico segun memoria RAM; no se declara un literal. ledger_refs: winutil:tweak:WPFTweaksSvcHostSplitting Inventario seccion 4: linea 127 (Service Host Splitting).",
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksSvcHostSplitting. Escribe SvcHostSplitThresholdInKB con un valor dinámico según la memoria RAM; no es un literal fijo, por eso no cabe en las acciones del motor. State=Specified con 0 acciones expresables. Inventario sección 4: línea 127.",
          "actions": []
       }
    ]

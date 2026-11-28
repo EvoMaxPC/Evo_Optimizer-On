@@ -155,6 +155,7 @@ internal sealed class TestHarness
             Privilege = privilege,
             Restore = restore,
             Reversibility = Reversibility.Reversible,
+            TechnicalNote = string.Empty,
             Confirmation = confirmation ?? CapabilityRules.MinimumConfirmation(risk),
             State = CapabilityState.Implemented,
             Variants = [Variant.Evo],

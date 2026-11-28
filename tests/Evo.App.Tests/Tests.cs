@@ -205,6 +205,43 @@ public class Tests
         Assert.Equal("Especificada: aún no disponible", cap.NotExecutableReason);
         Assert.False(cap.CanSimulate);
         Assert.False(cap.CanApply);
+        Assert.False(cap.CanUndo);
+        Assert.Equal("No disponible todavía", cap.NotAvailableText);
+    }
+
+    [Fact]
+    public void Implemented_Ejecutable_ConBotones()
+    {
+        var caps = new List<CapabilityDefinition> { SafeCapability("cap.impl") };
+        var vm = CreateVm(SupportedResult(), caps);
+
+        var cap = Assert.Single(vm.Sections.SelectMany(s => s.Capabilities));
+        Assert.Equal(CapabilityState.Implemented, cap.State);
+        Assert.True(cap.IsExecutable);
+        Assert.True(cap.CanSimulate);
+        Assert.True(cap.CanApply);
+        Assert.True(cap.CanUndo);
+        Assert.Equal(string.Empty, cap.NotAvailableText);
+    }
+
+    [Fact]
+    public void TechnicalNote_Cargado_PeroNoSeMuestraEnUI()
+    {
+        var caps = new List<CapabilityDefinition>
+        {
+            SafeCapability("cap.tech", sectionId: 4) with
+            {
+                TechnicalNote = "motivo interno: R1 gap, MachineAction, psd1",
+            },
+        };
+        var vm = CreateVm(SupportedResult(), caps);
+
+        var cap = Assert.Single(vm.Sections.SelectMany(s => s.Capabilities));
+        // La UI solo muestra Description, nunca TechnicalNote.
+        Assert.Equal("Descripción de cap.tech", cap.Description);
+        Assert.NotEqual("motivo interno: R1 gap, MachineAction, psd1", cap.Description);
+        // El contrato conserva TechnicalNote (verificado a nivel de loader, no en VM).
+        Assert.NotEmpty(cap.Description);
     }
 
     [Fact]

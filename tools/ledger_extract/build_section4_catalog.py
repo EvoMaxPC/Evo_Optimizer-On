@@ -75,47 +75,70 @@ HIVES = {"HKLM": "LocalMachine", "HKCU": "CurrentUser",
 # inventario de la sección 4, riesgo, seguridad y notas de construcción.
 WINUTIL_SPECS = [
     dict(id="services.winutil.diagtrack", service="DiagTrack",
-         name="Deshabilitar DiagTrack (telemetría de WinUtil)",
+         name="Deshabilitar el servicio de telemetría (DiagTrack)",
          inventario_linea=122,
-         desc="Pone el servicio Connected User Experiences and Telemetry (DiagTrack) "
-              "en arranque Deshabilitado, como WinUtil (WPFTweaksServices). Se detiene "
-              "si estaba corriendo y el tipo de inicio previo se guarda para deshacer.",
+         desc="Pone el servicio de telemetría y diagnóstico en arranque Deshabilitado. "
+              "Si estaba corriendo, se detiene. El tipo de inicio previo se guarda para "
+              "poder deshacer el cambio.",
          risk="Low", security="Improves",
          r2_reason=(
-             "MEJORA la privacidad: DiagTrack envía datos de uso y diagnóstico a "
-             "Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de "
-             "diagnóstico) se declara en la descripción y no reduce ninguna protección."),
+             "MEJORA la privacidad: el servicio de telemetría envía datos de uso y "
+             "diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste "
+             "(menos datos de diagnóstico) se declara en la descripción y no reduce "
+             "ninguna protección."),
+         technical_note=(
+             "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. "
+             "Servicio DiagTrack, SetStartupType=Disabled, OriginalType=1 (Automatic). "
+             "Acción del motor: Stop + SetStartupType. Reversible: el motor guarda el "
+             "tipo de inicio anterior y lo restaura al deshacer. Inventario sección 4: "
+             "línea 122."),
          build_note="DiagTrack existe en 19045 y en Windows 11"),
     dict(id="services.winutil.mapsbroker", service="MapsBroker",
-         name="Pasar MapsBroker a inicio Manual",
+         name="Pasar el servicio de mapas a inicio Manual",
          inventario_linea=123,
-         desc="Pone el servicio MapsBroker en arranque Manual (no se inicia solo). "
-              "WinUtil lo deja en Manual desde su tipo predeterminado Automatic. "
-              "Reversible: el motor guarda el tipo previo.",
+         desc="Pone el servicio de mapas en arranque Manual, para que no se inicie solo. "
+              "Reversible: el motor guarda el tipo de inicio previo para deshacer.",
          risk="Low", security="Neutral",
+         technical_note=(
+             "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. "
+             "Servicio MapsBroker, SetStartupType=Manual, OriginalType=2 (Automatic). "
+             "Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 123."),
          build_note="MapsBroker existe en 19045 y en Windows 11"),
     dict(id="services.winutil.storsvc", service="StorSvc",
-         name="Pasar StorSvc a inicio Manual",
+         name="Pasar el servicio de almacenamiento a inicio Manual",
          inventario_linea=124,
-         desc="Pone el servicio Almacenamiento (StorSvc) en arranque Manual, como "
-              "WinUtil. Reversible: el motor guarda el tipo previo.",
+         desc="Pone el servicio de almacenamiento en arranque Manual, para que no se "
+              "inicie solo. Reversible: el motor guarda el tipo de inicio previo para "
+              "deshacer.",
          risk="Low", security="Neutral",
+         technical_note=(
+             "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. "
+             "Servicio StorSvc, SetStartupType=Manual, OriginalType=2 (Automatic). "
+             "Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 124."),
          build_note="StorSvc existe en 19045 y en Windows 11"),
     dict(id="services.winutil.sharedaccess", service="SharedAccess",
-         name="Deshabilitar SharedAccess (compartición de conexión)",
+         name="Deshabilitar la compartición de conexión a Internet",
          inventario_linea=125,
-         desc="Pone el servicio SharedAccess (Compartición de conexión a Internet) "
-              "en arranque Deshabilitado, como WinUtil. Puede impedir compartir la "
-              "conexión a Internet por el equipo; el coste se declara en la descripción.",
+         desc="Pone el servicio de compartición de conexión a Internet en arranque "
+              "Deshabilitado. Puede impedir compartir la conexión del equipo con otros "
+              "dispositivos; el coste se declara en la descripción.",
          risk="Low", security="Neutral",
+         technical_note=(
+             "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. "
+             "Servicio SharedAccess, SetStartupType=Disabled, OriginalType=2 (Automatic). "
+             "Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 125."),
          build_note="SharedAccess existe en 19045 y en Windows 11"),
     dict(id="services.winutil.cscservice", service="CscService",
-         name="Deshabilitar CscService (archivos sin conexión)",
+         name="Deshabilitar los archivos sin conexión",
          inventario_linea=126,
-         desc="Pone el servicio CscService (Cliente de archivos sin conexión) en "
-              "arranque Deshabilitado, como WinUtil. Quita la sincronización de archivos "
-              "de red sin conexión; el coste se declara en la descripción.",
+         desc="Pone el servicio de archivos sin conexión en arranque Deshabilitado. "
+              "Quita la sincronización de archivos de red sin conexión; el coste se "
+              "declara en la descripción.",
          risk="Low", security="Neutral",
+         technical_note=(
+             "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices. "
+             "Servicio CscService, SetStartupType=Disabled, OriginalType=2 (Automatic). "
+             "Acción del motor: SetStartupType. Reversible. Inventario sección 4: línea 126."),
          build_note="CscService existe en 19045 y en Windows 11"),
 ]
 
@@ -124,15 +147,13 @@ WINUTIL_SPECS = [
 ATLAS_SERVICE_SPECS = [
     dict(atlas_toggle=("Services/Bluetooth.psd1", "Disable"),
          id="services.atlas.bluetooth",
-         name="Desactivar Bluetooth (toggle de Atlas)",
+         name="Desactivar Bluetooth",
          inventario_lineas=[130],
-         desc="Desactiva Bluetooth: pone AllowBluetooth=0 en la directiva de "
-              "conectividad y pasa los servicios de Bluetooth (bthserv, BTHUSB, "
-              "BluetoothUserService y los demas) a Deshabilitado, como el estado "
-              "'Disable' del toggle Bluetooth de Atlas. Reversible.",
+         desc="Desactiva Bluetooth: el equipo deja de ser detectable por otros dispositivos "
+              "y los servicios de Bluetooth se detienen. Reversible.",
          risk="Low", security="Neutral",
          r1_gap=(
-             "el pin declara ademas MachineAction Disable-AtlasBluetoothDevices "
+             "el pin declara además MachineAction Disable-AtlasBluetoothDevices "
              "(ejecuta Bluetooth.ps1 para deshabilitar cada dispositivo Bluetooth) y "
              "UserAction Remove-AtlasBluetoothSendTo (quita la entrada «Enviar a» de Bluetooth). "
              "Esos efectos no son registro ni tipo de servicio expresables por el motor; "
@@ -141,63 +162,65 @@ ATLAS_SERVICE_SPECS = [
          build_note="ConsentStore y servicios de Bluetooth presentes en 19045 y Windows 11"),
     dict(atlas_toggle=("Services/LanmanWorkstation.psd1", "Disable"),
          id="services.atlas.lanmanworkstation",
-         name="Desactivar el servicio de Estacion de trabajo (LanmanWorkstation)",
+         name="Desactivar el servicio de Estación de trabajo",
          inventario_lineas=[131],
-         desc="Pasa LanmanWorkstation y los servicios de red relacionados "
-              "(LanmanServer, mrxsmb, mrxsmb20, rdbss, srv2, KSecPkg) a Deshabilitado, "
-              "como el estado 'Disable' del toggle Lanman Workstation de Atlas. "
-              "Desactivar LanmanWorkstation puede romper el acceso a recursos de red; "
-              "el coste se declara en la descripcion.",
+         desc="Pasa el servicio de Estación de trabajo y los servicios de red relacionados "
+              "a Deshabilitado. Desactivarlo puede romper el acceso a recursos de red; "
+              "el coste se declara en la descripción.",
          risk="Medium", security="Neutral",
          r1_gap=(
-             "el pin declara ademas MachineAction Set-AtlasLanmanWorkstationState "
+             "el pin declara además MachineAction Set-AtlasLanmanWorkstationState "
              "que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor "
              "de registro ni tipo de servicio expresables (por ejemplo reglas de firewall "
-             "o dependencias de red). Esos efectos no se declaran aqui; por eso State=Specified."
+             "o dependencias de red). Esos efectos no se declaran aquí; por eso State=Specified."
          ),
          build_note="las claves de servicio de LanmanWorkstation existen en 19045 y Windows 11"),
     dict(atlas_toggle=("Services/NetworkDiscovery.psd1", "Disable"),
          id="services.atlas.networkdiscovery",
-         name="Desactivar el descubrimiento de red (Network Discovery)",
+         name="Desactivar el descubrimiento de red",
          inventario_lineas=[132],
-         desc="Pasa fdPHost, FDResPub, lmhosts y SSDPSRV a Deshabilitado, como el "
-              "estado 'Disable' del toggle Network Discovery de Atlas. El equipo deja de "
-              "ser visible en la red y de descubrir otros equipos. Reversible.",
+         desc="El equipo deja de ser visible en la red y de descubrir otros equipos. "
+              "Reversible.",
          risk="Low", security="Neutral", state="Implemented",
+         technical_note=(
+             "Origen: atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.psd1. "
+             "Estado Disable: servicios fdPHost, FDResPub, lmhosts, SSDPSRV a Deshabilitado; "
+             "registro AllowBluetooth=0. Acción del motor: servicio SetStartupType + "
+             "registro. Reversible. Inventario sección 4: línea 132."),
          build_note="los servicios de descubrimiento de red existen en 19045 y Windows 11"),
     dict(atlas_toggle=("Services/NVidiaDisplayContainer.psd1", "Disable"),
          id="services.atlas.nvidiadisplaycontainer",
-         name="Desactivar NVIDIA Display Container LS (toggle de Atlas)",
+         name="Desactivar NVIDIA Display Container",
          inventario_lineas=[133],
-         desc="El pin solo declara MachineAction Set-AtlasNVidiaDisplayContainerState para "
-              "el estado 'Disable', sin valores de registro ni tipos de servicio expresables. "
-              "No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance.",
+         desc="Desactiva el contenedor de pantalla de NVIDIA. El efecto del cambio no queda "
+              "expresado entero como acciones del motor, por lo que la capacidad se marca "
+              "como especificada (no ejecutable todavía).",
          risk="Low", security="Neutral", state="Specified",
          r1_gap=(
              "el pin ejecuta Set-AtlasNVidiaDisplayContainerState via NVidiaDisplayContainer.ps1; "
              "no hay registro ni tipo de servicio expresables en el estado Disable del .psd1"
          ),
-         build_note="Solo aplica mientras el controlador NVIDIA este instalado; no hay build minima garantizada"),
+         build_note="Solo aplica mientras el controlador NVIDIA esté instalado; no hay build mínima garantizada"),
     dict(atlas_toggle=("Services/Printing.psd1", "Disable"),
          id="services.atlas.printing",
-         name="Desactivar impresion (toggle de Atlas)",
+         name="Desactivar la impresión",
          inventario_lineas=[134],
-         desc="El pin solo declara MachineAction Set-AtlasPrintingMachineState y ContextAction "
-              "para el estado 'Disable', sin valores de registro ni tipos de servicio expresables. "
-              "No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance.",
+         desc="Desactiva el servicio de impresión. El efecto del cambio no queda expresado "
+              "entero como acciones del motor, por lo que la capacidad se marca como "
+              "especificada (no ejecutable todavía).",
          risk="Low", security="Neutral", state="Specified",
          r1_gap=(
              "el pin ejecuta Set-AtlasPrintingMachineState via Printing.ps1; no hay "
              "registro ni tipo de servicio expresables en el estado Disable del .psd1"
          ),
-         build_note="Depende del hardware de impresion; no hay build minima garantizada"),
+         build_note="Depende del hardware de impresión; no hay build mínima garantizada"),
     dict(atlas_toggle=("Services/SuperFetch.psd1", "Disable"),
          id="services.atlas.superfetch",
-         name="Desactivar SuperFetch/SysMain (toggle de Atlas)",
+         name="Desactivar SuperFetch/SysMain",
          inventario_lineas=[135],
-         desc="El pin solo declara MachineAction Set-AtlasSuperFetchMachineState para "
-              "el estado 'Disable', sin valores de registro ni tipos de servicio expresables. "
-              "No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance.",
+         desc="Desactiva SuperFetch/SysMain. El efecto del cambio no queda expresado entero "
+              "como acciones del motor, por lo que la capacidad se marca como especificada "
+              "(no ejecutable todavía).",
          risk="Low", security="Neutral", state="Specified",
          r1_gap=(
              "el pin ejecuta Set-AtlasSuperFetchMachineState via SuperFetch.ps1; no hay "
@@ -503,9 +526,14 @@ def apply_r1(capability: dict, spec: dict) -> dict:
     if not gap:
         return capability
     capability["state"] = "Specified"
-    capability["description"] = (
-        capability["description"].rstrip()
-        + " FUERA DE ESTA CAPACIDAD (R1): " + gap
+    # El motivo técnico va a TechnicalNote (nunca se muestra en la UI).
+    # La Descripción se deja limpia para el usuario.
+    existing = capability.get("technicalNote", "")
+    capability["technicalNote"] = (
+        (existing + " " if existing else "")
+        + "R1: el pin hace efectos adicionales que no son expresables como "
+        "acciones del motor: " + gap
+        + " Como el efecto del pin no queda expresado entero, State=Specified."
     )
     capability["provenance"] = (
         capability["provenance"].rstrip()
@@ -519,12 +547,13 @@ def apply_r1(capability: dict, spec: dict) -> dict:
 def base(cap_id: str, name: str, desc: str, section_id: int, risk: str,
          security: str, actions: list[dict], builds: list[int] | None,
          state: str, variants: list[str], provenance: str,
+         technical_note: str = "",
          r2_reason: str | None = None, r3_reason: str | None = None) -> dict:
     if security == "Improves":
         if not r2_reason:
             raise SystemExit(
                 f"{cap_id}: SecurityImpact=Improves exige r2_reason (regla R2)")
-        desc = desc.rstrip() + " Por que mejora la seguridad: " + r2_reason
+        desc = desc.rstrip() + " " + r2_reason
         provenance = provenance.rstrip() + " R2 (paso 12): SecurityImpact=Improves por: " + r2_reason
     return {
         "id": cap_id,
@@ -546,6 +575,7 @@ def base(cap_id: str, name: str, desc: str, section_id: int, risk: str,
         "dependsOn": [],
         "supportedBuilds": builds or DEFAULT_BUILDS,
         "provenance": provenance,
+        "technicalNote": technical_note,
         "actions": actions,
     }
 
@@ -592,6 +622,7 @@ def build() -> dict:
             spec["id"], spec["name"], spec["desc"], 4,
             spec["risk"], spec["security"], actions, None,
             "Implemented", ["Evo", "WinUtil"], provenance,
+            technical_note=spec.get("technical_note", ""),
             r2_reason=spec.get("r2_reason")))
 
     # ------------------------------------------------------- Atlas (servicios)
@@ -630,6 +661,7 @@ def build() -> dict:
             spec["id"], spec["name"], spec["desc"], 4,
             spec["risk"], spec["security"], actions, None,
             spec.get("state", "Specified"), ["Evo", "Atlas"], provenance,
+            technical_note=spec.get("technical_note", ""),
             r2_reason=spec.get("r2_reason")))
         apply_r1(capabilities[-1], spec)
 
@@ -638,11 +670,11 @@ def build() -> dict:
     # no declara servicio ni registro con literal fijo: queda en Specified con 0 acciones
     # expresables y el motivo medido en la descripción/provenance.
     spec = dict(id="services.winutil.svchostsplit",
-                name="Service Host Splitting (svchost) - desactivar",
-                desc="WPFTweaksSvcHostSplitting escribe SvcHostSplitThresholdInKB en "
-                     "HKLM\\SYSTEM\\CurrentControlSet\\Control con un valor que depende de "
-                     "la memoria fisica (no es un literal fijo). El motor no puede declarar "
-                     "un valor dinamico; queda en State=Specified con el motivo medido.",
+                name="División de host de servicios (svchost)",
+                desc="Este ajuste escribe un valor en el registro del sistema que depende "
+                     "de la memoria RAM del equipo. Como el valor cambia en cada equipo, "
+                     "el motor no puede declararlo como una acción fija; queda a la espera "
+                     "con el motivo medido en la nota técnica.",
                 risk="Low", security="Neutral",
                 inventario_linea=127)
     provenance = (
@@ -654,7 +686,12 @@ def build() -> dict:
     capabilities.append(base(
         spec["id"], spec["name"], spec["desc"], 4,
         spec["risk"], spec["security"], [], None,
-        "Specified", ["Evo", "WinUtil"], provenance))
+        "Specified", ["Evo", "WinUtil"], provenance,
+        technical_note=(
+            "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksSvcHostSplitting. "
+            "Escribe SvcHostSplitThresholdInKB con un valor dinámico según la memoria RAM; "
+            "no es un literal fijo, por eso no cabe en las acciones del motor. "
+            "State=Specified con 0 acciones expresables. Inventario sección 4: línea 127.")))
 
     capabilities.sort(key=lambda c: c["id"])
     return {

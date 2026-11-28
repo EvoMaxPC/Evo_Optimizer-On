@@ -124,6 +124,7 @@ public sealed class EngineCoordinatorRealTest : IDisposable
             State = CapabilityState.Implemented,
             SupportedBuilds = [26100],
             Variants = [Variant.Evo],
+            TechnicalNote = string.Empty,
         };
         return (capability, acciones);
     }

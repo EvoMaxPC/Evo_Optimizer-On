@@ -42,6 +42,10 @@ public sealed record CapabilityContract
     /// <summary>Madurez de la capacidad.</summary>
     public required CapabilityState State { get; init; }
 
+    /// <summary>Nota técnica interna (motivo R1/R3, efectos no expresables, etc.).
+    /// Nunca se muestra en la UI; se conserva en el JSON y en la documentación.</summary>
+    public required string TechnicalNote { get; init; }
+
     /// <summary>Linajes que aportan esta capacidad. Nunca vacío.</summary>
     public required IReadOnlyList<Variant> Variants { get; init; }
 

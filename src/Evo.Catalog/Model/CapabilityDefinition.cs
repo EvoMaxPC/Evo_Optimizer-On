@@ -66,6 +66,11 @@ public sealed record CapabilityDefinition
     [JsonPropertyName("provenance")]
     public string Provenance { get; init; } = string.Empty;
 
+    /// <summary>Nota técnica interna (motivo R1/R3, efectos no expresables, etc.).
+    /// Nunca se muestra en la UI; se conserva en el JSON y en la documentación.</summary>
+    [JsonPropertyName("technicalNote")]
+    public string TechnicalNote { get; init; } = string.Empty;
+
     /// <summary>Proyecta la definición al contrato del motor.</summary>
     public CapabilityContract ToContract() => new()
     {
@@ -84,5 +89,6 @@ public sealed record CapabilityDefinition
         ConflictsWith = ConflictsWith,
         DependsOn = DependsOn,
         SupportedBuilds = SupportedBuilds,
+        TechnicalNote = TechnicalNote,
     };
 }

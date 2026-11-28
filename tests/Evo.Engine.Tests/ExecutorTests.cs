@@ -304,6 +304,236 @@ public sealed class ExecutorTests
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, KeyPath, "X"));
     }
 
+    // ---------------- A1: Acciones de servicio idempotentes ----------------
+
+    /// <summary>
+    /// A1.1: Stop sobre servicio ya detenido → Omitido, sin journal, sin mutación.
+    /// </summary>
+    [Fact]
+    public async Task ServiceStop_YaDetenido_OmitidoSinJournal()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("DiagTrack", ServiceStatus.Stopped, ServiceStartupType.Disabled);
+        var journal = new UndoJournal();
+        var executor = new ServiceActionExecutor();
+
+        var result = await executor.ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "detener DiagTrack",
+            ServiceName = "DiagTrack",
+            Operation = ServiceOperation.Stop,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.False(result.Applied);
+        Assert.Empty(journal.Entries);
+        Assert.Contains("ya estaba detenido", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus("DiagTrack"));
+    }
+
+    /// <summary>
+    /// A1.2: SetStartupType al mismo tipo ya configurado → Omitido, sin journal.
+    /// </summary>
+    [Fact]
+    public async Task ServiceSetStartupType_MismoTipo_OmitidoSinJournal()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("MapsBroker", ServiceStatus.Stopped, ServiceStartupType.Manual);
+        var journal = new UndoJournal();
+        var executor = new ServiceActionExecutor();
+
+        var result = await executor.ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "arranque MapsBroker Manual",
+            ServiceName = "MapsBroker",
+            Operation = ServiceOperation.SetStartupType,
+            StartupType = "Manual",
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.False(result.Applied);
+        Assert.Empty(journal.Entries);
+        Assert.Contains("ya tiene el tipo de inicio 'Manual'", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.Equal(ServiceStartupType.Manual, harness.Services.GetStartupType("MapsBroker"));
+    }
+
+    /// <summary>
+    /// A1.3: Servicio inexistente (estado Unknown) → Omitido, no Fallo.
+    /// </summary>
+    [Fact]
+    public async Task ServiceInexistente_OmitidoNoFallo()
+    {
+        var harness = TestHarness.Create();
+        // No se semea ningún servicio: GetStatus/GetStartupType devuelven Unknown.
+        var journal = new UndoJournal();
+        var executor = new ServiceActionExecutor();
+
+        var result = await executor.ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "detener servicio que no existe",
+            ServiceName = "NoExisteEnEsteEquipo",
+            Operation = ServiceOperation.Stop,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.False(result.Applied);
+        Assert.Empty(journal.Entries);
+        Assert.Contains("no existe en este equipo", result.ErrorMessage, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// A1.4: Start sobre servicio ya corriendo → Omitido, sin journal.
+    /// </summary>
+    [Fact]
+    public async Task ServiceStart_YaCorriendo_OmitidoSinJournal()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("DiagTrack", ServiceStatus.Running, ServiceStartupType.Automatic);
+        var journal = new UndoJournal();
+        var executor = new ServiceActionExecutor();
+
+        var result = await executor.ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "iniciar DiagTrack",
+            ServiceName = "DiagTrack",
+            Operation = ServiceOperation.Start,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Skipped, result.Status);
+        Assert.False(result.Applied);
+        Assert.Empty(journal.Entries);
+        Assert.Contains("ya está en ejecución", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.Equal(ServiceStatus.Running, harness.Services.GetStatus("DiagTrack"));
+    }
+
+    /// <summary>
+    /// A1.5: Fallo real (acceso denegado) sigue siendo Fallo, con rollback aislado.
+    /// </summary>
+    [Fact]
+    public async Task ServiceStop_FalloReal_SigueSiendoFalloConRollback()
+    {
+        var harness = TestHarness.Create();
+        harness.Services.Seed("DiagTrack", ServiceStatus.Running, ServiceStartupType.Automatic);
+        // Forzar fallo al detener DiagTrack.
+        harness.Services.FailStopWith = "DiagTrack";
+        var journal = new UndoJournal();
+        var executor = new ServiceActionExecutor();
+
+        var result = await executor.ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "detener DiagTrack",
+            ServiceName = "DiagTrack",
+            Operation = ServiceOperation.Stop,
+        }, ContextFor(harness, journal: journal));
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.False(result.Applied);
+        Assert.Empty(journal.Entries);
+        Assert.Contains("No se pudo aplicar 'Stop' sobre 'DiagTrack'", result.ErrorMessage, StringComparison.Ordinal);
+        // El servicio sigue corriendo: no se mutó nada.
+        Assert.Equal(ServiceStatus.Running, harness.Services.GetStatus("DiagTrack"));
+    }
+
+    /// <summary>
+    /// A2: Mensaje de error con cadena de causas (InnerException).
+    /// </summary>
+    [Fact]
+    public async Task ServiceError_ConCadenaDeCausas_IncluyeInnerException()
+    {
+        var inner = new InvalidOperationException("el servicio está bloqueado por una dependencia");
+        var outer = new System.ServiceProcess.TimeoutException("tiempo de espera agotado", inner);
+
+        // Usamos un accessor personalizado que lanza la excepción anidada.
+        var services = new FailingServiceAccessorWithInner();
+        services.Seed("DiagTrack", ServiceStatus.Running, ServiceStartupType.Automatic);
+        services.FailStopException = outer;
+        var journal = new UndoJournal();
+        var context = new ActionContext
+        {
+            Registry = new FakeRegistryAccessor(),
+            Services = services,
+            Tasks = new FakeTaskAccessor(),
+            Processes = new FakeProcessAccessor(),
+            Commands = new FakeCommandRunner(),
+            Mode = ExecutionMode.Execute,
+            Journal = journal,
+            CapabilityId = "unit.capability",
+        };
+        var executor = new ServiceActionExecutor();
+
+        var result = await executor.ExecuteAsync(new ServiceAction
+        {
+            Order = 1,
+            Description = "detener DiagTrack",
+            ServiceName = "DiagTrack",
+            Operation = ServiceOperation.Stop,
+        }, context);
+
+        Assert.Equal(ActionStatus.Failed, result.Status);
+        Assert.Contains("causa: el servicio está bloqueado por una dependencia", result.ErrorMessage, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// A5: Test dedicado para services.atlas.networkdiscovery.
+    /// Verifica acciones, omitidos e inversa contra fakes.
+    /// </summary>
+    [Fact]
+    public async Task NetworkDiscovery_DedicatedTest_AccionesYInversa()
+    {
+        var harness = TestHarness.Create();
+        // networkdiscovery desactiva fdPHost, FDResPub, lmhosts, SSDPSRV → Disabled
+        harness.Services.Seed("fdPHost", ServiceStatus.Running, ServiceStartupType.Automatic);
+        harness.Services.Seed("FDResPub", ServiceStatus.Running, ServiceStartupType.Automatic);
+        harness.Services.Seed("lmhosts", ServiceStatus.Running, ServiceStartupType.Automatic);
+        harness.Services.Seed("SSDPSRV", ServiceStatus.Running, ServiceStartupType.Automatic);
+        var journal = new UndoJournal();
+
+        var actions = new[]
+        {
+            new ServiceAction { Order = 1, Description = "fdPHost detener", ServiceName = "fdPHost", Operation = ServiceOperation.Stop },
+            new ServiceAction { Order = 2, Description = "fdPHost Disabled", ServiceName = "fdPHost", Operation = ServiceOperation.SetStartupType, StartupType = "Disabled" },
+            new ServiceAction { Order = 3, Description = "FDResPub detener", ServiceName = "FDResPub", Operation = ServiceOperation.Stop },
+            new ServiceAction { Order = 4, Description = "FDResPub Disabled", ServiceName = "FDResPub", Operation = ServiceOperation.SetStartupType, StartupType = "Disabled" },
+            new ServiceAction { Order = 5, Description = "lmhosts detener", ServiceName = "lmhosts", Operation = ServiceOperation.Stop },
+            new ServiceAction { Order = 6, Description = "lmhosts Disabled", ServiceName = "lmhosts", Operation = ServiceOperation.SetStartupType, StartupType = "Disabled" },
+            new ServiceAction { Order = 7, Description = "SSDPSRV detener", ServiceName = "SSDPSRV", Operation = ServiceOperation.Stop },
+            new ServiceAction { Order = 8, Description = "SSDPSRV Disabled", ServiceName = "SSDPSRV", Operation = ServiceOperation.SetStartupType, StartupType = "Disabled" },
+        };
+
+        var executor = new ServiceActionExecutor();
+        foreach (var action in actions)
+        {
+            var result = await executor.ExecuteAsync(action, ContextFor(harness, journal: journal));
+            Assert.True(result.Success, $"Fallo en {action.Description}: {result.ErrorMessage}");
+            Assert.True(result.Applied);
+        }
+
+        // Verificar estado final: todos detenidos y Disabled.
+        foreach (var svc in new[] { "fdPHost", "FDResPub", "lmhosts", "SSDPSRV" })
+        {
+            Assert.Equal(ServiceStatus.Stopped, harness.Services.GetStatus(svc));
+            Assert.Equal(ServiceStartupType.Disabled, harness.Services.GetStartupType(svc));
+        }
+
+        // 8 entradas en el journal (una por acción aplicada).
+        Assert.Equal(8, journal.Entries.Count);
+
+        // Deshacer: restaura todos a Running/Automatic.
+        var report = await journal.RollbackAsync(new UndoContext(
+            harness.Registry, harness.Services, harness.Tasks, harness.Processes, harness.Commands));
+        Assert.True(report.Success);
+        foreach (var svc in new[] { "fdPHost", "FDResPub", "lmhosts", "SSDPSRV" })
+        {
+            Assert.Equal(ServiceStatus.Running, harness.Services.GetStatus(svc));
+            Assert.Equal(ServiceStartupType.Automatic, harness.Services.GetStartupType(svc));
+        }
+    }
+
     // ---------------- H3: Procesos (reporte honesto) ----------------
 
     /// <summary>
@@ -1632,5 +1862,44 @@ public sealed class ExecutorTests
         public RegistryValueKind GetKind(RegistryHive hive, string keyPath, string valueName) =>
             _valuesByKey.TryGetValue(keyPath, out var vals) && vals.TryGetValue(valueName, out var entry)
                 ? entry.Kind : RegistryValueKind.Unknown;
+    }
+
+    /// <summary>
+    /// IServiceAccessor que lanza una excepción anidada al detener un servicio
+    /// concreto. Se usa para verificar que el mensaje de error incluye la cadena
+    /// de causas (A2).
+    /// </summary>
+    private sealed class FailingServiceAccessorWithInner : IServiceAccessor
+    {
+        private readonly FakeServiceAccessor _inner = new();
+
+        public Exception? FailStopException { get; set; }
+
+        public int MutationCount => _inner.MutationCount;
+        public List<string> Log => _inner.Log;
+
+        public void Seed(string name, ServiceStatus status, ServiceStartupType startupType) =>
+            _inner.Seed(name, status, startupType);
+
+        public bool Exists(string name) => _inner.Exists(name);
+
+        public ServiceStatus GetStatus(string serviceName) => _inner.GetStatus(serviceName);
+
+        public ServiceStartupType GetStartupType(string serviceName) => _inner.GetStartupType(serviceName);
+
+        public void SetStartupType(string serviceName, ServiceStartupType startupType) =>
+            _inner.SetStartupType(serviceName, startupType);
+
+        public void StartService(string serviceName) => _inner.StartService(serviceName);
+
+        public void StopService(string serviceName)
+        {
+            if (FailStopException is not null &&
+                string.Equals(serviceName, "DiagTrack", StringComparison.OrdinalIgnoreCase))
+            {
+                throw FailStopException;
+            }
+            _inner.StopService(serviceName);
+        }
     }
 }

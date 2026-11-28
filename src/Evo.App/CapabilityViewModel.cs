@@ -55,11 +55,17 @@ public sealed class CapabilityViewModel
     public required string NotExecutableReason { get; init; }
 
     /// <summary>True si se puede simular (DryRun).</summary>
-    public bool CanSimulate => IsExecutable;
+    public bool CanSimulate => State == CapabilityState.Implemented && IsExecutable;
 
     /// <summary>True si se puede aplicar (Execute).</summary>
-    public bool CanApply => IsExecutable && Confirmation != ConfirmationType.TypeOperationName;
+    public bool CanApply => State == CapabilityState.Implemented &&
+        IsExecutable && Confirmation != ConfirmationType.TypeOperationName;
 
     /// <summary>True si se puede deshacer.</summary>
-    public bool CanUndo => true;
+    public bool CanUndo => State == CapabilityState.Implemented && IsExecutable;
+
+    /// <summary>Texto visible en la fila cuando la capacidad no está
+    /// Implementada (Specified o Stub): «No disponible todavía».</summary>
+    public string NotAvailableText =>
+        State != CapabilityState.Implemented ? "No disponible todavía" : string.Empty;
 }
