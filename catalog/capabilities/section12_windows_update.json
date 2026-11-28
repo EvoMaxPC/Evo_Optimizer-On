@@ -1,0 +1,145 @@
+{
+   "metadata": {
+      "version": "1.0.0",
+      "schemaVersion": 1,
+      "provenance": "Etapa 8 Parte B, seccion 12 (Windows Update y Mantenimiento). Fuentes: winutil@70c23c80641d7370532af2f619b2842658600842, atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f. Los literales y las referencias se leen del pin con tools/ledger_extract/build_section12_catalog.py; ninguno se escribe a mano.",
+      "generatedBy": "etapa 8 Parte B (seccion 12)"
+   },
+   "capabilities": [
+      {
+         "id": "services.atlas.cbs-repair-source-policy",
+         "name": "Directiva de origen de reparacion CBS",
+         "description": "Atlas oferta operaciones de servicio de componentes de Windows (CBS). La entrada Remove-AtlasCbsRepairSourcePolicy afecta a la política de origen de reparación y no se expresa como una acción de registro del motor, por lo que queda especificada (no ejecutable todavía).",
+         "sectionId": 12,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Specified",
+         "variants": [
+            "Evo"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1::Remove-AtlasCbsRepairSourcePolicy#0 (funcion de reparacion de componentes CBS). ledger_refs: atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1::Remove-AtlasCbsRepairSourcePolicy#0. R1 (paso 12): el pin hace ademas operaciones que NO se declaran como accion del motor (el pin declara Remove-AtlasCbsRepairSourcePolicy como una operacion de servicio de componentes de Windows (CBS), no como una entrada de registro que el motor pueda aplicar); por eso la capacidad queda en State=Specified. Inventario seccion 12: Windows Update y Mantenimiento.",
+         "actions": [],
+         "technicalNote": "Origen: atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1::Remove-AtlasCbsRepairSourcePolicy#0 (funcion de reparacion de componentes CBS). el pin declara Remove-AtlasCbsRepairSourcePolicy como una operacion de servicio de componentes de Windows (CBS), no como una entrada de registro que el motor pueda aplicar Como el efecto del pin no queda expresado entero como acciones del motor, State=Specified con 0 acciones expresables. Ledger seccion 12 linea 423 (regla R3 del paso 4e): coincide con el ledger de conciliación."
+      },
+      {
+         "id": "services.atlas.toggle-windows-updates",
+         "name": "Activar o desactivar Windows Update",
+         "description": "Atlas oferta una opcion para activar o desactivar Windows Update como bloque. Ese efecto se implementa como un efecto de script de prueba (Atlas.Verify.Tests.ps1) y no como una entrada de registro declarable, por lo que queda especificada (no ejecutable todavía).",
+         "sectionId": 12,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Specified",
+         "variants": [
+            "Evo"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:tests/Atlas.Verify.Tests.ps1::<top>#9 (efecto de activacion/desactivacion de Windows Update). ledger_refs: atlas:effect:tests/Atlas.Verify.Tests.ps1::<top>#9. R1 (paso 12): el pin hace ademas operaciones que NO se declaran como accion del motor (el pin declara el efecto de activar/desactivar Windows Update como un bloque de prueba de Atlas, no como una entrada de registro que el motor pueda aplicar); por eso la capacidad queda en State=Specified. Inventario seccion 12: Windows Update y Mantenimiento.",
+         "actions": [],
+         "technicalNote": "Origen: atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:tests/Atlas.Verify.Tests.ps1::<top>#9 (efecto de activacion/desactivacion de Windows Update). el pin declara el efecto de activar/desactivar Windows Update como un bloque de prueba de Atlas, no como una entrada de registro que el motor pueda aplicar Como el efecto del pin no queda expresado entero como acciones del motor, State=Specified con 0 acciones expresables. Ledger seccion 12 linea 410 (regla R3 del paso 4e): coincide con el ledger de conciliación."
+      },
+      {
+         "id": "services.winutil.registry-backup",
+         "name": "Copia de seguridad del registro",
+         "description": "Habilita la copia de seguridad diaria del registro de Windows (EnablePeriodicBackup) y programa la tarea AutoRegBackup a las 00:30. Parte del efecto es la tarea programada, que el motor no declara aqui, por lo que queda especificada (no ejecutable todavia).",
+         "sectionId": 12,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Specified",
+         "variants": [
+            "Evo"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json:79 (WPFFeatureRegBackup, InvokeScript). ledger_refs: winutil:feature:WPFFeatureRegBackup. R1 (paso 12): el pin hace ademas operaciones que NO se declaran como accion del motor (escribe EnablePeriodicBackup=1 y BackupCount=2 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager y registra la tarea programada AutoRegBackup (diaria, 00:30, como System) que ejecuta RegIdleBackup); por eso la capacidad queda en State=Specified. Inventario seccion 12: Windows Update y Mantenimiento.",
+         "actions": [],
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json:79 (WPFFeatureRegBackup, InvokeScript). escribe EnablePeriodicBackup=1 y BackupCount=2 en HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Configuration Manager y registra la tarea programada AutoRegBackup (diaria, 00:30, como System) que ejecuta RegIdleBackup Como el efecto del pin no queda expresado entero como acciones del motor, State=Specified con 0 acciones expresables. Ledger seccion 12 linea 405 (regla R2 del paso 4e): coincide con el ledger de conciliación."
+      },
+      {
+         "id": "services.winutil.system-restore-point",
+         "name": "Punto de restauración del sistema",
+         "description": "El ledger de conciliacion respalda esta linea del inventario con el tweak de WinUtil que configura el desenfoque acrilico de la pantalla de inicio de sesión (DisableAcrylicBackgroundOnLogon en HKLM). Ese efecto es de registro y queda expresado; la capacidad se declara como especificada porque el ledger la asocia a esta linea del inventario sin una accion de motor propia para crear puntos de restauracion.",
+         "sectionId": 12,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Specified",
+         "variants": [
+            "Evo"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1777 (WPFToggleLoginBlur, registry: DisableAcrylicBackgroundOnLogon). ledger_refs: winutil:tweak-op:WPFToggleLoginBlur:registry:0. R1 (paso 12): el pin hace ademas operaciones que NO se declaran como accion del motor (el ledger asocia esta linea al tweak WPFToggleLoginBlur (DeshabilitarFondoAcrílicoPantallaInicioSesion); no hay una accion de motor que cree un punto de restauracion del sistema); por eso la capacidad queda en State=Specified. Inventario seccion 12: Windows Update y Mantenimiento.",
+         "actions": [],
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1777 (WPFToggleLoginBlur, registry: DisableAcrylicBackgroundOnLogon). el ledger asocia esta linea al tweak WPFToggleLoginBlur (DeshabilitarFondoAcrílicoPantallaInicioSesion); no hay una accion de motor que cree un punto de restauracion del sistema Como el efecto del pin no queda expresado entero como acciones del motor, State=Specified con 0 acciones expresables. Ledger seccion 12 linea 406 (regla R3 del paso 4e): coincide con el ledger de conciliación."
+      },
+      {
+         "id": "services.winutil.windows-update-reset",
+         "name": "Restablecer Windows Update",
+         "description": "Esta funcion repara Windows Update: detiene sus servicios, renombra carpetas de historial y paquetes, borra logs y vuelve a registrar componentes. Involucra operaciones de archivo, de servicio y de registro que el motor no expresa como acciones de registro, servicio o tarea, por lo que queda especificada (no ejecutable todavía).",
+         "sectionId": 12,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Specified",
+         "variants": [
+            "Evo"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json:146 (WPFFixesUpdate, function Invoke-WPFFixesUpdate). ledger_refs: winutil:feature:WPFFixesUpdate. R1 (paso 12): el pin hace ademas operaciones que NO se declaran como accion del motor (detiene los servicios BITS, wuauserv, appidsvc y cryptsvc; renombra QMGR, DataStore, CatRoot2 y la carpeta de descargas; borra el log de Windows Update; resetea descriptores de seguridad; vuelve a registrar DLLs de BITS y Windows Update; quita la configuracion WSUS; resetea WinSock; borra trabajos BITS; configura el tipo de arranque y arranca los servicios; obliga a buscar actualizaciones); por eso la capacidad queda en State=Specified. Inventario seccion 12: Windows Update y Mantenimiento.",
+         "actions": [],
+         "technicalNote": "Origen: winutil@70c23c80641d7370532af2f619b2842658600842:config/feature.json:146 (WPFFixesUpdate, function Invoke-WPFFixesUpdate). detiene los servicios BITS, wuauserv, appidsvc y cryptsvc; renombra QMGR, DataStore, CatRoot2 y la carpeta de descargas; borra el log de Windows Update; resetea descriptores de seguridad; vuelve a registrar DLLs de BITS y Windows Update; quita la configuracion WSUS; resetea WinSock; borra trabajos BITS; configura el tipo de arranque y arranca los servicios; obliga a buscar actualizaciones Como el efecto del pin no queda expresado entero como acciones del motor, State=Specified con 0 acciones expresables. Ledger seccion 12 linea 397 (regla R1 del paso 4e): coincide con el ledger de conciliación."
+      }
+   ]
+}

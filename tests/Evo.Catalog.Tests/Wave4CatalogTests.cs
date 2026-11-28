@@ -478,6 +478,119 @@ public sealed class Wave4CatalogTests
         Assert.Equal(@"SOFTWARE\Evo\Y", action.KeyPath);
     }
 
+    // ------------------------------------------------- Etapa 8 Parte B: sección 12
+    /// <summary>T12-1: Windows Update Reset (línea 397) queda Specified (R1:
+    /// el pin detiene servicios, renombra carpetas y registra DLLs; el motor no
+    /// expresa eso como acciones). Su provenance cita el mapped_id del ledger.</summary>
+    [Fact]
+    public void TestWave4Catalog_Section12_WindowsUpdateReset_Specified()
+    {
+        var definition = Definition("services.winutil.windows-update-reset");
+        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Equal(12, definition.SectionId);
+        Assert.Equal(SecurityImpact.Neutral, definition.SecurityImpact);
+        Assert.Equal(Reversibility.Reversible, definition.Reversible);
+        Assert.Empty(definition.Actions);
+        Assert.NotEmpty(definition.TechnicalNote);
+        Assert.Contains("winutil:feature:WPFFixesUpdate", definition.Provenance,
+            StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+        // La descripcion no lleva jerga interna ni el motivo R1 (ese va en la nota tecnica).
+        Assert.DoesNotContain("WinUtil", definition.Description, StringComparison.Ordinal);
+        Assert.DoesNotContain("R1", definition.Description, StringComparison.Ordinal);
+        Assert.DoesNotContain("State=", definition.Description, StringComparison.Ordinal);
+    }
+
+    /// <summary>T12-2: Copia de seguridad del registro (línea 405) queda
+    /// Specified (R1: el pin también registra una tarea programada que el motor
+    /// no declara).</summary>
+    [Fact]
+    public void TestWave4Catalog_Section12_RegistryBackup_Specified()
+    {
+        var definition = Definition("services.winutil.registry-backup");
+        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Equal(12, definition.SectionId);
+        Assert.Empty(definition.Actions);
+        Assert.NotEmpty(definition.TechnicalNote);
+        Assert.Contains("winutil:feature:WPFFeatureRegBackup", definition.Provenance,
+            StringComparison.Ordinal);
+        Assert.Contains("EnablePeriodicBackup", definition.TechnicalNote,
+            StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+        Assert.DoesNotContain("tarea programada", definition.Description,
+            StringComparison.Ordinal);
+    }
+
+    /// <summary>T12-3: Punto de restauración del sistema (línea 406) queda
+    /// Specified; el ledger la asocia al tweak WPFToggleLoginBlur.</summary>
+    [Fact]
+    public void TestWave4Catalog_Section12_SystemRestorePoint_Specified()
+    {
+        var definition = Definition("services.winutil.system-restore-point");
+        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Equal(12, definition.SectionId);
+        Assert.Empty(definition.Actions);
+        Assert.NotEmpty(definition.TechnicalNote);
+        Assert.Contains("winutil:tweak-op:WPFToggleLoginBlur:registry:0",
+            definition.Provenance, StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+    }
+
+    /// <summary>T12-4: Activar/desactivar Windows Update (línea 410) queda
+    /// Specified; el pin lo declara como efecto de script de Atlas.</summary>
+    [Fact]
+    public void TestWave4Catalog_Section12_ToggleWindowsUpdates_Specified()
+    {
+        var definition = Definition("services.atlas.toggle-windows-updates");
+        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Equal(12, definition.SectionId);
+        Assert.Empty(definition.Actions);
+        Assert.NotEmpty(definition.TechnicalNote);
+        Assert.Contains("atlas:effect:tests/Atlas.Verify.Tests.ps1",
+            definition.Provenance, StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+    }
+
+    /// <summary>T12-5: Directiva de origen de reparación CBS (línea 423) queda
+    /// Specified; el pin declara Remove-AtlasCbsRepairSourcePolicy.</summary>
+    [Fact]
+    public void TestWave4Catalog_Section12_CbsRepairSourcePolicy_Specified()
+    {
+        var definition = Definition("services.atlas.cbs-repair-source-policy");
+        Assert.Equal(CapabilityState.Specified, definition.State);
+        Assert.Equal(12, definition.SectionId);
+        Assert.Empty(definition.Actions);
+        Assert.NotEmpty(definition.TechnicalNote);
+        Assert.Contains("CbsPackages.ps1", definition.Provenance,
+            StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+    }
+
+    /// <summary>T12-6: Las 5 capacidades de sección 12 son Specified, con
+    /// technicalNote relleno y builds explícitas.</summary>
+    [Fact]
+    public void TestWave4Catalog_Section12_AllFiveSpecifiedWithTechnicalNote()
+    {
+        var ids = new[]
+        {
+            "services.winutil.windows-update-reset",
+            "services.winutil.registry-backup",
+            "services.winutil.system-restore-point",
+            "services.atlas.toggle-windows-updates",
+            "services.atlas.cbs-repair-source-policy",
+        };
+        foreach (var id in ids)
+        {
+            var definition = Definition(id);
+            Assert.Equal(CapabilityState.Specified, definition.State);
+            Assert.Equal(12, definition.SectionId);
+            Assert.False(string.IsNullOrWhiteSpace(definition.TechnicalNote));
+            Assert.Equal(new[] { 19045, 22631, 26100, 26200 },
+                definition.SupportedBuilds);
+            Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+        }
+    }
+
     // ---------------------------------------------------------------- ayuda
     private static RegistryCreateKeyAction CreateKey(string keyPath) => new()
     {
