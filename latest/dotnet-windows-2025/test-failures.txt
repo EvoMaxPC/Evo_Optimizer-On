@@ -1,8 +1,5 @@
-Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates (Evo.Catalog.Tests): Assert.Equal() Failure: Collections differ
-Expected: [···, "privacy.telemetry.diagtrack", "privacy.telemetry.dmwappush"]
-Actual:   [···, "privacy.telemetry.diagtrack", "privacy.telemetry.dmwappush", "services.atlas.bluetooth", "services.atlas.lanmanworkstation", "services.atlas.networkdiscovery", ···]
-                                                                              ↑ (pos 39)
-   at Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates() in /_/tests/Evo.Catalog.Tests/Wave1CatalogTests.cs:line 101
+Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants (Evo.Catalog.Tests): Assert.NotEmpty() Failure: Collection was empty
+   at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants() in /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs:line 338
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
@@ -15,8 +12,11 @@ Actual:   List<string> [···, "system.services.manual-profile", "system.settin
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
-Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants (Evo.Catalog.Tests): Assert.NotEmpty() Failure: Collection was empty
-   at Evo.Catalog.Tests.Wave4CatalogTests.TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants() in /_/tests/Evo.Catalog.Tests/Wave4CatalogTests.cs:line 338
+Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates (Evo.Catalog.Tests): Assert.Equal() Failure: Collections differ
+Expected: [···, "privacy.telemetry.diagtrack", "privacy.telemetry.dmwappush"]
+Actual:   [···, "privacy.telemetry.diagtrack", "privacy.telemetry.dmwappush", "services.atlas.bluetooth", "services.atlas.lanmanworkstation", "services.atlas.networkdiscovery", ···]
+                                                                              ↑ (pos 39)
+   at Evo.Catalog.Tests.Wave1CatalogTests.TestWave1Catalog_LoadsAndValidates() in /_/tests/Evo.Catalog.Tests/Wave1CatalogTests.cs:line 101
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
