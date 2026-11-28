@@ -113,7 +113,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 3	117	atlas	Configure Privacy Defaults.	Mapped	winutil:tweak-op:WPFTweaksTelemetry:registry:1	media	regla R3 del paso 4e: coincide con el ledger
 3	118	atlas	Configure Windows Search Privacy.	Mapped	winutil:tweak-op:WPFToggleBingSearch:registry:0|winutil:tweak-op:WPFTweaksTelemetry:registry:1	media	regla R3 del paso 4e: coincide con el ledger
 4	120	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
-4	121	winutil	Services — configuración de inicio Manual.	Absent-At-Pin		alta	medido en el paso 7: la linea agrupa los servicios de WinUtil ya mapeados individualmente (DiagTrack, MapsBroker, StorSvc, SharedAccess, CscService en las líneas 122-126). No es una operación aparte; no hay candidato propio en el pin (REQ-002).
+4	121	winutil	Services — configuración de inicio Manual.	Mapped	winutil:tweak:WPFTweaksServices	alta	medido en el paso 7: WPFTweaksServices se expresa en el pin (config/tweaks.json:146) y las capacidades services.winutil.cscservice, diagtrack, mapsbroker, sharedaccess y storsvc declaran winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices; la linea 121 describe esa configuracion de inicio de servicios de WinUtil.
 4	122	winutil	DiagTrack.	Mapped	winutil:tweak-op:WPFTweaksServices:service:1	alta	nombre de servicio presente en las operaciones del ledger
 4	123	winutil	MapsBroker.	Mapped	winutil:tweak-op:WPFTweaksServices:service:2	alta	nombre de servicio presente en las operaciones del ledger
 4	124	winutil	StorSvc.	Mapped	winutil:tweak-op:WPFTweaksServices:service:3	alta	nombre de servicio presente en las operaciones del ledger

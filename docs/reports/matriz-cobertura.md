@@ -3,17 +3,17 @@
 Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a mano.
 
 - Filas de la conciliacion: **588**
-- `inventory/ledger/inventory-reconciliation.tsv` sha256 `30e1e99b2a947760177b8be97dc86ec40d4c635cce7b8d55a82067d7c576d2e8`
+- `inventory/ledger/inventory-reconciliation.tsv` sha256 `a4673908d164cacf026f86078af47d768c3f89c393cfce384addff846c009f81`
 - Pins: Atlas `ec3c4058`, WinUtil `70c23c80`
 
 ## 1. Totales por estado
 
 | Estado | Filas | % |
 |---|---:|---:|
-| `Mapped` | 159 | 27.0 % |
+| `Mapped` | 160 | 27.2 % |
 | `Mapped-To-App` | 5 | 0.9 % |
 | `EVO-Exclusive` | 37 | 6.3 % |
-| `Absent-At-Pin` | 316 | 53.7 % |
+| `Absent-At-Pin` | 315 | 53.6 % |
 | `Informative-Header` | 71 | 12.1 % |
 | **Total** | **588** | 100.0 % |
 
@@ -24,7 +24,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 1 | 3 | 0 | 1 | 23 | 2 | 29 |
 | 2 | 17 | 0 | 0 | 23 | 2 | 42 |
 | 3 | 6 | 0 | 0 | 34 | 2 | 42 |
-| 4 | 12 | 0 | 0 | 11 | 3 | 26 |
+| 4 | 13 | 0 | 0 | 10 | 3 | 26 |
 | 5 | 7 | 0 | 0 | 18 | 3 | 28 |
 | 6 | 6 | 0 | 11 | 12 | 3 | 32 |
 | 7 | 7 | 0 | 10 | 10 | 2 | 29 |
@@ -38,7 +38,7 @@ Generado por `tools/ledger_extract/generate_coverage_matrix.py`. No editar a man
 | 15 | 1 | 5 | 0 | 23 | 3 | 32 |
 | 16 | 5 | 0 | 0 | 35 | 4 | 44 |
 | 17 | 0 | 0 | 15 | 2 | 32 | 49 |
-| **Total** | **159** | **5** | **37** | **316** | **71** | **588** |
+| **Total** | **160** | **5** | **37** | **315** | **71** | **588** |
 
 ## 3. Cobertura WinUtil
 
