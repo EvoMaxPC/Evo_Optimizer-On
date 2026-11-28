@@ -48,7 +48,8 @@ Compare el resultado con el contenido del archivo `.sha256`. Deben coincidir.
 
 ### Qué debe ver al abrir
 
-- Arriba: la detección de Windows (build, UBR, edición y tipo de instalación). Si Windows no es compatible (por ejemplo, Windows Server o un build desconocido), aparece un mensaje **"Windows no compatible"** y no se puede aplicar nada.
+- Arriba: la detección de Windows (build, UBR, edición, tipo de instalación y **arquitectura** del sistema). Si la arquitectura no puede determinarse, o Windows no es compatible (por ejemplo, Windows Server o un build desconocido), aparece un mensaje **"Windows no compatible"** y no se puede aplicar nada.
+- La arquitectura se lee del sistema real y se compara con el catálogo de versiones soportadas (`x64`, `arm64`). Arquitecturas no declaradas en el catálogo se tratan como no compatibles.
 - El centro: 17 secciones del inventario de usuario con sus capacidades (nombre, descripción, riesgo, privilegio, estado).
 - Abajo: el área de resultados (texto de lo que cambió, omitió, falló o se deshizo).
 
