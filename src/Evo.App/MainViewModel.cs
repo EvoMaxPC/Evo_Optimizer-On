@@ -303,16 +303,43 @@ public sealed class MainViewModel
         return this;
     }
 
-    /// <summary>Deshace el diario acumulado de la sesión.</summary>
+    /// <summary>Deshace el diario acumulado de la sesión (aplicaciones previas).</summary>
     public MainViewModel Undo()
     {
         if (!IsWindowsCompatible) return this;
 
-        // El coordinador gestiona su propio diario interno. En esta versión
-        // mínima, el deshacer registra el intento y limpia el área de
-        // resultados; un deshacer real por capacidad requiere acceso al
-        // diario interno del coordinador (queda para la siguiente oleada).
-        AppendResult("Rollback de la sesión: diario limpiado. No se aplicaron cambios persistentes en DryRun.");
+        if (_journal.IsEmpty)
+        {
+            AppendResult("No hay nada para deshacer");
+            return this;
+        }
+
+        var capIds = _journal.Entries.Select(e => e.CapabilityId).Distinct().ToList();
+
+        var context = new UndoContext(
+            _registry ?? new WindowsRegistryAccessor(),
+            new WindowsServiceAccessor(),
+            new UnavailableTaskAccessor(),
+            new WindowsProcessAccessor(),
+            _commands,
+            dryRun: false);
+
+        var report = _journal.RollbackAsync(context).GetAwaiter().GetResult();
+
+        if (report.Restored.Count > 0)
+        {
+            var capIdText = capIds.Count == 1 ? capIds[0] : string.Join(", ", capIds);
+            AppendResult($"Se deshizo: {report.Restored.Count} cambio(s) de {capIdText}");
+        }
+        else if (report.Failed.Count > 0)
+        {
+            AppendResult($"Fallo al deshacer: {string.Join(" | ", report.Errors)}");
+        }
+        else
+        {
+            AppendResult("No hay nada para deshacer");
+        }
+
         return this;
     }
 

@@ -262,19 +262,26 @@ public class Tests
     [Fact]
     public void AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original()
     {
+        var registry = new FakeRegistryAccessor();
         var caps = new List<CapabilityDefinition> { SafeCapability("cap.undo") };
         var confirmations = new FakeConfirmationProvider { Approve = true };
         var restorePoints = new FakeRestorePointService { Available = true };
-        var vm = CreateVm(SupportedResult(), caps, confirmations: confirmations, restorePoints: restorePoints);
+        var vm = MainViewModel.CreateForTest(
+            ClientEnv(), SupportedResult(), caps,
+            confirmations, restorePoints, new FakeCommandRunner(), registry);
 
         var cap = Assert.Single(vm.Sections.SelectMany(s => s.Capabilities));
+        var keyPath = @"Software\Evo\Test";
         var applied = vm.Apply(cap);
 
         Assert.True(applied.HasResults);
-        // Después del undo, el diario está vacío
-        var undone = applied.Undo();
+        Assert.Equal(1, (int?)registry.GetValue(RegistryHive.CurrentUser, keyPath, "cap.undo"));
+
+        // Deshacer revierte de verdad el valor aplicado.
+        var undone = vm.Undo();
         Assert.True(undone.HasResults);
-        Assert.Contains("Rollback", undone.ResultsText);
+        Assert.Contains("Se deshizo", undone.ResultsText);
+        Assert.Null(registry.GetValue(RegistryHive.CurrentUser, keyPath, "cap.undo"));
     }
 
     #endregion
