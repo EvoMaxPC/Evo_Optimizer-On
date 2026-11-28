@@ -1,0 +1,20 @@
+{
+  "capacidades": 104,
+  "con_efectos_fuera": 18,
+  "implemented": 76,
+  "ok": true,
+  "specified": 28,
+  "specified_sin_efectos_fuera": [
+    "services.atlas.cbs-repair-source-policy",
+    "services.atlas.toggle-windows-updates",
+    "services.winutil.windows-update-reset",
+    "debloat.network.adobe-blocklist",
+    "debloat.start.layout",
+    "privacy.telemetry.dmwappush",
+    "services.winutil.svchostsplit",
+    "system.oem-information.identify",
+    "system.registry-backup.enable",
+    "system.time.ntp-servers"
+  ],
+  "violaciones_r1": []
+}
