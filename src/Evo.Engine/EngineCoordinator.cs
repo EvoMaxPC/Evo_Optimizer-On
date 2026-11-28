@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using Evo.Core.Actions;
 using Evo.Core.Confirmation;
 using Evo.Core.Enums;
@@ -344,6 +345,12 @@ public sealed class EngineCoordinator
             journal.RestorePointId = restorePointId;
         }
 
+        // Marca de posición: el rollback automático solo revertirá las
+        // entradas añadidas durante ESTA ejecución (ETAPA 6-K). Las entradas
+        // de ejecuciones previas exitosas de la misma capacidad quedan
+        // intactas, porque comparten el mismo journal (journal por capacidad).
+        var rollbackStartIndex = journal.Entries.Count;
+
         var context = template with { Mode = mode, Journal = journal, CapabilityId = plan.Capability.Id };
         var failed = false;
 
@@ -391,7 +398,9 @@ public sealed class EngineCoordinator
         }
         }
 
-        var rollbackEntries = journal.Entries.ToList();
+        // Solo las entradas de esta ejecución (después de la marca) se
+        // revierten en el rollback automático.
+        var rollbackEntries = journal.Entries.Skip(rollbackStartIndex).ToList();
         RollbackReport? rollbackReport = null;
 
         // El rollback se ejecuta en Execute cuando hay algo aplicado y la

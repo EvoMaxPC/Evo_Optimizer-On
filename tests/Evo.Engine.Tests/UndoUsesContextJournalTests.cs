@@ -135,4 +135,86 @@ public sealed class UndoUsesContextJournalTests
         // y el valor volvió al estado anterior (1, no 42).
         Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyB, "ValorB"));
     }
+
+    /// <summary>Paso 2, defecto del rollback automático: si la capacidad X ya se
+    /// aplicó con éxito (su journal J tiene entradas) y se ejecuta de nuevo
+    /// fallando en la 2ª acción, el rollback automático NO debe revertir las
+    /// entradas de la primera ejecución exitosa, solo las de esta ejecución.
+    ///
+    /// Traza a mano del código VIEJO (rollbackEntries = journal.Entries.ToList()):
+    ///   - Antes de la 2ª ejecución: J = [e1: ValorX 1→99]  (ValorX == 99)
+    ///   - 2ª ejecución: e2: ValorX 99→99 (Set DWord, éxito), luego comando falla.
+    ///   - rollbackEntries = [e1, e2]; RollbackAsync LIFO → deshace e2 (ValorX queda 99)
+    ///     y luego deshace e1 (ValorX vuelve a 1).  <-- BUG: ValorX == 1.
+    ///
+    /// Con la corrección (Skip(rollbackStartIndex)): solo e2 se revierte, ValorX
+    /// se queda en 99 y J conserva exactamente e1.
+    /// Contrato real de la app: Safe / SessionUndo / Confirmation.None
+    /// (no requiere punto de restauración, FakeRestorePointService no se invoca).
+    /// </summary>
+    [Fact]
+    public async Task RollbackAutomatico_No_Revierte_EjecucionPreviaExitosa()
+    {
+        var harness = TestHarness.Create();
+        var keyX = @"SOFTWARE\Evo\X";
+        harness.Registry.Seed(RegistryHive.LocalMachine, keyX, "ValorX", 1);
+
+        // Journal COMPARTIDO por la capacidad X (ETAPA 6-I: journal por capacidad).
+        var journalJ = new UndoJournal();
+        var ctxX = new ActionContext
+        {
+            Registry = harness.Registry,
+            Services = harness.Services,
+            Tasks = harness.Tasks,
+            Processes = harness.Processes,
+            Commands = harness.Commands,
+            Mode = ExecutionMode.Execute,
+            Journal = journalJ,
+            CapabilityId = "cap.x",
+        };
+
+        // 1ª ejecución: Set DWord ValorX 1→99, éxito.
+        var accionesX = new CapabilityAction[]
+        {
+            SetDword(1, "ValorX", "99", RegistryHiveKind.LocalMachine, keyX),
+        };
+        var contractX = TestHarness.Contract(
+            accionesX, id: "cap.x", risk: RiskLevel.Safe,
+            restore: RestoreLevel.SessionUndo, confirmation: ConfirmationType.None);
+        var summary1 = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contractX, accionesX), ExecutionMode.Execute, ctxX);
+        Assert.True(summary1.Succeeded >= 1);
+        Assert.Equal(99, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyX, "ValorX"));
+        Assert.Single(journalJ.Entries); // una entrada de la 1ª ejecución
+
+        // 2ª ejecución con el MISMO journal J: 1ª acción Set DWord (éxito),
+        // 2ª acción comando que falla → rollback automático.
+        harness.Commands.Throw("explode.exe --now");
+        var accionesX2 = new CapabilityAction[]
+        {
+            SetDword(1, "ValorX", "99", RegistryHiveKind.LocalMachine, keyX),
+            new CommandAction
+            {
+                Order = 2,
+                Description = "comando que falla",
+                FileName = "explode.exe",
+                Arguments = ["--now"],
+            },
+        };
+        var summary2 = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contractX, accionesX2), ExecutionMode.Execute, ctxX);
+        Assert.Equal(1, summary2.Succeeded); // la 1ª acción de esta ejecución aplicó
+        Assert.Equal(1, summary2.Failed);   // la 2ª falló → rollback automático
+
+        // CON LA CORRECCIÓN: ValorX se queda en 99 (estado tras la 1ª ejecución),
+        // NO vuelve a 1 (lo que daría el código viejo al deshacer también e1).
+        Assert.Equal(99, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyX, "ValorX"));
+
+        // J conserva exactamente las entradas de la 1ª ejecución (e2 se descartó
+        // al restaurarse; e1 nunca fue tocada por el rollback automático).
+        Assert.Single(journalJ.Entries);
+        var entrada = Assert.IsType<Undo.RegistryUndoEntry>(journalJ.Entries[0]);
+        Assert.Equal("1", entrada.PreviousState);
+        Assert.Equal(1, entrada.PreviousValue);
+    }
 }

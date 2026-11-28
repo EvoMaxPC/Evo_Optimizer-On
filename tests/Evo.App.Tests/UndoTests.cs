@@ -267,5 +267,44 @@ public class UndoTests
         Assert.True(vm.Undo(cap.Id).ResultsText.Contains("No hay nada para deshacer"));
     }
 
+    /// <summary>Paso 2e: Aplicar X con éxito; el segundo Aplicar de X falla a mitad
+    /// (SetValue lanza); Deshacer X debe revertir la PRIMERA aplicación (estado
+    /// original: valor ausente) y decir "Se deshizo: 1 cambio(s)".
+    ///
+    /// Forzado con FakeRegistryAccessor.ThrowOnSetValueCall: la 2ª aplicación
+    /// lanza OperationCanceledException en SetValue; EngineCoordinator la
+    /// captura (no deja escapar), no agrega entrada al journal de esta
+    /// ejecución, y como no hubo mutación nueva no hay rollback automático.
+    /// El journal de X conserva solo la entrada de la 1ª aplicación.
+    /// </summary>
+    [Fact]
+    public void DespuesDeAplicar_SegundoAplicarFalla_DeshacerReviertePrimera()
+    {
+        var registry = new FakeRegistryAccessor();
+        var caps = new List<CapabilityDefinition> { SafeCapability("cap.x", "ValorX", 42, @"Software\Evo\X") };
+        var vm = CreateVmConRegistro(caps, registry);
+        var cap = CapacidadDe(vm, "cap.x");
+
+        // 1ª aplicación: éxito.
+        var applied1 = vm.Apply(cap);
+        Assert.True(applied1.HasResults);
+        Assert.Equal(42, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\X", "ValorX"));
+
+        // 2ª aplicación: SetValue falla en la 1ª llamada (ThrowOnSetValueCall = 1).
+        registry.ResetSetValueCounter();
+        registry.ThrowOnSetValueCall = 1;
+        var applied2 = vm.Apply(cap);
+        Assert.True(applied2.HasResults);
+        // ValorX sigue en 42: la 2ª aplicación no mutó (SetValue lanzó antes).
+        Assert.Equal(42, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\X", "ValorX"));
+
+        // Deshacer X revierte la 1ª aplicación: estado original (valor ausente).
+        var undone = vm.Undo(cap.Id);
+        Assert.True(undone.HasResults);
+        Assert.Contains("Se deshizo: 1 cambio(s) de cap.x", undone.ResultsText);
+        Assert.DoesNotContain("DryRun", undone.ResultsText);
+        Assert.Null(registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\X", "ValorX"));
+    }
+
     #endregion
 }
