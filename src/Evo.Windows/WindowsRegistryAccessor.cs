@@ -1,5 +1,6 @@
 using Evo.Core.System;
 using Microsoft.Win32;
+using System.Security;
 
 namespace Evo.Windows;
 
