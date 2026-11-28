@@ -190,7 +190,7 @@ atlas:toggle:AutomaticFolderDiscovery	atlas-toggle	AutomaticFolderDiscovery	10	c
 atlas:toggle:AutomaticRepair	atlas-toggle	AutomaticRepair	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:AutomaticUpdates	atlas-toggle	AutomaticUpdates	12	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:BackgroundApps	atlas-toggle	BackgroundApps	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:Bluetooth	atlas-toggle	Bluetooth	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Bluetooth	atlas-toggle	Bluetooth	4	category	services.atlas.bluetooth	covered	cubierta por services.atlas.bluetooth (ledger_refs de su provenance)
 atlas:toggle:BootLogo	atlas-toggle	BootLogo	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:ClickToDo	atlas-toggle	ClickToDo	2	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:CompactView	atlas-toggle	CompactView	10	category	explorer.compact-view.enable	covered	cubierta por explorer.compact-view.enable (ledger_refs de su provenance)
@@ -219,7 +219,7 @@ atlas:toggle:Indexing	atlas-toggle	Indexing	9	item-name-rule		pending	ninguna ca
 atlas:toggle:InstallSoftware	atlas-toggle	InstallSoftware	15	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:KernelParameters	atlas-toggle	KernelParameters	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:KeyboardShortcuts	atlas-toggle	KeyboardShortcuts	10	category	system.keyboard-shortcuts.disable	covered	cubierta por system.keyboard-shortcuts.disable (ledger_refs de su provenance)
-atlas:toggle:LanmanWorkstation	atlas-toggle	LanmanWorkstation	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:LanmanWorkstation	atlas-toggle	LanmanWorkstation	4	category	services.atlas.lanmanworkstation	covered	cubierta por services.atlas.lanmanworkstation (ledger_refs de su provenance)
 atlas:toggle:Location	atlas-toggle	Location	3	item-name-rule	system.location.consent-deny	covered	cubierta por system.location.consent-deny (ledger_refs de su provenance)
 atlas:toggle:LockScreen	atlas-toggle	LockScreen	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:MicrosoftStore	atlas-toggle	MicrosoftStore	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
@@ -227,16 +227,16 @@ atlas:toggle:Mitigations	atlas-toggle	Mitigations	13	category	system.mitigations
 atlas:toggle:ModernBatteryFlyout	atlas-toggle	ModernBatteryFlyout	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:ModernDateTime	atlas-toggle	ModernDateTime	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:ModernVolumeFlyout	atlas-toggle	ModernVolumeFlyout	10	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:NVidiaDisplayContainer	atlas-toggle	NVidiaDisplayContainer	4	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:NVidiaDisplayContainerContextMenu	atlas-toggle	NVidiaDisplayContainerContextMenu	4	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:NetworkDiscovery	atlas-toggle	NetworkDiscovery	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:NVidiaDisplayContainer	atlas-toggle	NVidiaDisplayContainer	4	category	services.atlas.nvidiadisplaycontainer	covered	cubierta por services.atlas.nvidiadisplaycontainer (ledger_refs de su provenance)
+atlas:toggle:NVidiaDisplayContainerContextMenu	atlas-toggle	NVidiaDisplayContainerContextMenu	4	category	services.atlas.nvidiadisplaycontainer	covered	cubierta por services.atlas.nvidiadisplaycontainer (ledger_refs de su provenance)
+atlas:toggle:NetworkDiscovery	atlas-toggle	NetworkDiscovery	4	category	services.atlas.networkdiscovery	covered	cubierta por services.atlas.networkdiscovery (ledger_refs de su provenance)
 atlas:toggle:NetworkNavigationPane	atlas-toggle	NetworkNavigationPane	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:NewBootMenu	atlas-toggle	NewBootMenu	8	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:OldContextMenu	atlas-toggle	OldContextMenu	10	category	ui.context-menu.classic	covered	cubierta por ui.context-menu.classic (ledger_refs de su provenance)
 atlas:toggle:PauseUpdates	atlas-toggle	PauseUpdates	12	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:PhoneLink	atlas-toggle	PhoneLink	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:PowerSaving	atlas-toggle	PowerSaving	5	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:Printing	atlas-toggle	Printing	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:Printing	atlas-toggle	Printing	4	category	services.atlas.printing	covered	cubierta por services.atlas.printing (ledger_refs de su provenance)
 atlas:toggle:ProcessExplorer	atlas-toggle	ProcessExplorer	15	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:QuickAccess	atlas-toggle	QuickAccess	10	category	explorer.quick-access.hide	covered	cubierta por explorer.quick-access.hide (ledger_refs de su provenance)
 atlas:toggle:Recall	atlas-toggle	Recall	2	item-effect		pending	ninguna capacidad del catalogo la cita todavia
@@ -256,7 +256,7 @@ atlas:toggle:Sleep	atlas-toggle	Sleep	7	item-name-rule		pending	ninguna capacida
 atlas:toggle:SleepStudy	atlas-toggle	SleepStudy	7	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:SnapLayouts	atlas-toggle	SnapLayouts	10	category	ui.snap-layouts.disable	covered	cubierta por ui.snap-layouts.disable (ledger_refs de su provenance)
 atlas:toggle:SpinningAnimations	atlas-toggle	SpinningAnimations	8	category		pending	ninguna capacidad del catalogo la cita todavia
-atlas:toggle:SuperFetch	atlas-toggle	SuperFetch	4	category		pending	ninguna capacidad del catalogo la cita todavia
+atlas:toggle:SuperFetch	atlas-toggle	SuperFetch	4	category	services.atlas.superfetch	covered	cubierta por services.atlas.superfetch (ledger_refs de su provenance)
 atlas:toggle:SystemRestore	atlas-toggle	SystemRestore	14	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:TakeOwnership	atlas-toggle	TakeOwnership	10	category		pending	ninguna capacidad del catalogo la cita todavia
 atlas:toggle:TelemetryComponents	atlas-toggle	TelemetryComponents	14	category		pending	ninguna capacidad del catalogo la cita todavia
@@ -369,7 +369,7 @@ winutil:tweak:WPFAddUltPerf	winutil	Ultimate Performance Profile - Enable	5	cate
 winutil:tweak:WPFMultiplaneOverlay	winutil	Multiplane Overlay	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFOOSUbutton	winutil	O&O ShutUp10++ - Run		none		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFRemoveUltPerf	winutil	Ultimate Performance Profile - Disable	5	category		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFToggleBatteryPercentage	winutil	System Tray Battery Percentage	10	item-effect		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFToggleBatteryPercentage	winutil	System Tray Battery Percentage	10	item-effect	system.tray.battery-percentage	covered	cubierta por system.tray.battery-percentage (ledger_refs de su provenance)
 winutil:tweak:WPFToggleBingSearch	winutil	Start Menu Bing Search	10	item-effect	debloat.start.websearch	covered	cubierta por debloat.start.websearch (ledger_refs de su provenance)
 winutil:tweak:WPFToggleDarkMode	winutil	Dark Theme for Windows	10	item-name-rule	ui.theme.dark	covered	cubierta por ui.theme.dark (ledger_refs de su provenance)
 winutil:tweak:WPFToggleDetailedBSoD	winutil	BSoD Verbose Mode	14	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
@@ -424,9 +424,9 @@ winutil:tweak:WPFTweaksReservedStorage	winutil	Disable Reserved Storage	1	item-e
 winutil:tweak:WPFTweaksRestorePoint	winutil	Restore Point - Create	14	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksRevertStartMenu	winutil	Start Menu Previous Layout - Enable	10	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksRightClickMenu	winutil	Right-Click Menu Previous Layout - Enable	10	item-name-rule	ui.context-menu.classic	covered	cubierta por ui.context-menu.classic (ledger_refs de su provenance)
-winutil:tweak:WPFTweaksServices	winutil	Services - Set to Manual	4	item-effect	system.services.manual-profile	covered	cubierta por system.services.manual-profile (ledger_refs de su provenance)
+winutil:tweak:WPFTweaksServices	winutil	Services - Set to Manual	4	item-effect	services.winutil.cscservice	covered	cubierta por services.winutil.cscservice (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksStorage	winutil	Storage Sense - Disable	1	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:tweak:WPFTweaksSvcHostSplitting	winutil	svchost.exe Splitting - Disable	7	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:tweak:WPFTweaksSvcHostSplitting	winutil	svchost.exe Splitting - Disable	7	item-name-rule	services.winutil.svchostsplit	covered	cubierta por services.winutil.svchostsplit (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksTelemetry	winutil	Telemetry - Disable	3	item-name-rule	debloat.start.websearch	covered	cubierta por debloat.start.websearch (ledger_refs de su provenance)
 winutil:tweak:WPFTweaksTeredo	winutil	Teredo - Disable	11	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:tweak:WPFTweaksUTC	winutil	Date & Time - Set Time to UTC	9	item-name-rule	system.time.utc-rtc	covered	cubierta por system.time.utc-rtc (ledger_refs de su provenance)

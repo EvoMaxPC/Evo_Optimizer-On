@@ -124,8 +124,9 @@ def winutil_registry_pairs(entry: dict) -> set[tuple[str, str, str]]:
     return pairs
 
 
-def winutil_service_pairs(entry: dict) -> set[tuple[str, str]]:
-    return {(item["Name"], item["StartupType"]) for item in entry.get("service") or []}
+def winutil_service_pairs(entry: dict) -> list[tuple[str, str]]:
+    """Lista ordenada de servicios del tweak (misma secuencia que el pin)."""
+    return [(item["Name"], item["StartupType"]) for item in entry.get("service") or []]
 
 
 def script_registry_pairs(script: str) -> set[tuple[str, str, str]]:
@@ -192,6 +193,12 @@ def pin_pairs(capability: dict) -> tuple[set, set, set, list[str]]:
     provenance = capability["provenance"]
     tweaks = sorted(set(re.findall(rb"winutil:tweak:(\w+)", provenance.encode())))
     tweaks = [t.decode() for t in tweaks]
+    # `winutil:tweak-op:<tweak>:service:<N>` acota el efecto del pin al servicio
+    # en la posición N de la lista `service` del tweak (se usa cuando una
+    # capacidad solo gestiona UN servicio de un pin que declara varios).
+    svc_ops: dict[str, set[int]] = {}
+    for mk, mv in re.findall(rb"winutil:tweak-op:(\w+):service:(\d+)", provenance.encode()):
+        svc_ops.setdefault(mk.decode(), set()).add(int(mv))
     features = sorted(set(re.findall(rb"winutil:feature:(\w+)", provenance.encode())))
     features = [f.decode() for f in features]
     toggles = sorted(set(re.findall(r"Toggles/([A-Za-z0-9_/]+\.psd1)", provenance)))
@@ -206,7 +213,10 @@ def pin_pairs(capability: dict) -> tuple[set, set, set, list[str]]:
     for tweak in tweaks:
         entry = winutil_entry(tweak)
         registry |= winutil_registry_pairs(entry)
-        services |= winutil_service_pairs(entry)
+        svcs = winutil_service_pairs(entry)
+        if tweak in svc_ops:
+            svcs = [s for i, s in enumerate(svcs) if i in svc_ops[tweak]]
+        services |= set(svcs)
         for field in ("InvokeScript", "UndoScript"):
             for script in entry.get(field) or []:
                 if field == "UndoScript":

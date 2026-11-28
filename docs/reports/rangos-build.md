@@ -2,7 +2,7 @@
 
 Generado por `tools/ledger_extract/build_build_ranges_report.py` a partir de `catalog/capabilities/*.json`. No editar a mano: CI compara el fichero con el generado.
 
-Catálogo: **88** capacidades, 69 `Implemented` y 19 `Specified`.
+Catálogo: **101** capacidades, 76 `Implemented` y 25 `Specified`.
 
 ## Método
 
@@ -12,11 +12,11 @@ Se agrupa por la tupla exacta de `supportedBuilds` (sin normalizar ni reordenar)
 
 | `supportedBuilds` | Capacidades |
 |---|---:|
-| `[19045, 22631, 26100, 26200]` | 79 |
+| `[19045, 22631, 26100, 26200]` | 92 |
 | `[22631, 26100, 26200]` | 8 |
 | `[26100, 26200]` | 1 |
 
-Con las cuatro builds del catálogo: **79**. Con rango recortado: **9**.
+Con las cuatro builds del catálogo: **92**. Con rango recortado: **9**.
 
 ## Capacidades con rango recortado
 

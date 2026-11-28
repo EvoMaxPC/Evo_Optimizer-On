@@ -68,6 +68,18 @@ privacy.location.sensors	3	Implemented	winutil	config/tweaks.json#WPFTweaksLocat
 privacy.ceip.tasks	3	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/debloat/disable-scheduled-tasks.psd1	0	1	0		0	no	OK
 privacy.diagnostic.data.level	3	Implemented	winutil	config/tweaks.json#WPFTweaksTelemetry	0	7	0		0	no	OK
 privacy.kms.activation.telemetry	3	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-activation-telemetry.psd1	0	1	0		0	no	OK
+services.atlas.bluetooth	4	Specified	atlas	package/Executables/AtlasModules/Toggles/Services/Bluetooth.psd1:13	2	34	4	machine-action,unexpressed,user-action	0	no	OK
+services.atlas.lanmanworkstation	4	Specified	atlas	package/Executables/AtlasModules/Toggles/Services/LanmanWorkstation.psd1:11	0	14	1	machine-action	0	si	OK
+services.atlas.networkdiscovery	4	Implemented	atlas	package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.psd1:11	0	8	0		0	no	OK
+services.atlas.nvidiadisplaycontainer	4	Specified	atlas	package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainer.psd1:11	0	0	1	machine-action	0	no	OK
+services.atlas.printing	4	Specified	atlas	package/Executables/AtlasModules/Toggles/Services/Printing.psd1:11	0	0	1	machine-action	0	no	OK
+services.atlas.superfetch	4	Specified	atlas	package/Executables/AtlasModules/Toggles/Services/SuperFetch.psd1:11	0	0	1	machine-action	0	no	OK
+services.winutil.cscservice	4	Implemented	winutil	config/tweaks.json:WPFTweaksServices	1	2	0		0	no	OK
+services.winutil.diagtrack	4	Implemented	winutil	config/tweaks.json:WPFTweaksServices	1	2	0		0	no	OK
+services.winutil.mapsbroker	4	Implemented	winutil	config/tweaks.json:WPFTweaksServices	1	2	0		0	no	OK
+services.winutil.sharedaccess	4	Implemented	winutil	config/tweaks.json:WPFTweaksServices	1	2	0		0	no	OK
+services.winutil.storsvc	4	Implemented	winutil	config/tweaks.json:WPFTweaksServices	1	2	0		0	no	OK
+services.winutil.svchostsplit	4	Specified	winutil	config/tweaks.json:WPFTweaksSvcHostSplitting	0	0	0		0	si	OK
 system.error-reporting.crash-control	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/system/crash-control-qol.psd1:5-11.	0	5	0		0	no	OK
 system.error-reporting.wpbt-disable	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/system/disable-wpbt.psd1:8.	0	1	0		0	no	OK
 system.game-mode.enable	9	Implemented	winutil	config/tweaks.json#WPFToggleGameMode	2	2	0		0	no	OK
@@ -81,9 +93,10 @@ system.network.location-wizard.disable	9	Implemented	atlas	package/Executables/A
 system.oem-information.identify	9	Specified	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1:5-7.	0	3	0		0	no	OK
 system.registry-backup.enable	9	Specified	winutil	config/feature.json#WPFFeatureRegBackup	2	2	0		0	no	OK
 system.search-indexing.disable	9	Implemented	winutil	config/tweaks.json#WPFTweaksDisableSearchIndexing.	1	2	0		0	no	OK
-system.services.manual-profile	9	Implemented	winutil	config/tweaks.json#WPFTweaksServices.	5	5	0		0	no	OK
+system.services.manual-profile	9	Implemented	winutil	config/tweaks.json#WPFTweaksServices.	1	5	0		0	no	OK
 system.settings-page-visibility.hide	9	Implemented	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5	0	1	0		0	no	OK
 system.sleep.s0-network-keep	9	Implemented	winutil	config/tweaks.json#WPFToggleStandbyFix	1	1	0		0	no	OK
 system.sleep.s3-enable	9	Implemented	winutil	config/tweaks.json#WPFToggleS3Sleep	1	1	0		0	no	OK
 system.time.ntp-servers	9	Specified	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1:9-10.	0	3	0		0	si	OK
 system.time.utc-rtc	9	Implemented	winutil	config/tweaks.json#WPFTweaksUTC	1	1	0		0	no	OK
+system.tray.battery-percentage	9	Implemented	winutil	config/tweaks.json:WPFToggleBatteryPercentage:registry:0.	1	1	0		0	no	OK

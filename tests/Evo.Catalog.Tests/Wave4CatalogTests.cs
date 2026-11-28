@@ -233,6 +233,31 @@ public sealed class Wave4CatalogTests
             StringComparison.Ordinal);
     }
 
+    /// <summary>PASO D-A: `system.tray.battery-percentage` (WinUtil,
+    /// config/tweaks.json:1395) es `Implemented`: una acción `registry Set`
+    /// que activa el porcentaje de batería en la bandeja del sistema.</summary>
+    [Fact]
+    public void TestWave4Catalog_BatteryPercentageImplemented()
+    {
+        var definition = Definition("system.tray.battery-percentage");
+        Assert.Equal(CapabilityState.Implemented, definition.State);
+        Assert.Equal(PrivilegeLevel.User, definition.Privilege);
+        Assert.Equal(Reversibility.Reversible, definition.Reversibility);
+        Assert.Equal(RestoreLevel.SessionUndo, definition.Restore);
+
+        var registry = definition.Actions.OfType<RegistryAction>().ToList();
+        Assert.Single(registry);
+        var action = registry[0];
+        Assert.Equal(RegistryOperation.Set, action.Operation);
+        Assert.Equal(RegistryHive.CurrentUser, action.Hive);
+        Assert.Equal(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", action.KeyPath);
+        Assert.Equal("IsBatteryPercentageEnabled", action.ValueName);
+        Assert.Equal("1", action.Value);
+        Assert.Contains("WPFToggleBatteryPercentage", definition.Provenance,
+            StringComparison.Ordinal);
+        Assert.Empty(CapabilityRules.Validate(definition.ToContract()));
+    }
+
     /// <summary>T1/T2: el JSON de las acciones nuevas se deserializa con el
     /// discriminador exacto que espera el motor, y sólo con esos campos.</summary>
     [Fact]
@@ -290,17 +315,17 @@ public sealed class Wave4CatalogTests
     /// Barrido de TODO el catálogo (88). Existe porque cada oleada enumera sólo
     /// sus ids: si una capacidad se colara fuera de las listas (o una oleada
     /// dejara de enumerar la suya), ningún test se enteraría. Aquí se exige que
-    /// las 88 cumplan lo mismo, sin listas de ids de por medio.
+    /// las 101 cumplan lo mismo, sin listas de ids de por medio.
     /// </summary>
     [Fact]
     public void TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants()
     {
         var all = LoadAll();
-        Assert.Equal(88, all.Count);
+        Assert.Equal(101, all.Count);
 
-        // Las cinco secciones cerradas, ni una capacidad fuera de ellas.
+        // Las seis secciones cerradas, ni una capacidad fuera de ellas.
         var sections = all.Select(d => d.SectionId).Distinct().OrderBy(s => s).ToArray();
-        Assert.Equal(new[] { 1, 2, 3, 9, 10 }, sections);
+        Assert.Equal(new[] { 1, 2, 3, 4, 9, 10 }, sections);
 
         var report = new CatalogValidator(KnownBuilds).Validate(
             new CapabilityCatalog(new CatalogMetadata { Version = "1.0.0", SchemaVersion = 1 }, all));

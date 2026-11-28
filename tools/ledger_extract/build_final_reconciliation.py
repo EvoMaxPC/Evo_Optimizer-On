@@ -160,21 +160,67 @@ MAPPED_OVERRIDES: dict[tuple[int, str], tuple[str, str]] = {
                  "Scripts/Tweaks/qol/set-hidden-settings-pages.ps1; el paso 4e la habia "
                  "casado con WPFTweaksTelemetry:registry:7, que es AcceptedPrivacyPolicy y "
                  "no la visibilidad de paginas"),
+    # Correcciones medidas en el paso 7 (oleada 1, seccion 4 "Optimizacion de servicios").
+    # El paso 4e dejo estas lineas en `Absent-At-Pin` pero el pin SI las implementa.
+    (4, "127"): ("winutil:tweak:WPFTweaksSvcHostSplitting",
+                 "el pin implementa Service Host Splitting en WPFTweaksSvcHostSplitting "
+                 "(config/tweaks.json:180): escribe SvcHostSplitThresholdInKB en "
+                 "HKLM\\\\SYSTEM\\\\CurrentControlSet\\\\Control. El valor depende de la memoria "
+                 "fisica (no es literal fijo), por eso la capacidad queda en State=Specified."),
+    (4, "131"): ("atlas:toggle:LanmanWorkstation",
+                 "el pin implementa Lanman Workstation en Toggles/Services/LanmanWorkstation.psd1 "
+                 "(estado Disable): KSecPkg, LanmanServer, LanmanWorkstation, mrxsmb, mrxsmb20, "
+                 "rdbss y srv2 a StartupType Disabled/Manual. La MachineAction "
+                 "Set-AtlasSmbDirectFeature no se declara (R1), por eso State=Specified."),
+    (4, "132"): ("atlas:toggle:NetworkDiscovery",
+                 "el pin implementa Network Discovery en Toggles/Services/NetworkDiscovery.psd1 "
+                 "(estado Disable): fdPHost, FDResPub, lmhosts y SSDPSRV a StartupType Disabled. "
+                 "Estado Disable sin MachineAction, expresable completo."),
+    (4, "133"): ("atlas:toggle:NVidiaDisplayContainer",
+                 "el pin implementa NVIDIA Display Container en Toggles/Services/NVidiaDisplayContainer.psd1 "
+                 "(estado Disable): solo declara MachineAction Set-AtlasNVidiaDisplayContainerState, "
+                 "sin registro ni tipo de servicio expresables. No cabe en acciones del motor: State=Specified."),
+    (4, "134"): ("atlas:toggle:Printing",
+                 "el pin implementa Printing en Toggles/Services/Printing.psd1 (estado Disable): "
+                 "solo declara MachineAction Set-AtlasPrintingMachineState y ContextAction, sin "
+                 "registro ni tipo de servicio expresables. No cabe en acciones del motor: State=Specified."),
+    (4, "135"): ("atlas:toggle:SuperFetch",
+                 "el pin implementa SuperFetch/SysMain en Toggles/Services/SuperFetch.psd1 "
+                 "(estado Disable): solo declara MachineAction Set-AtlasSuperFetchMachineState, sin "
+                 "registro ni tipo de servicio expresables. No cabe en acciones del motor: State=Specified."),
+    # Seccion 9, linea 278 "System Tray Configuration." (bloque WinUtil).
+    # El paso 7 lo mueve a MAPPED_OVERRIDES: el pin SI tiene WPFToggleBatteryPercentage
+    # (config/tweaks.json:1395) y WPFTweaksDisableNotifications (config/tweaks.json:1116).
+    (9, "278"): ("winutil:tweak:WPFToggleBatteryPercentage",
+                 "medido en el paso 7: el pin de WinUtil no tiene un ajuste unico de "
+                 "'configuracion de la bandeja'; config/tweaks.json declara dos ajustes "
+                 "concretos - 'System Tray Notifications & Calendar - Disable' "
+                 "(WPFTweaksDisableNotifications, linea 1116) y 'System Tray Battery "
+                 "Percentage' (WPFToggleBatteryPercentage, linea 1395) - y no una "
+                 "'configuracion de la bandeja' generica. `xaml/` no tiene pagina de "
+                 "bandeja. Se cubre WPFToggleBatteryPercentage con la capacidad "
+                 "system.tray.battery-percentage (seccion 9)."),
 }
 
 # Lineas que el paso 4e dejo en `Mapped` por la regla R3 y que en el pin NO tienen
 # el efecto que anuncia la linea. Se corrigen a `Absent-At-Pin`, con la medicion.
 ABSENT_OVERRIDES: dict[tuple[int, str], str] = {
-    # Seccion 9, linea 278 "System Tray Configuration." (bloque WinUtil).
-    (9, "278"): ("medido en el paso 10: el pin de WinUtil no tiene ningun ajuste de "
-                 "configuracion de la bandeja del sistema. `config/tweaks.json` solo "
-                 "declara 'System Tray Notifications & Calendar - Disable' "
-                 "(WPFTweaksDisableNotifications) y 'System Tray Battery Percentage' "
-                 "(WPFToggleBatteryPercentage), que son dos ajustes concretos y no una "
-                 "'configuracion de la bandeja'; `xaml/` no tiene ninguna pagina de "
-                 "bandeja. El `mapped_id` que puso el paso 4e "
-                 "(winutil:tweak-op:WPFToggleLoginBlur:registry:0) es el desenfoque del "
-                 "inicio de sesion, sin relacion con la bandeja"),
+    # Seccion 4, linea 121 "Services — configuración de inicio Manual." (bloque WinUtil).
+    # Es un encabezado de sub-bloque que agrupa los 5 servicios ya mapeados individualmente
+    # (líneas 122-126). No es una operación aparte del pin.
+    (4, "121"): ("medido en el paso 7: la linea agrupa los servicios de WinUtil ya mapeados "
+                 "individualmente (DiagTrack, MapsBroker, StorSvc, SharedAccess, CscService en "
+                 "las líneas 122-126). No es una operación aparte; no hay candidato propio en el pin (REQ-002)."),
+    # Seccion 4, linea 136 "Windows Update Services." (bloque AtlasOS).
+    (4, "136"): ("medido en el paso 7: el pin tiene toggles generales de actualizacion "
+                 "(ToggleWindowsUpdates.psd1, AutomaticUpdates.psd1) pero no un toggle "
+                 "especifico llamado 'Windows Update Services'. No hay candidato de ledger "
+                 "que mapee a esta linea (REQ-002: no inventar)."),
+    # Seccion 4, linea 144 "Reset Services." (bloque AtlasOS).
+    (4, "144"): ("medido en el paso 7: el pin tiene Defaults.ps1 en Atlas.Network/Domain "
+                 "(Invoke-AtlasWindowsNetworkDefault) pero es un script de restablecimiento de red, "
+                 "no un toggle de servicios con el efecto que anuncia la linea. "
+                 "El mapped_id que puso el paso 4e (regla R3 contra tests de Atlas) no es producto. (REQ-002)"),
 }
 
 

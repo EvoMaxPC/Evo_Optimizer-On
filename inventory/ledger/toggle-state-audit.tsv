@@ -11,6 +11,12 @@ explorer.quick-access.hide	10	QuickAccess	Disable	Delete HKLM:SOFTWARE\Microsoft
 explorer.recent-items.disable	10	RecentItems	Disable	Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer ClearRecentDocsOnExit=; Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer NoInstrumentation=; Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer NoRecentDocsHistory=; Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer NoStartMenuMFUprogramsList=; Delete HKLM:SOFTWARE\Policies\Microsoft\Windows\Explorer HideRecentlyAddedApps=; Delete HKLM:SOFTWARE\Policies\Microsoft\Windows\Explorer NoRemoteDestinations=; Delete HKLM:SOFTWARE\Policies\Microsoft\Windows\Explorer ShowOrHideMostUsedApps=	PENDIENTE
 explorer.removable-drives.sidebar	10	RemovableDrivesInSidebar	Enable	DeleteKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}; DeleteKey HKLM:SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}	CONTRARIO
 explorer.shortcut-icon.classic	10	ShortcutIcon	Classic	Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons 29=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons 29=%SystemRoot%\AtlasModules\Other\Blank.ico,0	PENDIENTE
+services.atlas.bluetooth	4	Bluetooth	Disable	Set HKLM:SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth value=2	PENDIENTE
+services.atlas.lanmanworkstation	4	LanmanWorkstation	Disable		OK
+services.atlas.networkdiscovery	4	NetworkDiscovery	Disable		OK
+services.atlas.nvidiadisplaycontainer	4	NVidiaDisplayContainer	Disable		OK
+services.atlas.printing	4	Printing	Disable		OK
+services.atlas.superfetch	4	SuperFetch	Disable		OK
 system.hibernation.hide	9	Hibernation	Disable	Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings ShowHibernateOption=1	PENDIENTE
 system.keyboard-shortcuts.disable	9	KeyboardShortcuts	Disable	Set HKCU:Keyboard Layout\Toggle Hotkey=1; Set HKCU:Keyboard Layout\Toggle Language Hotkey=1; Set HKCU:Keyboard Layout\Toggle Layout Hotkey=2	PENDIENTE
 system.location.consent-deny	9	Location	Disable	Delete HKCU:Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location ShowGlobalPrompts=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location Value=Allow	PENDIENTE

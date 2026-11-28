@@ -93,7 +93,7 @@ public sealed class Wave1CatalogTests
         // + 1 neta del 8c (debloat.windows.ai se parte en .recall y .remove)
         // + 29 de la oleada 2 (sección 10, paso 9)
         // + 18 de la oleada 3 (sección 9, paso 10) = 86, + 2 del paso 12 = 88.
-        Assert.Equal(88, catalog.Count);
+        Assert.Equal(101, catalog.Count);
 
         // Las 39 de las secciones 1-3 siguen ahí; las oleadas 2 y 3 añaden las
         // secciones 10 y 9, que este test no enumera (tienen sus propios tests).
@@ -104,7 +104,7 @@ public sealed class Wave1CatalogTests
         // Paso 12: 29 -> 30 en la seccion 10 (`explorer.home.restore`) y
         // 18 -> 19 en la 9 (`system.network.location-wizard.disable`).
         Assert.Equal(30, catalog.Definitions.Count(d => d.SectionId == 10));
-        Assert.Equal(19, catalog.Definitions.Count(d => d.SectionId == 9));
+        Assert.Equal(20, catalog.Definitions.Count(d => d.SectionId == 9));
 
         var report = new CatalogValidator(KnownBuilds).Validate(catalog);
 

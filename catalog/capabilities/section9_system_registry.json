@@ -1013,6 +1013,45 @@
                "operation": "Set"
             }
          ]
+      },
+      {
+         "id": "system.tray.battery-percentage",
+         "name": "Mostrar el porcentaje de bateria en la bandeja del sistema",
+         "description": "Pone IsBatteryPercentageEnabled=1 en HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced (DWord), como el tweak WPFToggleBatteryPercentage de WinUtil. Muestra el porcentaje numerico de bateria junto al icono de bateria en la bandeja del sistema. Reversible.",
+         "sectionId": 9,
+         "risk": "Safe",
+         "securityImpact": "Neutral",
+         "privilege": "User",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "None",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFToggleBatteryPercentage:registry:0. Valor 1 (DWord) leido del pin. Inventario seccion 9: linea 278 (System Tray Battery Percentage). ledger_refs: winutil:tweak:WPFToggleBatteryPercentage Reversibilidad (ADR-0003): el motor guarda el valor previo del valor de registro y lo restaura al deshacer.",
+         "actions": [
+            {
+               "type": "registry",
+               "order": 1,
+               "description": "IsBatteryPercentageEnabled en HKCU",
+               "hive": "CurrentUser",
+               "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+               "valueName": "IsBatteryPercentageEnabled",
+               "value": "1",
+               "valueType": "DWord",
+               "operation": "Set"
+            }
+         ]
       }
    ]
 }

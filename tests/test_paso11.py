@@ -154,10 +154,10 @@ def test_la_seccion_9_cierra_sus_dos_specified() -> None:
         "system.time.ntp-servers",
     ], specified
     # Paso 12: 18 -> 19 con system.network.location-wizard.disable.
-    assert len(CAPS9) == 19
+    assert len(CAPS9) == 20
     # Actions: 39 del paso 10 + tarea (1) + w32time (1) + lfsvc/MapsBroker (4)
     # + Stop de WSearch (1) + registryCreateKey de NewNetworkWindowOff (1).
-    assert sum(len(c["actions"]) for c in CAPS9.values()) == 47
+    assert sum(len(c["actions"]) for c in CAPS9.values()) == 48
 
 
 def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
@@ -167,7 +167,7 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
     contra los dos JSON que cambian, para que la cifra no pueda quedarse vieja.
     """
     text = RANGES.read_text(encoding="utf-8")
-    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in text
+    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in text
     for path in sorted(CATALOG.glob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
         for cap in document["capabilities"]:
@@ -179,11 +179,11 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
     # Explorer y sistema: 3 de `explorer.home.restore` (crear la clave + 2 valores),
     # 1 `ServiceAction Stop` de WSearch y 1 `registryCreateKey` de
     # `system.network.location-wizard.disable`.
-    assert total == 88
+    assert total == 101
     actions = sum(len(a["actions"])
                   for p in sorted(CATALOG.glob("*.json"))
                   for a in json.loads(p.read_text(encoding="utf-8"))["capabilities"])
-    assert actions == 243
+    assert actions == 310
 
 
 def test_la_copia_de_seguridad_lleva_registro_y_tarea() -> None:
@@ -275,9 +275,9 @@ def test_la_auditoria_incluye_el_borrado_de_clave_con_su_fuente() -> None:
     assert report["distribucion"].get("ambiguous", 0) == 0
     assert report["excepciones"] == 2
     # 194 del paso 10 + la fila del DeleteKey de Inicio (195) + los dos valores
-    # de explorer.home.restore (197).
-    assert report["filas"] == 197
-    assert report["por_seccion"]["9"] == 33
+    # de explorer.home.restore (197) + la fila de bateria seccion 9 (198).
+    assert report["filas"] == 198
+    assert report["por_seccion"]["9"] == 34
     assert report["por_seccion"]["10"] == 59
 
     rows = read_tsv(AUDIT)
@@ -294,14 +294,14 @@ def test_la_cobertura_sigue_en_85_de_85_sin_huecos() -> None:
     report = json.loads(subprocess.run(
         [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
          "--json"], capture_output=True, text=True, check=False).stdout)
-    assert report["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
-    assert report["lineas_mapped_1_3"] == 85
-    assert report["cubiertas"] == 85
+    assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
+    assert report["lineas_mapped_1_3"] == 98
+    assert report["cubiertas"] == 98
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
     # Paso 12: 86 -> 88 capacidades (la cobertura sigue 85/85, no cambian las
     # líneas Mapped del inventario).
-    assert report["capacidades"] == 88
+    assert report["capacidades"] == 101
     for section in ("1", "2", "3", "9", "10"):
         assert report["por_seccion"][section]["huecos"] == 0, section
 
@@ -324,7 +324,7 @@ def test_las_cifras_de_los_informes_generados_estan_al_dia() -> None:
     text = RANGES.read_text(encoding="utf-8")
     # Paso 12h: 88 = 69 + 19 (ntp-servers pasa a Specified por R1: w32tm sin
     # acción equivalente en el motor).
-    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in text
+    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in text
 
     plan = PLAN.read_text(encoding="utf-8")
     assert "| 9 |" in plan and "| 10 |" in plan
@@ -338,8 +338,8 @@ def test_las_cifras_de_los_informes_generados_estan_al_dia() -> None:
 def test_no_se_rompe_la_reconciliacion_de_las_secciones_cerradas() -> None:
     rows = [r for r in read_tsv(RECON) if r["seccion"] == "9"]
     statuses = [r["status"] for r in rows]
-    assert statuses.count("Mapped") == 30
-    assert statuses.count("Absent-At-Pin") == 26
+    assert statuses.count("Mapped") == 31
+    assert statuses.count("Absent-At-Pin") == 25
     assert statuses.count("Informative-Header") == 2
 
 
@@ -385,7 +385,7 @@ def test_las_relajaciones_del_ci_estan_reparadas() -> None:
     # Hay un barrido de TODO el catálogo que no depende de listas de ids.
     sweep = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave4CatalogTests.cs").read_text(encoding="utf-8")
     assert "EveryCapabilityInTheCatalogMeetsTheSameInvariants" in sweep
-    assert "Assert.Equal(88, all.Count)" in sweep
+    assert "Assert.Equal(101, all.Count)" in sweep
 
 
 # --------------------------------------------------------------------- ADR-0005

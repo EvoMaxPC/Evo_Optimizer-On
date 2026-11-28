@@ -195,6 +195,16 @@ WINUTIL_SPECS = [
          build_note="WSearch existe en 19045 y en Windows 11"),
 ]
 
+WINUTIL_REGISTRY_SPECS = [
+    dict(id="system.tray.battery-percentage",
+         winutil_tweak="WPFToggleBatteryPercentage",
+         inventario_linea=278,
+         name="Mostrar el porcentaje de bateria en la bandeja del sistema",
+         desc="Pone IsBatteryPercentageEnabled=1 en HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced (DWord), como el tweak WPFToggleBatteryPercentage de WinUtil. Muestra el porcentaje numerico de bateria junto al icono de bateria en la bandeja del sistema. Reversible.",
+         risk="Safe", security="Neutral",
+         build_note="la clave existe en 19045 y Windows 11"),
+]
+
 ATLAS_TOGGLE_SPECS = [
     dict(id="system.hibernation.hide", atlas_toggle=("General/Hibernation.psd1", "Disable"),
          name="Ocultar la opción Hibernar del menú de energía",
@@ -847,6 +857,33 @@ def build() -> dict:
             + spec["atlas_tweak"].replace(".psd1", ""),
             r2_reason=spec.get("r2_reason"), r3_reason=spec.get("r3_reason")))
 
+    # --------------------------------------------- WinUtil (registro directo)
+    for spec in WINUTIL_REGISTRY_SPECS:
+        entry = W_TWEAKS[spec["winutil_tweak"]]
+        reg = (entry.get("registry") or [])[0]
+        hive, key_path = b10.split_path(reg["Path"])
+        actions = [{
+            "type": "registry", "order": 1,
+            "description": f"{reg['Name']} en {hive}",
+            "hive": HIVES[hive], "keyPath": key_path,
+            "valueName": reg["Name"],
+            "value": reg["Value"],
+            "valueType": reg.get("Type", "String"),
+            "operation": "Set",
+        }]
+        provenance = (
+            f"{WINUTIL_PIN}:config/tweaks.json:{spec['winutil_tweak']}:registry:0. "
+            f"Valor {reg['Value']} ({reg.get('Type','String')}) leido del pin. "
+            f"Inventario seccion 9: linea {spec['inventario_linea']} (System Tray Battery Percentage). "
+            f"ledger_refs: winutil:tweak:{spec['winutil_tweak']} "
+            f"Reversibilidad (ADR-0003): el motor guarda el valor previo del valor de registro y lo restaura al deshacer."
+        )
+        capabilities.append(base(
+            spec["id"], spec["name"], spec["desc"],
+            spec["risk"], spec["security"], actions, None,
+            "Implemented", ["Evo", "WinUtil"], provenance,
+            r2_reason=spec.get("r2_reason")))
+
     # ------------------------------------------- Atlas (clave creada, AddKey)
     for spec in ADDKEY_SPECS:
         relative = f"Tweaks/{spec['atlas_tweak']}"
@@ -903,7 +940,7 @@ def build() -> dict:
     # R1 (paso 12): las capacidades cuyo pin hace algo mas que lo declarado pasan
     # a Specified y lo dicen en description Y provenance.
     gaps = {spec["id"]: spec.get("r1_gap")
-            for spec in WINUTIL_SPECS + ATLAS_TOGGLE_SPECS + ATLAS_TWEAK_SPECS
+            for spec in WINUTIL_SPECS + ATLAS_TOGGLE_SPECS + ATLAS_TWEAK_SPECS + WINUTIL_REGISTRY_SPECS
             + ADDKEY_SPECS}
     for capability in capabilities:
         gap = gaps.get(capability["id"])

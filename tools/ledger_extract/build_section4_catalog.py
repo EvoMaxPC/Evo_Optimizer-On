@@ -128,25 +128,33 @@ ATLAS_SERVICE_SPECS = [
          inventario_lineas=[130],
          desc="Desactiva Bluetooth: pone AllowBluetooth=0 en la directiva de "
               "conectividad y pasa los servicios de Bluetooth (bthserv, BTHUSB, "
-              "BluetoothUserService y los demás) a Deshabilitado, como el estado "
+              "BluetoothUserService y los demas) a Deshabilitado, como el estado "
               "'Disable' del toggle Bluetooth de Atlas. Reversible.",
          risk="Low", security="Neutral",
+         r1_gap=(
+             "el pin declara ademas MachineAction Disable-AtlasBluetoothDevices "
+             "(ejecuta Bluetooth.ps1 para deshabilitar cada dispositivo Bluetooth) y "
+             "UserAction Remove-AtlasBluetoothSendTo (quita la entrada «Enviar a» de Bluetooth). "
+             "Esos efectos no son registro ni tipo de servicio expresables por el motor; "
+             "por eso State=Specified."
+         ),
          build_note="ConsentStore y servicios de Bluetooth presentes en 19045 y Windows 11"),
     dict(atlas_toggle=("Services/LanmanWorkstation.psd1", "Disable"),
          id="services.atlas.lanmanworkstation",
-         name="Desactivar el servicio de Estación de trabajo (LanmanWorkstation)",
+         name="Desactivar el servicio de Estacion de trabajo (LanmanWorkstation)",
          inventario_lineas=[131],
          desc="Pasa LanmanWorkstation y los servicios de red relacionados "
               "(LanmanServer, mrxsmb, mrxsmb20, rdbss, srv2, KSecPkg) a Deshabilitado, "
               "como el estado 'Disable' del toggle Lanman Workstation de Atlas. "
               "Desactivar LanmanWorkstation puede romper el acceso a recursos de red; "
-              "el coste se declara en la descripción.",
+              "el coste se declara en la descripcion.",
          risk="Medium", security="Neutral",
          r1_gap=(
-             "el pin declara además MachineAction Set-AtlasLanmanWorkstationState "
+             "el pin declara ademas MachineAction Set-AtlasLanmanWorkstationState "
              "que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor "
              "de registro ni tipo de servicio expresables (por ejemplo reglas de firewall "
-             "o dependencias de red). Esos efectos no se declaran aquí; por eso State=Specified."),
+             "o dependencias de red). Esos efectos no se declaran aqui; por eso State=Specified."
+         ),
          build_note="las claves de servicio de LanmanWorkstation existen en 19045 y Windows 11"),
     dict(atlas_toggle=("Services/NetworkDiscovery.psd1", "Disable"),
          id="services.atlas.networkdiscovery",
@@ -155,14 +163,49 @@ ATLAS_SERVICE_SPECS = [
          desc="Pasa fdPHost, FDResPub, lmhosts y SSDPSRV a Deshabilitado, como el "
               "estado 'Disable' del toggle Network Discovery de Atlas. El equipo deja de "
               "ser visible en la red y de descubrir otros equipos. Reversible.",
-         risk="Low", security="Neutral",
-         r1_gap=(
-             "el pin declara además MachineAction Set-AtlasNetworkDiscoveryState que "
-             "ejecuta NetworkDiscovery.ps1 con efectos de directiva de red y perfil que "
-             "no son valores de registro ni tipo de servicio expresables. Esos efectos "
-             "no se declaran aquí; por eso State=Specified."),
+         risk="Low", security="Neutral", state="Implemented",
          build_note="los servicios de descubrimiento de red existen en 19045 y Windows 11"),
+    dict(atlas_toggle=("Services/NVidiaDisplayContainer.psd1", "Disable"),
+         id="services.atlas.nvidiadisplaycontainer",
+         name="Desactivar NVIDIA Display Container LS (toggle de Atlas)",
+         inventario_lineas=[133],
+         desc="El pin solo declara MachineAction Set-AtlasNVidiaDisplayContainerState para "
+              "el estado 'Disable', sin valores de registro ni tipos de servicio expresables. "
+              "No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance.",
+         risk="Low", security="Neutral", state="Specified",
+         r1_gap=(
+             "el pin ejecuta Set-AtlasNVidiaDisplayContainerState via NVidiaDisplayContainer.ps1; "
+             "no hay registro ni tipo de servicio expresables en el estado Disable del .psd1"
+         ),
+         build_note="Solo aplica mientras el controlador NVIDIA este instalado; no hay build minima garantizada"),
+    dict(atlas_toggle=("Services/Printing.psd1", "Disable"),
+         id="services.atlas.printing",
+         name="Desactivar impresion (toggle de Atlas)",
+         inventario_lineas=[134],
+         desc="El pin solo declara MachineAction Set-AtlasPrintingMachineState y ContextAction "
+              "para el estado 'Disable', sin valores de registro ni tipos de servicio expresables. "
+              "No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance.",
+         risk="Low", security="Neutral", state="Specified",
+         r1_gap=(
+             "el pin ejecuta Set-AtlasPrintingMachineState via Printing.ps1; no hay "
+             "registro ni tipo de servicio expresables en el estado Disable del .psd1"
+         ),
+         build_note="Depende del hardware de impresion; no hay build minima garantizada"),
+    dict(atlas_toggle=("Services/SuperFetch.psd1", "Disable"),
+         id="services.atlas.superfetch",
+         name="Desactivar SuperFetch/SysMain (toggle de Atlas)",
+         inventario_lineas=[135],
+         desc="El pin solo declara MachineAction Set-AtlasSuperFetchMachineState para "
+              "el estado 'Disable', sin valores de registro ni tipos de servicio expresables. "
+              "No cabe en las acciones del motor. Reversible; el efecto queda registrado en la descripcion y la provenance.",
+         risk="Low", security="Neutral", state="Specified",
+         r1_gap=(
+             "el pin ejecuta Set-AtlasSuperFetchMachineState via SuperFetch.ps1; no hay "
+             "registro ni tipo de servicio expresables en el estado Disable del .psd1"
+         ),
+         build_note="SysMain depende del tipo de disco (HDD/SSD); candidato a SupportedBuilds reducido o Specified"),
 ]
+
 
 
 # ---------------------------------------------------------------- utilidades
@@ -589,6 +632,29 @@ def build() -> dict:
             spec.get("state", "Specified"), ["Evo", "Atlas"], provenance,
             r2_reason=spec.get("r2_reason")))
         apply_r1(capabilities[-1], spec)
+
+    # ----------------------------------- WinUtil: Service Host Splitting (línea 127)
+    # WPFTweaksSvcHostSplitting usa InvokeScript (valor dinámico según memoria RAM),
+    # no declara servicio ni registro con literal fijo: queda en Specified con 0 acciones
+    # expresables y el motivo medido en la descripción/provenance.
+    spec = dict(id="services.winutil.svchostsplit",
+                name="Service Host Splitting (svchost) - desactivar",
+                desc="WPFTweaksSvcHostSplitting escribe SvcHostSplitThresholdInKB en "
+                     "HKLM\\SYSTEM\\CurrentControlSet\\Control con un valor que depende de "
+                     "la memoria fisica (no es un literal fijo). El motor no puede declarar "
+                     "un valor dinamico; queda en State=Specified con el motivo medido.",
+                risk="Low", security="Neutral",
+                inventario_linea=127)
+    provenance = (
+        f"{WINUTIL_PIN}:config/tweaks.json:WPFTweaksSvcHostSplitting (InvokeScript: "
+        "SvcHostSplitThresholdInKB). Valor dinamico segun memoria RAM; no se declara "
+        "un literal. ledger_refs: winutil:tweak:WPFTweaksSvcHostSplitting "
+        "Inventario seccion 4: linea 127 (Service Host Splitting)."
+    )
+    capabilities.append(base(
+        spec["id"], spec["name"], spec["desc"], 4,
+        spec["risk"], spec["security"], [], None,
+        "Specified", ["Evo", "WinUtil"], provenance))
 
     capabilities.sort(key=lambda c: c["id"])
     return {

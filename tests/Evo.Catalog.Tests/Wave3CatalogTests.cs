@@ -38,6 +38,7 @@ public sealed class Wave3CatalogTests
         "system.search-indexing.disable",
         "system.services.manual-profile",
         "system.settings-page-visibility.hide",
+        "system.tray.battery-percentage",
         "system.sleep.s0-network-keep",
         "system.sleep.s3-enable",
         "system.time.ntp-servers",
@@ -89,7 +90,7 @@ public sealed class Wave3CatalogTests
         var catalog = LoadAll();
 
         // 68 de las oleadas 1/1b/8c/2 + 18 de la sección 9 = 86, + 2 del paso 12 = 88.
-        Assert.Equal(88, catalog.Count);
+        Assert.Equal(101, catalog.Count);
 
         var wave3 = catalog.Definitions.Where(d => d.SectionId == 9)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
@@ -569,7 +570,7 @@ public sealed class Wave3CatalogTests
             Assert.Empty(definition.DependsOn);
         }
 
-        Assert.Equal(88, ids.Count);
+        Assert.Equal(101, ids.Count);
         Assert.All(Wave3(), d => Assert.Contains("system.", d.Id, StringComparison.Ordinal));
     }
 }

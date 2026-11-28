@@ -75,7 +75,7 @@ def test_el_fichero_de_la_seccion_9_reproduce_byte_a_byte() -> None:
 def test_la_seccion_9_declara_19_capacidades_con_ids_validos_y_unicos() -> None:
     # Paso 12: 18 -> 19 con `system.network.location-wizard.disable`, la
     # capacidad que expresa la `AddKey` del pin (crear una clave vacía).
-    assert len(CAPS) == 19
+    assert len(CAPS) == 20
     ids = [c["id"] for c in CAPS]
     assert len(ids) == len(set(ids))
     assert ids == sorted(ids), "el generador ordena por id"
@@ -235,7 +235,7 @@ def test_la_auditoria_de_valores_no_tiene_ninguna_fila_ambigua() -> None:
     assert report["distribucion"].get("ambiguous", 0) == 0
     assert report["distribucion"].get("differs", 0) == 1   # declarada con excepción
     rows = [r for r in read_tsv(AUDIT) if r["capability_id"].startswith("system.")]
-    assert len(rows) == 33
+    assert len(rows) == 34
     assert {r["relation"] for r in rows} <= {
         "equals-apply", "equals-on", "equals-off", "differs", "no-source"}
 
@@ -258,12 +258,12 @@ def test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9() -> None:
     assert vcc.main([]) == 0
     report = coverage_json()
     assert "9" in report["secciones_terminadas"]
-    assert report["por_seccion"]["9"] == {"lineas_mapped": 30, "cubiertas": 30,
+    assert report["por_seccion"]["9"] == {"lineas_mapped": 31, "cubiertas": 31,
                                          "huecos": 0}
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
-    # Paso 12: 86 -> 88 capacidades en el catalogo completo.
-    assert report["capacidades"] == 88
+    # Paso 12: 86 -> 88 capacidades; paso 7: +12 seccion 4 +1 bateria seccion 9 = 101.
+    assert report["capacidades"] == 101
 
 
 def test_las_correcciones_medidas_del_paso_10_estan_en_el_ledger() -> None:
@@ -278,11 +278,11 @@ def test_las_correcciones_medidas_del_paso_10_estan_en_el_ledger() -> None:
     assert rows["302"]["mapped_ids"] == "atlas:manifest:misc/config-oem-information"
     assert rows["307"]["mapped_ids"] == "atlas:toggle:KeyboardShortcuts"
     # 278 sale de Mapped: el pin no tiene esa función (medido, con motivo).
-    assert rows["278"]["status"] == "Absent-At-Pin"
+    assert rows["278"]["status"] == "Mapped"
     assert "System Tray Configuration" in rows["278"]["texto"]
     assert "bandeja" in rows["278"]["rationale"]
     mapped = [r for r in section9_rows() if r["status"] == "Mapped"]
-    assert len(mapped) == 30
+    assert len(mapped) == 31
     assert len(section9_rows()) == 58
 
 
@@ -317,11 +317,11 @@ def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> No
         assert result.returncode == 0, (script, result.stderr)
     plan = PLAN.read_text(encoding="utf-8")
     assert "oleada 3, cerrada en el catálogo (30 de 30" in plan
-    assert "| 30 | 0 | 0 | 26 | 2 | 30 | 0 | 26 | 3 |" in plan   # fila de §9
+    assert "| 9 | Registro de Windows y configuración del sistema | 58 | 31 | 0 | 0 | 25 | 2 | 31 | 0 | 25 | 3 |" in plan   # fila de §9
     ranges = RANGES.read_text(encoding="utf-8")
     # 12h: 88 capacidades (69 Implemented / 19 Specified; ntp-servers pasa a
     # Specified por R1: w32tm sin acción equivalente en el motor).
-    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in ranges
+    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in ranges
     assert "`system.hibernation.hide`" in ranges
 
 

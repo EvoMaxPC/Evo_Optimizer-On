@@ -332,15 +332,15 @@ def test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10() -> None:
         [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
          "--json"], capture_output=True, text=True, check=False).stdout)
     # Paso 10 suma la sección 9 y sus 18 capacidades al mismo verificador.
-    assert report["secciones_terminadas"] == ["1", "2", "3", "9", "10"]
+    assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
     assert report["por_seccion"]["10"]["lineas_mapped"] == 29
     assert report["por_seccion"]["10"]["cubiertas"] == 29
     assert report["por_seccion"]["10"]["huecos"] == 0
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
-    # Paso 12: 86 -> 88 (explorer.home.restore y system.network.location-wizard.disable).
-    assert report["capacidades"] == 88
-    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 30 + 29
+    # Paso 12: 86 -> 88; paso 7: +12 seccion 4 +1 bateria seccion 9 = 101.
+    assert report["capacidades"] == 101
+    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 12 + 31 + 29
 
 
 def test_la_seccion_10_del_ledger_tiene_29_mapped_y_ninguna_queda_absente() -> None:
@@ -429,8 +429,8 @@ def test_el_informe_de_rangos_es_reproducible_y_dice_lo_medido() -> None:
     text = (ROOT / "docs" / "reports" / "rangos-build.md").read_text(encoding="utf-8")
     # Paso 12h: 88 capacidades (69 Implemented / 19 Specified; ntp-servers a
     # Specified por R1) y 79 + 9 de rango.
-    assert "**88** capacidades, 69 `Implemented` y 19 `Specified`" in text
-    assert "**79**" in text and "**9**" in text
+    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in text
+    assert "**92**" in text and "**9**" in text
     # Las cinco de la sección 10 con rango recortado aparecen cada una.
     for cap_id in ("explorer.gallery.hide", "explorer.home.hide",
                    "explorer.home.restore", "ui.context-menu.classic",

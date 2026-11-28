@@ -212,7 +212,7 @@ def test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada() -
     # (88): `explorer.home.restore` y `system.network.location-wizard.disable`. El
     # resto de la comprobación no cambia: toda capacidad está en Implemented o en
     # Specified, y ninguna en otro estado.
-    assert len(implemented) + len(specified) == len(caps) == 88
+    assert len(implemented) + len(specified) == len(caps) == 101
 
 
 def test_winsxs_resetbase_es_irreversible_y_conflicta_con_la_variante_sin_resetbase() -> None:

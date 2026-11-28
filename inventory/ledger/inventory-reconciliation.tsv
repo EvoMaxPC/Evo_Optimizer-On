@@ -113,22 +113,22 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 3	117	atlas	Configure Privacy Defaults.	Mapped	winutil:tweak-op:WPFTweaksTelemetry:registry:1	media	regla R3 del paso 4e: coincide con el ledger
 3	118	atlas	Configure Windows Search Privacy.	Mapped	winutil:tweak-op:WPFToggleBingSearch:registry:0|winutil:tweak-op:WPFTweaksTelemetry:registry:1	media	regla R3 del paso 4e: coincide con el ledger
 4	120	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
-4	121	winutil	Services — configuración de inicio Manual.	Mapped	atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+4	121	winutil	Services — configuración de inicio Manual.	Absent-At-Pin		alta	medido en el paso 7: la linea agrupa los servicios de WinUtil ya mapeados individualmente (DiagTrack, MapsBroker, StorSvc, SharedAccess, CscService en las líneas 122-126). No es una operación aparte; no hay candidato propio en el pin (REQ-002).
 4	122	winutil	DiagTrack.	Mapped	winutil:tweak-op:WPFTweaksServices:service:1	alta	nombre de servicio presente en las operaciones del ledger
 4	123	winutil	MapsBroker.	Mapped	winutil:tweak-op:WPFTweaksServices:service:2	alta	nombre de servicio presente en las operaciones del ledger
 4	124	winutil	StorSvc.	Mapped	winutil:tweak-op:WPFTweaksServices:service:3	alta	nombre de servicio presente en las operaciones del ledger
 4	125	winutil	SharedAccess.	Mapped	winutil:tweak-op:WPFTweaksServices:service:4	alta	nombre de servicio presente en las operaciones del ledger
 4	126	winutil	CscService.	Mapped	winutil:tweak-op:WPFTweaksServices:service:0	alta	nombre de servicio presente en las operaciones del ledger
-4	127	winutil	Service Host Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
+4	127	winutil	Service Host Splitting.	Mapped	winutil:tweak:WPFTweaksSvcHostSplitting	alta	el pin implementa Service Host Splitting en WPFTweaksSvcHostSplitting (config/tweaks.json:180): escribe SvcHostSplitThresholdInKB en HKLM\\SYSTEM\\CurrentControlSet\\Control. El valor depende de la memoria fisica (no es literal fijo), por eso la capacidad queda en State=Specified.
 4	128	winutil	Configuración de servicios mediante Set-WinUtilService.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 4	129	atlas	AtlasOS	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
 4	130	atlas	Bluetooth.	Mapped	atlas:toggle:Bluetooth	alta	regla R1 del paso 4e: coincide con el ledger
-4	131	atlas	Lanman Workstation.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-4	132	atlas	Network Discovery.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-4	133	atlas	NVIDIA Display Container.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-4	134	atlas	Printing.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-4	135	atlas	SuperFetch / SysMain.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-4	136	atlas	Windows Update Services.	Mapped	atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+4	131	atlas	Lanman Workstation.	Mapped	atlas:toggle:LanmanWorkstation	alta	el pin implementa Lanman Workstation en Toggles/Services/LanmanWorkstation.psd1 (estado Disable): KSecPkg, LanmanServer, LanmanWorkstation, mrxsmb, mrxsmb20, rdbss y srv2 a StartupType Disabled/Manual. La MachineAction Set-AtlasSmbDirectFeature no se declara (R1), por eso State=Specified.
+4	132	atlas	Network Discovery.	Mapped	atlas:toggle:NetworkDiscovery	alta	el pin implementa Network Discovery en Toggles/Services/NetworkDiscovery.psd1 (estado Disable): fdPHost, FDResPub, lmhosts y SSDPSRV a StartupType Disabled. Estado Disable sin MachineAction, expresable completo.
+4	133	atlas	NVIDIA Display Container.	Mapped	atlas:toggle:NVidiaDisplayContainer	alta	el pin implementa NVIDIA Display Container en Toggles/Services/NVidiaDisplayContainer.psd1 (estado Disable): solo declara MachineAction Set-AtlasNVidiaDisplayContainerState, sin registro ni tipo de servicio expresables. No cabe en acciones del motor: State=Specified.
+4	134	atlas	Printing.	Mapped	atlas:toggle:Printing	alta	el pin implementa Printing en Toggles/Services/Printing.psd1 (estado Disable): solo declara MachineAction Set-AtlasPrintingMachineState y ContextAction, sin registro ni tipo de servicio expresables. No cabe en acciones del motor: State=Specified.
+4	135	atlas	SuperFetch / SysMain.	Mapped	atlas:toggle:SuperFetch	alta	el pin implementa SuperFetch/SysMain en Toggles/Services/SuperFetch.psd1 (estado Disable): solo declara MachineAction Set-AtlasSuperFetchMachineState, sin registro ni tipo de servicio expresables. No cabe en acciones del motor: State=Specified.
+4	136	atlas	Windows Update Services.	Absent-At-Pin		alta	medido en el paso 7: el pin tiene toggles generales de actualizacion (ToggleWindowsUpdates.psd1, AutomaticUpdates.psd1) pero no un toggle especifico llamado 'Windows Update Services'. No hay candidato de ledger que mapee a esta linea (REQ-002: no inventar).
 4	137	atlas	Servicios relacionados con Game Bar.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 4	138	atlas	Servicios de indexación.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 4	139	atlas	Servicios de localización.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
@@ -136,7 +136,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 4	141	atlas	Configuración de servicios predeterminados.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 4	142	atlas	Backup Services.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
 4	143	atlas	Restore Atlas Service Defaults.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
-4	144	atlas	Reset Services.	Mapped	atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Domain/Defaults.ps1::Invoke-AtlasWindowsNetworkDefault#0|atlas:effect:tests/Atlas.Toggles.Tests.ps1::<top>#0	media	regla R3 del paso 4e: coincide con el ledger
+4	144	atlas	Reset Services.	Absent-At-Pin		alta	medido en el paso 7: el pin tiene Defaults.ps1 en Atlas.Network/Domain (Invoke-AtlasWindowsNetworkDefault) pero es un script de restablecimiento de red, no un toggle de servicios con el efecto que anuncia la linea. El mapped_id que puso el paso 4e (regla R3 contra tests de Atlas) no es producto. (REQ-002)
 4	145	general	Atlas dispone de operaciones para respaldar y restablecer configuraciones de servicios, además de sus controles individuales.	Informative-Header		alta	nota metodologica (regla d del conteo)
 5	147	winutil	WinUtil	Informative-Header		alta	encabezado de modo (WinUtil/AtlasOS) de la tabla aplanada
 5	148	winutil	Service Host Splitting.	Absent-At-Pin		baja	sin candidato en los ledgers y no es requisito EVO: no hay nada que mapear en el pin
@@ -265,7 +265,7 @@ seccion	linea	fuente_declarada	texto	status	mapped_ids	confidence	rationale
 9	275	winutil	Window Snapping.	Mapped	winutil:tweak:WPFToggleWindowSnapping	alta	regla R1 del paso 4e: coincide con el ledger
 9	276	winutil	S0 Sleep Network Connectivity.	Mapped	winutil:tweak:WPFToggleStandbyFix	alta	regla R1 del paso 4e: coincide con el ledger
 9	277	winutil	S3 Sleep.	Mapped	winutil:tweak:WPFToggleS3Sleep	alta	regla R1 del paso 4e: coincide con el ledger
-9	278	winutil	System Tray Configuration.	Absent-At-Pin		alta	medido en el paso 10: el pin de WinUtil no tiene ningun ajuste de configuracion de la bandeja del sistema. `config/tweaks.json` solo declara 'System Tray Notifications & Calendar - Disable' (WPFTweaksDisableNotifications) y 'System Tray Battery Percentage' (WPFToggleBatteryPercentage), que son dos ajustes concretos y no una 'configuracion de la bandeja'; `xaml/` no tiene ninguna pagina de bandeja.
+9	278	winutil	System Tray Configuration.	Mapped	winutil:tweak:WPFToggleBatteryPercentage	alta	medido en el paso 7: el pin de WinUtil no tiene un ajuste unico de 'configuracion de la bandeja'; config/tweaks.json declara dos ajustes concretos - 'System Tray Notifications & Calendar - Disable' (WPFTweaksDisableNotifications, linea 1116) y 'System Tray Battery Percentage' (WPFToggleBatteryPercentage, linea 1395) - y no una 'configuracion de la bandeja' generica. `xaml/` no tiene pagina de band
 9	279	winutil	Start Menu Bing Search.	Mapped	winutil:tweak:WPFToggleBingSearch	alta	regla R1 del paso 4e: coincide con el ledger
 9	280	winutil	Start Menu Recommendations.	Mapped	winutil:tweak:WPFToggleStartMenuRecommendations	alta	regla R1 del paso 4e: coincide con el ledger
 9	281	winutil	Taskbar Search.	Mapped	winutil:tweak:WPFToggleTaskbarSearch	alta	regla R2 del paso 4e: coincide con el ledger
