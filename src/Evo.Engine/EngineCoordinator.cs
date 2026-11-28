@@ -335,7 +335,10 @@ public sealed class EngineCoordinator
         }
 
         var results = new List<ActionResult>();
-        var journal = new UndoJournal();
+        // Usa el diario del contexto (pasado por el llamante/ViewModel) en
+        // lugar de crear uno local que se descarta. Así el deshacer del
+        // ViewModel ve las entradas aplicadas (ETAPA 6-H).
+        var journal = template.Journal ?? new UndoJournal();
         if (restorePointId is not null)
         {
             journal.RestorePointId = restorePointId;
