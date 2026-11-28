@@ -102,8 +102,7 @@ public sealed class UndoUsesContextJournalTests
             SetDword(1, "ValorA", "99", RegistryHiveKind.LocalMachine, keyA),
         };
         var contractA = TestHarness.Contract(
-            accionesA, id: "cap.a", risk: RiskLevel.Safe,
-            restore: RestoreLevel.None, confirmation: ConfirmationType.None);
+            accionesA, id: "cap.a", restore: RestoreLevel.SessionUndo);
         var summaryA = await harness.Coordinator.ExecuteAsync(
             TestHarness.Plan(contractA, accionesA), ExecutionMode.Execute, ctxA);
         Assert.True(summaryA.Succeeded >= 1);
@@ -125,7 +124,7 @@ public sealed class UndoUsesContextJournalTests
         };
         var contractB = TestHarness.Contract(
             accionesB, id: "cap.b", risk: RiskLevel.Safe,
-            restore: RestoreLevel.None, confirmation: ConfirmationType.None);
+            restore: RestoreLevel.SessionUndo, confirmation: ConfirmationType.None);
         var summaryB = await harness.Coordinator.ExecuteAsync(
             TestHarness.Plan(contractB, accionesB), ExecutionMode.Execute, ctxB);
         Assert.Equal(1, summaryB.Succeeded); // la primera acción aplicó
