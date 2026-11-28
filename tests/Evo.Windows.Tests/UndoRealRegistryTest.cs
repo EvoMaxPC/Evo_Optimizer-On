@@ -4,6 +4,7 @@ using Evo.Core.Enums;
 using Evo.Core.Models;
 using Evo.Core.Restore;
 using Evo.Core.System;
+using Evo.App;
 using Evo.Catalog.Model;
 using Evo.Detection;
 using Evo.Detection.Model;

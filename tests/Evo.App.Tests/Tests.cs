@@ -8,6 +8,7 @@ using Evo.Catalog.Model;
 using Evo.Detection;
 using Evo.Detection.Model;
 using Evo.Testing;
+using Microsoft.Win32;
 using Xunit;
 
 namespace Evo.App.Tests;
