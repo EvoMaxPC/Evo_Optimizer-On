@@ -131,7 +131,8 @@ public sealed class UndoUsesContextJournalTests
         Assert.Equal(99, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyA, "ValorA"));
         Assert.NotEmpty(ctxA.Journal.Entries); // J_A intacto
 
-        // B fue revertida por el rollback automático (su Set DWord se deshizo).
-        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, keyB, "ValorB"));
+        // B fue revertida por el rollback automático: su Set DWord se deshizo
+        // y el valor volvió al estado anterior (1, no 42).
+        Assert.Equal(1, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyB, "ValorB"));
     }
 }
