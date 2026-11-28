@@ -29,6 +29,9 @@ ui.taskbar.task-view-button	10	Implemented	winutil	config/tweaks.json:1920	1	1	0
 ui.theme.dark	10	Implemented	winutil	config/tweaks.json:1413	2	2	0		2	no	OK
 ui.verbose-messages.enable	10	Implemented	atlas	package/Executables/AtlasModules/Toggles/Interface/VerboseMessages.psd1:11	1	1	0		0	no	OK
 ui.visual-effects.minimal	10	Implemented	atlas	package/Executables/AtlasModules/Toggles/Interface/Animation.psd1:11	11	11	0		0	no	OK
+services.atlas.cbs-repair-source-policy	12	Specified	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1::Remove-AtlasCbsRepairSourcePolicy#0	0	0	0		0	no	OK
+services.atlas.toggle-windows-updates	12	Specified	atlas	tests/Atlas.Verify.Tests.ps1::<top>#9	0	0	0		0	no	OK
+services.winutil.windows-update-reset	12	Specified	winutil	config/feature.json:146	0	0	0		0	no	OK
 cleanup.temp.user	1	Implemented	winutil	config/tweaks.json#WPFTweaksDeleteTempFiles	0	0	0		0	no	OK
 cleanup.temp.system	1	Implemented	winutil	config/tweaks.json#WPFTweaksDeleteTempFiles	0	0	0		0	no	OK
 cleanup.delivery.optimization	1	Implemented	winutil	config/tweaks.json#WPFTweaksDeliveryOptimization	0	1	0		0	no	OK

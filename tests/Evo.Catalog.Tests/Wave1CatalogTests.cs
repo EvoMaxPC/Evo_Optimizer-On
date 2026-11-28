@@ -93,7 +93,8 @@ public sealed class Wave1CatalogTests
         // + 1 neta del 8c (debloat.windows.ai se parte en .recall y .remove)
         // + 29 de la oleada 2 (sección 10, paso 9)
         // + 18 de la oleada 3 (sección 9, paso 10) = 86, + 2 del paso 12 = 88.
-        Assert.Equal(101, catalog.Count);
+// Etapa 8 Parte B: +5 seccion 12.
+        Assert.Equal(104, catalog.Count);
 
         // Las 39 de las secciones 1-3 siguen ahí; las oleadas 2 y 3 añaden las
         // secciones 10 y 9, que este test no enumera (tienen sus propios tests).

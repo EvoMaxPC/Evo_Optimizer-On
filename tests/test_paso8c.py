@@ -212,12 +212,12 @@ def test_la_cobertura_1_3_sigue_siendo_26_de_26() -> None:
     # Lo que este test protege sigue siendo lo mismo: que 1+2+3 no pierdan ni
     # una línea Mapped al añadir secciones al verificador.
     # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): sec 4 pasa de 12 a 13 Mapped.
-    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 13 + 31 + 29  # 99: sec 1-3 + sec 4 + sec 9 + sec 10
+    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 13 + 31 + 29 + 5  # 104: sec 1-3 + sec 4 + sec 9 + sec 10 + sec 12
     assert report["por_seccion"]["1"]["lineas_mapped"] == 3
     assert report["por_seccion"]["2"]["lineas_mapped"] == 17
     assert report["por_seccion"]["3"]["lineas_mapped"] == 6
     # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): sec 4 pasa de 12 a 13 Mapped.
-    assert report["cubiertas"] == 3 + 17 + 6 + 13 + 31 + 29  # 99: sec 1-3 + sec 4 + sec 9 + sec 10
+    assert report["cubiertas"] == 3 + 17 + 6 + 13 + 31 + 29 + 5  # 104: sec 1-3 + sec 4 + sec 9 + sec 10 + sec 12
     assert report["huecos"] == 0
     assert len(report["por_seccion_17"]) == 17
 

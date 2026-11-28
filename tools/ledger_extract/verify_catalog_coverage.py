@@ -74,6 +74,12 @@ DECLARED_SOURCES: dict[tuple[str, str], str] = {
     # (WPFToggleLoginBlur:registry:0 está en la 333 y en la 334).
     ("10", "334"): "ui.notifications.center-hide",
     ("10", "347"): "ui.numlock.startup",
+    # Etapa 8 Parte B: linea 405 (Registry Backup) se expresa como
+    # system.registry-backup.enable (seccion 9); linea 406 (System Restore Point)
+    # se expresa como ui.logon.acrylic-blur (seccion 10). No se crean
+    # capacidades duplicadas en seccion 12.
+    ("12", "405"): "system.registry-backup.enable",
+    ("12", "406"): "ui.logon.acrylic-blur",
 }
 
 

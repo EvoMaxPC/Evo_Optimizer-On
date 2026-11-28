@@ -263,7 +263,8 @@ def test_el_verificador_cubre_las_27_lineas_mapped_de_la_seccion_9() -> None:
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
     # Paso 12: 86 -> 88 capacidades; paso 7: +12 seccion 4 +1 bateria seccion 9 = 101.
-    assert report["capacidades"] == 101
+    # Etapa 8 Parte B: +5 seccion 12 = 106.
+    assert report["capacidades"] == 104
 
 
 def test_las_correcciones_medidas_del_paso_10_estan_en_el_ledger() -> None:
@@ -321,7 +322,8 @@ def test_los_informes_derivados_son_reproducibles_y_reflejan_la_oleada_3() -> No
     ranges = RANGES.read_text(encoding="utf-8")
     # 12h: 88 capacidades (69 Implemented / 19 Specified; ntp-servers pasa a
     # Specified por R1: w32tm sin acción equivalente en el motor).
-    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in ranges
+    # Etapa 8 Parte B: +5 seccion 12 (todas Specified) = 106 capacidades, 76 Implemented y 30 Specified.
+    assert "**104** capacidades, 76 `Implemented` y 28 `Specified`" in ranges
     assert "`system.hibernation.hide`" in ranges
 
 

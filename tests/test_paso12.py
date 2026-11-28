@@ -166,9 +166,9 @@ def test_r1_no_queda_ninguna_violacion() -> None:
     rows = mcc.measure()
     violations = [r for r in rows if r["verdict"] == "R1-VIOLATION"]
     assert violations == []
-    assert len(rows) == 101
+    assert len(rows) == 104
     assert sum(1 for r in rows if r["state"] == "Implemented") == 76
-    assert sum(1 for r in rows if r["state"] == "Specified") == 25
+    assert sum(1 for r in rows if r["state"] == "Specified") == 28
 
     # El TSV versionado (reglas R1/R2/R3) es consistente con su propio --check.
     assert subprocess.run([sys.executable, str(ROOT / "tools" / "ledger_extract"
@@ -322,27 +322,28 @@ def test_las_cifras_del_ledger_son_las_medidas() -> None:
     """88 capacidades, 243 acciones; §9 19/47 y §10 30/60. Ninguna cifra del
     paso 11 (86 / 238 / 45 / 57) puede sobrevivir donde importa."""
     caps = all_capabilities()
-    assert len(caps) == 101
+    assert len(caps) == 104
     assert sum(len(c["actions"]) for c in caps.values()) == 310
     assert len(CAPS9) == 20 and sum(len(c["actions"]) for c in CAPS9.values()) == 48
     assert len(CAPS10) == 30 and sum(len(c["actions"]) for c in CAPS10.values()) == 60
     assert sum(1 for c in caps.values() if c["state"] == "Implemented") == 76
-    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 25
+    assert sum(1 for c in caps.values() if c["state"] == "Specified") == 28
 
     cov = json.loads(run("verify_catalog_coverage.py", "--json"))
-    assert cov["capacidades"] == 101
+    assert cov["capacidades"] == 104
     # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): una
     # línea más del inventario queda cubierta, así que 98 -> 99.
-    assert cov["cubiertas"] == 99 and cov["lineas_mapped_1_3"] == 99
+    # Etapa 8 Parte B: sec 12 añade 5 Mapped, así que 99 -> 104.
+    assert cov["cubiertas"] == 104 and cov["lineas_mapped_1_3"] == 104
     assert cov["huecos"] == 0 and cov["huecos_no_declarados"] == 0
-    assert cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
+    assert cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10", "12"]
 
     # Los tres tests xUnit que fijan el total ya dicen 88, no 86.
     for name in ("Wave1CatalogTests.cs", "Wave2CatalogTests.cs",
                  "Wave3CatalogTests.cs", "Wave4CatalogTests.cs"):
         text = (ROOT / "tests" / "Evo.Catalog.Tests" / name).read_text(encoding="utf-8")
         assert "Assert.Equal(86, " not in text, name
-        assert "Assert.Equal(101, " in text, name
+        assert "Assert.Equal(104, " in text, name
 
 
 def test_la_auditoria_de_valores_sigue_a_cero_sin_excepcion() -> None:
@@ -480,7 +481,7 @@ def test_el_ci_tiene_el_job_del_paso_12_con_doble_ejecucion() -> None:
     assert "build_section10_catalog.py --check" in job
     assert 'a["type"] == "registryCreateKey"' in job
     # Las cifras del job son las del paso 12.
-    assert "r1[\"capacidades\"] == 101" in job
+    assert "r1[\"capacidades\"] == 104" in job
     assert "len(caps9) == 20 and acts9 == 48" in job
     assert "len(caps10) == 30 and acts10 == 60" in job
     assert 'aud["filas"] == 198' in job

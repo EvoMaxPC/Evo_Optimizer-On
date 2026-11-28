@@ -321,7 +321,7 @@ public sealed class Wave4CatalogTests
     public void TestWave4Catalog_EveryCapabilityInTheCatalogMeetsTheSameInvariants()
     {
         var all = LoadAll();
-        Assert.Equal(101, all.Count);
+        Assert.Equal(104, all.Count);
 
         // Las seis secciones cerradas, ni una capacidad fuera de ellas.
         var sections = all.Select(d => d.SectionId).Distinct().OrderBy(s => s).ToArray();

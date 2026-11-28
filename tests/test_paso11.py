@@ -167,7 +167,7 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
     contra los dos JSON que cambian, para que la cifra no pueda quedarse vieja.
     """
     text = RANGES.read_text(encoding="utf-8")
-    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in text
+    assert "**104** capacidades, 76 `Implemented` y 28 `Specified`" in text
     for path in sorted(CATALOG.glob("*.json")):
         document = json.loads(path.read_text(encoding="utf-8"))
         for cap in document["capabilities"]:
@@ -179,7 +179,8 @@ def test_el_catalogo_completo_cambia_de_estado_pero_no_de_tamano() -> None:
     # Explorer y sistema: 3 de `explorer.home.restore` (crear la clave + 2 valores),
     # 1 `ServiceAction Stop` de WSearch y 1 `registryCreateKey` de
     # `system.network.location-wizard.disable`.
-    assert total == 101
+    # Etapa 8 Parte B: +5 seccion 12 (todas Specified, 0 acciones) = 106.
+    assert total == 104
     actions = sum(len(a["actions"])
                   for p in sorted(CATALOG.glob("*.json"))
                   for a in json.loads(p.read_text(encoding="utf-8"))["capabilities"])
@@ -294,16 +295,18 @@ def test_la_cobertura_sigue_en_85_de_85_sin_huecos() -> None:
     report = json.loads(subprocess.run(
         [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
          "--json"], capture_output=True, text=True, check=False).stdout)
-    assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
+    assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10", "12"]
     # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): una
     # línea más del inventario queda cubierta, así que 98 -> 99.
-    assert report["lineas_mapped_1_3"] == 99
-    assert report["cubiertas"] == 99
+    # Etapa 8 Parte B: sec 12 añade 5 Mapped, así que 99 -> 104.
+    assert report["lineas_mapped_1_3"] == 104
+    assert report["cubiertas"] == 104
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
     # Paso 12: 86 -> 88 capacidades (la cobertura sigue 85/85, no cambian las
     # líneas Mapped del inventario).
-    assert report["capacidades"] == 101
+    # Etapa 8 Parte B: +5 seccion 12 = 106.
+    assert report["capacidades"] == 104
     for section in ("1", "2", "3", "9", "10"):
         assert report["por_seccion"][section]["huecos"] == 0, section
 
@@ -326,7 +329,8 @@ def test_las_cifras_de_los_informes_generados_estan_al_dia() -> None:
     text = RANGES.read_text(encoding="utf-8")
     # Paso 12h: 88 = 69 + 19 (ntp-servers pasa a Specified por R1: w32tm sin
     # acción equivalente en el motor).
-    assert "**101** capacidades, 76 `Implemented` y 25 `Specified`" in text
+    # Etapa 8 Parte B: +5 seccion 12 (todas Specified) = 106 capacidades, 76 Implemented y 30 Specified.
+    assert "**104** capacidades, 76 `Implemented` y 28 `Specified`" in text
 
     plan = PLAN.read_text(encoding="utf-8")
     assert "| 9 |" in plan and "| 10 |" in plan
@@ -387,7 +391,7 @@ def test_las_relajaciones_del_ci_estan_reparadas() -> None:
     # Hay un barrido de TODO el catálogo que no depende de listas de ids.
     sweep = (ROOT / "tests" / "Evo.Catalog.Tests" / "Wave4CatalogTests.cs").read_text(encoding="utf-8")
     assert "EveryCapabilityInTheCatalogMeetsTheSameInvariants" in sweep
-    assert "Assert.Equal(101, all.Count)" in sweep
+    assert "Assert.Equal(104, all.Count)" in sweep
 
 
 # --------------------------------------------------------------------- ADR-0005

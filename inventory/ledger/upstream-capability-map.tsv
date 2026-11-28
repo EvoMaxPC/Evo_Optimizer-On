@@ -326,7 +326,7 @@ winutil:feature:WPFFeatureslegacymedia	winutil	Legacy Media Components (WMP, Dir
 winutil:feature:WPFFeaturewsl	winutil	Windows Subsystem for Linux (WSL) - Enable	16	item-effect		pending	ninguna capacidad del catalogo la cita todavia
 winutil:feature:WPFFixesNTPPool	winutil	NTP Server - Enable	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:feature:WPFFixesNetwork	winutil	Network - Reset	11	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
-winutil:feature:WPFFixesUpdate	winutil	Windows Update - Reset	12	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
+winutil:feature:WPFFixesUpdate	winutil	Windows Update - Reset	12	item-name-rule	services.winutil.windows-update-reset	covered	cubierta por services.winutil.windows-update-reset (ledger_refs de su provenance)
 winutil:feature:WPFFixesWinget	winutil	WinGet - Reinstall	16	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:feature:WPFPanelAutologin	winutil	AutoLogon - Run	8	item-name-rule		pending	ninguna capacidad del catalogo la cita todavia
 winutil:feature:WPFPanelComputer	winutil	Computer Management		none		pending	ninguna capacidad del catalogo la cita todavia

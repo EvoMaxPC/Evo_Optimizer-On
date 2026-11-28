@@ -90,7 +90,8 @@ public sealed class Wave3CatalogTests
         var catalog = LoadAll();
 
         // 68 de las oleadas 1/1b/8c/2 + 18 de la sección 9 = 86, + 2 del paso 12 = 88.
-        Assert.Equal(101, catalog.Count);
+// Etapa 8 Parte B: +5 seccion 12.
+        Assert.Equal(104, catalog.Count);
 
         var wave3 = catalog.Definitions.Where(d => d.SectionId == 9)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
@@ -570,7 +571,7 @@ public sealed class Wave3CatalogTests
             Assert.Empty(definition.DependsOn);
         }
 
-        Assert.Equal(101, ids.Count);
+        Assert.Equal(104, ids.Count);
         Assert.All(Wave3(), d => Assert.Contains("system.", d.Id, StringComparison.Ordinal));
     }
 }

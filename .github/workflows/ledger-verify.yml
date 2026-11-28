@@ -576,11 +576,11 @@ jobs:
           print("seccion 9:", cov["por_seccion"]["9"])
           print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
           sec9 = cov["por_seccion"]["9"]
-          # Paso 7: 88 -> 101 capacidades (+12 seccion 4, +1 bateria seccion 9).
+          # Paso 7: 88 -> 101 capacidades. Etapa 8 Parte B: +3 seccion 12 = 104. (+12 seccion 4, +1 bateria seccion 9).
           # Secciones terminadas: [1, 2, 3, 4, 9, 10]. Seccion 9: 31 lineas mapped
           # (278 ahora Mapped con WPFToggleBatteryPercentage).
-          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
-                and cov["capacidades"] == 101
+          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10", "12"]
+                and cov["capacidades"] == 104
                 and sec9["lineas_mapped"] == 31
                 and sec9["cubiertas"] == 31
                 and sec9["huecos"] == 0
@@ -667,10 +667,10 @@ jobs:
           loc = [(a.get("serviceName"), a["operation"])
                  for a in caps9["system.location.consent-deny"]["actions"]
                  if a["type"] == "service"]
-          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
-                # Paso 7: 88 -> 101 capacidades (+12 seccion 4, +1 bateria seccion 9).
+          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10", "12"]
+                # Paso 7: 88 -> 101 capacidades. Etapa 8 Parte B: +3 seccion 12 = 104. (+12 seccion 4, +1 bateria seccion 9).
                 # Seccion 9: 20 caps / 48 acciones (+1 bateria). Specified: 6 (lista cerrada).
-                and cov["capacidades"] == 101
+                and cov["capacidades"] == 104
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
                 and len(caps9) == 20 and acts9 == 48
@@ -767,15 +767,15 @@ jobs:
           print("seccion 9:", len(caps9), "caps /", acts9, "acciones |",
                 "seccion 10:", len(caps10), "caps /", acts10, "acciones")
           print("registryCreateKey:", sorted(creates))
-          ok = (r1["capacidades"] == 101
+          ok = (r1["capacidades"] == 104
                 and r1["violaciones_r1"] == []
-                and r1["implemented"] + r1["specified"] == 101
+                and r1["implemented"] + r1["specified"] == 104
                 and t3["veredicto"] == "CONTRARIOS_DETECTADOS"
                 and t3["contrarios"] == ["explorer.home.hide", "explorer.home.restore", "explorer.removable-drives.sidebar"]
                 and t3["totales"]["CONTRARIO"] == 3
                 and t3["totales"]["OK"] == 7
                 and t3["totales"]["PENDIENTE"] == 16
-                and cov["capacidades"] == 101
+                and cov["capacidades"] == 104
                 and cov["huecos"] == 0
                 and cov["huecos_no_declarados"] == 0
                 and aud["filas"] == 198
@@ -898,8 +898,8 @@ jobs:
           r1 = json.load(open("ci-out/paso12g-r1.json", encoding="utf-8"))
           print("R1:", r1["capacidades"], "caps | Implemented", r1["implemented"],
                 "| Specified", r1["specified"], "| violaciones", r1["violaciones_r1"])
-          sys.exit(0 if (r1["capacidades"] == 101 and r1["violaciones_r1"] == []
-                         and r1["implemented"] + r1["specified"] == 101) else 1)
+          sys.exit(0 if (r1["capacidades"] == 104 and r1["violaciones_r1"] == []
+                         and r1["implemented"] + r1["specified"] == 104) else 1)
           PYEOF
 
       - name: G3 - estados de toggles y estados contrarios (T3)

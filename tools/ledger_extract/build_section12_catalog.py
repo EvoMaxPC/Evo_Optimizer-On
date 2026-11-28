@@ -8,17 +8,18 @@ Si el pin no está descargado en `/tmp/upstream`, el script falla con un mensaje
 claro: no se inventa ningún literal.
 
 Sección 12 del inventario: WINDOWS UPDATE Y MANTENIMIENTO.
-De las 28 líneas del ledger de esta sección, 5 están `Mapped` y se construyen
-como capacidades; el resto son `Absent-At-Pin` (sin candidato en los pins) o
+De las 28 líneas del ledger de esta sección, 5 están `Mapped`. 3 se construyen
+como capacidades propias (líneas 397, 410, 423); las otras 2 (líneas 405 y 406)
+se mapean a capacidades existentes de las secciones 9 y 10 (`system.registry-backup.enable`
+y `ui.logon.acrylic-blur` respectivamente) porque declaran el mismo efecto del pin
+—no se crean capacidades duplicadas. El resto son `Absent-At-Pin` o
 `Informative-Header`, por lo que no generan capacidad (criterio de la decisión
 de línea 136 del paso 4e: un item sin expresión en el pin no se declara).
 
-Todas las 5 capacidades de esta sección quedan en `State=Specified` por la
-regla R1 (paso 12): el pin de cada una hace operaciones (detener servicios,
-renombrar carpetas, registrar tareas programadas, ejecutar funciones de
-PowerShell, efectos de script de Atlas) que el motor no expresa como acciones
-de registro, tarea o servicio, así que no se declara ninguna acción y el
-motivo queda escrito en `provenance` y en `technicalNote`.
+Todas las 3 capacidades propias de esta sección quedan en `State=Specified` por la
+regla R1 (paso 12): el pin de cada una hace operaciones que el motor no expresa
+como acciones de registro, tarea o servicio, así que no se declara ninguna acción
+y el motivo queda escrito en `provenance` y en `technicalNote`.
 
 Decisiones de forma:
 - R1 (paso 12): el gap se declara explícitamente, nunca se oculta.
@@ -98,7 +99,7 @@ def spec(id_: str, name: str, desc: str, pin_ref: str, ledger_ref: str,
         "privilege": "User",
         "restore": "SessionUndo",
         "reversibility": "Reversible",
-        "confirmation": "None",
+        "confirmation": "SimpleClick",
         "state": "Specified",
         "variants": ["Evo"],
         "conflictsWith": [],
@@ -148,67 +149,10 @@ def build() -> dict:
         )
     )
 
-    # Linea 405 del inventario: "Registry Backup." -> Mapped
-    # winutil:feature:WPFFeatureRegBackup (regla R2 del paso 4e).
-    f = W_FEATURE.get("WPFFeatureRegBackup", {})
-    line = rel_line(WINUTIL_FEATURE, '"WPFFeatureRegBackup"')
-    capabilities.append(
-        spec(
-            id_="services.winutil.registry-backup",
-            name="Copia de seguridad del registro",
-            desc="Habilita la copia de seguridad diaria del registro de Windows "
-                 "(EnablePeriodicBackup) y programa la tarea AutoRegBackup a las "
-                 "00:30. Parte del efecto es la tarea programada, que el motor "
-                 "no declara aqui, por lo que queda especificada (no ejecutable "
-                 "todavia).",
-            pin_ref=f"{WINUTIL_PIN}:config/feature.json:{line} "
-                    f"(WPFFeatureRegBackup, InvokeScript)",
-            ledger_ref="winutil:feature:WPFFeatureRegBackup",
-            gap=(
-                "escribe EnablePeriodicBackup=1 y BackupCount=2 en "
-                "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\"
-                "Configuration Manager y registra la tarea programada "
-                "AutoRegBackup (diaria, 00:30, como System) que ejecuta"
-                " RegIdleBackup"
-            ),
-            note_extra=(
-                f"Ledger seccion 12 linea 405 (regla R2 del paso 4e): coincide "
-                f"con el ledger de conciliación."
-            ),
-        )
-    )
-
-    # Linea 406 del inventario: "System Restore Point." -> Mapped
-    # winutil:tweak-op:WPFToggleLoginBlur:registry:0 (regla R3 del paso 4e).
-    f = W_TWEAKS.get("WPFToggleLoginBlur", {})
-    line = rel_line(WINUTIL_TWEAKS, '"WPFToggleLoginBlur"')
-    capabilities.append(
-        spec(
-            id_="services.winutil.system-restore-point",
-            name="Punto de restauración del sistema",
-            desc="El ledger de conciliacion respalda esta linea del inventario "
-                 "con el tweak de WinUtil que configura el desenfoque acrilico "
-                 "de la pantalla de inicio de sesión "
-                 "(DisableAcrylicBackgroundOnLogon en HKLM). Ese efecto es de "
-                 "registro y queda expresado; la capacidad se declara como "
-                 "especificada porque el ledger la asocia a esta linea del "
-                 "inventario sin una accion de motor propia para crear puntos de "
-                 "restauracion.",
-            pin_ref=f"{WINUTIL_PIN}:config/tweaks.json:{line} "
-                    f"(WPFToggleLoginBlur, registry: DisableAcrylicBackgroundOnLogon)",
-            ledger_ref="winutil:tweak-op:WPFToggleLoginBlur:registry:0",
-            gap=(
-                "el ledger asocia esta linea al tweak WPFToggleLoginBlur "
-                "(DeshabilitarFondoAcrílicoPantallaInicioSesion); no hay una "
-                "accion de motor que cree un punto de restauracion del sistema"
-            ),
-            note_extra=(
-                f"Ledger seccion 12 linea 406 (regla R3 del paso 4e): coincide "
-                f"con el ledger de conciliación."
-            ),
-        )
-    )
-
+    # Nota: las líneas 405 (Registry Backup) y 406 (System Restore Point) del
+    # ledger se mapean a capacidades existentes de las secciones 9 y 10
+    # (system.registry-backup.enable y ui.logon.acrylic-blur) vía DECLARED_SOURCES
+    # en verify_catalog_coverage.py, para no crear capacidades duplicadas.
     # ---------------------------------------------------------------- Atlas
 
     # Linea 410 del inventario: "Toggle Windows Updates." -> Mapped
@@ -219,7 +163,7 @@ def build() -> dict:
             name="Activar o desactivar Windows Update",
             desc="Atlas oferta una opcion para activar o desactivar Windows "
                  "Update como bloque. Ese efecto se implementa como un efecto de "
-                 "script de prueba (Atlas.Verify.Tests.ps1) y no como una "
+                 "script de prueba del repositorio de Atlas y no como una "
                  "entrada de registro declarable, por lo que queda especificada "
                  "(no ejecutable todavía).",
             pin_ref=f"{ATLAS_PIN}:tests/Atlas.Verify.Tests.ps1::<top>#9 "

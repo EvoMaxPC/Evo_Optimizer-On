@@ -54,17 +54,20 @@ privacy.location.sensors	3	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	
 privacy.telemetry.diagtrack	3	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 privacy.telemetry.dmwappush	3	Specified	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-
 services.atlas.bluetooth	4	Specified	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
+services.atlas.cbs-repair-source-policy	12	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
 services.atlas.lanmanworkstation	4	Specified	Reversible	Medium	Neutral	Admin	Summary	RestorePoint	19045,22631,26100,26200	service	si	si	si	no
 services.atlas.networkdiscovery	4	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 services.atlas.nvidiadisplaycontainer	4	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
 services.atlas.printing	4	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
 services.atlas.superfetch	4	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
+services.atlas.toggle-windows-updates	12	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
 services.winutil.cscservice	4	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 services.winutil.diagtrack	4	Implemented	Reversible	Low	Improves	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 services.winutil.mapsbroker	4	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 services.winutil.sharedaccess	4	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 services.winutil.storsvc	4	Implemented	Reversible	Low	Neutral	Admin	SimpleClick	SessionUndo	19045,22631,26100,26200	service	si	si	si	si
 services.winutil.svchostsplit	4	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
+services.winutil.windows-update-reset	12	Specified	Reversible	Low	Neutral	User	SimpleClick	SessionUndo	19045,22631,26100,26200		si	si	no	-
 system.error-reporting.crash-control	9	Implemented	Reversible	Medium	Reduces	Admin	Summary	RestorePoint	19045,22631,26100,26200	registry	si	si	no	-
 system.error-reporting.wpbt-disable	9	Implemented	Reversible	Medium	Improves	Admin	Summary	RestorePoint	19045,22631,26100,26200	registry	si	si	no	-
 system.game-mode.enable	9	Implemented	Reversible	Safe	Neutral	User	None	SessionUndo	19045,22631,26100,26200	registry	si	si	no	-

@@ -116,7 +116,8 @@ public sealed class Wave2CatalogTests
 
         // 39 de las oleadas 1/1b/8c + 29 de la sección 10 + 18 de la sección 9
         // (paso 10) = 86, + 2 del paso 12 = 88. Lo que este test protege sigue siendo la sección 10.
-        Assert.Equal(101, catalog.Count);
+// Etapa 8 Parte B: +5 seccion 12.
+        Assert.Equal(104, catalog.Count);
 
         var wave2 = catalog.Definitions.Where(d => d.SectionId == 10)
             .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal).ToList();
