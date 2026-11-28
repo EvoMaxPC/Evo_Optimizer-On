@@ -1,0 +1,50 @@
+source	category_key	items	section	basis	reviewed
+atlas-manifest	debloat/(raiz)	5	2	Tweaks/debloat/*.psd1 (5 ficheros: content-delivery, storage-sense, reserved-storage, scheduled-tasks, unused-security-pages) -> 2 DEBLOAT. (seccion 2: DEBLOAT DE WINDOWS)	no
+atlas-manifest	misc/(raiz)	8	mixed	Tweaks/misc/*.psd1 (8 ficheros: create-shortcuts, config-time, rebuild-perf-counters, register-user-upgrade...): sin area comun. Mezcla real.	no
+atlas-manifest	networking/(raiz)	2	11	Tweaks/networking/*.psd1 sueltos -> 11 RED Y CONECTIVIDAD. (seccion 11: RED Y CONECTIVIDAD)	no
+atlas-manifest	networking/shares	3	11	Tweaks/networking/shares (3) -> 11 RED Y CONECTIVIDAD (recursos compartidos). (seccion 11: RED Y CONECTIVIDAD)	no
+atlas-manifest	performance/(raiz)	8	5	Tweaks/performance/*.psd1 sueltos (7) -> 5 OPTIMIZACION DE CPU Y RENDIMIENTO. (seccion 5: OPTIMIZACION DE CPU Y RENDIMIENTO)	no
+atlas-manifest	performance/system	3	5	Tweaks/performance/system (3) -> 5 OPTIMIZACION DE CPU Y RENDIMIENTO. (seccion 5: OPTIMIZACION DE CPU Y RENDIMIENTO)	no
+atlas-manifest	privacy/(raiz)	24	3	Tweaks/privacy/*.psd1 sueltos: disable-activity-feed, disallow-user-activity-upload, search-settings, disallow-ms-accounts... -> 3 TELEMETRIA Y PRIVACIDAD. (seccion 3: TELEMETRIA Y PRIVACIDAD)	no
+atlas-manifest	privacy/advertising	2	3	Tweaks/privacy/advertising (2) -> 3 TELEMETRIA Y PRIVACIDAD. (seccion 3: TELEMETRIA Y PRIVACIDAD)	no
+atlas-manifest	privacy/apps	4	3	Tweaks/privacy/apps (4) -> 3 TELEMETRIA Y PRIVACIDAD (historial de apps). (seccion 3: TELEMETRIA Y PRIVACIDAD)	no
+atlas-manifest	privacy/cloud	4	3	Tweaks/privacy/cloud (4) -> 3 TELEMETRIA Y PRIVACIDAD. (seccion 3: TELEMETRIA Y PRIVACIDAD)	no
+atlas-manifest	privacy/telemetry	7	3	Tweaks/privacy/telemetry (7) -> 3 TELEMETRIA Y PRIVACIDAD. (seccion 3: TELEMETRIA Y PRIVACIDAD)	no
+atlas-manifest	qol/(raiz)	25	mixed	Tweaks/qol/*.psd1 sueltos (25 ficheros: config-start-menu, bcdedit-tweaks, disable-store-auto-updates, disable-tips, visual-effects...): interfaz, arranque y update mezclados. Mezcla real.	no
+atlas-manifest	qol/appearance	3	10	Tweaks/qol/appearance (3) -> 10 EXPLORADOR E INTERFAZ. (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+atlas-manifest	qol/ease-of-access	4	10	Tweaks/qol/ease-of-access (4) -> 10 EXPLORADOR E INTERFAZ (accesibilidad). (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+atlas-manifest	qol/explorer	36	10	Tweaks/qol/explorer (36) -> 10 EXPLORADOR DE ARCHIVOS E INTERFAZ. (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+atlas-manifest	qol/security	1	13	Tweaks/qol/security/disable-uac-secure-desktop.psd1: PromptOnSecureDesktop=0, es decir DESACTIVA la proteccion de UAC -> 13 SEGURIDAD Y PROTECCION. El directorio cuelga de qol/ (calidad de vida) pero el objeto es seguridad; se sigue el efecto, no el arbol. (seccion 13: SEGURIDAD Y PROTECCION)	no
+atlas-manifest	qol/shell	11	10	Tweaks/qol/shell (11) -> 10 EXPLORADOR E INTERFAZ (shell de Windows). (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+atlas-manifest	qol/startup-shutdown	4	8	Tweaks/qol/startup-shutdown (4) -> 8 ADMINISTRACION DE INICIO Y APAGADO. (seccion 8: ADMINISTRACION DE INICIO Y APAGADO)	no
+atlas-manifest	qol/system	2	9	Tweaks/qol/system (2) -> 9 REGISTRO Y CONFIGURACION DEL SISTEMA. (seccion 9: REGISTRO DE WINDOWS Y CONFIGURACION DEL SISTEMA)	no
+atlas-manifest	qol/taskbar	7	10	Tweaks/qol/taskbar (7) -> 10 EXPLORADOR E INTERFAZ (barra de tareas). (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+atlas-manifest	qol/windows-update	8	12	Tweaks/qol/windows-update (8) -> 12 WINDOWS UPDATE Y MANTENIMIENTO. (seccion 12: WINDOWS UPDATE Y MANTENIMIENTO)	no
+atlas-manifest	scripts/(raiz)	8	mixed	Tweaks/scripts/*.psd1 (8: disable-core-isolation, disable-mitigations, disable-pnp, set-file-associations, set-power-settings...): seguridad, reparacion y rendimiento mezclados. Mezcla real.	no
+atlas-manifest	security/(raiz)	3	13	Tweaks/security/*.psd1 (3: block-anonymous-enum-sam, disable-automatic-restart-signon, disable-remote-assistance) -> 13 SEGURIDAD. (seccion 13: SEGURIDAD Y PROTECCION)	no
+atlas-toggle	Advanced	3	mixed	Grupo 'Advanced' (3 toggles: MicrosoftStore, ProcessExplorer, ToggleWindowsUpdates) toca 15, 14 y 12: mezcla real.	no
+atlas-toggle	Boot	8	8	Grupo 'Boot' (8 toggles: AdvancedBootOptions, BootLogo, NewBootMenu, SpinningAnimations...) -> 8 ADMINISTRACION DE INICIO Y APAGADO. (seccion 8: ADMINISTRACION DE INICIO Y APAGADO)	no
+atlas-toggle	General	29	mixed	Grupo 'General' (29 toggles: AutomaticUpdates, BackgroundApps, Copilot, DeliveryOptimisation, Hibernation...): medido en 9 (2) y 2 (1); cubre debloat, memoria, update y sistema. Mezcla real.	no
+atlas-toggle	Interface	26	10	Grupo 'Interface' (26 toggles: Animation, CompactView, Gallery, Home, LockScreen, Taskbar...) -> 10 EXPLORADOR E INTERFAZ; las 3 lineas Mapped medidas caen en 10. (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+atlas-toggle	Security	7	13	Grupo 'Security' (7 toggles: ConfigVBS, Mitigations, ToggleDefender...) -> 13 SEGURIDAD Y PROTECCION; medido 1 linea en 13. (seccion 13: SEGURIDAD Y PROTECCION)	no
+atlas-toggle	Services	7	4	Grupo 'Services' (7 toggles: Bluetooth, LanmanWorkstation, Printing, SuperFetch...) -> 4 OPTIMIZACION DE SERVICIOS; medido 1 linea en 4. (seccion 4: OPTIMIZACION DE SERVICIOS)	no
+atlas-toggle	Software	3	15	Grupo 'Software' (InstallSoftware, RemoveEdge, RemovePythonStorePrompt) -> 15 ADMINISTRACION DE APLICACIONES. (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+atlas-toggle	Troubleshooting	8	14	Grupo 'Troubleshooting' (AtlasHealth, FixErrors2502and2503, RepairWindowsComponents, SafeMode...) -> 14 REPARACION Y DIAGNOSTICO. (seccion 14: REPARACION Y DIAGNOSTICO)	no
+winutil-appx	Bing & Web Services	5	15	appx.json = desinstalacion de paquetes provisionados -> seccion 15 ADMINISTRACION DE APLICACIONES. La subcategoria ('Bing & Web Services') describe el proveedor, no el area del sistema. (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+winutil-appx	Developer Tools	2	15	appx.json -> 15 ADMINISTRACION DE APLICACIONES (paquete AppX). (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+winutil-appx	Microsoft Apps	5	15	appx.json -> 15 ADMINISTRACION DE APLICACIONES (paquete AppX). (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+winutil-appx	Microsoft Ecosystem	2	15	appx.json -> 15 ADMINISTRACION DE APLICACIONES (paquete AppX). (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+winutil-appx	Utilities & Productivity	14	15	appx.json -> 15 ADMINISTRACION DE APLICACIONES (paquete AppX). (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+winutil-appx	Xbox & Gaming	6	15	appx.json -> 15 ADMINISTRACION DE APLICACIONES. Se elige 15 y no 6 GAMING porque el item es un paquete AppX desinstalable, no un ajuste de juego. (seccion 15: ADMINISTRACION DE APLICACIONES)	no
+winutil-dns	config/dns.json	8	11	dns.json son proveedores DNS (8) -> 11 RED Y CONECTIVIDAD. El fichero no tiene campo de categoria; el grupo es el fichero entero. (seccion 11: RED Y CONECTIVIDAD)	no
+winutil-feature	Features	10	mixed	Categoria 'Features' (10 items: Hyper-V, WSL, NFS, Sandbox, .NET...): cada caracteristica de Windows cae en un area distinta; medida en 12 y 13. El reparto por item va en el paso siguiente.	no
+winutil-feature	Fixes	6	mixed	Categoria 'Fixes' (6 items: NTP, AutoLogon, Update Reset, Network Reset, DISM, WinGet): medida en 14 REPARACION (4), 11 RED (1) y 12 UPDATE (1). Son reparaciones de areas distintas.	no
+winutil-feature	Legacy Windows Panels	14	mixed	Categoria 'Legacy Windows Panels' (14 accesos directos a paneles antiguos): medida en 13; pero incluye Firewall (13), Conexiones de red (11), Administracion de equipos (9) y Panel de control (10). Mezcla real.	no
+winutil-feature	Powershell Profile Powershell 7+ Only	2	16	Categoria 'Powershell Profile' + seccion 16 FUNCIONES DE INSTALACION Y ADMINISTRACION AVANZADA: instala/desinstala un perfil de PowerShell del propio WinUtil. Sin lineas Mapped: propuesta. (seccion 16: FUNCIONES DE INSTALACION Y ADMINISTRACION AVANZADA)	no
+winutil-feature	Remote Access	1	11	Categoria 'Remote Access' (OpenSSH Server) + seccion 11 RED Y CONECTIVIDAD: medida en 11 (1 linea Mapped). (seccion 11: RED Y CONECTIVIDAD)	no
+winutil-preset	config/preset.json	4	mixed	preset.json (4 presets: Standard, Minimal, Advanced, AppxDefault) son listas de claves de varias secciones (tweaks + appx). La seccion la heredarian los items que agrupan, no el preset.	no
+winutil-theme	config/themes.json	3	10	themes.json (Light/Dark) -> 10 EXPLORADOR E INTERFAZ. (seccion 10: EXPLORADOR DE ARCHIVOS E INTERFAZ)	no
+winutil-tweak	Customize Preferences	25	mixed	Categoria 'Customize Preferences' (panel 2, 25 items): la conciliacion la reparte entre 9 REGISTRO Y CONFIGURACION DEL SISTEMA (17 lineas Mapped), 10 EXPLORADOR E INTERFAZ (11) y 2/5/6/8 (4). Mezcla real: el reparto por item va en el paso siguiente.	no
+winutil-tweak	Essential Tweaks	18	mixed	Categoria 'Essential Tweaks' (panel 1, 18 items): medida en 2 DEBLOAT (5), 10 EXPLORADOR (3) y 13/5/6/7/9 (una cada una). WinUtil agrupa por 'esencial' (lo que el autor recomienda), no por area del sistema.	no
+winutil-tweak	Performance Plans - NOT FOR LAPTOPS	2	5	Categoria 'Performance Plans' + seccion 5 OPTIMIZACION DE CPU Y RENDIMIENTO: son los planes de energia Ultimate/High Performance. Sin lineas Mapped en la conciliacion (0 medidas), asi que la seccion es propuesta, no medida. (seccion 5: OPTIMIZACION DE CPU Y RENDIMIENTO)	no
+winutil-tweak	z__Advanced Tweaks - CAUTION	24	mixed	Categoria 'z__Advanced Tweaks - CAUTION' (panel 1, 24 items): medida en 2 DEBLOAT (6), 7 MEMORIA/SEGUNDO PLANO (4), 11 RED (2), 13 SEGURIDAD (2) y 10/3/9 (una cada una). Mezcla real; el prefijo z__ es solo orden de UI.	no
