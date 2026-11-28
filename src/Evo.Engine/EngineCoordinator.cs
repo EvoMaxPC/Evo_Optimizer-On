@@ -339,19 +339,19 @@ public sealed class EngineCoordinator
         // Usa el diario del contexto (pasado por el llamante/ViewModel) en
         // lugar de crear uno local que se descarta. Así el deshacer del
         // ViewModel ve las entradas aplicadas (ETAPA 6-H).
-        var journal = template.Journal ?? new UndoJournal();
+        // Usa el diario del contexto (pasado por el llamante/ViewModel) para
+        // el deshacer manual (ETAPA 6-H). Para el rollback automático se usa
+        // un journal LOCAL de esta ejecución, así el deshacer automático de
+        // una ejecución fallida no toca las entradas de ejecuciones previas
+        // exitosas de la misma capacidad (ETAPA 6-K).
+        var contextJournal = template.Journal ?? new UndoJournal();
+        var executionJournal = new UndoJournal();
         if (restorePointId is not null)
         {
-            journal.RestorePointId = restorePointId;
+            executionJournal.RestorePointId = restorePointId;
         }
 
-        // Marca de posición: el rollback automático solo revertirá las
-        // entradas añadidas durante ESTA ejecución (ETAPA 6-K). Las entradas
-        // de ejecuciones previas exitosas de la misma capacidad quedan
-        // intactas, porque comparten el mismo journal (journal por capacidad).
-        var rollbackStartIndex = journal.Entries.Count;
-
-        var context = template with { Mode = mode, Journal = journal, CapabilityId = plan.Capability.Id };
+        var context = template with { Mode = mode, Journal = executionJournal, CapabilityId = plan.Capability.Id };
         var failed = false;
 
         if (!canceled)
@@ -398,9 +398,9 @@ public sealed class EngineCoordinator
         }
         }
 
-        // Solo las entradas de esta ejecución (después de la marca) se
-        // revierten en el rollback automático.
-        var rollbackEntries = journal.Entries.Skip(rollbackStartIndex).ToList();
+        // Las entradas de esta ejecución están en el journal local; el
+        // rollback automático solo las revierte a ellas (ETAPA 6-K).
+        var rollbackEntries = executionJournal.Entries.ToList();
         RollbackReport? rollbackReport = null;
 
         // El rollback se ejecuta en Execute cuando hay algo aplicado y la
@@ -417,10 +417,10 @@ public sealed class EngineCoordinator
             var undoContext = new UndoContext(
                 template.Registry, template.Services, template.Tasks,
                 template.Processes, template.Commands);
-            // Tras un rollback el diario conserva solo las entradas que
+            // Tras un rollback el diario local conserva solo las entradas que
             // fallaron (para reintento); las restauradas y no reversibles se
             // descardan. El estado de los recursos ya se deshizo.
-            rollbackReport = await journal.RollbackAsync(undoContext).ConfigureAwait(false);
+            rollbackReport = await executionJournal.RollbackAsync(undoContext).ConfigureAwait(false);
         }
 
         if (canceled)
@@ -475,15 +475,19 @@ public sealed class EngineCoordinator
 
         if (mode == ExecutionMode.Execute)
         {
-            // El diario del coordinador acumula las entradas aplicadas para que
-            // el llamante pueda deshacer manualmente más tarde.
+            // El diario del coordinador y el del contexto (ViewModel)
+            // acumulan las entradas de esta ejecución exitosa para que el
+            // Deshacer manual las vea (ETAPA 6-H / 6-K). Las ejecuciones
+            // fallidas ya se deshicieron arriba y no se vuelcan.
             if (restorePointId is not null)
             {
+                contextJournal.RestorePointId = restorePointId;
                 Journal.RestorePointId = restorePointId;
             }
 
-            foreach (var entry in rollbackEntries)
+            foreach (var entry in executionJournal.Entries)
             {
+                contextJournal.Add(entry);
                 Journal.Add(entry);
             }
         }
