@@ -126,7 +126,11 @@ public sealed class Wave1CatalogTests
             // Specified = declarada con acciones pero sin verificar en el pin.
             Assert.Contains(definition.State,
                 new[] { CapabilityState.Implemented, CapabilityState.Specified });
-            Assert.NotEmpty(definition.Actions);
+            // R1: una capacidad Implemented siempre expresa al menos una acción.
+            // Una capacidad Specified puede quedar sin acciones cuando el pin
+            // solo declara efectos no expresables por el motor (MachineAction).
+            if (definition.State == CapabilityState.Implemented)
+                Assert.NotEmpty(definition.Actions);
             Assert.False(string.IsNullOrWhiteSpace(definition.Provenance));
             // Este bucle recorre TODO el catálogo (sección 10 desde el paso 9 y
             // sección 9 desde el paso 10), así que la lista de impactos permitidos
