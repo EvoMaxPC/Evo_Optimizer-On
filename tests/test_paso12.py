@@ -331,7 +331,9 @@ def test_las_cifras_del_ledger_son_las_medidas() -> None:
 
     cov = json.loads(run("verify_catalog_coverage.py", "--json"))
     assert cov["capacidades"] == 101
-    assert cov["cubiertas"] == 98 and cov["lineas_mapped_1_3"] == 98
+    # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): una
+    # línea más del inventario queda cubierta, así que 98 -> 99.
+    assert cov["cubiertas"] == 99 and cov["lineas_mapped_1_3"] == 99
     assert cov["huecos"] == 0 and cov["huecos_no_declarados"] == 0
     assert cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
 

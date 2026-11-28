@@ -10,10 +10,10 @@ Total: **588** líneas no vacías.
 
 | estado | líneas | qué significa |
 |---|---:|---|
-| `Mapped` | 159 | existe como tweak/toggle/servicio/clave en el pin, con id |
+| `Mapped` | 160 | existe como tweak/toggle/servicio/clave en el pin, con id |
 | `Mapped-To-App` | 5 | entrada de `winutil-apps.tsv` (sección 15) |
 | `EVO-Exclusive` | 37 | requisito propio de EVO |
-| `Absent-At-Pin` | 316 | nombrado en el inventario, no existe en el pin |
+| `Absent-At-Pin` | 315 | nombrado en el inventario, no existe en el pin |
 | `Informative-Header` | 71 | encabezado, nota o cabecera de tabla |
 
 ## Tabla 17 × 5
@@ -23,7 +23,7 @@ Total: **588** líneas no vacías.
 | 1 | LIMPIEZA Y ELIMINACIÓN DE COMPONENTES | 3 | 0 | 1 | 23 | 2 | 29 |
 | 2 | DEBLOAT DE WINDOWS | 17 | 0 | 0 | 23 | 2 | 42 |
 | 3 | TELEMETRÍA Y PRIVACIDAD | 6 | 0 | 0 | 34 | 2 | 42 |
-| 4 | OPTIMIZACIÓN DE SERVICIOS | 12 | 0 | 0 | 11 | 3 | 26 |
+| 4 | OPTIMIZACIÓN DE SERVICIOS | 13 | 0 | 0 | 10 | 3 | 26 |
 | 5 | OPTIMIZACIÓN DE CPU Y RENDIMIENTO | 7 | 0 | 0 | 18 | 3 | 28 |
 | 6 | OPTIMIZACIÓN GAMING | 6 | 0 | 11 | 12 | 3 | 32 |
 | 7 | MEMORIA Y APLICACIONES EN SEGUNDO PLANO | 7 | 0 | 10 | 10 | 2 | 29 |
@@ -37,7 +37,7 @@ Total: **588** líneas no vacías.
 | 15 | ADMINISTRACIÓN DE APLICACIONES | 1 | 5 | 0 | 23 | 3 | 32 |
 | 16 | FUNCIONES DE INSTALACIÓN Y ADMINISTRACIÓN AV | 5 | 0 | 0 | 35 | 4 | 44 |
 | 17 | CAPACIDADES ADICIONALES QUE NO DEBEMOS PERDE | 0 | 0 | 15 | 2 | 32 | 49 |
-| **Σ** | | 159 | 5 | 37 | 316 | 71 | **588** |
+| **Σ** | | 160 | 5 | 37 | 315 | 71 | **588** |
 
 ## Reglas aplicadas
 

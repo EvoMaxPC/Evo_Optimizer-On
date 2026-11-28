@@ -295,8 +295,10 @@ def test_la_cobertura_sigue_en_85_de_85_sin_huecos() -> None:
         [sys.executable, str(ROOT / "tools" / "ledger_extract" / "verify_catalog_coverage.py"),
          "--json"], capture_output=True, text=True, check=False).stdout)
     assert report["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10"]
-    assert report["lineas_mapped_1_3"] == 98
-    assert report["cubiertas"] == 98
+    # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): una
+    # línea más del inventario queda cubierta, así que 98 -> 99.
+    assert report["lineas_mapped_1_3"] == 99
+    assert report["cubiertas"] == 99
     assert report["huecos"] == 0
     assert report["huecos_no_declarados"] == 0
     # Paso 12: 86 -> 88 capacidades (la cobertura sigue 85/85, no cambian las

@@ -11,7 +11,7 @@ MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/invent
 | 1 | Limpieza y eliminación de componentes | 29 | 3 | 0 | 1 | 23 | 2 | 3 | 0 | 24 | 2 |
 | 2 | Debloat de Windows | 42 | 17 | 0 | 0 | 23 | 2 | 17 | 0 | 23 | 5 |
 | 3 | Telemetría y privacidad | 42 | 6 | 0 | 0 | 34 | 2 | 6 | 0 | 34 | 35 |
-| 4 | Optimización de servicios | 26 | 12 | 0 | 0 | 11 | 3 | 12 | 0 | 11 | 1 |
+| 4 | Optimización de servicios | 26 | 13 | 0 | 0 | 10 | 3 | 13 | 0 | 10 | 1 |
 | 5 | Optimización CPU y rendimiento | 28 | 7 | 0 | 0 | 18 | 3 | 3 | 4 | 22 | 20 |
 | 6 | Optimización gaming | 32 | 6 | 0 | 11 | 12 | 3 | 2 | 4 | 27 | 1 |
 | 7 | Memoria y aplicaciones en segundo plano | 29 | 7 | 0 | 10 | 10 | 2 | 3 | 4 | 24 | 3 |
@@ -25,7 +25,7 @@ MEDIDO: las cuatro primeras columnas de estado salen de `inventory/ledger/invent
 | 15 | Administración de aplicaciones | 32 | 1 | 5 | 0 | 23 | 3 | 0 | 6 | 29 | 44 |
 | 16 | Funciones de instalación y administración avanzada | 44 | 5 | 0 | 0 | 35 | 4 | 0 | 5 | 40 | 7 |
 | 17 | Capacidades adicionales que no debemos perder | 49 | 0 | 0 | 15 | 2 | 32 | 0 | 0 | 17 | 0 |
-| **Σ** | **17 secciones** | **588** | **159** | **5** | **37** | **316** | **71** | **113** | **51** | **404** | **308** |
+| **Σ** | **17 secciones** | **588** | **160** | **5** | **37** | **315** | **71** | **114** | **51** | **403** | **308** |
 
 Pendientes upstream **sin sección**: 18. Desde el paso 8d la sección sale también de `inventory/partition/item-section-map.tsv` (435 filas, regla y evidencia escritas). Lo que queda sin sección no tiene efecto propio: entradas de navegación, presets, paneles heredados y scripts cuyo efecto no está medido en el pin.
 
@@ -40,7 +40,7 @@ PROPUESTA (no medida): el orden y los motivos son del agente; las cifras de cada
 | W3 | 10 Explorador de archivos e interfaz | 17 | Explorador e interfaz: oleada 2, cerrada en el catálogo (29 de 29 líneas Mapped cubiertas). Sigue siendo la sección con más ítems de upstream pendientes: el trabajo que queda es de upstream, no del inventario. |
 | W4 | 9 Registro de Windows y configuración del sistema | 25 | Registro y configuración: oleada 3, cerrada en el catálogo (30 de 30 líneas Mapped cubiertas con 18 capacidades). Quedan 3 ítems de upstream pendientes y ninguno es un valor de registro fijo: la indización se aplica como acción de TrustedInstaller, la página de «workplace» se edita de forma incremental (conservando las demás páginas) y el panel de fecha y hora sólo abre timedate.cpl. |
 | W5 | 3 Telemetría y privacidad | 34 | Telemetría: 6/6 Mapped cubiertas; el resto (34 Absent-At-Pin) son los ajustes de privacidad finos, que necesitan el motor de 2. |
-| W6 | 4 Optimización de servicios | 11 | Servicios: alto riesgo por servicio, 9 Mapped. Después de 3 para no duplicar DiagTrack. |
+| W6 | 4 Optimización de servicios | 10 | Servicios: alto riesgo por servicio, 9 Mapped. Después de 3 para no duplicar DiagTrack. |
 | W7 | 12 Windows Update y mantenimiento | 25 | Windows Update: 5 Mapped y 21 Absent-At-Pin; toca el mismo DISM de 1 y 14, así que va después de ellas. |
 | W8 | 14 Reparación y diagnóstico | 24 | Reparación y diagnóstico: 13 Mapped; sus comandos comparten ejecutor con 1. |
 | W9 | 13 Seguridad y protección | 20 | Seguridad: 9 Mapped y riesgo alto; después de 4 y 12, que ya tocan servicios y directivas del sistema. |

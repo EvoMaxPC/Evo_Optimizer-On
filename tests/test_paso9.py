@@ -340,7 +340,8 @@ def test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10() -> None:
     assert report["huecos_no_declarados"] == 0
     # Paso 12: 86 -> 88; paso 7: +12 seccion 4 +1 bateria seccion 9 = 101.
     assert report["capacidades"] == 101
-    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 12 + 31 + 29
+    # DESVIACIÓN (etapa 7, línea 121 ahora Mapped vía WPFTweaksServices): sec 4 pasa de 12 a 13 Mapped.
+    assert report["lineas_mapped_1_3"] == 3 + 17 + 6 + 13 + 31 + 29
 
 
 def test_la_seccion_10_del_ledger_tiene_29_mapped_y_ninguna_queda_absente() -> None:
