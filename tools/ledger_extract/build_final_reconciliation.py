@@ -206,11 +206,16 @@ MAPPED_OVERRIDES: dict[tuple[int, str], tuple[str, str]] = {
 # el efecto que anuncia la linea. Se corrigen a `Absent-At-Pin`, con la medicion.
 ABSENT_OVERRIDES: dict[tuple[int, str], str] = {
     # Seccion 4, linea 121 "Services — configuración de inicio Manual." (bloque WinUtil).
-    # Es un encabezado de sub-bloque que agrupa los 5 servicios ya mapeados individualmente
-    # (líneas 122-126). No es una operación aparte del pin.
-    (4, "121"): ("medido en el paso 7: la linea agrupa los servicios de WinUtil ya mapeados "
-                 "individualmente (DiagTrack, MapsBroker, StorSvc, SharedAccess, CscService en "
-                 "las líneas 122-126). No es una operación aparte; no hay candidato propio en el pin (REQ-002)."),
+    # WPFTweaksServices SÍ se expresa en el pin (config/tweaks.json:146; preset.json:8,19,29) y
+    # las capacidades services.winutil.cscservice/diagtrack/mapsbroker/sharedaccess/storsvc declaran
+    # winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTWeaksServices; las
+    # líneas 122-126 están Mapped a WPFTweaksServices. La línea 121 es un encabezado de sub-bloque
+    # que agrupa esos servicios ya mapeados individualmente, no es una operación aparte del pin
+    # (REQ-002: no inventar una operación propia para un encabezado).
+    (4, "121"): ("medido en el paso 7: WPFTweaksServices se expresa en el pin y las líneas 122-126 "
+                 "están Mapped a servicios de WPFTweaksServices (CscService, DiagTrack, MapsBroker, "
+                 "SharedAccess, StorSvc). La línea 121 agrupa esos servicios; no es una operación "
+                 "aparte; no hay candidato propio en el pin (REQ-002)."),
     # Seccion 4, linea 136 "Windows Update Services." (bloque AtlasOS).
     (4, "136"): ("medido en el paso 7: el pin tiene toggles generales de actualizacion "
                  "(ToggleWindowsUpdates.psd1, AutomaticUpdates.psd1) pero no un toggle "
