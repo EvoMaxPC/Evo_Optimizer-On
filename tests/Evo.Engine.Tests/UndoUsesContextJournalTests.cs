@@ -90,29 +90,10 @@ public sealed class UndoUsesContextJournalTests
         harness.Registry.Seed(RegistryHive.LocalMachine, keyA, "ValorA", 1);
         harness.Registry.Seed(RegistryHive.LocalMachine, keyB, "ValorB", 1);
 
-        // Diarios SEPARADOS por capacidad (ETAPA 6-I).
-        var ctxA = new ActionContext
-        {
-            Registry = harness.Registry,
-            Services = harness.Services,
-            Tasks = harness.Tasks,
-            Processes = harness.Processes,
-            Commands = harness.Commands,
-            Mode = ExecutionMode.Execute,
-            Journal = new UndoJournal(),
-            CapabilityId = "cap.a",
-        };
-        var ctxB = new ActionContext
-        {
-            Registry = harness.Registry,
-            Services = harness.Services,
-            Tasks = harness.Tasks,
-            Processes = harness.Processes,
-            Commands = harness.Commands,
-            Mode = ExecutionMode.Execute,
-            Journal = new UndoJournal(),
-            CapabilityId = "cap.b",
-        };
+        // Diarios SEPARADOS por capacidad (ETAPA 6-I): cada harness.Context()
+        // crea su propio UndoJournal nuevo.
+        var ctxA = harness.Context(ExecutionMode.Execute);
+        var ctxB = harness.Context(ExecutionMode.Execute);
 
         // Capacidad A: Set DWord (éxito). Puertas mínimas (Safe/None/None)
         // para que no haya confirmación ni punto de restauración de por medio.
