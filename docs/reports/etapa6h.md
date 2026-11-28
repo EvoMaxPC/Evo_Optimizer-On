@@ -117,15 +117,17 @@ Además, `MainViewModel.Undo()` (src/Evo.App/MainViewModel.cs) se reescribió pa
 |------|-------|--------------|-----------|
 | `ExecuteAsync_Uses_ContextJournal_Not_CoordinatorOwnJournal` | UndoUsesContextJournalTests.cs:~1 | `context.Journal` recibe las entradas (no queda vacío) | PASA |
 
-## Alcance de "Deshacer"
+## Alcance de "Deshacer" (reemplazado por ETAPA 6-I)
 
-Deshacer revierte **toda la sesión acumulada** (todas las capacidades aplicadas desde que se abrió la app), no solo la última capacidad clickeada. El diario `_journal` es de instancia de `MainViewModel` y se acumula con cada `ExecuteCapability(..., ExecutionMode.Execute)`.
+En la 6-H el deshacer usaba un diario compartido (`_journal`) y revocaba toda la sesión. En la ETAPA 6-I se cambió a **deshacer por capacidad**: cada capacidad tiene su propio `UndoJournal` indexado por Id, y `Undo(string capabilityId)` revierte SOLO lo aplicado de esa capacidad. Véase `docs/reports/etapa6i.md` (Punto A).
 
-Texto que muestra la UI:
-- Si hay cambios para deshacer: `"Se deshizo: N cambio(s) de <capId>"` (o lista de IDs si hay varias).
+Texto que muestra la UI (6-I):
+- Si hay cambios para deshacer: `"Se deshizo: N cambio(s) de <capId>"`.
 - Si falló alguna entrada: `"Fallo al deshacer: <errores>"`.
 - Si el diario está vacío: `"No hay nada para deshacer"`.
 - Nunca contiene `"DryRun"` en el deshacer real (verificado por test).
+
+Los números de línea de las tablas de tests de este informe (6-H) fueron reemplazados por los de la 6-I en `docs/reports/etapa6i.md`.
 
 ## Evidencia CI (HEAD `58d98a5ba8f456a5614fdd6ffda9c7928be7f72e`)
 
