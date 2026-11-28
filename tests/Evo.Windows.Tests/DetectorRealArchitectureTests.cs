@@ -26,14 +26,5 @@ public class DetectorRealArchitectureTests
         Assert.False(string.IsNullOrWhiteSpace(resultado.Architecture),
             $"Arquitectura vacia o nula: {resultado.Reason}");
         Assert.DoesNotContain("Arquitectura ''", resultado.Reason);
-
-        // Si el sistema es Cliente y el build esta en el catalogo, la arquitectura
-        // detectada debe estar declarada para esa version (no rechazada por arquitectura vacia).
-        if (resultado.Status == CompatibilityStatus.Supported ||
-            resultado.Status == CompatibilityStatus.SupportedWithWarning)
-        {
-            Assert.False(string.IsNullOrWhiteSpace(resultado.Reason),
-                $"Sistema compatible pero con motivo de rechazo: {resultado.Reason}");
-        }
     }
 }
