@@ -85,9 +85,9 @@ public sealed class WindowsSystemEnvironment : ISystemEnvironment
     /// </summary>
     internal static string MapArchitecture(Architecture architecture) => architecture switch
     {
-        Architecture.X64 => "x64",
-        Architecture.Arm64 => "arm64",
-        Architecture.X86 => "x86",
+        global::System.Runtime.InteropServices.Architecture.X64 => "x64",
+        global::System.Runtime.InteropServices.Architecture.Arm64 => "arm64",
+        global::System.Runtime.InteropServices.Architecture.X86 => "x86",
         var other => $"desconocido-{other}",
     };
 }
