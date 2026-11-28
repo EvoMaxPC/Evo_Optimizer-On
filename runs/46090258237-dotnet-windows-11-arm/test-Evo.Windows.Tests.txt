@@ -1,0 +1,64 @@
+Build started 11/27/2026 4:54:13 PM.
+Test run for C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\bin\Release\net10.0-windows\Evo.Windows.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.11]   Discovering: Evo.Windows.Tests
+[xUnit.net 00:00:00.15]   Discovered:  Evo.Windows.Tests
+[xUnit.net 00:00:00.16]   Starting:    Evo.Windows.Tests
+[xUnit.net 00:00:00.32]     Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU [FAIL]
+[xUnit.net 00:00:00.32]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.32]       Expected: 2
+[xUnit.net 00:00:00.32]       Actual:   1
+[xUnit.net 00:00:00.32]       Stack Trace:
+[xUnit.net 00:00:00.32]         /_/tests/Evo.Windows.Tests/EngineCoordinatorRealTest.cs(176,0): at Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU()
+[xUnit.net 00:00:00.32]         --- End of stack trace from previous location ---
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Roundtrip_AllSupportedKinds [66 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_Binary_ZeroAndFF [1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_NestedKey_AncestorsCreated [1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_MissingKeyAndValue_ReturnNull [< 1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_ExpandString_NotExpanded [< 1 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Registry_DefaultValue_EmptyName [< 1 ms]
+  Failed Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU [96 ms]
+  Error Message:
+   Assert.Equal() Failure: Values differ
+Expected: 2
+Actual:   1
+  Stack Trace:
+     at Evo.Windows.Tests.EngineCoordinatorRealTest.Motor_Real_Escribe_Y_Deshace_En_HKCU() in /_/tests/Evo.Windows.Tests/EngineCoordinatorRealTest.cs:line 176
+--- End of stack trace from previous location ---
+[xUnit.net 00:00:00.35]     Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia [FAIL]
+[xUnit.net 00:00:00.35]       Sistema compatible pero con motivo de rechazo: 
+[xUnit.net 00:00:00.35]       Stack Trace:
+[xUnit.net 00:00:00.35]         /_/tests/Evo.Windows.Tests/DetectorRealArchitectureTests.cs(35,0): at Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia()
+[xUnit.net 00:00:00.35]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.35]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:01.18]   Finished:    Evo.Windows.Tests
+  Failed Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia [113 ms]
+  Error Message:
+   Sistema compatible pero con motivo de rechazo: 
+  Stack Trace:
+     at Evo.Windows.Tests.DetectorRealArchitectureTests.DetectorReal_NoRechazaPorArquitecturaVacia() in /_/tests/Evo.Windows.Tests/DetectorRealArchitectureTests.cs:line 35
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Evo.Windows.Tests.RegistryDeleteKeyRealRollbackTest.BorradoReal_RestauraValores_Kinds_Y_Subclave [17 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Process_StartAndTerminate_Ping [242 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_EventLog_ReadOnly [637 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.Service_MissingService_NoException [5 ms]
+  Passed Evo.Windows.Tests.WindowsAccessorsTests.RegistryDeleteKey_RealExecutor_RollbackRestoresTree [6 ms]
+Results File: C:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.Windows.Tests\Evo.Windows.Tests.trx
+
+Test Run Failed.
+Total tests: 13
+     Passed: 11
+     Failed: 2
+ Total time: 1.7334 Seconds
+     1>Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\Evo.Windows.Tests.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "C:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.Windows.Tests\Evo.Windows.Tests.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.47
