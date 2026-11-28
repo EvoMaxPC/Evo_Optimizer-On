@@ -249,7 +249,7 @@ public sealed class Wave4CatalogTests
         Assert.Single(registry);
         var action = registry[0];
         Assert.Equal(RegistryOperation.Set, action.Operation);
-        Assert.Equal(RegistryHive.CurrentUser, action.Hive);
+        Assert.Equal(RegistryHiveKind.CurrentUser, action.Hive);
         Assert.Equal(@"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", action.KeyPath);
         Assert.Equal("IsBatteryPercentageEnabled", action.ValueName);
         Assert.Equal("1", action.Value);
