@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "description": "Desviaciones de valor aceptadas: cada fila de inventory/ledger/catalog-value-audit.tsv con relation=equals-off, equals-original o differs debe estar aqui con motivo, evidencia y tipo (deviation_kind: value | switch-meaning). Lo comprueba tools/ledger_extract/audit_catalog_values.py (exit 1 si falta).",
+  "deviations": [
+    {
+      "capability_id": "debloat.settings.home",
+      "hive": "HKCU",
+      "key": "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "name": "SettingsPageVisibility",
+      "catalog_value": "hide:home",
+      "source": "winutil",
+      "source_apply_value": "show:home",
+      "source_original_value": "hide:home",
+      "relation": "equals-off",
+      "evidence": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:1741-1755 (WPFToggleHideSettingsHome: Value='show:home', OriginalValue='hide:home', DefaultState='true'); inventory/ledger/winutil-tweak-ops.tsv winutil:tweak-op:WPFToggleHideSettingsHome:registry:0",
+      "reason": "Desviacion de SIGNIFICADO DE INTERRUPTOR, no de valor: la casilla encendida de WinUtil deja la pagina de Inicio visible (Value='show:home'); el valor que produce el efecto que anuncia la capacidad de EVO es el estado apagado ('hide:home'). Se copia el estado apagado y se deja constancia. Si el titular confirma que quiere replicar la casilla tal cual, hay que invertir este literal.",
+      "deviation_kind": "switch-meaning",
+      "switch_meaning": "WPFToggleHideSettingsHome es un Toggle (config/tweaks.json:1746) con Value='show:home' y OriginalValue='hide:home'. Por Invoke-WinUtilTweaks.ps1:34-46, Value es el estado ENCENDIDO de la casilla y OriginalValue el APAGADO (Get-WinUtilToggleStatus.ps1:44 compara contra Value). El catalogo escribe el estado APAGADO a proposito: su nombre es 'ocultar la pagina de Inicio'."
+    },
+    {
+      "capability_id": "system.settings-page-visibility.hide",
+      "hive": "HKLM",
+      "key": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+      "name": "SettingsPageVisibility",
+      "catalog_value": "hide:recovery;maps;maps-downloadmaps;privacy;privacy-feedback;privacy-activityhistory;search-permissions;privacy-general;sync;mobile-devices;mobile-devices-addphone;workplace;family-group;deviceusage;home",
+      "source": "winutil",
+      "source_apply_value": "hide:aicomponents",
+      "source_original_value": "<RemoveEntry>",
+      "relation": "differs",
+      "evidence": "ATLAS (origen del valor del catalogo, idéntico byte a byte): package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1:5 (\\$value = 'hide:recovery;maps;...;deviceusage;home'), :7 (\\$key = HKLM\\...\\Policies\\Explorer), :11 (Set-ItemProperty SettingsPageVisibility = \\$value). Capacidad: catalog/capabilities/section9_system_registry.json. WINUTIL (valor DISTINTO en la misma clave HKLM): winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:952-961 (#WPFTweaksWindowsAI, registry Path=...Policies\\Explorer, Name=SettingsPageVisibility, Value='hide:aicomponents') e inventory/ledger/winutil-tweak-ops.tsv winutil:tweak-op:WPFTweaksWindowsAI:registry:0 (valor que la auditoría encontró primero). Nota: catalog/capabilities/section2_debloat.json debloat.settings.home también escribe SettingsPageVisibility pero en HKCU (Value='hide:home', WinUtil WPFToggleHideSettingsHome), distinta hive -> misma clave no se pisa, sin ConflictsWith.",
+      "reason": "Relacion real: el valor del catalogo IGUALA al pin de Atlas (set-hidden-settings-pages.ps1:5, larga con 'home') y DIFIERE del pin de WinUtil WPFTweaksWindowsAI ('hide:aicomponents', tweaks.json:961) sobre la misma clave HKLM\\...\\Policies\\Explorer\\SettingsPageVisibility. Por tanto relation='differs' frente a la fuente WinUtil que encontro la auditoria; el valor del catalogo NO sale de WinUtil. No hay conflicto entre capacidades del catalogo: system.settings-page-visibility.hide escribe HKLM y debloat.settings.home escribe HKCU (distintas claves de registro).",
+      "deviation_kind": "value"
+    }
+  ]
+}

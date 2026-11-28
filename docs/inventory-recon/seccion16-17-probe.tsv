@@ -1,0 +1,40 @@
+item	fuente_inventario	patron	winutil_ficheros	atlas_ficheros	ejemplos
+Atlas Playbook	sec16:Atlas	Playbook|playbook	0	19	app/docs/translating.md; app/docs/writing.md; app/src/model/tests/package.rs
+AME Wizard	sec16:Atlas	AME.?Wizard	0	8	app/src/model/tests/package.rs; app/src/services/package.rs; app/src/services/releases.rs
+TrustedInstaller Broker	sec16:Atlas	TrustedInstaller.*[Bb]roker|Broker.*TrustedInstaller	0	35	docs/console-presentation.md; docs/front-door.md; docs/testing.md
+Install Plan	sec16:Atlas	Install.?Plan	0	41	app/src/model/test_harness.rs; app/src/model/tests/install.rs; app/src/services/system.rs
+Install Session	sec16:Atlas	Install.?Session	0	19	app/src/services/session.rs; app/src/services/settings.rs; app/src/services/system.rs
+Installation Phases	sec16:Atlas	[Ii]nstallation.?[Pp]hase|Phases?::|Phase\b [patron dudoso]	3	143	AGENTS.md; docs/src/components/react-bits/ShinyText.jsx; app/docs/install-flow.md
+Pre-Install	sec16:Atlas	[Pp]re.?[Ii]nstall	8	14	AGENTS.md; config/applications.json; docs/install-state.md
+Environment Phase	sec16:Atlas	[Ee]nvironment.?[Pp]hase	0	3	tests/Atlas.InstallOrchestrator.Tests.ps1
+Choices Phase	sec16:Atlas	[Cc]hoices?.?[Pp]hase|Choices [patron dudoso]	4	160	docs/src/content/docs/guides/automation.mdx; docs/src/content/docs/guides/win11creator.mdx; app/docs/i18n.md
+Features Phase	sec16:Atlas	[Ff]eatures?.?[Pp]hase	0	6	package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasPackageReplacement.ps1; package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1; tests/Atlas.Features.Tests.ps1
+Services Phase	sec16:Atlas	[Ss]ervices?.?[Pp]hase	0	3	tests/Atlas.Phases.Tests.ps1
+Tweaks Phase	sec16:Atlas	[Tt]weaks?.?[Pp]hase	0	10	package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasInstall.ps1; package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-TweaksPhase.ps1; package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasInstallingUserPolicyRegistry.ps1
+Components Phase	sec16:Atlas	[Cc]omponents?.?[Pp]hase	0	9	package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-ComponentsPhase.ps1; package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-FeaturesPhase.ps1; package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasEdgeRemoval.ps1
+Software Phase	sec16:Atlas	[Ss]oftware.?[Pp]hase	0	3	tests/Atlas.Phases.Tests.ps1
+Shell Refresh Phase	sec16:Atlas	[Ss]hell.?[Rr]efresh	0	28	package/Executables/AtlasDesktop/4. Interface Tweaks/Start Menu/Install Open-Shell.cmd; package/Executables/AtlasModules/Scripts/Entry/Initialize-NewUser.ps1; package/Executables/AtlasModules/Scripts/Entry/Install-OpenShell.ps1
+AppX Support Phase	sec16:Atlas	Appx?.?[Ss]upport	0	18	app/src/model/tests/install.rs; docs/architecture.md; docs/windows-transition.md
+Windows Transition	sec16:Atlas	Windows.?Transition	0	58	app/docs/review-tools.md; app/resources/prepare/Stage-App.ps1; app/src/model.rs
+ISO Creation	sec16:Atlas	ISO.?(Creation|Creat|Build|Inject) [patron dudoso]	3	38	functions/private/Invoke-WinUtilISO.ps1; pester/xaml.Tests.ps1; app/docs/install-flow.md
+ISO Injection	sec16:Atlas	ISO.?(Injection|Inject)|[Ii]nject.*ISO [patron dudoso]	6	0	AGENTS.md; docs/src/content/docs/code-reference/architecture.mdx
+Upgrade System	sec16:Atlas	Upgrade.?System|System.?Upgrade [patron dudoso]	0	1	
+New User Initialization	sec16:Atlas	[Nn]ew.?[Uu]ser|Initialize-NewUser	1	28	docs/src/content/docs/guides/getting-started.mdx; app/src/pages/installed.rs; app/src/services/session.rs
+Atlas Health	sec16:Atlas	Atlas.?Health|HealthCheck	0	21	docs/architecture.md; docs/power-saving-policy.md; docs/style.md
+Toggle State Persistence	sec16:Atlas	Toggle.?State|State.?Persist	5	91	docs/src/content/docs/guides/getting-started.mdx; functions/private/Get-WinUtilTweaksStateReport.ps1; app/tools/Get-AccessibilityTree.ps1
+Package Verification	sec16:Atlas	[Pp]ackage.?[Vv]erif|Verify-.*Package	0	5	tests/Atlas.Appx.Tests.ps1; tests/AtlasBuild.Tests.ps1; tools/build/AtlasBuild/AtlasBuild.psm1
+Component Servicing	sec16:Atlas	Component.?Servicing|CBS|Cbs	1	61	docs/package-lock.json; app/vendor/gpui-pre-windows/src/display.rs; app/vendor/gpui-pre-windows/src/events.rs
+PowerShell Module Initialization	sec16:Atlas	Initialize-AtlasPowerShell|Module.?Initiali|Import-Module	4	185	AGENTS.md; .github/workflows/unittests.yaml; app/resources/iso/Build-Iso.ps1
+Compile.ps1	sec16:WinUtil	Compile\.ps1	14	0	AGENTS.md; SPEC.md
+inicialización WPF	sec16:WinUtil	Initialize-WPFUI|WPFUI	33	0	AGENTS.md; docs/src/content/docs/code-reference/architecture.mdx
+Runspaces	sec16:WinUtil	Runspace|runspace	48	3	AGENTS.md; Compile.ps1; tests/Atlas.Hardware.Tests.ps1
+trabajos en segundo plano	sec16:WinUtil	Background.?Job|Start-Job|background [patron dudoso]	58	153	AGENTS.md; SPEC.md; app/docs/accessibility.md
+presets	sec16:WinUtil	preset	35	7	AGENTS.md; README.md; package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Domain/Index.ps1
+importación/exportación	sec16:WinUtil	Import-|Export-|Impex	13	268	AGENTS.md; .github/workflows/unittests.yaml; .github/workflows/app.yml
+deshacer ajustes	sec16:WinUtil	[Uu]ndo|Invoke-WPFundoall	61	47	AGENTS.md; SPEC.md; app/i18n/de/atlas.ftl
+detección de cambios revertidos	sec16:WinUtil	[Rr]evert|[Tt]oggleStatus|Get-WinUtilToggleStatus	24	9	AGENTS.md; config/preset.json; app/vendor/gpui-pre/src/elements/list.rs
+registro de ejecución	sec16:WinUtil	Write-WinUtilLog|transcript|logging [patron dudoso]	99	48	AGENTS.md; SPEC.md; app/src/model/install.rs
+creación de USB	sec17	USB|Usb|Rufus|MediaCreationTool [patron dudoso]	15	62	SPEC.md; config/applications.json; app/docs/architecture.md
+instalación de ISO	sec17	\.iso|ISO|Mount-DiskImage	54	252	AGENTS.md; Compile.ps1; README.md
+actualización del programa	sec17	Update-WinUtil|SelfUpdate|updater|Version [patron dudoso]	116	535	AGENTS.md; README.md; .github/SECURITY.md
+informes de entorno	sec17	Environment.?Report|Get-WinUtilEnvironmentReport	11	0	docs/src/content/docs/guides/getting-started.mdx; functions/private/Get-WinUtilEnvironmentReport.ps1

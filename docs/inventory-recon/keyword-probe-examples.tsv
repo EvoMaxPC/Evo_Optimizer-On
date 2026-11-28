@@ -1,0 +1,420 @@
+termino	repo	ruta
+telemetry	winutil	config/preset.json
+telemetry	winutil	config/tweaks.json
+telemetry	winutil	docs/README.md
+telemetry	atlas	README.md
+telemetry	atlas	app/src/model/preview.rs
+telemetry	atlas	app/src/model/tests/rebase.rs
+DiagTrack	winutil	config/tweaks.json
+DiagTrack	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Services.mdx
+DiagTrack	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Telemetry.mdx
+DiagTrack	atlas	docs/services-startup-policy.md
+DiagTrack	atlas	docs/catalog/tweaks.md
+DiagTrack	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Atlas.Privacy.psd1
+CEIP	winutil	docs/src/content/docs/code-reference/architecture.mdx
+CEIP	winutil	docs/src/content/docs/guides/win11creator.mdx
+CEIP	atlas	docs/catalog/tweaks.md
+CEIP	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+CEIP	atlas	package/Executables/AtlasModules/Scripts/Tweaks/debloat/disable-scheduled-tasks.psd1
+debloat	winutil	README.md
+debloat	winutil	config/tweaks.json
+debloat	winutil	docs/src/content/docs/index.mdx
+debloat	atlas	docs/architecture.md
+debloat	atlas	docs/catalog/toggles.md
+debloat	atlas	docs/catalog/tweaks.md
+activity history	winutil	config/tweaks.json
+activity history	winutil	docs/src/content/docs/faq.mdx
+activity history	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Activity.mdx
+activity history	atlas	docs/catalog/tweaks.md
+activity history	atlas	package/Executables/AtlasModules/Scripts/Tweaks/privacy/disallow-user-activity-upload.psd1
+activity history	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1
+location tracking	winutil	config/tweaks.json
+location tracking	winutil	docs/src/content/docs/faq.mdx
+location tracking	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Location.mdx
+location tracking	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1
+location tracking	atlas	tests/Atlas.Privacy.Tests.ps1
+tailored experiences	winutil	config/tweaks.json
+tailored experiences	winutil	docs/src/content/docs/code-reference/architecture.mdx
+tailored experiences	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Telemetry.mdx
+tailored experiences	atlas	docs/catalog/tweaks.md
+tailored experiences	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+tailored experiences	atlas	package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-tailored-experiences.psd1
+advertising id	winutil	config/tweaks.json
+advertising id	winutil	docs/src/content/docs/code-reference/architecture.mdx
+advertising id	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Telemetry.mdx
+advertising id	atlas	docs/catalog/tweaks.md
+advertising id	atlas	package/Executables/AtlasModules/Scripts/Tweaks/privacy/advertising/disable-advertising-info.psd1
+feedback	winutil	AGENTS.md
+feedback	winutil	.github/CODE_OF_CONDUCT.md
+feedback	winutil	config/appx.json
+feedback	atlas	.github/ISSUE_TEMPLATE/bug_report.yml
+feedback	atlas	app/docs/install-flow.md
+feedback	atlas	app/docs/rc-testers-build.md
+TrustedInstaller	atlas	.github/CONTRIBUTING.md
+TrustedInstaller	atlas	.github/SECURITY.md
+TrustedInstaller	atlas	app/src/model/install.rs
+Defender	winutil	config/feature.json
+Defender	winutil	config/tweaks.json
+Defender	winutil	docs/src/content/docs/faq.mdx
+Defender	atlas	README.md
+Defender	atlas	.github/workflows/integration.yml
+Defender	atlas	app/docs/i18n.md
+BitLocker	winutil	config/tweaks.json
+BitLocker	winutil	docs/src/content/docs/code-reference/architecture.mdx
+BitLocker	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/DisableBitLocker.mdx
+VBS	winutil	functions/private/Invoke-WinUtilISOScript.ps1
+VBS	winutil	tools/autounattend.xml
+VBS	atlas	app/i18n/de/atlas.ftl
+VBS	atlas	app/i18n/en-GB/atlas.ftl
+VBS	atlas	app/i18n/en-US/atlas.ftl
+Core Isolation	atlas	README.md
+Core Isolation	atlas	app/docs/translating.md
+Core Isolation	atlas	app/i18n/de/atlas.ftl
+mitigations	atlas	README.md
+mitigations	atlas	.github/workflows/integration.yml
+mitigations	atlas	app/docs/review-tools.md
+Safe Mode	winutil	docs/src/content/docs/guides/tweaks.mdx
+Safe Mode	atlas	docs/architecture.md
+Safe Mode	atlas	docs/catalog/toggles.md
+Safe Mode	atlas	package/Executables/AtlasDesktop/9. Troubleshooting/Safe Mode/Exit Safe Mode.cmd
+UAC	winutil	functions/private/Invoke-WinUtilSSHServer.ps1
+UAC	winutil	pester/headless.Tests.ps1
+UAC	winutil	scripts/start.ps1
+UAC	atlas	app/docs/i18n.md
+UAC	atlas	app/docs/install-flow.md
+UAC	atlas	app/docs/rc-testers-build.md
+take ownership	atlas	docs/catalog/toggles.md
+take ownership	atlas	package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Take Ownership/Add Take Ownership to Context Menu.cmd
+take ownership	atlas	package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Take Ownership/Remove Take Ownership to Context Menu (default).cmd
+hibernat	winutil	config/tweaks.json
+hibernat	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Hiber.mdx
+hibernat	atlas	app/docs/translating.md
+hibernat	atlas	app/i18n/de/atlas.ftl
+hibernat	atlas	app/i18n/en-GB/atlas.ftl
+SysMain	atlas	docs/compatibility.md
+SysMain	atlas	docs/catalog/toggles.md
+SysMain	atlas	package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Superfetch/Disable SuperFetch.cmd
+prefetch	atlas	package/Executables/AtlasModules/Scripts/Preparation/Update-Windows.ps1
+prefetch	atlas	tests/Atlas.WindowsTransition.Tests.ps1
+MMCSS	atlas	docs/catalog/tweaks.md
+MMCSS	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+MMCSS	atlas	package/Executables/AtlasModules/Scripts/Tweaks/performance/config-mmcss.psd1
+timer resolution	atlas	app/vendor/gpui-pre-windows/src/dispatcher.rs
+timer resolution	atlas	app/vendor/gpui-pre/src/platform.rs
+timer resolution	atlas	app/vendor/gpui-pre/src/platform_scheduler.rs
+GameDVR	winutil	docs/src/content/docs/faq.mdx
+GameDVR	winutil	functions/public/Invoke-WPFAppxRemoval.ps1
+GameDVR	winutil	pester/appx.Tests.ps1
+GameDVR	atlas	package/Executables/AtlasModules/Scripts/Tweaks/performance/disable-game-bar.psd1
+GameDVR	atlas	package/Executables/AtlasModules/Toggles/General/FSOGameBar.psd1
+Game Bar	winutil	config/appx.json
+Game Bar	winutil	config/tweaks.json
+Game Bar	winutil	docs/src/content/docs/code-reference/tweaks/Customize-Preferences/GameMode.mdx
+Game Bar	atlas	docs/architecture.md
+Game Bar	atlas	docs/catalog/toggles.md
+Game Bar	atlas	docs/catalog/tweaks.md
+fullscreen optimizations	atlas	docs/catalog/toggles.md
+fullscreen optimizations	atlas	package/Executables/AtlasModules/Toggles/catalog.json
+fullscreen optimizations	atlas	package/Executables/AtlasModules/Toggles/General/FSOGameBar.psd1
+ultimate performance	winutil	config/tweaks.json
+ultimate performance	winutil	docs/src/content/docs/faq.mdx
+ultimate performance	winutil	docs/src/content/docs/knownissues.mdx
+ultimate performance	atlas	docs/power-saving-policy.md
+ultimate performance	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Hardware/Domain/Power.ps1
+ultimate performance	atlas	tests/Atlas.Hardware.Tests.ps1
+powercfg	winutil	config/feature.json
+powercfg	winutil	config/tweaks.json
+powercfg	winutil	docs/src/content/docs/code-reference/features/Legacy-Windows-Panels/Power.mdx
+powercfg	atlas	docs/power-saving-policy.md
+powercfg	atlas	docs/catalog/toggles.md
+powercfg	atlas	package/Executables/AtlasModules/Scripts/Entry/Import-PowerPlanFile.ps1
+Win32 Priority	atlas	docs/catalog/tweaks.md
+Win32 Priority	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+Win32 Priority	atlas	package/Executables/AtlasModules/Scripts/Tweaks/performance/system/win32-priority-separation.psd1
+Windows Update	winutil	AGENTS.md
+Windows Update	winutil	README.md
+Windows Update	winutil	SPEC.md
+Windows Update	atlas	.markdownlint-cli2.jsonc
+Windows Update	atlas	README.md
+Windows Update	atlas	.github/workflows/app.yml
+DNS	winutil	AGENTS.md
+DNS	winutil	SPEC.md
+DNS	winutil	config/applications.json
+DNS	atlas	app/i18n/de/atlas.ftl
+DNS	atlas	app/i18n/en-GB/atlas.ftl
+DNS	atlas	app/i18n/es/atlas.ftl
+Teredo	winutil	config/tweaks.json
+Teredo	winutil	docs/src/content/docs/code-reference/tweaks/z--Advanced-Tweaks---CAUTION/Teredo.mdx
+Teredo	atlas	app/resources/iso/Build-Iso.ps1
+Teredo	atlas	app/src/services/atlas_state.rs
+Teredo	atlas	package/Executables/AtlasModules/Scripts/Install/Tasks/Set-OemInformation.ps1
+LLMNR	atlas	docs/catalog/tweaks.md
+LLMNR	atlas	package/Executables/AtlasModules/Scripts/Tweaks/README.md
+LLMNR	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+SMB	winutil	config/icons/ventoy.png
+SMB	atlas	docs/catalog/toggles.md
+SMB	atlas	docs/catalog/tweaks.md
+SMB	atlas	package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Lanman Workstation (SMB)/Disable Lanman Workstation.cmd
+IPv6	winutil	AGENTS.md
+IPv6	winutil	config/tweaks.json
+IPv6	winutil	docs/src/content/docs/code-reference/tweaks/z--Advanced-Tweaks---CAUTION/DisableIPv6.mdx
+IPv6	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Domain/Defaults.ps1
+IPv6	atlas	package/Executables/AtlasModules/Tools/multichoice.exe
+IPv6	atlas	services/reports/API.md
+NTP	winutil	config/feature.json
+NTP	winutil	docs/src/content/docs/code-reference/features/Fixes/NTPPool.mdx
+NTP	winutil	functions/public/Invoke-WPFFixesNTPPool.ps1
+NTP	atlas	docs/catalog/tweaks.md
+NTP	atlas	package/Executables/AtlasModules/Other/user.png
+NTP	atlas	package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1
+network discovery	atlas	docs/catalog/toggles.md
+network discovery	atlas	package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Network Discovery/Disable Network Discovery Services.cmd
+network discovery	atlas	package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Network Discovery/Enable Network Discovery Services (default).cmd
+OpenSSH	winutil	config/feature.json
+OpenSSH	winutil	docs/src/content/docs/code-reference/features/Remote-Access/SSHServer.mdx
+OpenSSH	winutil	docs/src/content/docs/guides/features.mdx
+Edge	winutil	config/applications.json
+Edge	winutil	config/tweaks.json
+Edge	winutil	docs/src/components/react-bits/Beams.jsx
+Edge	atlas	app/docs/install-flow.md
+Edge	atlas	app/docs/translating.md
+Edge	atlas	app/i18n/de/atlas.ftl
+OneDrive	winutil	config/applications.json
+OneDrive	winutil	config/preset.json
+OneDrive	winutil	config/tweaks.json
+OneDrive	atlas	app/i18n/de/atlas.ftl
+OneDrive	atlas	app/i18n/en-GB/atlas.ftl
+OneDrive	atlas	app/i18n/es/atlas.ftl
+Copilot	winutil	AGENTS.md
+Copilot	winutil	.github/copilot-instructions.md
+Copilot	winutil	config/appx.json
+Copilot	atlas	app/src/i18n/describe.rs
+Copilot	atlas	docs/architecture.md
+Copilot	atlas	docs/catalog/toggles.md
+Recall	winutil	config/preset.json
+Recall	winutil	config/tweaks.json
+Recall	winutil	docs/package-lock.json
+Recall	atlas	app/i18n/pt-BR/atlas.ftl
+Recall	atlas	docs/install-state.md
+Recall	atlas	docs/catalog/toggles.md
+Click To Do	atlas	docs/catalog/toggles.md
+Click To Do	atlas	docs/catalog/tweaks.md
+Click To Do	atlas	package/Executables/AtlasDesktop/3. General Configuration/AI Features/Click To Do/Disable Click To Do (default).cmd
+Spotlight	winutil	config/tweaks.json
+Spotlight	winutil	docs/src/content/docs/code-reference/tweaks/Customize-Preferences/StartMenuRecommendations.mdx
+Spotlight	atlas	docs/catalog/toggles.md
+Spotlight	atlas	docs/catalog/tweaks.md
+Spotlight	atlas	package/Executables/AtlasDesktop/3. General Configuration/Windows Spotlight/Disable Windows Spotlight (default).cmd
+Widgets	winutil	config/applications.json
+Widgets	winutil	config/appx.json
+Widgets	winutil	config/tweaks.json
+Widgets	atlas	app/vendor/gpui-pre/src/_accessibility.rs
+Widgets	atlas	app/vendor/gpui-pre/src/elements/div.rs
+Widgets	atlas	docs/architecture.md
+Consumer Features	winutil	config/preset.json
+Consumer Features	winutil	config/tweaks.json
+Consumer Features	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/ConsumerFeatures.mdx
+Consumer Features	atlas	docs/catalog/tweaks.md
+Consumer Features	atlas	package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-tailored-experiences.psd1
+Consumer Features	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-tips.psd1
+Reserved Storage	winutil	config/tweaks.json
+Reserved Storage	winutil	docs/src/content/docs/code-reference/tweaks/z--Advanced-Tweaks---CAUTION/ReservedStorage.mdx
+Reserved Storage	atlas	docs/catalog/tweaks.md
+Reserved Storage	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+Reserved Storage	atlas	package/Executables/AtlasModules/Scripts/Tweaks/debloat/disable-reserved-storage.psd1
+Storage Sense	winutil	config/tweaks.json
+Storage Sense	winutil	docs/src/content/docs/code-reference/tweaks/z--Advanced-Tweaks---CAUTION/Storage.mdx
+Storage Sense	atlas	docs/catalog/tweaks.md
+Storage Sense	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+Storage Sense	atlas	package/Executables/AtlasModules/Scripts/Tweaks/debloat/config-storage-sense.psd1
+Windows AI	winutil	config/preset.json
+Windows AI	winutil	config/tweaks.json
+Windows AI	winutil	docs/src/content/docs/code-reference/tweaks/z--Advanced-Tweaks---CAUTION/WindowsAI.mdx
+Windows AI	atlas	app/i18n/pt-BR/atlas.ftl
+Windows AI	atlas	docs/catalog/toggles.md
+Windows AI	atlas	package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-click-to-do.psd1
+AppX	winutil	AGENTS.md
+AppX	winutil	SPEC.md
+AppX	winutil	config/appx.json
+AppX	atlas	.github/labeler.yml
+AppX	atlas	.github/workflows/app.yml
+AppX	atlas	.zed/settings.json
+provisioned	winutil	functions/private/Install-WinUtilAPPX.ps1
+provisioned	winutil	functions/private/Invoke-WinUtilISOScript.ps1
+provisioned	winutil	functions/private/Invoke-WinUtilTweaks.ps1
+provisioned	atlas	app/src/model/install.rs
+provisioned	atlas	docs/architecture.md
+provisioned	atlas	docs/diagnostics.md
+winget	winutil	AGENTS.md
+winget	winutil	.github/DISCUSSION_TEMPLATE/app-suggestion.yaml
+winget	winutil	config/applications.json
+winget	atlas	app/docs/install-flow.md
+winget	atlas	docs/architecture.md
+winget	atlas	docs/compatibility.md
+choco	winutil	AGENTS.md
+choco	winutil	config/applications.json
+choco	winutil	config/appnavigation.json
+DISM	winutil	AGENTS.md
+DISM	winutil	config/applications.json
+DISM	winutil	config/feature.json
+DISM	atlas	app/docs/iso-internals.md
+DISM	atlas	app/i18n/en-GB/atlas.ftl
+DISM	atlas	app/resources/iso/Build-Iso.ps1
+sfc	winutil	docs/src/content/docs/code-reference/features/Fixes/DISM.mdx
+sfc	winutil	functions/public/Invoke-WPFSystemRepair.ps1
+sfc	winutil	pester/system-repair.Tests.ps1
+sfc	atlas	docs/catalog/toggles.md
+sfc	atlas	package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35amd645.0.0.0.cab
+sfc	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1
+ShutUp10	winutil	config/tweaks.json
+ShutUp10	winutil	docs/src/assets/branding/title-screen.png
+ShutUp10	winutil	docs/src/assets/screenshots/updates-tab-new.png
+ShutUp10	atlas	package/Executables/AtlasModules/Wallpapers/atlas-v0.4.x-light.png
+LibreWolf	winutil	config/applications.json
+LibreWolf	atlas	app/i18n/de/atlas.ftl
+LibreWolf	atlas	app/i18n/en-GB/atlas.ftl
+LibreWolf	atlas	app/i18n/es/atlas.ftl
+OpenShell	atlas	docs/architecture.md
+OpenShell	atlas	docs/catalog/tweaks.md
+OpenShell	atlas	package/Executables/AtlasDesktop/4. Interface Tweaks/Start Menu/Install Open-Shell.cmd
+NVCleanstall	winutil	config/applications.json
+NVCleanstall	atlas	package/Executables/AtlasDesktop/2. Drivers/GPU Drivers/NVCleanInstall.url
+NVCleanstall	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/SoftwarePicker.ps1
+Process Explorer	winutil	config/applications.json
+Process Explorer	winutil	pester/job-layer.Tests.ps1
+Process Explorer	winutil	pester/package-outcome.Tests.ps1
+Process Explorer	atlas	app/resources/iso/Desktop.ps1
+Process Explorer	atlas	docs/catalog/toggles.md
+Process Explorer	atlas	package/Executables/AtlasDesktop/6. Advanced Configuration/Process Explorer/Install Process Explorer.cmd
+WPBT	winutil	config/preset.json
+WPBT	winutil	config/tweaks.json
+WPBT	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/WPBT.mdx
+WPBT	atlas	docs/catalog/tweaks.md
+WPBT	atlas	package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1
+WPBT	atlas	package/Executables/AtlasModules/Scripts/Tweaks/qol/system/disable-wpbt.psd1
+Fault Tolerant Heap	winutil	SPEC.md
+Fault Tolerant Heap	winutil	config/icons/wireguard.png
+Fault Tolerant Heap	winutil	docs/package-lock.json
+Fault Tolerant Heap	atlas	app/src/ui/text_input/layout.rs
+Fault Tolerant Heap	atlas	docs/catalog/toggles.md
+Fault Tolerant Heap	atlas	docs/catalog/tweaks.md
+Sleep Study	atlas	docs/catalog/toggles.md
+Sleep Study	atlas	docs/catalog/tweaks.md
+Sleep Study	atlas	package/Executables/AtlasDesktop/3. General Configuration/Sleep Study/Disable Sleep Study (default).cmd
+bcdedit	winutil	config/feature.json
+bcdedit	winutil	docs/src/content/docs/code-reference/features/Features/DisableLegacyRecovery.mdx
+bcdedit	winutil	docs/src/content/docs/code-reference/features/Features/EnableLegacyRecovery.mdx
+bcdedit	atlas	docs/architecture.md
+bcdedit	atlas	docs/catalog/toggles.md
+bcdedit	atlas	docs/catalog/tweaks.md
+boot logo	atlas	docs/catalog/toggles.md
+boot logo	atlas	package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Appearance/Boot Logo.cmd
+boot logo	atlas	package/Executables/AtlasModules/Scripts/Entry/Invoke-Toggle.ps1
+ISO	winutil	AGENTS.md
+ISO	winutil	SPEC.md
+ISO	winutil	config/applications.json
+ISO	atlas	.gitignore
+ISO	atlas	README.md
+ISO	atlas	app/README.md
+USB	winutil	SPEC.md
+USB	winutil	config/applications.json
+USB	winutil	docs/src/content/docs/code-reference/architecture.mdx
+USB	atlas	README.md
+USB	atlas	app/README.md
+USB	atlas	app/docs/architecture.md
+AME Wizard	atlas	.github/vale/Atlas/AmeWizard.yml
+AME Wizard	atlas	app/src/cli.rs
+AME Wizard	atlas	app/src/model/tests/package.rs
+Playbook	atlas	.github/ISSUE_TEMPLATE/bug_report.yml
+Playbook	atlas	app/docs/architecture.md
+Playbook	atlas	app/docs/translating.md
+Runspace	winutil	AGENTS.md
+Runspace	winutil	Compile.ps1
+Runspace	winutil	SPEC.md
+Runspace	atlas	package/Executables/AtlasModules/Scripts/Preparation/Update-Windows.ps1
+Runspace	atlas	tests/Atlas.ConsolePresentation.Tests.ps1
+Runspace	atlas	tests/Atlas.Hardware.Tests.ps1
+Compile.ps1	winutil	AGENTS.md
+Compile.ps1	winutil	SPEC.md
+Compile.ps1	winutil	.github/CONTRIBUTING.md
+Install Plan	atlas	app/docs/install-flow.md
+Install Plan	atlas	app/src/model/install.rs
+Install Plan	atlas	app/src/model/test_harness.rs
+Install Session	atlas	app/src/model/recovery.rs
+Install Session	atlas	app/src/services/iso.rs
+Install Session	atlas	app/src/services/session.rs
+Broker	winutil	config/tweaks.json
+Broker	winutil	docs/src/content/docs/code-reference/tweaks/Essential-Tweaks/Services.mdx
+Broker	atlas	.github/CONTRIBUTING.md
+Broker	atlas	docs/architecture.md
+Broker	atlas	docs/console-presentation.md
+Toolbox	winutil	README.md
+Toolbox	winutil	.github/FUNDING.yml
+Toolbox	winutil	config/applications.json
+Toolbox	atlas	README.md
+Toolbox	atlas	app/docs/install-flow.md
+Toolbox	atlas	app/docs/rc-testers-build.md
+Atlas Manager	atlas	README.md
+Atlas Manager	atlas	.github/CONTRIBUTING.md
+Atlas Manager	atlas	.github/SECURITY.md
+Health Check	atlas	README.md
+Health Check	atlas	.github/CONTRIBUTING.md
+Health Check	atlas	.github/workflows/integration.yml
+Pester	winutil	AGENTS.md
+Pester	winutil	SPEC.md
+Pester	winutil	.github/workflows/unittests.yaml
+Pester	atlas	.github/CONTRIBUTING.md
+Pester	atlas	.github/workflows/test.yml
+Pester	atlas	app/docs/development.md
+preset	winutil	AGENTS.md
+preset	winutil	README.md
+preset	winutil	SPEC.md
+preset	atlas	docs/architecture.md
+preset	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Native/Atlas.Native.cs
+preset	atlas	package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Domain/Index.ps1
+registry backup	winutil	config/feature.json
+registry backup	winutil	docs/src/content/docs/code-reference/architecture.mdx
+registry backup	winutil	docs/src/content/docs/code-reference/features/Features/RegBackup.mdx
+registry backup	atlas	tests/Atlas.Services.Tests.ps1
+restore point	winutil	config/preset.json
+restore point	winutil	config/tweaks.json
+restore point	winutil	docs/src/content/docs/faq.mdx
+restore point	atlas	docs/catalog/toggles.md
+restore point	atlas	package/Executables/AtlasDesktop/3. General Configuration/System Restore/Disable System Restore.cmd
+restore point	atlas	package/Executables/AtlasDesktop/3. General Configuration/System Restore/Enable System Restore (default).cmd
+scheduled task	winutil	config/feature.json
+scheduled task	winutil	docs/src/content/docs/code-reference/architecture.mdx
+scheduled task	winutil	docs/src/content/docs/code-reference/features/Features/RegBackup.mdx
+scheduled task	atlas	.github/workflows/integration.yml
+scheduled task	atlas	.zed/settings.json
+scheduled task	atlas	app/src/services/update_access.rs
+service	winutil	AGENTS.md
+service	winutil	SPEC.md
+service	winutil	config/applications.json
+service	atlas	LICENSE
+service	atlas	README.md
+service	atlas	lychee.toml
+WPF	winutil	AGENTS.md
+WPF	winutil	SPEC.md
+WPF	winutil	.github/CONTRIBUTING.md
+WPF	atlas	package/Executables/AtlasModules/Scripts/Operations/Update-Drivers.ps1
+WPF	atlas	package/Executables/AtlasModules/Wallpapers/atlas-v0.4.x-dark.png
+WPF	atlas	package/Executables/AtlasModules/Wallpapers/atlas-v0.4.x-light.png
+xaml	winutil	AGENTS.md
+xaml	winutil	Compile.ps1
+xaml	winutil	SPEC.md
+xaml	atlas	docs/preparation.md
+xaml	atlas	package/Executables/AtlasModules/Scripts/Preparation/Update-Windows.ps1
+xaml	atlas	tests/Atlas.Appx.Tests.ps1
+import	winutil	AGENTS.md
+import	winutil	SPEC.md
+import	winutil	.github/CONTRIBUTING.md
+import	atlas	LICENSE
+import	atlas	.github/SECURITY.md
+import	atlas	.github/workflows/lint.yml
+export	winutil	AGENTS.md
+export	winutil	docs/astro.config.mjs
+export	winutil	docs/src/content.config.ts
+export	atlas	.github/CONTRIBUTING.md
+export	atlas	.github/ISSUE_TEMPLATE/bug_report.yml
+export	atlas	.github/linters/PSScriptAnalyzerSettings.Package.psd1

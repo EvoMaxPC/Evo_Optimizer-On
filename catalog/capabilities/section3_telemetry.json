@@ -1,0 +1,570 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "schemaVersion": 1,
+    "provenance": "Paso 8, seccion 3. Fuentes: winutil@70c23c80641d7370532af2f619b2842658600842, atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f; ledger inventory/ledger/*.tsv",
+    "generatedBy": "paso 8 (oleada 1)"
+  },
+  "capabilities": [
+    {
+      "id": "privacy.telemetry.diagtrack",
+      "name": "Detener y deshabilitar DiagTrack",
+      "description": "Para el servicio Connected User Experiences and Telemetry (DiagTrack) y lo deja deshabilitado, como WinUtil (StartupType Disabled) y Atlas (StartupType 4). Reversible: el diario guarda estado y tipo de arranque previos (en un Windows de fábrica, Automatic + Running).",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksTelemetry (service diagtrack: Disabled, OriginalType Automatic) + inventory/ledger/winutil-tweak-ops.tsv (winutil:tweak-op:WPFTweaksTelemetry:service:0) + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disallow-data-collection.psd1 (Services DiagTrack: StartupType 4 + Stop, AllowMissing) + inventory/ledger/atlas-tweak-ops.tsv. Reversibilidad (ADR-0003): Reversible — estado y tipo de arranque del servicio; el diario restaura ambos",
+      "actions": [
+        {
+          "type": "service",
+          "order": 1,
+          "description": "Parar DiagTrack",
+          "serviceName": "DiagTrack",
+          "operation": "Stop"
+        },
+        {
+          "type": "service",
+          "order": 2,
+          "description": "Deshabilitar DiagTrack (arranque deshabilitado)",
+          "serviceName": "DiagTrack",
+          "operation": "SetStartupType",
+          "startupType": "Disabled"
+        }
+      ]
+    },
+    {
+      "id": "privacy.telemetry.dmwappush",
+      "name": "Deshabilitar dmwappushservice",
+      "description": "Fija Start=4 (deshabilitado) en el servicio Device Management WAP Push, que WinUtil desactiva en su script de ISO. En este pin WinUtil es la única fuente que lo toca: ni el catálogo de tweaks ni los psd1 de Atlas lo mencionan. Reversible.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:functions/private/Invoke-WinUtilISOScript.ps1 linea 561 (Set-WinUtilRegistryValue 'HKLM\\SYSTEM\\CurrentControlSet\\Services\\dmwappushservice' 'Start' 'REG_DWORD' '4'). NO VERIFICADO como tweak del catalogo de WinUtil ni como psd1 de Atlas: el ledger no lo extrae de ninguna de esas dos superficies. Reversibilidad (ADR-0003): Reversible — valor Start del servicio; el diario restaura el previo. Estado (paso 8b): Specified — su unica fuente es un script de ISO de WinUtil (Invoke-WinUtilISOScript.ps1) y no se ha podido verificar contra un tweak del catalogo ni contra un psd1 de Atlas; el motor la ejecuta contra fakes, pero eso no la convierte en verificada",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Start=4 en dmwappushservice",
+          "hive": "LocalMachine",
+          "keyPath": "SYSTEM\\CurrentControlSet\\Services\\dmwappushservice",
+          "valueName": "Start",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "id": "privacy.advertising.id",
+      "name": "Desactivar el identificador de publicidad",
+      "description": "Desactiva el ID de publicidad en HKCU y HKLM y lo bloquea por directiva de máquina (DisabledByGroupPolicy=1), como hace Atlas. Reversible.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/advertising/disable-advertising-info.psd1 (3 valores) + inventory/ledger/atlas-tweak-ops.tsv + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksTelemetry (HKCU AdvertisingInfo\\Enabled=0) + inventory/ledger/inventory-reconciliation.tsv linea 117 (Configure Privacy Defaults). Nota de cobertura: la linea del inventario que habla de Advertising Information es Absent-At-Pin en el pin, asi que esta capacidad no respalda ninguna linea Mapped; su evidencia es el psd1 de Atlas y la op registry:0 de WPFTweaksTelemetry (AdvertisingInfo, que no es la linea Mapped de la seccion 3). ledger_refs: ninguno. Reversibilidad (ADR-0003): Reversible — tres valores de registro; el diario restaura los previos",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "HKCU AdvertisingInfo\\Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+          "valueName": "Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "HKLM AdvertisingInfo\\Enabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo",
+          "valueName": "Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Bloquearlo por directiva (DisabledByGroupPolicy=1)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo",
+          "valueName": "DisabledByGroupPolicy",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "privacy.activity.history",
+      "name": "Desactivar el historial de actividad",
+      "description": "Desactiva el feed de actividades y bloquea la publicación y la subida del historial (EnableActivityFeed=0, PublishUserActivities=0, UploadUserActivities=0). Aviso de divergencia entre fuentes: WinUtil WPFTweaksActivity escribe EnableActivityFeed=1 (quirk, desviacion 4); EVO sigue a Atlas, que escribe 0. Reversible.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-activity-feed.psd1 (EnableActivityFeed=0) y package/Executables/AtlasModules/Scripts/Tweaks/privacy/disallow-user-activity-upload.psd1 (UploadUserActivities=0, PublishUserActivities=0) + inventory/ledger/atlas-tweak-ops.tsv + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksActivity (EnableActivityFeed=1, PublishUserActivities=0, UploadUserActivities=0) + inventory/ledger/inventory-reconciliation.tsv linea 35 (Activity History). ledger_refs: winutil:tweak:WPFTweaksActivity | winutil:tweak-op:WPFTweaksActivity:registry:0. Reversibilidad (ADR-0003): Reversible — tres politicas; el diario restaura los previos",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Desactivar el feed de actividades",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+          "valueName": "EnableActivityFeed",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "No publicar actividades",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+          "valueName": "PublishUserActivities",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "No subir actividades",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\System",
+          "valueName": "UploadUserActivities",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "privacy.feedback.frequency",
+      "name": "Desactivar las peticiones de opinion de Windows",
+      "description": "Pone a 0 la frecuencia de SIUF, borra PeriodInNanoSeconds (para que Windows no lo recalcule con un valor por defecto) y activa DoNotShowFeedbackNotifications. Atlas y WinUtil coinciden en los tres valores. Reversible, salvo el borrado: el diario restaura el valor previo exacto si existía.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-windows-feedback.psd1 (3 valores) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksTelemetry (Siuf\\Rules NumberOfSIUFInPeriod=0, PeriodInNanoSeconds <RemoveEntry> QWord) + inventory/ledger/atlas-tweak-ops.tsv. Reversibilidad (ADR-0003): Reversible — dos valores escritos y uno borrado que el diario restaura si existia",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "NumberOfSIUFInPeriod=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Siuf\\Rules",
+          "valueName": "NumberOfSIUFInPeriod",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Borrar PeriodInNanoSeconds",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Siuf\\Rules",
+          "valueName": "PeriodInNanoSeconds",
+          "operation": "Delete",
+          "valueType": "QWord"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "DoNotShowFeedbackNotifications=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+          "valueName": "DoNotShowFeedbackNotifications",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "privacy.location.sensors",
+      "name": "Desactivar la ubicacion y los sensores",
+      "description": "Deniega el acceso a la ubicación para todo el equipo (ConsentStore\\location Value=Deny), desactiva el permiso de sensores del sensor de ubicación, impide que Mapas actualice y deshabilita el servicio lfsvc. Reversible. Efecto visible: algunas apps que piden ubicación dejan de funcionar.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksLocation (ConsentStore\\location Value=Deny String, Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}\\SensorPermissionState=0, SYSTEM\\Maps\\AutoUpdateEnabled=0, service lfsvc Disabled/Manual) + inventory/ledger/winutil-tweak-ops.tsv (filas WPFTweaksLocation registry:0..2 y service:0) + inventory/ledger/inventory-reconciliation.tsv lineas 42 y 80 (Location Tracking). ledger_refs: winutil:tweak-op:WPFTweaksLocation:registry:0 | winutil:tweak:WPFTweaksLocation. Reversibilidad (ADR-0003): Reversible — tres valores y el arranque de lfsvc; el diario restaura ambos",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Denegar la ubicacion en el equipo",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location",
+          "valueName": "Value",
+          "operation": "Set",
+          "valueType": "String",
+          "value": "Deny"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Desactivar el permiso del sensor de ubicacion",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Sensor\\Overrides\\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}",
+          "valueName": "SensorPermissionState",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Impedir la actualizacion automatica de Mapas",
+          "hive": "LocalMachine",
+          "keyPath": "SYSTEM\\Maps",
+          "valueName": "AutoUpdateEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "service",
+          "order": 4,
+          "description": "Deshabilitar lfsvc (Servicio de ubicación)",
+          "serviceName": "lfsvc",
+          "operation": "SetStartupType",
+          "startupType": "Disabled"
+        }
+      ]
+    },
+    {
+      "id": "privacy.ceip.tasks",
+      "name": "Desactivar las tareas del CEIP y del informe de uso",
+      "description": "Deshabilita las tareas programadas que recogen datos de uso y diagnóstico (Disk Diagnostic Data Collector, CEIP Consolidator, CEIP UsbCeip, Flighting UsageDataReporting y el proxy de Autochk) y borra CriticalMaintenance_UsageDataReporting del mantenimiento automático, como Atlas. Si una tarea no existe en el build, el motor la marca como fallida: por eso se declara Medium con punto de restauración. Reversible (el diario guarda si estaba habilitada).",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/debloat/disable-scheduled-tasks.psd1 (sha256 bcf098b90bda2c733960013f7c820b0ca8bbe8a51b958f591b104ce67f6d8b7d en inventory/ledger/atlas-tweak-files.tsv; el contenido de ScheduledTasks NO esta extraido en inventory/ledger/atlas-effects.tsv, que no tiene tareas: se leyo el psd1 en el pin). Registro Ubpm\\CriticalMaintenance_UsageDataReporting en inventory/ledger/atlas-tweak-ops.tsv. Reversibilidad (ADR-0003): Reversible — las tareas se rehabilitan con el estado previo que guarda el diario",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Quitar el informe de uso del mantenimiento automatico",
+          "hive": "LocalMachine",
+          "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Ubpm",
+          "valueName": "CriticalMaintenance_UsageDataReporting",
+          "operation": "Delete",
+          "valueType": "DWord"
+        },
+        {
+          "type": "task",
+          "order": 2,
+          "description": "Disk Diagnostic Data Collector",
+          "taskPath": "\\Microsoft\\Windows\\DiskDiagnostic",
+          "taskName": "Microsoft-Windows-DiskDiagnosticDataCollector",
+          "enabled": false
+        },
+        {
+          "type": "task",
+          "order": 3,
+          "description": "CEIP Consolidator",
+          "taskPath": "\\Microsoft\\Windows\\Customer Experience Improvement Program",
+          "taskName": "Consolidator",
+          "enabled": false
+        },
+        {
+          "type": "task",
+          "order": 4,
+          "description": "CEIP UsbCeip",
+          "taskPath": "\\Microsoft\\Windows\\Customer Experience Improvement Program",
+          "taskName": "UsbCeip",
+          "enabled": false
+        },
+        {
+          "type": "task",
+          "order": 5,
+          "description": "A/B testing UsageDataReporting",
+          "taskPath": "\\Microsoft\\Windows\\Flighting\\FeatureConfig",
+          "taskName": "UsageDataReporting",
+          "enabled": false
+        },
+        {
+          "type": "task",
+          "order": 6,
+          "description": "Proxy SQM de Autochk",
+          "taskPath": "\\Microsoft\\Windows\\Autochk",
+          "taskName": "Proxy",
+          "enabled": false
+        }
+      ]
+    },
+    {
+      "id": "privacy.diagnostic.data.level",
+      "name": "Bajar los datos de diagnostico al minimo y limitar registros y volcados",
+      "description": "Escribe AllowTelemetry=0 en las dos rutas que usan las fuentes (la directiva documentada de Atlas y el espejo CurrentVersion\\Policies de WinUtil), limita la recogida de registros y de volcados, desactiva el seguimiento de diagnóstico de rendimiento y corta el uso de los datos de diagnóstico para experiencias personalizadas (TailoredExperiencesWithDiagnosticDataEnabled=0 y DisableTailoredExperiencesWithDiagnosticData=1), que es el valor registry:1 de WPFTweaksTelemetry al que el inventario mapea la línea 117. En ediciones Home/Pro Windows puede quedarse en el mínimo que permita la edición: se escribe 0, el valor efectivo no se verifica. Reversible.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disallow-data-collection.psd1 (AllowTelemetry=0, LimitDiagnosticLogCollection=1, LimitDumpCollection=1) y package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-diagnostic-tracing.psd1 (Diagnostics\\Performance\\DisableDiagnosticTracing=1) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksTelemetry (HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection\\AllowTelemetry=0) + inventory/ledger/atlas-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 117. Nota: la linea 117 del inventario (Configure Privacy Defaults) se mapea a winutil:tweak-op:WPFTweaksTelemetry:registry:1, que es HKCU Privacy\\TailoredExperiencesWithDiagnosticDataEnabled=0; esa pareja de valores se apoya tambien en atlas:package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-tailored-experiences.psd1. ledger_refs: winutil:tweak-op:WPFTweaksTelemetry:registry:1. Reversibilidad (ADR-0003): Reversible — siete valores de politica; el diario restaura los previos",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "AllowTelemetry=0 (directiva documentada)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+          "valueName": "AllowTelemetry",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "AllowTelemetry=0 (espejo CurrentVersion\\Policies de WinUtil)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection",
+          "valueName": "AllowTelemetry",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Limitar la recogida de registros de diagnostico",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+          "valueName": "LimitDiagnosticLogCollection",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 4,
+          "description": "Limitar la recogida de volcados",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
+          "valueName": "LimitDumpCollection",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 5,
+          "description": "Desactivar el seguimiento de diagnostico de rendimiento",
+          "hive": "LocalMachine",
+          "keyPath": "SYSTEM\\CurrentControlSet\\Control\\Diagnostics\\Performance",
+          "valueName": "DisableDiagnosticTracing",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 6,
+          "description": "No usar los datos de diagnostico para experiencias personalizadas",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy",
+          "valueName": "TailoredExperiencesWithDiagnosticDataEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 7,
+          "description": "Bloquear por directiva las experiencias personalizadas",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+          "valueName": "DisableTailoredExperiencesWithDiagnosticData",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "privacy.kms.activation.telemetry",
+      "name": "Desactivar la telemetria de activacion (KMS/AVS)",
+      "description": "Fija NoGenTicket=1 en Software Protection Platform, que desactiva la validación de activación en línea (AVS) y por tanto el envío de datos de activación por KMS a Microsoft. Atlas lo documenta con la directiva NoAcquireGT. Reversible.",
+      "sectionId": 3,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-activation-telemetry.psd1 (HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Software Protection Platform\\NoGenTicket=1; https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.SoftwareProtectionPlatform::NoAcquireGT) + inventory/ledger/atlas-tweak-ops.tsv. Reversibilidad (ADR-0003): Reversible — un valor de politica; el diario restaura el previo",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "NoGenTicket=1 (sin validacion AVS)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Software Protection Platform",
+          "valueName": "NoGenTicket",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    }
+  ]
+}

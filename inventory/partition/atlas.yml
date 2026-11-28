@@ -1,0 +1,172 @@
+# Partición de ficheros de AtlasOS (SHA ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f)
+# Gana la PRIMERA regla que casa. Glob propio: `*` no cruza '/', `**` sí.
+# Sin distinguir mayúsculas. treatment: extract | reference | exclude.
+# Sin catch-all a propósito: un fichero nuevo sin regla debe FALLAR ruidosamente
+# (REQ-005: nada se ignora en silencio).
+#
+# Orden deliberado: primero las extensiones de comportamiento, luego los
+# directorios, luego el paraguas de `package/**` y por último el resto.
+schema: 1
+repo: atlas
+sha: ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f
+rules:
+  # --- comportamiento por extensión (extract) -----------------------------
+  - glob: "package/**/*.ps1"
+    treatment: extract
+    reason: "Scripts PowerShell del paquete (226): comportamiento."
+  - glob: "package/**/*.psm1"
+    treatment: extract
+    reason: "Módulos PowerShell del paquete: comportamiento."
+  # Atlas-CbsHashes.psd1 es un manifiesto de hashes (no un módulo ejecutable):
+  # se referencia por hash en lugar de extraerse.
+  - glob: "package/Executables/AtlasModules/Packages/*.psd1"
+    treatment: extract
+    reason: "Manifiesto de hashes CBS (Atlas-CbsHashes.psd1): contrato de verificación de componentes."
+  - glob: "package/**/*.psd1"
+    treatment: extract
+    reason: "Manifiestos de módulo del paquete (295): contrato de comportamiento."
+  - glob: "package/**/*.cmd"
+    treatment: extract
+    reason: "Scripts .cmd del paquete (187): comportamiento."
+  - glob: "package/**/*.vbs"
+    treatment: extract
+    reason: "Lanzadores VBS ocultos (Invoke-*Hidden.vbs): comportamiento."
+  - glob: "package/**/*.reg"
+    treatment: extract
+    reason: "Ficheros de registro aplicados por los scripts (11): comportamiento."
+
+  # --- comportamiento por directorio (extract) ----------------------------
+  - glob: "package/Executables/AtlasModules/Scripts/**"
+    treatment: extract
+    reason: "Motor de configuración de Atlas (Entry/Install/Operations/Tweaks/Registry/Preparation/Modules)."
+  - glob: "package/Executables/AtlasDesktop/**"
+    treatment: extract
+    reason: "Menú clásico de tweaks (1. Software … 9. Troubleshooting): comportamiento."
+  - glob: "app/src/**"
+    treatment: extract
+    reason: "Aplicación nativa Rust del instalador (phases, choices, install plan): comportamiento."
+  - glob: "app/Cargo.toml"
+    treatment: extract
+    reason: "Manifiesto de la app Rust: contrato de build."
+  - glob: "app/rust-toolchain.toml"
+    treatment: extract
+    reason: "Cadena de herramientas Rust fijada: contrato de build reproducible."
+  - glob: "tests/**"
+    treatment: extract
+    reason: "Suite Pester de upstream (109 .ps1 + fixtures): especificación ejecutable."
+  - glob: "build.cmd"
+    treatment: extract
+    reason: "Script de build del paquete: comportamiento de empaquetado."
+  - glob: "build.sh"
+    treatment: extract
+    reason: "Script de build del paquete (Linux): comportamiento de empaquetado."
+  - glob: ".atlasPsModulesPath"
+    treatment: extract
+    reason: "Declara la ruta de módulos PowerShell que carga el motor: acoplamiento relevante."
+
+  # --- referencia: artefactos binarios y YAML de servicio ------------------
+  - glob: "package/**/*.cab"
+    treatment: extract
+    reason: "[paso 3] Artefacto de servicio (NoDefender/NoTelemetry). Se extrae nombre/tamaño/sha256 y lista de miembros si hay herramienta; NUNCA se copia ni descomprime contenido (GPL-3.0)."
+  - glob: "tools/**/*.yaml"
+    treatment: reference
+    reason: "Herramientas SxSC: YAML declarativo de servicio."
+
+  # [paso 4b] package/atlas.json es la configuración del paquete (schemaVersion,
+  # version, supportedBuilds, requirements, estimatedMinutes, choices): datos
+  # operativos que el instalador aplica, no un activo.
+  - glob: "package/**/*.json"
+    treatment: extract
+    reason: "JSON de configuración del paquete (atlas.json, StartLayout.json, catalog.json): datos operativos aplicados."
+
+  # [paso 4b] La regla `package/**/*.json` (más arriba) cubre StartLayout.json y
+  # Toggles/catalog.json; se retiró la regla específica de Executables porque
+  # quedaba muerta (el checker la detectó).
+  - glob: "package/Executables/**/*.xml"
+    treatment: extract
+    reason: "XML de configuración aplicado (Force Timer Resolution.xml): datos de configuración."
+
+  # --- referencia: paraguas y contexto ------------------------------------
+  - glob: "package/**"
+    treatment: reference
+    reason: "Resto del paquete (PNG/ICO/URL/LNK/EXE/ZIP/temas/JSON de datos): activos y metadatos, sin lógica propia."
+  # [paso 2b] ERROR EVIDENTE corregido: los .ps1 bajo app/resources/ y app/tools/
+  # son comportamiento (ISO creation, Write-Usb, captura) y estaban cayendo en
+  # `app/**` -> reference. Regla añadida ANTES de las de directorio de app/.
+  - glob: "app/**/*.ps1"
+    treatment: extract
+    reason: "Scripts PowerShell de la app (resources/iso, resources/prepare, tools): comportamiento de creación de ISO y USB."
+
+  # [paso 4b] Ficheros de app/ que no son motor: se declaran uno a uno para que
+  # "A REVISAR" quede vacío por decisión escrita, no por un paraguas.
+  - glob: "app/build.rs"
+    treatment: reference
+    reason: "[paso 4b] Script de build de Cargo (genera recursos de compilación): proceso de build, no comportamiento de producto en tiempo de ejecución."
+  - glob: "app/examples/**"
+    treatment: reference
+    reason: "[paso 4b] Ejemplos de desarrollo (i18n_spike.rs): material de apoyo, no comportamiento de producto."
+  - glob: "app/rustfmt.toml"
+    treatment: reference
+    reason: "[paso 4b] Configuración de formato de Rust: proceso de desarrollo."
+  - glob: "app/licenses/**"
+    treatment: reference
+    reason: "[paso 4b] Inventarios de licencias de dependencias (JSON): metadatos legales, no comportamiento."
+  # [paso 2b] Declarado explícitamente: código de terceros vendorizado.
+  # No es comportamiento de Atlas ni de EVO; se referencia para trazabilidad.
+  - glob: "app/vendor/**"
+    treatment: reference
+    reason: "Dependencias Rust vendorizadas (gpui, accesskit): código de terceros, no de Atlas. Se referencia."
+
+  - glob: "app/i18n/**"
+    treatment: reference
+    reason: "Traducciones de la app (15 idiomas): datos de texto, no comportamiento."
+  - glob: "app/**"
+    treatment: reference
+    reason: "Resto de la app (docs, assets, licenses, vendor, FTL, Cargo.lock): contexto y activos."
+  - glob: "tools/**"
+    treatment: reference
+    reason: "Herramientas de desarrollo/build/release/lab/native/timer: no son motor de producto."
+  - glob: ".github/**"
+    treatment: reference
+    reason: "CI y metadatos del repositorio (workflows, labeler, plantillas): referencia de proceso."
+  - glob: "docs/**"
+    treatment: reference
+    reason: "Documentación del proyecto: contexto."
+  - glob: "services/**"
+    treatment: reference
+    reason: "Servicios auxiliares (reports, reports-mcp): fuera del alcance de EVO CLEAN; se referencian."
+  - glob: "*.md"
+    treatment: reference
+    reason: "README y notas de raíz: referencia."
+  - glob: ".vscode/**"
+    treatment: reference
+    reason: "[paso 4b] Configuración del editor para colaboradores (extensions/launch/settings.json): entorno de desarrollo, sin comportamiento de producto."
+  - glob: ".zed/**"
+    treatment: reference
+    reason: "[paso 4b] Configuración del editor para colaboradores (settings/tasks.json): entorno de desarrollo, sin comportamiento de producto."
+  - glob: "lychee.toml"
+    treatment: reference
+    reason: "[paso 4b] Configuración del comprobador de enlaces: proceso de CI, sin comportamiento de producto."
+  - glob: ".vale.ini"
+    treatment: reference
+    reason: "Configuración del linter de prosa: referencia de proceso."
+  - glob: ".markdownlint-cli2.jsonc"
+    treatment: reference
+    reason: "Configuración del linter de Markdown: referencia de proceso."
+  - glob: ".yamllint.yml"
+    treatment: reference
+    reason: "Configuración del linter de YAML: referencia de proceso."
+  - glob: ".editorconfig"
+    treatment: reference
+    reason: "Estilo de codificación compartido: referencia de proceso."
+
+  # --- sin valor de comportamiento (exclude) ------------------------------
+  - glob: "LICENSE"
+    treatment: exclude
+    reason: "Texto legal GPL-3.0; es el LICENSE de este repo y está en THIRD_PARTY_NOTICES.md."
+  - glob: ".gitignore"
+    treatment: exclude
+    reason: "Metadato de VCS; sin comportamiento."
+  - glob: ".gitattributes"
+    treatment: exclude
+    reason: "Metadato de VCS; sin comportamiento."

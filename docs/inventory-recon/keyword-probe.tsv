@@ -1,0 +1,89 @@
+termino	patron	winutil_ficheros	atlas_ficheros
+telemetry	telemetry	23	62
+DiagTrack	DiagTrack	7	8
+CEIP	\bCEIP\b	2	4
+debloat	debloat	8	22
+activity history	activity.?history|ActivityHistory	4	3
+location tracking	location.?track|LocationService|LetAppsAccessLocation	4	2
+tailored experiences	tailored.?experien|TailoredExperiences	5	3
+advertising id	advertis\w*.?\bid|AdvertisingInfo	5	2
+feedback	feedback|FeedbackHub	10	22
+TrustedInstaller	TrustedInstaller	0	134
+Defender	Defender|WinDefend|AMSI	7	134
+BitLocker	BitLocker	8	0
+VBS	\bVBS\b|VirtualizationBasedSecurity|Virtualization.?Based.?Security	2	58
+Core Isolation	Core.?Isolation|HVCI|Kernel.?DMA	0	50
+mitigations	mitigation|MitigationOptions|MitigationAudit	0	80
+Safe Mode	Safe.?Mode|SafeBoot	1	26
+UAC	\bUAC\b|EnableLUA|ConsentPrompt|SecureDesktop	3	52
+take ownership	take.?ownership|TakeOwnership|takeown	0	18
+hibernat	hibernat|HiberbootEnabled	2	55
+SysMain	SysMain|Superfetch|SuperFetch	0	13
+prefetch	prefetch|EnablePrefetcher	0	2
+MMCSS	MMCSS|Multimedia.?System.?Profile	0	3
+timer resolution	timer.?resolution|TimerResolution|GlobalTimerResolution	0	28
+HAGS	HwSchMode|\bHAGS\b|GPU.?scheduling	0	0
+GameDVR	GameDVR|AppCapture|GameDvr	4	2
+Game Bar	Game.?Bar|GameBar	5	16
+fullscreen optimizations	fullscreen.?optimi|FullscreenOptimizations	0	3
+ultimate performance	ultimate.?performance|UltimatePerformance	7	3
+powercfg	powercfg	5	15
+Win32 Priority	Win32.?Priority|Win32PrioritySeparation	0	3
+Windows Update	Windows.?Update|wuauserv|WUStatus	26	124
+DNS	\bDNS\b|NameServer|Dnscache	17	18
+Teredo	Teredo	2	8
+LLMNR	LLMNR|EnableMulticast	0	4
+SMB	\bSMB\b|LanmanServer|LanmanWorkstation|SMB1|SMB2	1	23
+IPv6	IPv6	8	7
+NTP	\bNTP\b|NtpServer|w32time	3	5
+network discovery	network.?discovery|NetworkDiscovery|Function Discovery	0	13
+OpenSSH	OpenSSH|sshd	6	0
+Edge	\bEdge\b|MicrosoftEdge|MSEDGE	19	119
+OneDrive	OneDrive	13	50
+Copilot	Copilot	10	20
+Recall	\bRecall\b|AIX|WindowsAI	9	26
+Click To Do	Click.?To.?Do|ClickToDo	0	8
+Spotlight	Spotlight	2	18
+Widgets	Widgets|WidgetService|TaskbarDa	5	22
+Consumer Features	Consumer.?Features|ConsumerExperience|CloudContent	5	8
+Reserved Storage	Reserved.?Storage|ReservedStorage	2	3
+Storage Sense	Storage.?Sense|StorageSense	2	3
+Windows AI	Windows.?AI|WindowsAI|AIFabric	5	13
+AppX	Appx|AppX	56	74
+provisioned	provisioned|ProvisionedAppx|Remove-AppxProvisioned	7	25
+winget	winget|WinGet	53	31
+choco	choco	33	0
+DISM	\bDISM\b|dism\.exe|Dism /	22	36
+sfc	\bsfc\b|sfc\.exe|sfc /scannow	3	7
+ShutUp10	ShutUp10|OOSU10|O&O	10	1
+LibreWolf	LibreWolf	1	32
+OpenShell	OpenShell|Open-Shell|ClassicShell	0	13
+NVCleanstall	NVCleanstall|NVCleanstall	1	2
+Process Explorer	Process.?Explorer|procexp	3	13
+WPBT	WPBT|Windows.?Platform.?Binary	3	3
+Fault Tolerant Heap	Fault.?Tolerant.?Heap|FTH	4	18
+Sleep Study	Sleep.?Study|sleepstudy	0	9
+bcdedit	bcdedit	4	23
+boot logo	boot.?logo|BootLogo|BootGraphicsResourceTable	0	8
+ISO	\bISO\b|\.iso	22	109
+USB	\bUSB\b|UsbStor|USBSTOR	11	55
+AME Wizard	AME.?Wizard|ame.?wizard	0	8
+Playbook	Playbook|playbook	0	19
+Runspace	Runspace|runspace	48	3
+Compile.ps1	Compile\.ps1	14	0
+Install Plan	Install.?Plan|install.?plan	0	41
+Install Session	Install.?Session|install.?session	0	19
+Broker	Broker	2	50
+Toolbox	Toolbox|toolbox	4	93
+Atlas Manager	Atlas.?Manager	0	150
+Health Check	Health.?Check|HealthCheck|Atlas.?Health	0	32
+Pester	Pester|pester	7	21
+preset	preset	35	7
+registry backup	registry.?backup|RegBack|RegistryBackup	4	1
+restore point	restore.?point|Checkpoint-Computer|SystemRestore	10	11
+scheduled task	scheduled.?task|ScheduledTask	13	50
+service	\bservice\b|\bservices\b|Set-Service|sc\.exe	62	347
+WPF	\bWPF\b|PresentationFramework	44	3
+xaml	xaml	18	4
+import	import	90	292
+export	export	47	141

@@ -1,0 +1,79 @@
+# Partición de ficheros de WinUtil (SHA 70c23c80641d7370532af2f619b2842658600842)
+# Gana la PRIMERA regla que casa (glob estilo fnmatch, sin distinguir mayúsculas).
+# treatment: extract (comportamiento) | reference (contexto) | exclude (sin valor)
+# Sin catch-all a propósito: un fichero nuevo sin regla debe FALLAR ruidosamente
+# (REQ-005: nada se ignora en silencio).
+schema: 1
+repo: winutil
+sha: 70c23c80641d7370532af2f619b2842658600842
+rules:
+  # --- comportamiento (extract) ------------------------------------------
+  - glob: "config/*.json"
+    treatment: extract
+    reason: "Catálogo y ajustes del producto (applications, tweaks, feature, appx, themes, preset, appnavigation, dns): fuente de items del ledger."
+
+  - glob: "functions/public/*.ps1"
+    treatment: extract
+    reason: "API pública del motor (35 Invoke-WPF*): cada función es comportamiento a cubrir."
+
+  - glob: "functions/private/*.ps1"
+    treatment: extract
+    reason: "Helpers internos (90 Get/Set/Invoke-WinUtil*): comportamiento de apoyo."
+
+  - glob: "scripts/*.ps1"
+    treatment: extract
+    reason: "Punto de entrada (start.ps1) y bootstrap (main.ps1): comportamiento de arranque."
+
+  - glob: "lint/*.ps1"
+    treatment: extract
+    reason: "Reglas de PSScriptAnalyzer: contrato de estilo ejecutable del proyecto."
+
+  - glob: "pester/**"
+    treatment: extract
+    reason: "Suite Pester de upstream: especificación ejecutable del comportamiento."
+
+  - glob: "xaml/*"
+    treatment: extract
+    reason: "Definición de la UI WPF (inputXML.xaml): comportamiento de interfaz."
+
+  - glob: "*.ps1"
+    treatment: extract
+    reason: "Scripts de raíz (Compile.ps1, windev.ps1): comportamiento de build/arranque."
+
+  - glob: "*.bat"
+    treatment: extract
+    reason: "sign.bat: paso de firma del pipeline de release (comportamiento de build)."
+
+  # --- referencia (contexto, no producto) --------------------------------
+  - glob: "config/icons/*"
+    treatment: reference
+    reason: "239 PNG usados por applications.json para mapear app -> icono; se referencian por hash."
+
+  - glob: "tools/**"
+    treatment: reference
+    reason: "Utilidades de desarrollo (generador de iconos, autounattend.xml, docs-generator, scripts Python): no son motor de producto."
+
+  - glob: "docs/**"
+    treatment: reference
+    reason: "Sitio de documentación (Astro/MDX/JSX/CSS/imágenes): contexto, no comportamiento."
+
+  - glob: ".github/**"
+    treatment: reference
+    reason: "CI y metadatos del repositorio: referencia de proceso."
+
+  - glob: "*.md"
+    treatment: reference
+    reason: "Especificaciones en raíz (SPEC.md, AGENTS.md, README.md...): referencia."
+
+  # --- sin valor de comportamiento (exclude) -----------------------------
+  - glob: "LICENSE"
+    treatment: exclude
+    reason: "Texto legal MIT; ya vive en THIRD_PARTY_NOTICES.md. Sin comportamiento."
+
+  - glob: ".gitignore"
+    treatment: exclude
+    reason: "Metadato de VCS; sin comportamiento."
+
+  - glob: ".gitattributes"
+    treatment: exclude
+    reason: "Metadato de VCS; sin comportamiento."
