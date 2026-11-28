@@ -1,0 +1,130 @@
+Build started 11/28/2026 2:02:01 AM.
+Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\bin\Release\net10.0-windows\Evo.App.Tests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.11]   Discovering: Evo.App.Tests
+[xUnit.net 00:00:00.19]   Discovered:  Evo.App.Tests
+[xUnit.net 00:00:00.20]   Starting:    Evo.App.Tests
+  Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: X86, esperado: "x86") [9 ms]
+  Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: Arm, esperado: "desconocido-Arm") [1 ms]
+  Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: X64, esperado: "x64") [< 1 ms]
+  Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: Arm64, esperado: "arm64") [< 1 ms]
+  Passed Evo.App.Tests.Tests.TrustedInstaller_No_Disponible [38 ms]
+  Passed Evo.App.Tests.UndoTests.DeshacerSinAplicar_Dice_NoHayNada [38 ms]
+  Passed Evo.App.Tests.Tests.Simular_DryRun_No_Muta_Fake [46 ms]
+  Passed Evo.App.Tests.Tests.Build_Conocido_Cliente_Compatible [3 ms]
+  Passed Evo.App.Tests.Tests.Specified_No_Ejecutable [4 ms]
+  Passed Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [1 ms]
+  Passed Evo.App.Tests.Tests.Critical_Bloqueada [3 ms]
+  Passed Evo.App.Tests.Tests.Confirmacion_No_Impide_Mutar_Fake [11 ms]
+  Passed Evo.App.Tests.Tests.Diecisiete_Secciones_Titulos_Exactos [< 1 ms]
+  Passed Evo.App.Tests.ArchitectureMappingTests.EntornoReal_Arquitectura_NoVacia_Y_DeclaradaEnCatalogo [96 ms]
+  Passed Evo.App.Tests.Tests.Privilege_Admin_NoAdmin_Muestra_Aviso [1 ms]
+  Passed Evo.App.Tests.Tests.Build_Desconocido_NoAplicaNada [2 ms]
+[xUnit.net 00:00:00.40]       Assert.Contains() Failure: Sub-string not found
+[xUnit.net 00:00:00.40]       String:    "[Execute] cap.i\r\n  Acciones: 1 | Éxito: 1"···
+[xUnit.net 00:00:00.40]       Not found: "Se deshizo"
+[xUnit.net 00:00:00.40]       Stack Trace:
+[xUnit.net 00:00:00.40]     Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado [FAIL]
+[xUnit.net 00:00:00.41]         /_/tests/Evo.App.Tests/UndoTests.cs(111,0): at Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado()
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.41]     Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original [FAIL]
+[xUnit.net 00:00:00.41]       Assert.Contains() Failure: Sub-string not found
+[xUnit.net 00:00:00.41]       String:    "[Execute] cap.undo\r\n  Acciones: 1 | Éxito"···
+[xUnit.net 00:00:00.41]       Not found: "Se deshizo"
+[xUnit.net 00:00:00.41]       Stack Trace:
+[xUnit.net 00:00:00.41]         /_/tests/Evo.App.Tests/Tests.cs(284,0): at Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original()
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.41]     Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada [FAIL]
+[xUnit.net 00:00:00.41]       Assert.Contains() Failure: Sub-string not found
+[xUnit.net 00:00:00.41]       String:    "[Execute] cap.v\r\n  Acciones: 1 | Éxito: 1"···
+[xUnit.net 00:00:00.41]       Not found: "Se deshizo"
+[xUnit.net 00:00:00.41]       Stack Trace:
+[xUnit.net 00:00:00.41]         /_/tests/Evo.App.Tests/UndoTests.cs(192,0): at Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada()
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.41]     Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original [FAIL]
+[xUnit.net 00:00:00.41]       Assert.Contains() Failure: Sub-string not found
+[xUnit.net 00:00:00.41]       String:    "[DryRun] cap.iii\r\n  Acciones: 1 | Éxito: "···
+[xUnit.net 00:00:00.41]       Not found: "Se deshizo"
+[xUnit.net 00:00:00.41]       Stack Trace:
+[xUnit.net 00:00:00.41]         /_/tests/Evo.App.Tests/UndoTests.cs(157,0): at Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original()
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.41]     Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_RestauraValorPrevio [FAIL]
+[xUnit.net 00:00:00.41]       Assert.Contains() Failure: Sub-string not found
+[xUnit.net 00:00:00.41]       String:    "[Execute] cap.ii\r\n  Acciones: 1 | Éxito: "···
+[xUnit.net 00:00:00.41]       Not found: "Se deshizo"
+[xUnit.net 00:00:00.41]       Stack Trace:
+[xUnit.net 00:00:00.41]         /_/tests/Evo.App.Tests/UndoTests.cs(132,0): at Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_RestauraValorPrevio()
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.41]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.41]   Finished:    Evo.App.Tests
+  Passed Evo.App.Tests.Tests.Restauracion_Pendiente_No_Llama_Al_Motor [< 1 ms]
+  Passed Evo.App.Tests.Tests.Tarea_O_Comando_No_Disponible_Todavia [1 ms]
+  Passed Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada [1 ms]
+  Failed Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado [73 ms]
+  Error Message:
+   Assert.Contains() Failure: Sub-string not found
+String:    "[Execute] cap.i\r\n  Acciones: 1 | Éxito: 1"···
+Not found: "Se deshizo"
+  Stack Trace:
+     at Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado() in /_/tests/Evo.App.Tests/UndoTests.cs:line 111
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original [1 ms]
+  Error Message:
+   Assert.Contains() Failure: Sub-string not found
+String:    "[Execute] cap.undo\r\n  Acciones: 1 | Éxito"···
+Not found: "Se deshizo"
+  Stack Trace:
+     at Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original() in /_/tests/Evo.App.Tests/Tests.cs:line 284
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Passed Evo.App.Tests.Tests.Seccion_Sin_Capacidades_Muestra_Sin_Capacidades_Todavia [< 1 ms]
+  Failed Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada [< 1 ms]
+  Error Message:
+   Assert.Contains() Failure: Sub-string not found
+String:    "[Execute] cap.v\r\n  Acciones: 1 | Éxito: 1"···
+Not found: "Se deshizo"
+  Stack Trace:
+     at Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada() in /_/tests/Evo.App.Tests/UndoTests.cs:line 192
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original [< 1 ms]
+  Error Message:
+   Assert.Contains() Failure: Sub-string not found
+String:    "[DryRun] cap.iii\r\n  Acciones: 1 | Éxito: "···
+Not found: "Se deshizo"
+  Stack Trace:
+     at Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original() in /_/tests/Evo.App.Tests/UndoTests.cs:line 157
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+  Failed Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_RestauraValorPrevio [< 1 ms]
+  Error Message:
+   Assert.Contains() Failure: Sub-string not found
+String:    "[Execute] cap.ii\r\n  Acciones: 1 | Éxito: "···
+Not found: "Se deshizo"
+  Stack Trace:
+     at Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_RestauraValorPrevio() in /_/tests/Evo.App.Tests/UndoTests.cs:line 132
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.App.Tests\Evo.App.Tests.trx
+
+Total tests: 25
+Test Run Failed.
+     Passed: 20
+     Failed: 5
+ Total time: 0.9951 Seconds
+     1>Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\Evo.App.Tests.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\Evo.App.Tests.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.22
