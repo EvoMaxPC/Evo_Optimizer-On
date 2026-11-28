@@ -1,0 +1,729 @@
+{
+   "metadata": {
+      "version": "1.0.0",
+      "schemaVersion": 1,
+      "provenance": "ETAPA 7, seccion 4 (oleada 1). Fuentes: winutil@70c23c80641d7370532af2f619b2842658600842, atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f. Los literales de valor se leen del pin con tools/ledger_extract/build_section4_catalog.py; ninguno se escribe a mano.",
+      "generatedBy": "etapa 7 (oleada 1)"
+   },
+   "capabilities": [
+      {
+         "id": "services.atlas.bluetooth",
+         "name": "Desactivar Bluetooth (toggle de Atlas)",
+         "description": "Desactiva Bluetooth: pone AllowBluetooth=0 en la directiva de conectividad y pasa los servicios de Bluetooth (bthserv, BTHUSB, BluetoothUserService y los demás) a Deshabilitado, como el estado 'Disable' del toggle Bluetooth de Atlas. Reversible.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Specified",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/Bluetooth.psd1:13 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: value=Stop; BluetoothUserService=Stop; BTAGService=Stop; BthA2dp=Stop; BthAvctpSvc=Stop; BthEnum=Stop; BthHFEnum=Stop; BthLEEnum=Stop; BthMini=Stop; BTHMODEM=Stop; BTHPORT=Stop; bthserv=Stop; BTHUSB=Stop; HidBth=Stop; Microsoft_Bluetooth_AvrcpTransport=Stop; RFCOMM=Stop; BthPan=Stop; value=Disabled; BluetoothUserService=Disabled; BTAGService=Disabled; BthA2dp=Disabled; BthAvctpSvc=Disabled; BthEnum=Disabled; BthHFEnum=Disabled; BthLEEnum=Disabled; BthMini=Disabled; BTHMODEM=Disabled; BTHPORT=Disabled; bthserv=Disabled; BTHUSB=Disabled; HidBth=Disabled; Microsoft_Bluetooth_AvrcpTransport=Disabled; RFCOMM=Disabled; BthPan=Disabled. Builds: ConsentStore y servicios de Bluetooth presentes en 19045 y Windows 11. ledger_refs: atlas:toggle:Bluetooth Inventario sección 4: líneas 130 (130).",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "value: detener",
+               "serviceName": "value",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "BluetoothUserService: detener",
+               "serviceName": "BluetoothUserService",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "BTAGService: detener",
+               "serviceName": "BTAGService",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 4,
+               "description": "BthA2dp: detener",
+               "serviceName": "BthA2dp",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 5,
+               "description": "BthAvctpSvc: detener",
+               "serviceName": "BthAvctpSvc",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 6,
+               "description": "BthEnum: detener",
+               "serviceName": "BthEnum",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 7,
+               "description": "BthHFEnum: detener",
+               "serviceName": "BthHFEnum",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 8,
+               "description": "BthLEEnum: detener",
+               "serviceName": "BthLEEnum",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 9,
+               "description": "BthMini: detener",
+               "serviceName": "BthMini",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 10,
+               "description": "BTHMODEM: detener",
+               "serviceName": "BTHMODEM",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 11,
+               "description": "BTHPORT: detener",
+               "serviceName": "BTHPORT",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 12,
+               "description": "bthserv: detener",
+               "serviceName": "bthserv",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 13,
+               "description": "BTHUSB: detener",
+               "serviceName": "BTHUSB",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 14,
+               "description": "HidBth: detener",
+               "serviceName": "HidBth",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 15,
+               "description": "Microsoft_Bluetooth_AvrcpTransport: detener",
+               "serviceName": "Microsoft_Bluetooth_AvrcpTransport",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 16,
+               "description": "RFCOMM: detener",
+               "serviceName": "RFCOMM",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 17,
+               "description": "BthPan: detener",
+               "serviceName": "BthPan",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 18,
+               "description": "value -> Disabled",
+               "serviceName": "value",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 19,
+               "description": "BluetoothUserService -> Disabled",
+               "serviceName": "BluetoothUserService",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 20,
+               "description": "BTAGService -> Disabled",
+               "serviceName": "BTAGService",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 21,
+               "description": "BthA2dp -> Disabled",
+               "serviceName": "BthA2dp",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 22,
+               "description": "BthAvctpSvc -> Disabled",
+               "serviceName": "BthAvctpSvc",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 23,
+               "description": "BthEnum -> Disabled",
+               "serviceName": "BthEnum",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 24,
+               "description": "BthHFEnum -> Disabled",
+               "serviceName": "BthHFEnum",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 25,
+               "description": "BthLEEnum -> Disabled",
+               "serviceName": "BthLEEnum",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 26,
+               "description": "BthMini -> Disabled",
+               "serviceName": "BthMini",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 27,
+               "description": "BTHMODEM -> Disabled",
+               "serviceName": "BTHMODEM",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 28,
+               "description": "BTHPORT -> Disabled",
+               "serviceName": "BTHPORT",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 29,
+               "description": "bthserv -> Disabled",
+               "serviceName": "bthserv",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 30,
+               "description": "BTHUSB -> Disabled",
+               "serviceName": "BTHUSB",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 31,
+               "description": "HidBth -> Disabled",
+               "serviceName": "HidBth",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 32,
+               "description": "Microsoft_Bluetooth_AvrcpTransport -> Disabled",
+               "serviceName": "Microsoft_Bluetooth_AvrcpTransport",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 33,
+               "description": "RFCOMM -> Disabled",
+               "serviceName": "RFCOMM",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 34,
+               "description": "BthPan -> Disabled",
+               "serviceName": "BthPan",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "services.atlas.lanmanworkstation",
+         "name": "Desactivar el servicio de Estación de trabajo (LanmanWorkstation)",
+         "description": "Pasa LanmanWorkstation y los servicios de red relacionados (LanmanServer, mrxsmb, mrxsmb20, rdbss, srv2, KSecPkg) a Deshabilitado, como el estado 'Disable' del toggle Lanman Workstation de Atlas. Desactivar LanmanWorkstation puede romper el acceso a recursos de red; el coste se declara en la descripción. FUERA DE ESTA CAPACIDAD (R1): el pin declara además MachineAction Set-AtlasLanmanWorkstationState que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor de registro ni tipo de servicio expresables (por ejemplo reglas de firewall o dependencias de red). Esos efectos no se declaran aquí; por eso State=Specified.",
+         "sectionId": 4,
+         "risk": "Medium",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "RestorePoint",
+         "reversibility": "Reversible",
+         "confirmation": "Summary",
+         "state": "Specified",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/LanmanWorkstation.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: KSecPkg=Stop; LanmanServer=Stop; LanmanWorkstation=Stop; mrxsmb=Stop; mrxsmb20=Stop; rdbss=Stop; srv2=Stop; KSecPkg=Disabled; LanmanServer=Disabled; LanmanWorkstation=Disabled; mrxsmb=Disabled; mrxsmb20=Disabled; rdbss=Manual; srv2=Disabled. Builds: las claves de servicio de LanmanWorkstation existen en 19045 y Windows 11. ledger_refs: atlas:toggle:LanmanWorkstation Inventario sección 4: líneas 131 (131). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara además MachineAction Set-AtlasLanmanWorkstationState que ejecuta el script LanmanWorkstation.ps1 con efectos que no son valor de registro ni tipo de servicio expresables (por ejemplo reglas de firewall o dependencias de red). Esos efectos no se declaran aquí; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "KSecPkg: detener",
+               "serviceName": "KSecPkg",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "LanmanServer: detener",
+               "serviceName": "LanmanServer",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "LanmanWorkstation: detener",
+               "serviceName": "LanmanWorkstation",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 4,
+               "description": "mrxsmb: detener",
+               "serviceName": "mrxsmb",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 5,
+               "description": "mrxsmb20: detener",
+               "serviceName": "mrxsmb20",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 6,
+               "description": "rdbss: detener",
+               "serviceName": "rdbss",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 7,
+               "description": "srv2: detener",
+               "serviceName": "srv2",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 8,
+               "description": "KSecPkg -> Disabled",
+               "serviceName": "KSecPkg",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 9,
+               "description": "LanmanServer -> Disabled",
+               "serviceName": "LanmanServer",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 10,
+               "description": "LanmanWorkstation -> Disabled",
+               "serviceName": "LanmanWorkstation",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 11,
+               "description": "mrxsmb -> Disabled",
+               "serviceName": "mrxsmb",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 12,
+               "description": "mrxsmb20 -> Disabled",
+               "serviceName": "mrxsmb20",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 13,
+               "description": "rdbss -> Manual",
+               "serviceName": "rdbss",
+               "operation": "SetStartupType",
+               "startupType": "Manual"
+            },
+            {
+               "type": "service",
+               "order": 14,
+               "description": "srv2 -> Disabled",
+               "serviceName": "srv2",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "services.atlas.networkdiscovery",
+         "name": "Desactivar el descubrimiento de red (Network Discovery)",
+         "description": "Pasa fdPHost, FDResPub, lmhosts y SSDPSRV a Deshabilitado, como el estado 'Disable' del toggle Network Discovery de Atlas. El equipo deja de ser visible en la red y de descubrir otros equipos. Reversible. FUERA DE ESTA CAPACIDAD (R1): el pin declara además MachineAction Set-AtlasNetworkDiscoveryState que ejecuta NetworkDiscovery.ps1 con efectos de directiva de red y perfil que no son valores de registro ni tipo de servicio expresables. Esos efectos no se declaran aquí; por eso State=Specified.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Specified",
+         "variants": [
+            "Evo",
+            "Atlas"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.psd1:11 (estado 'Disable'). Valores y servicios tomados del bloque Registry y Services del pin: fdPHost=Stop; FDResPub=Stop; lmhosts=Stop; SSDPSRV=Stop; fdPHost=Disabled; FDResPub=Disabled; lmhosts=Disabled; SSDPSRV=Disabled. Builds: los servicios de descubrimiento de red existen en 19045 y Windows 11. ledger_refs: atlas:toggle:NetworkDiscovery Inventario sección 4: líneas 132 (132). R1 (paso 12): el pin hace ADEMAS esto, que NO se declara como accion: el pin declara además MachineAction Set-AtlasNetworkDiscoveryState que ejecuta NetworkDiscovery.ps1 con efectos de directiva de red y perfil que no son valores de registro ni tipo de servicio expresables. Esos efectos no se declaran aquí; por eso State=Specified. Como el efecto del pin no queda expresado entero, State=Specified.",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "fdPHost: detener",
+               "serviceName": "fdPHost",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "FDResPub: detener",
+               "serviceName": "FDResPub",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 3,
+               "description": "lmhosts: detener",
+               "serviceName": "lmhosts",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 4,
+               "description": "SSDPSRV: detener",
+               "serviceName": "SSDPSRV",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 5,
+               "description": "fdPHost -> Disabled",
+               "serviceName": "fdPHost",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 6,
+               "description": "FDResPub -> Disabled",
+               "serviceName": "FDResPub",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 7,
+               "description": "lmhosts -> Disabled",
+               "serviceName": "lmhosts",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            },
+            {
+               "type": "service",
+               "order": 8,
+               "description": "SSDPSRV -> Disabled",
+               "serviceName": "SSDPSRV",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "services.winutil.cscservice",
+         "name": "Deshabilitar CscService (archivos sin conexión)",
+         "description": "Pone el servicio CscService (Cliente de archivos sin conexión) en arranque Deshabilitado, como WinUtil. Quita la sincronización de archivos de red sin conexión; el coste se declara en la descripción.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: CscService StartupType=Disabled, OriginalType=Manual). Servicio y tipo de inicio tomados de la fuente: CscService=Stop; CscService=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: CscService existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:0 Inventario sección 4: línea 126 (CscService).",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "CscService: detener",
+               "serviceName": "CscService",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "CscService -> Disabled",
+               "serviceName": "CscService",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "services.winutil.diagtrack",
+         "name": "Deshabilitar DiagTrack (telemetría de WinUtil)",
+         "description": "Pone el servicio Connected User Experiences and Telemetry (DiagTrack) en arranque Deshabilitado, como WinUtil (WPFTweaksServices). Se detiene si estaba corriendo y el tipo de inicio previo se guarda para deshacer. Por que mejora la seguridad: MEJORA la privacidad: DiagTrack envía datos de uso y diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de diagnóstico) se declara en la descripción y no reduce ninguna protección.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Improves",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: DiagTrack StartupType=Disabled, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: DiagTrack=Stop; DiagTrack=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: DiagTrack existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:1 Inventario sección 4: línea 122 (DiagTrack). R2 (paso 12): SecurityImpact=Improves por: MEJORA la privacidad: DiagTrack envía datos de uso y diagnóstico a Microsoft. Deshabilitarlo corta esa telemetría. El coste (menos datos de diagnóstico) se declara en la descripción y no reduce ninguna protección.",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "DiagTrack: detener",
+               "serviceName": "DiagTrack",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "DiagTrack -> Disabled",
+               "serviceName": "DiagTrack",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "services.winutil.mapsbroker",
+         "name": "Pasar MapsBroker a inicio Manual",
+         "description": "Pone el servicio MapsBroker en arranque Manual (no se inicia solo). WinUtil lo deja en Manual desde su tipo predeterminado Automatic. Reversible: el motor guarda el tipo previo.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: MapsBroker StartupType=Manual, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: MapsBroker=Stop; MapsBroker=Manual. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: MapsBroker existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:2 Inventario sección 4: línea 123 (MapsBroker).",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "MapsBroker: detener",
+               "serviceName": "MapsBroker",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "MapsBroker -> Manual",
+               "serviceName": "MapsBroker",
+               "operation": "SetStartupType",
+               "startupType": "Manual"
+            }
+         ]
+      },
+      {
+         "id": "services.winutil.sharedaccess",
+         "name": "Deshabilitar SharedAccess (compartición de conexión)",
+         "description": "Pone el servicio SharedAccess (Compartición de conexión a Internet) en arranque Deshabilitado, como WinUtil. Puede impedir compartir la conexión a Internet por el equipo; el coste se declara en la descripción.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: SharedAccess StartupType=Disabled, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: SharedAccess=Stop; SharedAccess=Disabled. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: SharedAccess existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:4 Inventario sección 4: línea 125 (SharedAccess).",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "SharedAccess: detener",
+               "serviceName": "SharedAccess",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "SharedAccess -> Disabled",
+               "serviceName": "SharedAccess",
+               "operation": "SetStartupType",
+               "startupType": "Disabled"
+            }
+         ]
+      },
+      {
+         "id": "services.winutil.storsvc",
+         "name": "Pasar StorSvc a inicio Manual",
+         "description": "Pone el servicio Almacenamiento (StorSvc) en arranque Manual, como WinUtil. Reversible: el motor guarda el tipo previo.",
+         "sectionId": 4,
+         "risk": "Low",
+         "securityImpact": "Neutral",
+         "privilege": "Admin",
+         "restore": "SessionUndo",
+         "reversibility": "Reversible",
+         "confirmation": "SimpleClick",
+         "state": "Implemented",
+         "variants": [
+            "Evo",
+            "WinUtil"
+         ],
+         "conflictsWith": [],
+         "dependsOn": [],
+         "supportedBuilds": [
+            19045,
+            22631,
+            26100,
+            26200
+         ],
+         "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json:WPFTweaksServices (service: StorSvc StartupType=Manual, OriginalType=Automatic). Servicio y tipo de inicio tomados de la fuente: StorSvc=Stop; StorSvc=Manual. Semantica: `StartupType` es lo que WinUtil aplica y `OriginalType` lo que restaura su deshacer; el motor guarda el tipo previo. Reversibilidad (ADR-0003): Reversible - el motor registra el tipo de inicio anterior de cada servicio y lo devuelve al deshacer.  Builds: StorSvc existe en 19045 y en Windows 11. ledger_refs: winutil:tweak:WPFTweaksServices, winutil:tweak-op:WPFTweaksServices:service:3 Inventario sección 4: línea 124 (StorSvc).",
+         "actions": [
+            {
+               "type": "service",
+               "order": 1,
+               "description": "StorSvc: detener",
+               "serviceName": "StorSvc",
+               "operation": "Stop"
+            },
+            {
+               "type": "service",
+               "order": 2,
+               "description": "StorSvc -> Manual",
+               "serviceName": "StorSvc",
+               "operation": "SetStartupType",
+               "startupType": "Manual"
+            }
+         ]
+      }
+   ]
+}
