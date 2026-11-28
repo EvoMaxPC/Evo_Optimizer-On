@@ -47,7 +47,7 @@ Si dos capacidades escriben la **MISMA** clave de registro, deshacer la primera 
 | `DeshacerSinAplicar_Dice_NoHayNada` | UndoTests.cs:176 | Sin aplicar dice "No hay nada" | PASA / PASA |
 | `DosClicsEnDeshacer_ElSegundo_DiceNoHayNada` | UndoTests.cs:192 | Segundo clic dice "No hay nada" | PASA / PASA |
 | `DeshacerPorCapacidad_A_No_Afecta_A_B` | UndoTests.cs:~210 | Deshacer A no afecta a B (y viceversa) | PASA / PASA |
-| `AplicarADosVeces_DeshacerUnaVez_VuelveAlEstadoOriginal` | UndoTests.cs:~250 | Dos aplicaciones, un deshacer → estado original (ambas entradas LIFO) | PASA / PASA |
+| `AplicarADosVeces_DeshacerUnaVez_VuelveAlEstadoOriginal` | UndoTests.cs:244 | Dos aplicaciones, un deshacer → estado original (ambas entradas LIFO) | PASA / PASA |
 
 ### Test existente actualizado (tests/Evo.App.Tests/Tests.cs)
 
@@ -105,7 +105,7 @@ Código clave del test:
 - Se ejecuta B (Set DWord + comando que falla) → `summaryB.Succeeded == 1`, `summaryB.Failed == 1` (rollback automático de B).
 - Se verifica que A sigue en 99 (J_A intacto) y B volvió a 1 (su estado previo).
 
-**Conclusión:** no fue necesario corregir el motor; el aislamiento se logra con el journal por capacidad de 6-I. Los 134 tests de Engine siguen pasando.
+**Conclusión (ETAPA 6-K):** se confirmó el defecto con código literal y se corrigió el motor con el cambio mínimo (journal local aislado por ejecución en `EngineCoordinator.ExecuteAsync`). El aislamiento por capacidad de 6-I evita que el rollback de una capacidad afecte a otra; la corrección de 6-K evita que una reejecución fallida de la MISMA capacidad revierta su propia ejecución previa exitosa. Los 135 tests de Engine siguen pasando (134 previos + 1 nuevo).
 
 ## Punto C — Datos del artefacto release-exe
 
