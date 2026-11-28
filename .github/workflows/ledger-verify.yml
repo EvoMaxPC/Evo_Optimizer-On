@@ -1,0 +1,1019 @@
+name: ledger-verify
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'tools/ledger_extract/**'
+      - 'inventory/**'
+      - 'docs/inventory-recon/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'catalog/**'
+      - 'Directory.Build.props'
+      - 'Evo.sln'
+      - 'global.json'
+      - 'tools/dotnet_tools/**'
+      - 'docs/reports/**'
+      - '.github/workflows/**'
+    branches-ignore:
+      - ci-report
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ledger-verify-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: ledger-verify (ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      LABEL: ledger-verify
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Instalar pytest y pyyaml
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages pytest pyyaml
+          python3 -c "import pytest, yaml; print('pytest', pytest.__version__, '| pyyaml', yaml.__version__)"
+
+      - name: Reproducir upstream en el SHA fijado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/fetch_upstream.py --dest /tmp/upstream
+          python3 tools/ledger_extract/list_files.py --dest /tmp/upstream
+
+      - name: Suite pytest
+        shell: bash
+        run: |
+          mkdir -p ci-out
+          set +e
+          python3 -m pytest tools/ledger_extract/tests/ tests/ -q 2>&1 | tee ci-out/pytest.txt
+          rc=${PIPESTATUS[0]}
+          echo "pytest_exit=$rc" | tee -a ci-out/pytest.txt
+          exit $rc
+
+      - name: partition_check
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p ci-out
+          set +e
+          python3 tools/ledger_extract/partition_check.py 2>&1 | tee ci-out/partition_check.txt
+          rc=${PIPESTATUS[0]}
+          echo "partition_check_exit=$rc" | tee -a ci-out/partition_check.txt
+          # copia también los resultados por fichero
+          for f in inventory/partition/results/*.tsv; do
+            [ -f "$f" ] && cp "$f" "ci-out/$(basename "$f")"
+          done
+          exit $rc
+
+      - name: Extractor de WinUtil (determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/extract_winutil_config.py
+          python3 tools/ledger_extract/extract_winutil_functions.py
+          cp inventory/ledger/winutil-items.tsv ci-out/winutil-items.tsv
+          cp inventory/ledger/winutil-apps.tsv ci-out/winutil-apps.tsv
+          cp inventory/ledger/winutil-functions.tsv ci-out/winutil-functions.tsv
+          sha256sum inventory/ledger/*.tsv | tee ci-out/ledger-sha-run1.txt
+          # segunda ejecución: debe producir bytes idénticos
+          python3 tools/ledger_extract/extract_winutil_config.py
+          python3 tools/ledger_extract/extract_winutil_functions.py
+          sha256sum inventory/ledger/*.tsv | tee ci-out/ledger-sha-run2.txt
+          if ! diff -u ci-out/ledger-sha-run1.txt ci-out/ledger-sha-run2.txt; then
+            echo "DETERMINISMO ROTO: las dos ejecuciones difieren" | tee ci-out/determinism.txt
+            exit 1
+          fi
+          echo "determinismo: OK (mismos sha256 en dos ejecuciones)" | tee ci-out/determinism.txt
+
+      - name: Cobertura de extract (winutil)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/coverage_check.py 2>&1 | tee ci-out/coverage.txt
+          echo "coverage_exit=${PIPESTATUS[0]}" | tee -a ci-out/coverage.txt
+
+      - name: Esquema de config
+        if: always()
+        shell: bash
+        run: |
+          python3 tools/ledger_extract/config_schema.py 2>&1 | tee ci-out/config-schema.txt
+
+      - name: Extractor de Atlas (determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/extract_atlas_files.py
+          cp inventory/ledger/atlas-files.tsv ci-out/atlas-files.tsv
+          cp inventory/ledger/atlas-reg-entries.tsv ci-out/atlas-reg-entries.tsv
+          sha256sum inventory/ledger/atlas-*.tsv | tee ci-out/atlas-sha-run1.txt
+          python3 tools/ledger_extract/extract_atlas_files.py
+          sha256sum inventory/ledger/atlas-*.tsv | tee ci-out/atlas-sha-run2.txt
+          if ! diff -u ci-out/atlas-sha-run1.txt ci-out/atlas-sha-run2.txt; then
+            echo "DETERMINISMO ATLAS ROTO" | tee ci-out/atlas-determinism.txt
+            exit 1
+          fi
+          echo "determinismo atlas: OK" | tee ci-out/atlas-determinism.txt
+
+      - name: Cobertura de extract (atlas)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/coverage_check_atlas.py 2>&1 | tee ci-out/coverage-atlas.txt
+          echo "coverage_atlas_exit=${PIPESTATUS[0]}" | tee -a ci-out/coverage-atlas.txt
+
+      - name: Extractor de toggles de Atlas (determinismo + cruces)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/extract_atlas_toggles.py
+          cp inventory/ledger/atlas-toggles.tsv ci-out/atlas-toggles.tsv
+          cp inventory/ledger/atlas-tweak-files.tsv ci-out/atlas-tweak-files.tsv
+          sha256sum inventory/ledger/atlas-toggles.tsv \
+                    inventory/ledger/atlas-tweak-files.tsv \
+            | tee ci-out/toggles-sha-run1.txt
+          python3 tools/ledger_extract/extract_atlas_toggles.py
+          sha256sum inventory/ledger/atlas-toggles.tsv \
+                    inventory/ledger/atlas-tweak-files.tsv \
+            | tee ci-out/toggles-sha-run2.txt
+          if ! diff -u ci-out/toggles-sha-run1.txt ci-out/toggles-sha-run2.txt; then
+            echo "DETERMINISMO TOGGLES ROTO" | tee ci-out/toggles-determinism.txt
+            exit 1
+          fi
+          echo "determinismo toggles: OK" | tee ci-out/toggles-determinism.txt
+          python3 tools/ledger_extract/extract_atlas_toggles.py --json \
+            > ci-out/toggles-cross.json
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/toggles-cross.json", encoding="utf-8"))
+          c = d["cross"]
+          bad = c["duplicate_ids"] or c["unnamed"] or c["broken_refs"]
+          print("toggles:", c["toggles"], "| prediccion 91:",
+                "OK" if c["prediction_ok"] else "DIFIERE")
+          print("ids duplicados:", len(c["duplicate_ids"]),
+                "| sin etiqueta:", len(c["unnamed"]),
+                "| refs rotas:", len(c["broken_refs"]))
+          sys.exit(1 if bad else 0)
+          PYEOF
+
+      - name: Extractores de 4c (determinismo + cruce)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_functions.py
+            python3 tools/ledger_extract/extract_atlas_bridge.py
+            python3 tools/ledger_extract/extract_atlas_toggle_ops.py
+            python3 tools/ledger_extract/extract_atlas_tweak_ops.py
+            sha256sum inventory/ledger/atlas-functions.tsv \
+                      inventory/ledger/atlas-toggle-bridge.tsv \
+                      inventory/ledger/atlas-toggle-ops.tsv \
+                      inventory/ledger/atlas-tweak-ops.tsv \
+              > "ci-out/paso4c-sha-run${i}.txt"
+            cp inventory/ledger/atlas-functions.tsv ci-out/atlas-functions.tsv
+            cp inventory/ledger/atlas-toggle-bridge.tsv ci-out/atlas-toggle-bridge.tsv
+            cp inventory/ledger/atlas-toggle-ops.tsv ci-out/atlas-toggle-ops.tsv
+            cp inventory/ledger/atlas-tweak-ops.tsv ci-out/atlas-tweak-ops.tsv
+          done
+          if ! diff -u ci-out/paso4c-sha-run1.txt ci-out/paso4c-sha-run2.txt; then
+            echo "DETERMINISMO 4C ROTO" | tee ci-out/paso4c-determinism.txt
+            exit 1
+          fi
+          echo "determinismo 4c: OK" | tee ci-out/paso4c-determinism.txt
+          python3 tools/ledger_extract/cross_atlas_ops.py --json \
+            | tee ci-out/paso4c-cross.json
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/paso4c-cross.json", encoding="utf-8"))
+          print("ops catalogo:", d["toggle_ops_total"],
+                "| con hive+key:", d["toggle_ops_con_hive_y_key"])
+          print("ops psd1:", d["tweak_ops_total"],
+                "| claves distintas:", d["claves_normalizadas_tweak"])
+          print("veredicto:", d["veredicto"])
+          if d["toggle_ops_con_hive_y_key"] != 0:
+              print("INESPERADO: el catalogo ahora declara claves; revisar el cruce")
+              sys.exit(1)
+          PYEOF
+          for f in atlas-functions atlas-toggle-bridge atlas-toggle-ops atlas-tweak-ops; do
+            echo "$f: $(($(wc -l < inventory/ledger/$f.tsv) - 1)) filas"
+          done | tee ci-out/paso4c-counts.txt
+
+      - name: Extractores de 4d (determinismo + cifras)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_effects.py
+            python3 tools/ledger_extract/extract_atlas_toggle_effects.py
+            python3 tools/ledger_extract/extract_winutil_ops.py
+            sha256sum inventory/ledger/atlas-effects.tsv \
+                      inventory/ledger/atlas-toggle-effects.tsv \
+                      inventory/ledger/atlas-psd1-refs.tsv \
+                      inventory/ledger/winutil-tweak-ops.tsv \
+                      inventory/ledger/winutil-feature-ops.tsv \
+                      inventory/ledger/winutil-appx-ops.tsv \
+              > "ci-out/paso4d-sha-run${i}.txt"
+            for f in atlas-effects atlas-toggle-effects atlas-psd1-refs \
+                     winutil-tweak-ops winutil-feature-ops winutil-appx-ops; do
+              cp "inventory/ledger/$f.tsv" "ci-out/$f.tsv"
+            done
+          done
+          if ! diff -u ci-out/paso4d-sha-run1.txt ci-out/paso4d-sha-run2.txt; then
+            echo "DETERMINISMO 4D ROTO" | tee ci-out/paso4d-determinism.txt
+            exit 1
+          fi
+          echo "determinismo 4d: OK" | tee ci-out/paso4d-determinism.txt
+          python3 tools/ledger_extract/extract_atlas_effects.py --json \
+            > ci-out/paso4d-effects.json
+          python3 tools/ledger_extract/extract_atlas_toggle_effects.py --json \
+            > ci-out/paso4d-toggle-effects.json
+          python3 tools/ledger_extract/extract_winutil_ops.py --json \
+            > ci-out/paso4d-winutil-ops.json
+          python3 - <<'PYEOF'
+          import json, sys
+          eff = json.load(open("ci-out/paso4d-effects.json", encoding="utf-8"))
+          tog = json.load(open("ci-out/paso4d-toggle-effects.json", encoding="utf-8"))
+          win = json.load(open("ci-out/paso4d-winutil-ops.json", encoding="utf-8"))
+          print("efectos atlas:", eff["efectos"], "| por tipo:", len(eff["por_tipo"]))
+          print("filas toggle-effects:", tog["filas"], "| sin efecto:", tog["filas_sin_efecto"])
+          print("psd1 sin referencia:", tog["psd1"]["sin_ninguna"])
+          print("winutil tweak-ops:", win["tweaks"]["filas"],
+                "| feature:", win["features"]["filas"],
+                "| appx:", win["appx"]["filas"])
+          ok = (eff["efectos"] > 0 and tog["filas"] == 92
+                and win["tweaks"]["filas"] > 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Extractores de 4e (manifiesto + conciliacion, determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_manifest.py
+            python3 tools/ledger_extract/build_conciliacion.py
+            sha256sum inventory/ledger/atlas-manifest.tsv \
+                      inventory/ledger/conciliacion-borrador.tsv \
+              > "ci-out/paso4e-sha-run${i}.txt"
+            cp inventory/ledger/atlas-manifest.tsv ci-out/atlas-manifest.tsv
+            cp inventory/ledger/conciliacion-borrador.tsv ci-out/conciliacion-borrador.tsv
+          done
+          if ! diff -u ci-out/paso4e-sha-run1.txt ci-out/paso4e-sha-run2.txt; then
+            echo "DETERMINISMO 4E ROTO" | tee ci-out/paso4e-determinism.txt
+            exit 1
+          fi
+          echo "determinismo 4e: OK" | tee ci-out/paso4e-determinism.txt
+          python3 - <<'PYEOF'
+          import csv
+          rows = list(csv.DictReader(open("inventory/ledger/conciliacion-borrador.tsv",
+                                         encoding="utf-8"), delimiter="\t"))
+          man = list(csv.DictReader(open("inventory/ledger/atlas-manifest.tsv",
+                                         encoding="utf-8"), delimiter="\t"))
+          print("manifiesto:", len(man), "entradas | enabled:",
+                sum(1 for r in man if r["enabled"] == "true"))
+          print("conciliacion:", len(rows), "filas")
+          bad = [r for r in rows if "Mapped" in r.values()]
+          print("filas con Mapped:", len(bad))
+          assert len(rows) == 588, "la conciliacion debe tener 588 filas"
+          assert not bad, "prohibido Mapped en el borrador"
+          assert len(man) == 182, "el manifiesto debe tener 182 entradas"
+          PYEOF
+
+      - name: Paso 8b (auditoria de valores + mapa upstream, determinismo)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/audit_catalog_values.py | tee "ci-out/paso8b-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py | tee "ci-out/paso8b-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py | tee "ci-out/paso8b-map-run${i}.txt"
+            sha256sum inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+              > "ci-out/paso8b-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso8b-sha-run1.txt ci-out/paso8b-sha-run2.txt; then
+            echo "DETERMINISMO PASO 8B ROTO" | tee ci-out/paso8b-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 8b: OK" | tee ci-out/paso8b-determinism.txt
+          cp inventory/ledger/catalog-value-audit.tsv ci-out/
+          cp inventory/ledger/upstream-capability-map.tsv ci-out/
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso8b-audit.json
+          python3 tools/ledger_extract/build_upstream_capability_map.py --json \
+            > ci-out/paso8b-map.json
+          # gate en modo informativo: el pending del mapa no bloquea la fase 0
+          python3 tools/ledger_extract/coverage_gate.py --gate phase0 \
+            | tee ci-out/paso8b-gate-phase0.txt
+          python3 tools/ledger_extract/coverage_gate.py --gate beta --informational \
+            | tee ci-out/paso8b-gate-beta.txt
+          python3 - <<'PYEOF'
+          import json, sys
+          a = json.load(open("ci-out/paso8b-audit.json", encoding="utf-8"))
+          m = json.load(open("ci-out/paso8b-map.json", encoding="utf-8"))
+          print("acciones auditadas:", a["filas"], "| distribucion:", a["distribucion"])
+          print("desviaciones sin excepcion:", a["sin_excepcion"])
+          print("mapa:", m["filas"], "| cobertura:", m["cobertura"])
+          print("source x status:", m["source_x_status"])
+          # Las cifras suben con el catalogo: 105 acciones de registro y 39
+          # capacidades en el paso 8c (antes 104 y 37). No se fijan a la baja.
+          ok = (a["sin_excepcion"] == 0 and a["filas"] >= 104
+                and m["filas"] == 435 and m["cobertura"]["covered"] >= 37)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Paso 8c (interruptores, seccion por categoria y plan de oleadas)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_winutil_ops.py | tee "ci-out/paso8c-ops-run${i}.txt"
+            python3 tools/ledger_extract/build_category_section_map.py | tee "ci-out/paso8c-cat-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py | tee "ci-out/paso8c-audit-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py > "ci-out/paso8c-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py > "ci-out/paso8c-plan-run${i}.txt"
+            sha256sum inventory/ledger/winutil-tweak-ops.tsv \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      inventory/partition/category-section-map.tsv \
+                      docs/reports/plan-oleadas.md \
+              > "ci-out/paso8c-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso8c-sha-run1.txt ci-out/paso8c-sha-run2.txt; then
+            echo "DETERMINISMO PASO 8C ROTO" | tee ci-out/paso8c-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 8c: OK" | tee ci-out/paso8c-determinism.txt
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          cp inventory/ledger/winutil-tweak-ops.tsv ci-out/
+          cp inventory/ledger/catalog-value-audit.tsv ci-out/
+          cp inventory/ledger/upstream-capability-map.tsv ci-out/
+          cp inventory/partition/category-section-map.tsv ci-out/
+          cp docs/reports/plan-oleadas.md ci-out/
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso8c-audit.json
+          python3 tools/ledger_extract/build_upstream_capability_map.py --json \
+            > ci-out/paso8c-map.json
+          python3 tools/ledger_extract/build_category_section_map.py --json \
+            > ci-out/paso8c-cat.json
+          python3 - <<'PYEOF'
+          import json, sys
+          a = json.load(open("ci-out/paso8c-audit.json", encoding="utf-8"))
+          m = json.load(open("ci-out/paso8c-map.json", encoding="utf-8"))
+          c = json.load(open("ci-out/paso8c-cat.json", encoding="utf-8"))
+          print("audit:", a["filas"], "acciones |", a["distribucion"])
+          print("sin excepcion:", a["sin_excepcion"], "| excepciones:", a["excepciones"])
+          print("mapa:", m["filas"], "| basis:", m["por_basis"])
+          print("categorias:", c["categorias"], "| items:", c["items"],
+                "| con seccion:", c["asignadas"], "| mixed:", c["mixed"])
+          # 140 es el valor medido con las 49 categorias del pin; lo que no se
+          # admite es volver al 361 del paso 8b (ni dejar categorias sin asignar).
+          ok = (a["sin_excepcion"] == 0 and m["filas"] == 435
+                and m["por_basis"].get("none", 0) < 361
+                and c["unassigned"] == 0 and c["categorias"] == 49)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Paso 8d (claves de toggle, seccion por item, plan y rangos)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/extract_atlas_toggle_keys.py \
+              | tee "ci-out/paso8d-togglekeys-run${i}.txt"
+            python3 tools/ledger_extract/build_item_section_map.py \
+              | tee "ci-out/paso8d-items-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py \
+              > "ci-out/paso8d-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso8d-plan-run${i}.txt"
+            sha256sum inventory/ledger/atlas-toggle-keys.tsv \
+                      inventory/partition/item-section-map.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      docs/reports/plan-oleadas.md \
+              > "ci-out/paso8d-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso8d-sha-run1.txt ci-out/paso8d-sha-run2.txt; then
+            echo "DETERMINISMO PASO 8D ROTO" | tee ci-out/paso8d-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 8d: OK" | tee ci-out/paso8d-determinism.txt
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          cp inventory/ledger/atlas-toggle-keys.tsv ci-out/
+          cp inventory/partition/item-section-map.tsv ci-out/
+          cp inventory/ledger/upstream-capability-map.tsv ci-out/
+          cp docs/reports/plan-oleadas.md ci-out/
+          python3 tools/ledger_extract/build_item_section_map.py --json \
+            > ci-out/paso8d-items.json
+          python3 tools/ledger_extract/build_upstream_capability_map.py --json \
+            > ci-out/paso8d-map.json
+          python3 tools/ledger_extract/extract_atlas_toggle_keys.py --json \
+            > ci-out/paso8d-togglekeys.json
+          python3 - <<'PYEOF'
+          import json, sys
+          items = json.load(open("ci-out/paso8d-items.json", encoding="utf-8"))
+          mapa = json.load(open("ci-out/paso8d-map.json", encoding="utf-8"))
+          keys = json.load(open("ci-out/paso8d-togglekeys.json", encoding="utf-8"))
+          print("items:", items["filas"], "| con seccion:", items["asignadas"],
+                "| unassigned:", items["unassigned"])
+          print("basis:", items["por_basis"])
+          print("claves de toggle:", keys["filas"], "|", keys["por_hive"])
+          print("mapa upstream: basis:", mapa["por_basis"])
+          print("pending sin seccion:", mapa["pending_por_seccion"].get("(sin seccion)", 0))
+          ok = (items["filas"] == 435
+                and items["asignadas"] + items["unassigned"] == 435
+                and mapa["filas"] == 435
+                and mapa["por_basis"].get("none", 0) < 140
+                and items["por_basis"].get("manual-review", 0) < 140
+                and keys["filas"] > 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Paso 9 (catalogo de la seccion 10, cobertura y doble ejecucion)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section10_catalog.py \
+              | tee "ci-out/paso9-catalog-run${i}.txt"
+            python3 tools/ledger_extract/generate_coverage_matrix.py \
+              > "ci-out/paso9-matrix-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py \
+              > "ci-out/paso9-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py \
+              > "ci-out/paso9-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso9-plan-run${i}.txt"
+            python3 tools/ledger_extract/build_build_ranges_report.py \
+              > "ci-out/paso9-ranges-run${i}.txt"
+            sha256sum catalog/capabilities/section10_explorer_ui.json \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      inventory/ledger/inventory-reconciliation.tsv \
+                      docs/reports/matriz-cobertura.md \
+                      docs/reports/plan-oleadas.md \
+                      docs/reports/rangos-build.md \
+              > "ci-out/paso9-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso9-sha-run1.txt ci-out/paso9-sha-run2.txt; then
+            echo "DETERMINISMO PASO 9 ROTO" | tee ci-out/paso9-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 9: OK" | tee ci-out/paso9-determinism.txt
+          python3 tools/ledger_extract/build_section10_catalog.py --check
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          python3 tools/ledger_extract/build_build_ranges_report.py --check
+          cp catalog/capabilities/section10_explorer_ui.json ci-out/
+          python3 tools/ledger_extract/generate_coverage_matrix.py \
+            --report /tmp/paso9-matriz.md --json > ci-out/paso9-matriz.json
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso9-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso9-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          cov = json.load(open("ci-out/paso9-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso9-audit.json", encoding="utf-8"))
+          print("capacidades:", cov["capacidades"],
+                "| secciones:", cov["secciones_terminadas"],
+                "| mapped:", cov["lineas_mapped_1_3"],
+                "| cubiertas:", cov["cubiertas"],
+                "| huecos:", cov["huecos"])
+          print("seccion 10:", cov["por_seccion"]["10"])
+          print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
+          sec10 = cov["por_seccion"]["10"]
+          # Invariantes PROPIAS de la seccion 10, leidas del fichero del catalogo:
+          # sustituyen al recuento global de capacidades, que el paso 10 tuvo que
+          # aflojar (== 68 -> >= 68) y que por tanto ya no verificaba nada.
+          sec10_doc = json.load(open("ci-out/section10_explorer_ui.json", encoding="utf-8"))
+          caps10 = sec10_doc["capabilities"]
+          acts10 = sum(len(c["actions"]) for c in caps10)
+          # Paso 12: la seccion 10 suma `explorer.home.restore` (3 acciones:
+          # registryCreateKey + IsPinnedToNameSpaceTree + LaunchTo).
+          ok = (len(caps10) == 30
+                and acts10 == 60
+                and all(c["sectionId"] == 10 for c in caps10)
+                and all(c["state"] in ("Implemented", "Specified") for c in caps10)
+                and any(a["type"] == "registryDeleteKey"
+                        for c in caps10 for a in c["actions"])
+                and sec10["lineas_mapped"] == 29
+                and sec10["cubiertas"] == 29
+                and sec10["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and aud["sin_excepcion"] == 0
+                and aud["distribucion"].get("ambiguous", 0) == 0
+                and aud["distribucion"].get("unhandled", 0) == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Paso 10 (catalogo de la seccion 9, cobertura y doble ejecucion)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section9_catalog.py \
+              | tee "ci-out/paso10-catalog-run${i}.txt"
+            python3 tools/ledger_extract/generate_coverage_matrix.py \
+              > "ci-out/paso10-matrix-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py \
+              > "ci-out/paso10-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py \
+              > "ci-out/paso10-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py \
+              > "ci-out/paso10-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso10-plan-run${i}.txt"
+            python3 tools/ledger_extract/build_build_ranges_report.py \
+              > "ci-out/paso10-ranges-run${i}.txt"
+            sha256sum catalog/capabilities/section9_system_registry.json \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      inventory/ledger/inventory-reconciliation.tsv \
+                      docs/reports/matriz-cobertura.md \
+                      docs/reports/plan-oleadas.md \
+                      docs/reports/rangos-build.md \
+              > "ci-out/paso10-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso10-sha-run1.txt ci-out/paso10-sha-run2.txt; then
+            echo "DETERMINISMO PASO 10 ROTO" | tee ci-out/paso10-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 10: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso10-determinism.txt
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          python3 tools/ledger_extract/build_build_ranges_report.py --check
+          cp catalog/capabilities/section9_system_registry.json ci-out/
+          cp ci-out/paso10-sha-run1.txt ci-out/paso10-sha.txt
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso10-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso10-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          cov = json.load(open("ci-out/paso10-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso10-audit.json", encoding="utf-8"))
+          print("capacidades:", cov["capacidades"],
+                "| secciones:", cov["secciones_terminadas"],
+                "| mapped:", cov["lineas_mapped_1_3"],
+                "| cubiertas:", cov["cubiertas"],
+                "| huecos:", cov["huecos"])
+          print("seccion 9:", cov["por_seccion"]["9"])
+          print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
+          sec9 = cov["por_seccion"]["9"]
+          # Paso 7: 88 -> 101 capacidades. Etapa 8 Parte B: +3 seccion 12 = 104. (+12 seccion 4, +1 bateria seccion 9).
+          # Secciones terminadas: [1, 2, 3, 4, 9, 10]. Seccion 9: 31 lineas mapped
+          # (278 ahora Mapped con WPFToggleBatteryPercentage).
+          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10", "12"]
+                and cov["capacidades"] == 104
+                and sec9["lineas_mapped"] == 31
+                and sec9["cubiertas"] == 31
+                and sec9["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and aud["sin_excepcion"] == 0
+                and aud["distribucion"].get("ambiguous", 0) == 0
+                and aud["por_seccion"].get("9") == 34)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: "Paso 11 (expresividad del motor: clave, tarea y servicio)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section9_catalog.py \
+              | tee "ci-out/paso11-cat9-run${i}.txt"
+            python3 tools/ledger_extract/build_section10_catalog.py \
+              | tee "ci-out/paso11-cat10-run${i}.txt"
+            python3 tools/ledger_extract/audit_catalog_values.py \
+              > "ci-out/paso11-audit-run${i}.txt"
+            python3 tools/ledger_extract/verify_catalog_coverage.py \
+              > "ci-out/paso11-coverage-run${i}.txt"
+            python3 tools/ledger_extract/build_upstream_capability_map.py \
+              > "ci-out/paso11-map-run${i}.txt"
+            python3 tools/ledger_extract/build_wave_plan.py \
+              > "ci-out/paso11-plan-run${i}.txt"
+            python3 tools/ledger_extract/build_build_ranges_report.py \
+              > "ci-out/paso11-ranges-run${i}.txt"
+            sha256sum catalog/capabilities/section9_system_registry.json \
+                      catalog/capabilities/section10_explorer_ui.json \
+                      inventory/ledger/catalog-value-audit.tsv \
+                      inventory/ledger/upstream-capability-map.tsv \
+                      docs/reports/matriz-cobertura.md \
+                      docs/reports/plan-oleadas.md \
+                      docs/reports/rangos-build.md \
+                      docs/adr/ADR-0005-expresividad-del-motor.md \
+              > "ci-out/paso11-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso11-sha-run1.txt ci-out/paso11-sha-run2.txt; then
+            echo "DETERMINISMO PASO 11 ROTO" | tee ci-out/paso11-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 11: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso11-determinism.txt
+          sha256sum catalog/capabilities/section9_system_registry.json \
+                    catalog/capabilities/section10_explorer_ui.json \
+            > ci-out/paso11-sha.json.txt
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/build_section10_catalog.py --check
+          python3 tools/ledger_extract/build_wave_plan.py --check
+          python3 tools/ledger_extract/build_build_ranges_report.py --check
+          cp ci-out/paso11-sha-run1.txt ci-out/paso11-sha.txt
+          cp catalog/capabilities/section9_system_registry.json ci-out/
+          cp catalog/capabilities/section10_explorer_ui.json ci-out/
+          cp docs/adr/ADR-0005-expresividad-del-motor.md ci-out/
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso11-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso11-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          cov = json.load(open("ci-out/paso11-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso11-audit.json", encoding="utf-8"))
+          sec9 = json.load(open("ci-out/section9_system_registry.json", encoding="utf-8"))
+          sec10 = json.load(open("ci-out/section10_explorer_ui.json", encoding="utf-8"))
+          caps9 = {c["id"]: c for c in sec9["capabilities"]}
+          caps10 = {c["id"]: c for c in sec10["capabilities"]}
+          acts9 = sum(len(c["actions"]) for c in caps9.values())
+          acts10 = sum(len(c["actions"]) for c in caps10.values())
+          new9 = [c["id"] for c in caps9.values() if c["state"] == "Specified"]
+          kinds = sorted({a["type"] for c in list(caps9.values()) + list(caps10.values())
+                          for a in c["actions"]})
+          print("capacidades:", cov["capacidades"], "| huecos:", cov["huecos"],
+                "| cubiertas:", cov["cubiertas"])
+          print("seccion 9:", len(caps9), "caps /", acts9, "acciones / specified:", new9)
+          print("seccion 10:", len(caps10), "caps /", acts10, "acciones")
+          print("tipos de accion:", kinds)
+          print("auditoria:", aud["filas"], aud["distribucion"], aud["por_seccion"])
+          task = [a for a in caps9["system.registry-backup.enable"]["actions"]
+                  if a["type"] == "taskCreate"]
+          deletes = [a for a in caps10["explorer.home.hide"]["actions"]
+                     if a["type"] == "registryDeleteKey"]
+          loc = [(a.get("serviceName"), a["operation"])
+                 for a in caps9["system.location.consent-deny"]["actions"]
+                 if a["type"] == "service"]
+          ok = (cov["secciones_terminadas"] == ["1", "2", "3", "4", "9", "10", "12"]
+                # Paso 7: 88 -> 101 capacidades. Etapa 8 Parte B: +3 seccion 12 = 104. (+12 seccion 4, +1 bateria seccion 9).
+                # Seccion 9: 20 caps / 48 acciones (+1 bateria). Specified: 6 (lista cerrada).
+                and cov["capacidades"] == 104
+                and cov["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and len(caps9) == 20 and acts9 == 48
+                # 12h: ntp-servers es Specified (R1: w32tm /config /update y
+                # /resync sin accion equivalente en el motor), asi que la lista
+                # cerrada de Specified de la seccion 9 tiene 6 entradas.
+                and new9 == ["system.hibernation.hide", "system.location.consent-deny",
+                             "system.mitigations.disable", "system.oem-information.identify",
+                             "system.registry-backup.enable", "system.time.ntp-servers"]
+                and acts10 == 60
+                and {"registryDeleteKey", "taskCreate", "service"} <= set(kinds)
+                and len(task) == 1 and task[0]["taskName"] == "AutoRegBackup"
+                and task[0]["overwrite"] is False
+                and len(deletes) == 1 and deletes[0]["recursive"] is False
+                and len(loc) == 4
+                # Paso 7: 197 -> 198 filas (la fila de bateria en seccion 9).
+                and aud["filas"] == 198
+                and aud["sin_excepcion"] == 0
+                and aud["distribucion"].get("ambiguous", 0) == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: "Paso 12 (R1/R2/R3, registryCreateKey y estados contrarios)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Doble ejecución de los DOS generadores y de los dos medidores nuevos:
+          # si alguno no es determinista, aqui se ve.
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_section9_catalog.py \
+              | tee "ci-out/paso12-cat9-run${i}.txt"
+            python3 tools/ledger_extract/build_section10_catalog.py \
+              | tee "ci-out/paso12-cat10-run${i}.txt"
+            python3 tools/ledger_extract/measure_capability_completeness.py \
+              > "ci-out/paso12-r1-run${i}.txt"
+            python3 tools/ledger_extract/measure_toggle_states.py \
+              | tee "ci-out/paso12-toggle-states-run${i}.txt"
+            sha256sum catalog/capabilities/section9_system_registry.json \
+                      catalog/capabilities/section10_explorer_ui.json \
+                      inventory/ledger/capability-completeness.tsv \
+                      inventory/ledger/toggle-state-audit.tsv \
+                      inventory/ledger/catalog-value-audit.tsv \
+              > "ci-out/paso12-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso12-sha-run1.txt ci-out/paso12-sha-run2.txt; then
+            echo "DETERMINISMO PASO 12 ROTO" | tee ci-out/paso12-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 12: OK (mismos sha256 en dos ejecuciones)" \
+            | tee ci-out/paso12-determinism.txt
+
+          # Los dos medidores comparan contra el TSV versionado y fallan si difiere.
+          python3 tools/ledger_extract/measure_capability_completeness.py --check
+          python3 tools/ledger_extract/measure_toggle_states.py --check
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/build_section10_catalog.py --check
+          python3 tools/ledger_extract/audit_catalog_values.py
+          python3 tools/ledger_extract/verify_catalog_coverage.py
+
+          cp ci-out/paso12-sha-run1.txt ci-out/paso12-sha.txt
+          python3 tools/ledger_extract/measure_capability_completeness.py --json \
+            > ci-out/paso12-r1.json
+          python3 tools/ledger_extract/measure_toggle_states.py --json \
+            > ci-out/paso12-toggle-states.json
+          python3 tools/ledger_extract/verify_catalog_coverage.py --json \
+            > ci-out/paso12-coverage.json
+          python3 tools/ledger_extract/audit_catalog_values.py --json \
+            > ci-out/paso12-audit.json
+          python3 - <<'PYEOF'
+          import json, sys
+          r1 = json.load(open("ci-out/paso12-r1.json", encoding="utf-8"))
+          t3 = json.load(open("ci-out/paso12-toggle-states.json", encoding="utf-8"))
+          cov = json.load(open("ci-out/paso12-coverage.json", encoding="utf-8"))
+          aud = json.load(open("ci-out/paso12-audit.json", encoding="utf-8"))
+          sec9 = json.load(open("catalog/capabilities/section9_system_registry.json", encoding="utf-8"))
+          sec10 = json.load(open("catalog/capabilities/section10_explorer_ui.json", encoding="utf-8"))
+          caps9 = {c["id"]: c for c in sec9["capabilities"]}
+          caps10 = {c["id"]: c for c in sec10["capabilities"]}
+          acts9 = sum(len(c["actions"]) for c in caps9.values())
+          acts10 = sum(len(c["actions"]) for c in caps10.values())
+          creates = {cap: [a for a in c["actions"] if a["type"] == "registryCreateKey"]
+                     for cap, c in list(caps9.items()) + list(caps10.items())}
+          creates = {k: v for k, v in creates.items() if v}
+          specified9 = sorted(c["id"] for c in caps9.values() if c["state"] == "Specified")
+          print("R1:", r1["capacidades"], "caps | Implemented", r1["implemented"],
+                "| Specified", r1["specified"], "| violaciones", r1["violaciones_r1"])
+          print("T3:", t3["veredicto"], "| con toggle", t3["capacidades_con_toggle"],
+                "| pendientes", len(t3["pendientes"]),
+                "| contrarios", t3["contrarios"])
+          print("cobertura:", cov["capacidades"], "| huecos", cov["huecos"],
+                "| cubiertas", cov["cubiertas"])
+          print("auditoria:", aud["filas"], "| sin excepcion", aud["sin_excepcion"],
+                "| veredicto", "OK" if aud["ok"] else "FALLO")
+          print("seccion 9:", len(caps9), "caps /", acts9, "acciones |",
+                "seccion 10:", len(caps10), "caps /", acts10, "acciones")
+          print("registryCreateKey:", sorted(creates))
+          ok = (r1["capacidades"] == 104
+                and r1["violaciones_r1"] == []
+                and r1["implemented"] + r1["specified"] == 104
+                and t3["veredicto"] == "CONTRARIOS_DETECTADOS"
+                and t3["contrarios"] == ["explorer.home.hide", "explorer.home.restore", "explorer.removable-drives.sidebar"]
+                and t3["totales"]["CONTRARIO"] == 3
+                and t3["totales"]["OK"] == 7
+                and t3["totales"]["PENDIENTE"] == 16
+                and cov["capacidades"] == 104
+                and cov["huecos"] == 0
+                and cov["huecos_no_declarados"] == 0
+                and aud["filas"] == 198
+                and aud["sin_excepcion"] == 0
+                and len(caps9) == 20 and acts9 == 48
+                and len(caps10) == 30 and acts10 == 60
+                # T2: los tres AddKey pendientes del paso 11 ya son acciones, y
+                # cada una es UNICA en su capacidad (crear dos veces la misma
+                # clave no seria idempotente).
+                and sorted(creates) == ["explorer.home.restore",
+                                        "system.network.location-wizard.disable"]
+                and all(len(v) == 1 for v in creates.values())
+                # La lista cerrada de Specified de la seccion 9 (R1 + R3).
+                # 12h: ntp-servers es Specified (R1: w32tm /config /update y
+                # /resync sin accion equivalente en el motor), quedan 6 Specified.
+                and specified9 == ["system.hibernation.hide",
+                                   "system.location.consent-deny",
+                                   "system.mitigations.disable",
+                                   "system.oem-information.identify",
+                                   "system.registry-backup.enable",
+                                   "system.time.ntp-servers"]
+                # R3: lo que INSTALA algo persistente con privilegios altos (una
+                # tarea programada o un servicio) no puede ser Safe ni quedar sin
+                # confirmacion. Las escrituras de registro quedan fuera del
+                # alcance de R3 que declaran los generadores (ver paso12.md).
+                and all(c["risk"] != "Safe" and c["confirmation"] != "None"
+                        for c in list(caps9.values()) + list(caps10.values())
+                        if c["privilege"] == "Admin"
+                        and any(a["type"] in ("taskCreate", "service")
+                                for a in c["actions"])))
+          sys.exit(0 if ok else 1)
+          PYEOF
+          cp inventory/ledger/capability-completeness.tsv ci-out/
+          cp inventory/ledger/toggle-state-audit.tsv ci-out/
+
+      - name: "Paso 12c (reporte R1/R2/R3 completo + estados contrarios, determinismo)"
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          for i in 1 2; do
+            python3 tools/ledger_extract/report_rules_state.py               > "ci-out/paso12c-rules-run${i}.txt"
+            sha256sum inventory/ledger/reglas-r1-r3.tsv                       docs/reports/reglas-r1-r3.md               > "ci-out/paso12c-sha-run${i}.txt"
+          done
+          if ! diff -u ci-out/paso12c-sha-run1.txt ci-out/paso12c-sha-run2.txt; then
+            echo "DETERMINISMO PASO 12C ROTO" | tee ci-out/paso12c-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 12c: OK" | tee ci-out/paso12c-determinism.txt
+          python3 tools/ledger_extract/report_rules_state.py --check
+          cp inventory/ledger/reglas-r1-r3.tsv ci-out/
+          cp docs/reports/reglas-r1-r3.md ci-out/
+
+      - name: Publicar informe
+        if: always()
+        shell: bash
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          mkdir -p ci-out
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "${{ job.status }}" \
+            || echo "publish-report fallo (no bloquea el job)"
+
+  paso-12g:
+    name: paso 12g (reconciliacion verificable de 12c)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [verify]
+    env:
+      LABEL: ledger-verify
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Instalar pytest y pyyaml
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet --break-system-packages pytest pyyaml
+          python3 -c "import pytest, yaml; print('pytest', pytest.__version__, '| pyyaml', yaml.__version__)"
+
+      - name: Reproducir upstream en el SHA fijado
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/fetch_upstream.py --dest /tmp/upstream
+
+      - name: G1 - historia de Specified de la seccion 9
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/report_specified_history.py | tee ci-out/paso12g-specified-history.txt
+          python3 tools/ledger_extract/report_specified_history.py > ci-out/paso12g-specified-history-run2.txt
+          if ! diff -u ci-out/paso12g-specified-history.txt ci-out/paso12g-specified-history-run2.txt; then
+            echo "G1: report_specified_history.py no es determinista" | tee ci-out/paso12g-determinismo.txt
+            exit 1
+          fi
+          echo "G1: report_specified_history.py determinista y sin errores" | tee ci-out/paso12g-determinismo.txt
+
+      - name: G2 - catalogo de seccion 9 reproducible y sin violaciones R1
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/build_section9_catalog.py --check
+          python3 tools/ledger_extract/measure_capability_completeness.py --check
+          python3 tools/ledger_extract/audit_catalog_values.py
+          python3 tools/ledger_extract/verify_catalog_coverage.py
+          cp inventory/ledger/capability-completeness.tsv ci-out/
+          cp inventory/ledger/toggle-state-audit.tsv ci-out/
+          cp catalog/capabilities/section9_system_registry.json ci-out/
+          python3 tools/ledger_extract/measure_capability_completeness.py --json > ci-out/paso12g-r1.json
+          python3 - <<'PYEOF'
+          import json, sys
+          r1 = json.load(open("ci-out/paso12g-r1.json", encoding="utf-8"))
+          print("R1:", r1["capacidades"], "caps | Implemented", r1["implemented"],
+                "| Specified", r1["specified"], "| violaciones", r1["violaciones_r1"])
+          sys.exit(0 if (r1["capacidades"] == 104 and r1["violaciones_r1"] == []
+                         and r1["implemented"] + r1["specified"] == 104) else 1)
+          PYEOF
+
+      - name: G3 - estados de toggles y estados contrarios (T3)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci-out
+          python3 tools/ledger_extract/measure_toggle_states.py --check
+          python3 tools/ledger_extract/measure_toggle_states.py --json > ci-out/paso12g-toggle.json
+          python3 - <<'PYEOF'
+          import json, sys
+          t3 = json.load(open("ci-out/paso12g-toggle.json", encoding="utf-8"))
+          print("T3:", t3["veredicto"], "| OK", t3["totales"]["OK"],
+                "| PENDIENTE", t3["totales"]["PENDIENTE"],
+                "| CONTRARIO", t3["totales"]["CONTRARIO"])
+          sys.exit(0 if (t3["veredicto"] == "CONTRARIOS_DETECTADOS"
+                        and t3["totales"]["OK"] == 7
+                        and t3["totales"]["PENDIENTE"] == 16
+                        and t3["totales"]["CONTRARIO"] == 3) else 1)
+          PYEOF
+
+      - name: G4 - reproducibilidad con worktrees temporales
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ledger_extract/reproducibilidad_worktrees.py
+
+      - name: Suite pytest (12g)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pytest tools/ledger_extract/tests/ tests/ -q
+
+      - name: Estructura .NET (validador)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/dotnet_tools/validate_dotnet_structure.py 2>&1 \
+            | tee ci-out/dotnet-structure.txt
+          echo "dotnet_structure_exit=${PIPESTATUS[0]}" | tee -a ci-out/dotnet-structure.txt
+          python3 tools/dotnet_tools/validate_dotnet_structure.py --json \
+            > ci-out/dotnet-structure.json 2>/dev/null || true
+
+      - name: Paso 5 (conciliacion definitiva + matriz de cobertura)
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 1 2; do
+            python3 tools/ledger_extract/build_final_reconciliation.py
+            sha256sum inventory/ledger/inventory-reconciliation.tsv \
+              > "ci-out/paso5-sha-run${i}.txt"
+            cp inventory/ledger/inventory-reconciliation.tsv ci-out/
+            cp docs/requirements/CONCILIACION_INVENTARIO.md ci-out/
+          done
+          if ! diff -u ci-out/paso5-sha-run1.txt ci-out/paso5-sha-run2.txt; then
+            echo "DETERMINISMO PASO 5 ROTO" | tee ci-out/paso5-determinism.txt
+            exit 1
+          fi
+          echo "determinismo paso 5: OK" | tee ci-out/paso5-determinism.txt
+          python3 tools/ledger_extract/build_final_reconciliation.py --json \
+            > ci-out/paso5-recon.json
+          python3 tools/ledger_extract/generate_coverage_matrix.py \
+            --report docs/reports/matriz-cobertura.md --json \
+            > ci-out/paso5-matriz.json
+          cp docs/reports/matriz-cobertura.md ci-out/
+          python3 tools/ledger_extract/generate_coverage_matrix.py \
+            --report /tmp/matriz-cobertura-2.md > /dev/null
+          if ! diff -u docs/reports/matriz-cobertura.md /tmp/matriz-cobertura-2.md; then
+            echo "MATRIZ NO REPRODUCIBLE" | tee ci-out/paso5-matriz-diff.txt
+            exit 1
+          fi
+          echo "matriz reproducible: OK" | tee ci-out/paso5-matriz-diff.txt
+          python3 tools/ledger_extract/validate_reconciliation.py \
+            2>&1 | tee ci-out/paso5-validate.txt
+          python3 - <<'PYEOF'
+          import json, sys
+          d = json.load(open("ci-out/paso5-recon.json", encoding="utf-8"))
+          m = json.load(open("ci-out/paso5-matriz.json", encoding="utf-8"))
+          est = d["por_estado"]
+          print("filas:", d["filas"], "| estados:", est)
+          print("secciones:", m["secciones"], "| atomicos:", m["cobertura"]["atomicos"])
+          ok = (d["filas"] == 588 and sum(est.values()) == 588
+                and len(est) == 5 and m["secciones"] == 17
+                and m["cobertura"]["ids_otros"] == 0)
+          sys.exit(0 if ok else 1)
+          PYEOF
+
+      - name: Sonda de coincidencia con el inventario
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/probe_inventory_match.py 2>&1 \
+            | tee ci-out/probe-coincidencia.txt
+          cp docs/reports/probe-coincidencia-inventario.tsv ci-out/ 2>/dev/null
+
+      - name: Recon (regenera y compara)
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          python3 tools/ledger_extract/recon_report.py 2>&1 | tee ci-out/recon.txt
+          echo "recon_exit=${PIPESTATUS[0]}" | tee -a ci-out/recon.txt
+          git diff --stat docs/inventory-recon/ | tee ci-out/recon-diff.txt || true
+
+      - name: Publicar informe
+        if: always()
+        shell: bash
+        env:
+          CI_REPORT_WORK: ${{ runner.temp }}/ci-report-work
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -u
+          mkdir -p ci-out
+          bash tools/ci/publish-report.sh ci-out "$LABEL" "${{ job.status }}" \
+            || echo "publish-report fallo (no bloquea el job)"

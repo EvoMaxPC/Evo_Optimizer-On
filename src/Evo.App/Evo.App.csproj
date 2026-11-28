@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Evo.App</RootNamespace>
+    <AssemblyName>Evo.App</AssemblyName>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Evo.Core\Evo.Core.csproj" />
+    <ProjectReference Include="..\Evo.Catalog\Evo.Catalog.csproj" />
+    <ProjectReference Include="..\Evo.Detection\Evo.Detection.csproj" />
+    <ProjectReference Include="..\Evo.Engine\Evo.Engine.csproj" />
+    <ProjectReference Include="..\Evo.Testing\Evo.Testing.csproj" />
+    <ProjectReference Include="..\Evo.Windows\Evo.Windows.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\catalog\capabilities\*.json">
+      <Link>capabilities\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\catalog\windows-releases.json">
+      <Link>catalog\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

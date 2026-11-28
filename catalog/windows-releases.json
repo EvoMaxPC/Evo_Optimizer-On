@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "catalog": "windows-releases",
+  "description": "Versiones de Windows cliente soportadas por EVO CLEAN (REQ-003).",
+  "policy": {
+    "unknownBuild": "reject",
+    "nonClientInstallationType": "reject",
+    "maxSupportedBuild": 27999,
+    "notes": [
+      "Un build que no case con ninguna entrada de releases es Incompatible.",
+      "InstallationType distinto de 'Client' (p.ej. 'Server') es Incompatible.",
+      "maxSupportedBuild acota la entrada de rango abierto de 26H2: por encima de ese valor el build se considera desconocido (fail-closed).",
+      "ProductName NO se usa para detectar: reporta 'Windows 10' en kernels 26xxx (ERRATA-EVO-003)."
+    ]
+  },
+  "supportedInstallationTypes": [
+    "Client"
+  ],
+  "releases": [
+    {
+      "id": "win10-22h2",
+      "displayName": "Windows 10 22H2",
+      "product": "Windows 10",
+      "version": "22H2",
+      "build": 19045,
+      "buildMin": 19045,
+      "buildMax": 19045,
+      "openEnded": false,
+      "installationType": "Client",
+      "architectures": [
+        "x64",
+        "arm64"
+      ],
+      "esuRequired": true,
+      "supportStatus": "end-of-support",
+      "requiresEsuNotice": true,
+      "notes": "Fin de soporte general; requiere ESU para seguir recibiendo parches. EVO CLEAN avisa pero no bloquea.",
+      "provenance": "build fijado por el responsable (prompt 6); fechas de soporte NO VERIFICADAS en este repo"
+    },
+    {
+      "id": "win11-23h2",
+      "displayName": "Windows 11 23H2",
+      "product": "Windows 11",
+      "version": "23H2",
+      "build": 22631,
+      "buildMin": 22631,
+      "buildMax": 22631,
+      "openEnded": false,
+      "installationType": "Client",
+      "architectures": [
+        "x64",
+        "arm64"
+      ],
+      "esuRequired": false,
+      "supportStatus": "supported",
+      "requiresEsuNotice": false,
+      "notes": "Soportado sin advertencia de ESU.",
+      "provenance": "build fijado por el responsable (prompt 6)"
+    },
+    {
+      "id": "win11-24h2",
+      "displayName": "Windows 11 24H2",
+      "product": "Windows 11",
+      "version": "24H2",
+      "build": 26100,
+      "buildMin": 26100,
+      "buildMax": 26100,
+      "openEnded": false,
+      "installationType": "Client",
+      "architectures": [
+        "x64",
+        "arm64"
+      ],
+      "esuRequired": false,
+      "supportStatus": "supported",
+      "requiresEsuNotice": false,
+      "notes": "Soportado sin advertencia de ESU.",
+      "provenance": "build fijado por el responsable (prompt 6)"
+    },
+    {
+      "id": "win11-25h2",
+      "displayName": "Windows 11 25H2",
+      "product": "Windows 11",
+      "version": "25H2",
+      "build": 26200,
+      "buildMin": 26200,
+      "buildMax": 26200,
+      "openEnded": false,
+      "installationType": "Client",
+      "architectures": [
+        "x64",
+        "arm64"
+      ],
+      "esuRequired": false,
+      "supportStatus": "supported",
+      "requiresEsuNotice": false,
+      "notes": "Soportado sin advertencia de ESU. Es el build del runner windows-11-arm (ERRATA-EVO-003).",
+      "provenance": "build fijado por el responsable (prompt 6); confirmado por el runner windows-11-arm"
+    },
+    {
+      "id": "win11-26h2",
+      "displayName": "Windows 11 26H2",
+      "product": "Windows 11",
+      "version": "26H2",
+      "build": 27600,
+      "buildMin": 27600,
+      "buildMax": null,
+      "openEnded": true,
+      "installationType": "Client",
+      "architectures": [
+        "x64",
+        "arm64"
+      ],
+      "esuRequired": false,
+      "supportStatus": "supported",
+      "requiresEsuNotice": false,
+      "notes": "El responsable lo declara '27600+': rango abierto hasta policy.maxSupportedBuild. El límite superior real NO VERIFICADO.",
+      "provenance": "build minimo fijado por el responsable (prompt 6); build exacto NO VERIFICADO"
+    }
+  ]
+}

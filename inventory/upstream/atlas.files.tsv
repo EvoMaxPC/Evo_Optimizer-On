@@ -1,0 +1,1551 @@
+path	size	blob_sha	ext	top_dir
+.atlasPsModulesPath	48	fae132883590306df9b91d15f9e1e902c0cd03a9		.
+.editorconfig	564	d6521cac82f04d97315b1bbcd3c291545493bbee		.
+.gitattributes	920	b15d974ab51bb326618de281697c9a60bf9cfbc1		.
+.github/CODEOWNERS	21	df762b2bc99ca0fed1795c3a1456b3bdc888437b		.github
+.github/CONTRIBUTING.md	8247	6b8d749d8ea3bd693d20afed24356a3724f3c303	md	.github
+.github/FUNDING.yml	15	a496c4adc7f39175a7764d1023c174a2df2a2a59	yml	.github
+.github/ISSUE_TEMPLATE/bug_report.yml	3318	3350d99d09d721b6175802bf555e4a259438469a	yml	.github
+.github/ISSUE_TEMPLATE/config.yml	758	d8efb94e5cab3b2ba18becd9df7f8f134865ae43	yml	.github
+.github/ISSUE_TEMPLATE/feature_request.yml	1673	30e66ca11c9a980999574d90cae9bfe412438930	yml	.github
+.github/SECURITY.md	2453	0c38249390355300e01d1e7f6f1098c25b95db2f	md	.github
+.github/actionlint.yaml	43	d0d345e1635565caca20a9f2664bdaf9a8ad85c1	yaml	.github
+.github/dependabot.yml	344	07a472afea730b371a38c885b003952a2db79401	yml	.github
+.github/labeler.yml	1762	fd070e9f30f0af4ce1021055a617e51dcaf7a2e0	yml	.github
+.github/linters/PSScriptAnalyzerSettings.Package.psd1	1874	e077dad774b917263b9ed672a28fd893f81c92c1	psd1	.github
+.github/linters/PSScriptAnalyzerSettings.psd1	574	3831a050f89547630cafa8b0b3a2678e4a87f94a	psd1	.github
+.github/pull_request_template.md	1120	5291a2f0fcd5c330bc097154474b925e5058eb77	md	.github
+.github/requirements-ci.txt	813	cbc3b96ca3e95fec8ce4d3c640ad273794e18580	txt	.github
+.github/vale/Atlas/AmeWizard.yml	406	21cddad05006502666518ec2792620bbd63d6347	yml	.github
+.github/vale/Atlas/Banned.yml	436	9eae6f444ec2777b5f5135fb84f5d4bd5e3b4188	yml	.github
+.github/vale/Atlas/British.yml	663	4071fadd5f6b27eeb687612e39686b1080350fc8	yml	.github
+.github/vale/Atlas/BritishIse.yml	508	b258c9cfc683a935800d2b051cd93b75f4271a22	yml	.github
+.github/vale/Atlas/Status.yml	469	d1abd6cc7c1956ba75d13629bc98add48c19495a	yml	.github
+.github/vale/Atlas/Terms.yml	543	2abc6bac664b495b71b5da091328e87606c8ce3b	yml	.github
+.github/vale/Atlas/Vocabulary.yml	345	abc5378c021617e3889374834de6248b93cc35e3	yml	.github
+.github/workflows/app.yml	5910	5d25fa704644a4d3a2bb1a58b346dfe70b81b8bc	yml	.github
+.github/workflows/build.yml	14832	7c83aa6a3c11af509080181cc319ca2ecf410abb	yml	.github
+.github/workflows/docs.yml	3431	5495a7648548da56945471490b25a5755bce8ed5	yml	.github
+.github/workflows/integration.yml	5142	1738cc39a505d8de01d2154b7cb820ecfbc51a9f	yml	.github
+.github/workflows/labeler.yml	761	7cc509579ab4ca55de844419ea782a5afbadf89d	yml	.github
+.github/workflows/lint.yml	3445	68408266cf61d1fe39b1604b90a9870382f1a19a	yml	.github
+.github/workflows/release.yml	10399	297468c8bfcb551e35c61399d1d263e417cc8795	yml	.github
+.github/workflows/reports.yml	1895	476ef8de3c91d24df3341715d906548911769a14	yml	.github
+.github/workflows/test.yml	3864	33714e9508a27a44cd259f5c9ee1dc00581f10ea	yml	.github
+.github/workflows/yaml.yml	1524	8319719148b609b0d4571d118f77dccc2cd7ebf4	yml	.github
+.gitignore	651	ebec440b32abd88293f557e6c596b3558aa3f89f		.
+.markdownlint-cli2.jsonc	1721	6c7715ced88677fed5428cfb6eefc22b72652dd2	jsonc	.
+.vale.ini	810	28aa6666fa0a61cd9f092d195abd9e8fb54aa5dc	ini	.
+.vscode/extensions.json	162	1acfa8ae3a5343cea8984c9497cffb8a2b3c99db	json	.vscode
+.vscode/launch.json	1250	1ad2ef0edfb74faf2097bcf417f7dc3c4879f794	json	.vscode
+.vscode/settings.json	1216	fc663e19a28228c6b738207aa9eeaaa14b69fd66	json	.vscode
+.yamllint.yml	533	5655dd1bfb25ac899acf55b752b6785af6f10e84	yml	.
+.zed/settings.json	626	7684866de715fe9aea6fecb1b3673edafadc4d0c	json	.zed
+.zed/tasks.json	1298	536022c46796963d4c5d15620da627cf80aad138	json	.zed
+LICENSE	35149	f288702d2fa16d3cdf0035b15a9fcbc552cd88e7		.
+README.md	7057	3fd532de1f801f5223c25dd5d0319a9810f60466	md	.
+app/Cargo.lock	104832	ba4a0ce57124bec7b255ff61bc0b0d39f9c042f4	lock	app
+app/Cargo.toml	3503	6d50e0bc7d85d53c80cc148c0f4fb0848095c4c9	toml	app
+app/README.md	4586	ca45424bb7087a0653131b910574f56c1e7d0559	md	app
+app/assets/brand/atlas-icon-256.png	4471	1fdc199ce7368c5c153557ec4e94a080cc583503	png	app
+app/assets/brand/atlas-mark.svg	181	2ffb79606573f43925fbff1c098dab70ac51f2c7	svg	app
+app/assets/brand/eclean.png	2266	9bcb644af7483be0eb3c2e99daa12ecca18e0dd4	png	app
+app/assets/brand/toolbox.png	39397	2eef89fd71c946ac3a0e7c8794bc2e34462ceeba	png	app
+app/assets/icons/ring.svg	175	e37457c50ad72d273490085e3f0961d90de557fd	svg	app
+app/assets/icons/status-dot.svg	135	068d375b1aab5231e172ced0c9b028882e1f4881	svg	app
+app/build.rs	5940	6fdc9cc834814a28b5125dffeb37fc6cb0c9e3d4	rs	app
+app/docs/accessibility.md	3867	f8c28c8be2455c6a11498ecf991a77ebe94b5ace	md	app
+app/docs/architecture.md	8989	be606c99f7b01ef994775153ec60447b46a42430	md	app
+app/docs/development.md	5406	723974fe8850217e0ea9a1012a0078e74d606b40	md	app
+app/docs/i18n.md	17557	d64a1f77d24a414c9da06b7cb16a02ad470d4def	md	app
+app/docs/install-flow.md	21114	b8eea05fb8c5437e1064a038f7a0ff3d6a475b18	md	app
+app/docs/iso-creation.md	12742	be1f47d1a69af10f5a4b358409081edd0522cb59	md	app
+app/docs/iso-internals.md	10889	3c99352b19fc8fe9b0aae72fc3f6772992ec37b3	md	app
+app/docs/performance.md	3187	ad265d7a867239d5bcbf8f4ecb3044e402718d88	md	app
+app/docs/rc-testers-build.md	9329	babbbaa97b3e3e2781aafca4fde0cebf2557117e	md	app
+app/docs/review-tools.md	16117	e5c2b8c8b63d5f96eef97c77e6755d3f5abe374c	md	app
+app/docs/translating.md	38194	1ac1d51046d285998203671132cd5cb93d8ef613	md	app
+app/docs/writing.md	4106	012b4b3150f26bcd6e3e07bb5adc0d995c413f7e	md	app
+app/examples/i18n_spike.rs	6575	a1d52520aea3ceec709247f9f50f93ee7732caa0	rs	app
+app/i18n/de/atlas.ftl	130540	7e4c309bdf7602174f35048f4e015c5e5a19ac36	ftl	app
+app/i18n/en-GB/atlas.ftl	123006	d584a8c3f1bf8b423aa462c05a23cc0ce8c38162	ftl	app
+app/i18n/en-US/atlas.ftl	3476	1aff7646d31860b772f7007797fd153e8cfbf0e9	ftl	app
+app/i18n/es/atlas.ftl	126740	41eb94d177ee7cf6e28001f26f38ab1820af963d	ftl	app
+app/i18n/fr/atlas.ftl	128347	e87760655eccafcbcd6d81b3503b7ab72e196812	ftl	app
+app/i18n/hi/atlas.ftl	210588	fb2977d6c35ce21732235826cb859d0cb3e45634	ftl	app
+app/i18n/id/atlas.ftl	115775	abe17264aae7bc693628ae2623c29031e41f31b3	ftl	app
+app/i18n/ja/atlas.ftl	145634	1a25268ef97f76f3dd180bb4359b4e1b1dc67477	ftl	app
+app/i18n/pl/atlas.ftl	123875	1fd8dad00b26a37ac59f72f089e11d348c23081f	ftl	app
+app/i18n/pt-BR/atlas.ftl	131958	ba2407191918f682f8acf2a3eebddd144db50862	ftl	app
+app/i18n/ru/atlas.ftl	173055	e7d7f3642fd8a868c71715654c761f54f2f83b2c	ftl	app
+app/i18n/th/atlas.ftl	211001	d87afe4dfb0129487b7ed5c2041e8e01faa4d55a	ftl	app
+app/i18n/tr/atlas.ftl	123388	47970464b9d1a2aacd477196410973fc3257c1da	ftl	app
+app/i18n/zh-Hans/atlas.ftl	107936	b02df06c57609d20f85b66cb4d19a8ae3be50a45	ftl	app
+app/i18n/zh-Hant/atlas.ftl	108955	42a6ccd93694fef2cba269dc5eadf53afb9bead2	ftl	app
+app/licenses/.gitattributes	81	bdf8728b725a9468ed5d297eb9076c584ae2a045		app
+app/licenses/GPUI-input-APACHE-2.0.txt	10768	461a0fe5ba20a096c281a2686da08fef79f534a3	txt	app
+app/licenses/README.md	2783	cd82a9a43eddc81dac6911040c72b3d31051727b	md	app
+app/licenses/THIRD-PARTY-NOTICES.txt	3580378	de5ad93aac81589329be2956a8b1cb4da3c30c9b	txt	app
+app/licenses/dependency-inventory.json	196727	cd254d2240c01bccdaab339d62f4403a0ef5e192	json	app
+app/licenses/supplemental/accesskit-0.25.2/LICENSE-APACHE	9723	1b5ec8b78e237b5c3b3d812a7c0a6589d0f7161d		app
+app/licenses/supplemental/accesskit-0.25.2/LICENSE-MIT	1023	31aa79387f27e730e33d871925e152e35e428031		app
+app/licenses/supplemental/accesskit_consumer-0.39.2/LICENSE-APACHE	9723	1b5ec8b78e237b5c3b3d812a7c0a6589d0f7161d		app
+app/licenses/supplemental/accesskit_consumer-0.39.2/LICENSE-MIT	1023	31aa79387f27e730e33d871925e152e35e428031		app
+app/licenses/supplemental/defmt-parser-1.0.0/LICENSE-APACHE	10850	11069edd79019f7dafbe3138841cf289209270dd		app
+app/licenses/supplemental/defmt-parser-1.0.0/LICENSE-MIT	1053	e68a7ab37c8accca023db5f1505d48e4375d4324		app
+app/licenses/supplemental/fluent-langneg-0.13.1/LICENSE-APACHE	11357	8dada3edaf50dbc082c9a125058f25def75e625a		app
+app/licenses/supplemental/fluent-langneg-0.13.1/LICENSE-MIT	1053	00ec7a238dcd2fb765a6abc64ae43d80f0514140		app
+app/licenses/supplemental/fluent-langneg-0.14.2/LICENSE-APACHE	11337	35582f166b4b81f8686869d9f4cc8ec0a29a9a0a		app
+app/licenses/supplemental/fluent-langneg-0.14.2/LICENSE-MIT	1053	00ec7a238dcd2fb765a6abc64ae43d80f0514140		app
+app/licenses/supplemental/intl_pluralrules-7.0.2/LICENSE-APACHE	9723	1b5ec8b78e237b5c3b3d812a7c0a6589d0f7161d		app
+app/licenses/supplemental/intl_pluralrules-7.0.2/LICENSE-MIT	1023	31aa79387f27e730e33d871925e152e35e428031		app
+app/licenses/supplemental/lyon-1.0.19/LICENSE-APACHE	554	47f4fd0e8982271e9b7662380fae36a1ac007cf1		app
+app/licenses/supplemental/lyon-1.0.19/LICENSE-MIT	1080	e6d4b179949c58d7a4143d661ccdfecabcebcf54		app
+app/licenses/supplemental/lyon_algorithms-1.0.21/LICENSE-APACHE	554	47f4fd0e8982271e9b7662380fae36a1ac007cf1		app
+app/licenses/supplemental/lyon_algorithms-1.0.21/LICENSE-MIT	1080	e6d4b179949c58d7a4143d661ccdfecabcebcf54		app
+app/licenses/supplemental/lyon_geom-1.0.20/LICENSE-APACHE	554	47f4fd0e8982271e9b7662380fae36a1ac007cf1		app
+app/licenses/supplemental/lyon_geom-1.0.20/LICENSE-MIT	1080	e6d4b179949c58d7a4143d661ccdfecabcebcf54		app
+app/licenses/supplemental/lyon_path-1.0.19/LICENSE-APACHE	554	47f4fd0e8982271e9b7662380fae36a1ac007cf1		app
+app/licenses/supplemental/lyon_path-1.0.19/LICENSE-MIT	1080	e6d4b179949c58d7a4143d661ccdfecabcebcf54		app
+app/licenses/supplemental/lyon_tessellation-1.0.21/LICENSE-APACHE	554	47f4fd0e8982271e9b7662380fae36a1ac007cf1		app
+app/licenses/supplemental/lyon_tessellation-1.0.21/LICENSE-MIT	1080	e6d4b179949c58d7a4143d661ccdfecabcebcf54		app
+app/licenses/supplemental/profiling-1.0.18/LICENSE-APACHE	10818	139dce95d473c201a8561ef17536314d8b8cda65		app
+app/licenses/supplemental/profiling-1.0.18/LICENSE-MIT	1093	6a84e059ad8b43e03c2b06bc2af4dc1d8442808d		app
+app/licenses/supplemental/profiling-procmacros-1.0.18/LICENSE-APACHE	10818	139dce95d473c201a8561ef17536314d8b8cda65		app
+app/licenses/supplemental/profiling-procmacros-1.0.18/LICENSE-MIT	1093	6a84e059ad8b43e03c2b06bc2af4dc1d8442808d		app
+app/licenses/supplemental/pulp-wasm-simd-flag-0.1.1/LICENSE	1062	84e3f4435bfe437a7e2a1db5f6d701ffd0638fae		app
+app/licenses/supplemental/seahash-4.1.0/LICENSE	1023	31aa79387f27e730e33d871925e152e35e428031		app
+app/licenses/supplemental/simd_helpers-0.1.0/LICENSE	1069	1b7c6aaa5106ef1459ed8c539c06d640e0e0a784		app
+app/licenses/supplemental/sval_nested-2.22.0/LICENSE-APACHE	10847	16fe87b06e802f094b3fbb0894b137bca2b16ef1		app
+app/licenses/supplemental/sval_nested-2.22.0/LICENSE-MIT	1064	6f5a4c83aa9f7854101129b570651dc5d8bf3d29		app
+app/licenses/supplemental/svg_fmt-0.4.5/LICENSE	1070	9ad7b40bcf7bb89a9866e5e2e8fdb370fb528e36		app
+app/licenses/supplemental/taffy-0.15.1/LICENSE	1100	f6b3d8f95569d0dfca076b6b24901b2a4a89aca8		app
+app/licenses/supplemental/zune-inflate-0.2.54/LICENSE.md	384	ee9ce454f54f6dfd13d10218af4178f07497fde0	md	app
+app/licenses/supplements.json	11369	55df030fa845406b559fa1e9c0b2621f90e18c01	json	app
+app/resources/atlas.ico	8856	fabcd73e438dd2dccb99f0ae44829f92c65c20c6	ico	app
+app/resources/atlas.rc	1097	f30be1e0023e590bb17e3a48838ae73afcd7b167	rc	app
+app/resources/iso/Build-Iso.ps1	36292	8bf6e90dc2a8ea03d8409caa155e01847ef95bdf	ps1	app
+app/resources/iso/Desktop-Policy.ps1	3540	74d289abb82f7eff5ae42f27141e2fe98f4a863b	ps1	app
+app/resources/iso/Desktop.ps1	7131	b285c33d3038752c970cbcd8f89b432d2bba2ed0	ps1	app
+app/resources/iso/Master-Iso.ps1	4520	444875028e8027a068c35af5832656ea7a555593	ps1	app
+app/resources/iso/Network-Drivers.ps1	9104	19844672b20cd5930ce302922f2a15fef52a08a2	ps1	app
+app/resources/iso/Setup.ps1	9368	dab57c0e6aa95236d68015b6685456c967488512	ps1	app
+app/resources/iso/Write-Usb.ps1	26712	2f94620eaf7567d39133a2b03e9958058db09360	ps1	app
+app/resources/prepare/Stage-App.ps1	12305	87013d81eef394e015095914bf1f5bdc54a120b8	ps1	app
+app/rust-toolchain.toml	301	3fe2db83d9a51579c903b17acff57a0733cf6d3f	toml	app
+app/rustfmt.toml	62	d6c2640df10c849d7486d71a01f73bdd5ded6cfd	toml	app
+app/src/assets.rs	1530	11fcec476784f512283587f0dc97d364b076edc8	rs	app
+app/src/cli.rs	5756	b8057ff6acccaa96660c6e41caed0708c897c34e	rs	app
+app/src/environment.rs	9912	ca9c235aab02cbd17a26e80353f0c04f53746ac4	rs	app
+app/src/flow.rs	11960	6b3b6c1b2113318757d1a4cf4d0127fc3300eff7	rs	app
+app/src/i18n/catalog.rs	19256	818373cc993e2d928956bfb366019d944c4e2ff2	rs	app
+app/src/i18n/checks.rs	33397	abf8baf272af2ccd804772e60f7ee3407b4b8d5c	rs	app
+app/src/i18n/describe.rs	79744	d129d1d77f32bbb3f7fc70dc8eb042e8a12b836f	rs	app
+app/src/i18n/fmt.rs	11461	e66eb5900e2ab666db5f8ca7cac4dc1392c1dbcc	rs	app
+app/src/i18n/line_breaks.rs	2395	86d9937afef10807fc7fb97e7c600c5867e49463	rs	app
+app/src/i18n/mod.rs	17501	c66a5355de69cfb349f53522684288ef58566d07	rs	app
+app/src/i18n/negotiate.rs	8276	5a7283d7ca133683479c47a104f6cda423aaef8c	rs	app
+app/src/i18n/pseudo.rs	2934	2ee12c4585ed6a588264d049a65a208a27185d99	rs	app
+app/src/main.rs	7896	fe715608c2ed4b150eb6a12ba6eb918f25fefd19	rs	app
+app/src/model.rs	23259	8f7e034dd3df05da36eeab3ebbe9e9d6881f7f1f	rs	app
+app/src/model/checks.rs	26855	bb5d2e3a8e98ca328decc8fa5067d277c367699a	rs	app
+app/src/model/drafts.rs	14476	629587165494e56844484a704968e557d0d78f20	rs	app
+app/src/model/elevation.rs	4500	7cf412da1b0a24b850925d37a4502a4af3f0173a	rs	app
+app/src/model/eligibility.rs	8686	c9dc67032c595e42a69c76ad36993c1dc6fc4082	rs	app
+app/src/model/install.rs	42654	86f59e05999efb3fb2796e34feaaa2d63e8b23db	rs	app
+app/src/model/navigation.rs	17050	d5e9d2f38a4f7d9901f9c164a828af34574d811a	rs	app
+app/src/model/offer_wait.rs	13979	c5ab0df3781328060aaf0e8ed2777bba9b792a54	rs	app
+app/src/model/options.rs	9179	54df495719cb75b51206383d4a674f85b2bad5f8	rs	app
+app/src/model/package.rs	27260	458444565ee43edc58b1608532e5411b192b95dd	rs	app
+app/src/model/preferences.rs	18640	d7f04c8f5810637796019017881cc849ee532ab7	rs	app
+app/src/model/preparation.rs	18841	93d1ddf4fa6d790258ff271a2c83c638809bc688	rs	app
+app/src/model/preview.rs	45147	66c2ba869e57d73a68f009d83bb63e65e084e49b	rs	app
+app/src/model/rebase.rs	15665	9a7d9d632b3320f55fa53df9feb0211e3f7c80af	rs	app
+app/src/model/recovery.rs	18666	17ed2a74e9bedd9dfbfe90417037e12af9bc7fc1	rs	app
+app/src/model/restart.rs	15751	0e8e32c83ec66525f29262041fe02fd8d2b94bd3	rs	app
+app/src/model/test_harness.rs	15779	391051043231e3c83cb55fc9148124515848a678	rs	app
+app/src/model/tests/checks.rs	21743	f96fa01e5ec184fe1c9a3dd1d5ae3471c5c6e788	rs	app
+app/src/model/tests/drafts.rs	29868	4b08363bca8e47218e6c75495486d79f30ee8da1	rs	app
+app/src/model/tests/elevation.rs	8165	275853eafa7298156654f4a0e962c1f5317a493c	rs	app
+app/src/model/tests/eligibility.rs	16154	553228801604a34ce4dbfdf2ec11f212ad883d87	rs	app
+app/src/model/tests/install.rs	23539	b786e41e0e1a24df7610af33bac3ca8abfaef042	rs	app
+app/src/model/tests/mod.rs	1337	ff206be92edbe4f4b9ab7af2cd023ef48010d636	rs	app
+app/src/model/tests/navigation.rs	12929	4c4cf3a27825e4a0bd095104bfd29d8c80313b30	rs	app
+app/src/model/tests/options.rs	4271	bd9258aefba954ccf8d2698984e80b7fe92b37f6	rs	app
+app/src/model/tests/package.rs	30444	38d5eba868b1a7d39b0ec2fc42d270fe40ca7d07	rs	app
+app/src/model/tests/preferences.rs	25523	20173053978ec8fe8c4ab13780d99313047b366c	rs	app
+app/src/model/tests/preparation.rs	32653	669e13496a151e2a5b41969bd345bb59c742208b	rs	app
+app/src/model/tests/rebase.rs	45875	5d6a8b1f8961d94161d8cb3689990b447002aa37	rs	app
+app/src/model/tests/recovery.rs	16927	9b8b3a83ee00fb99da4b84fb9aacec60614d6416	rs	app
+app/src/model/tests/restart.rs	25604	5a9f5c8ba328847bcc299e2f4c1162aa75e0fd49	rs	app
+app/src/model/tests/transition.rs	64860	3d06df5911ca58efce078204c028e6c874419f43	rs	app
+app/src/model/transition.rs	19807	8d4801614b81747158894713a9b7dbfdcb85ee5b	rs	app
+app/src/pages/footer.rs	5975	c34068377be49f99343ab68b29d0d4afd0f12ab2	rs	app
+app/src/pages/home.rs	55968	0b1dfef54e5a9da61d5eff0f124c5af1883185c0	rs	app
+app/src/pages/install/mod.rs	24584	3a0ff78dc22c7a2bcf9e0e1c52decacf6c11e9ff	rs	app
+app/src/pages/install/options.rs	33270	8da01c4acbf9a79e9ec58a6cc49d59cea3c1c310	rs	app
+app/src/pages/install/preparation.rs	39910	2a06945a284211ee65863196aaf8c1787d0b9aa4	rs	app
+app/src/pages/install/ready.rs	40181	b5fe802f442d973d929122f77d543e60244bff3b	rs	app
+app/src/pages/install/security.rs	23606	a0d1438135c85baf2034d3bbd4581bb4e571ff01	rs	app
+app/src/pages/install/summary.rs	34697	afb1d3273e78865c4fb008f481da35269743c107	rs	app
+app/src/pages/installed.rs	19877	bae2a2851e6c2c465eb2f8f1928f759243e9bfdb	rs	app
+app/src/pages/installing.rs	15381	cbf9fe31762e0d7652d7efd8b70b3b5d4ede3fd6	rs	app
+app/src/pages/iso.rs	111352	d3491e96bdbba9837e5b67d319d675f3c0b4ff69	rs	app
+app/src/pages/iso/download.rs	12017	811b644c4b4ef6bab9849df18ce75eaa3c4cfccd	rs	app
+app/src/pages/mod.rs	48704	8778aecc84addac5dc454ff2914aceaebe67ffd8	rs	app
+app/src/pages/report.rs	66706	3d7c9b5ccf38a3bce653103ab6d6e45b3741a35c	rs	app
+app/src/pages/settings.rs	20576	6ca5797d9f0f707794a95a5a980311cf606d55dd	rs	app
+app/src/pages/stepper.rs	9848	f992549de2bc63bd8e1935e728cc8141a4514e1c	rs	app
+app/src/pages/usb.rs	36803	2964e7d9b349da954530c71c8bbc2e29726a99a6	rs	app
+app/src/platform.rs	418	389473166174b6ee8fb0d7654070baa6c9d60175	rs	app
+app/src/services/analytics.rs	2469	4ce9793632cdf73a573b72cccbd3264fea383067	rs	app
+app/src/services/atlas_state.rs	25919	a41989b565ac168d5d9f033fd5f9217813b978ae	rs	app
+app/src/services/desktop_setup.rs	1004	1d717204f7e8bdb136adc387fd9c237b096dd55a	rs	app
+app/src/services/diagnostics.rs	45213	41de9a66d371a649b77e0ae8c6d9ce5d704e810b	rs	app
+app/src/services/diagnostics_redaction.rs	30204	24fc8486f68ce1424aec9326d8b2fdf288ea6954	rs	app
+app/src/services/embedded.rs	6906	a8da47ba599056d5f32f26e310140f0c7812f87c	rs	app
+app/src/services/files.rs	2906	46e70f3b1bb8963486b8c311439fa42dbf8b2d73	rs	app
+app/src/services/installer/command.rs	9186	385c0a1d62e1b74e41bdf8d6fae91d178d8d6aef	rs	app
+app/src/services/installer/follow.rs	14173	067b4aa13abeffeb405e1a9e767fea730cc79c84	rs	app
+app/src/services/installer/mod.rs	16274	789f7d72af88e4ab8e9afda9094f3740dbad3380	rs	app
+app/src/services/installer/tests.rs	26415	cc37bfdb32656485827c81230f1cad31b7ee4486	rs	app
+app/src/services/iso.rs	49128	12ccca87e73eb31c7635de34ee8a4a96acae2653	rs	app
+app/src/services/legacy_choices.rs	42551	87437b757a4ab9b548877f28d73133d98dc67f46	rs	app
+app/src/services/licenses.rs	2849	d9589bb5dd8cc10b73bb3bf14b4ab616b50a07d6	rs	app
+app/src/services/locale.rs	17970	8af20d2ab17c0117f334e634cd6ba6bf7478caa3	rs	app
+app/src/services/manager_version.rs	5394	dbd6a4ae2cf49ca6cc82c94b3fa36e063f24307c	rs	app
+app/src/services/mod.rs	770	8c4309704d9ae3b94f22da6c9d10a920b339e86d	rs	app
+app/src/services/package.rs	69046	2f54909fae630a0abd5b09d067939cf03b2e46bd	rs	app
+app/src/services/powershell.rs	6458	ca3e243b9757f44e7f372f50f96d1a03fc1d629b	rs	app
+app/src/services/preparation.rs	62680	1dadda9a1f8bd97028545a5ce2a2dc47ebbbda3c	rs	app
+app/src/services/recovery_app.rs	7181	bafe58cfaada3001cf76ba7e05f12eee9192b2c2	rs	app
+app/src/services/registry.rs	5323	48fc132eec1f4e9e6323af0694f4882c92d08923	rs	app
+app/src/services/releases.rs	18547	1b8cbaba71c31f1a8b035b18af1be32245793a6f	rs	app
+app/src/services/reports.rs	15913	2987dc03cf0f7895ed5f23fdac5f13d5958b7664	rs	app
+app/src/services/requirements/deadline.rs	7075	358b62c154f8ca138ff6f5b9a63e9da191197589	rs	app
+app/src/services/requirements/mod.rs	18772	1daafed68fa586538debdf36ce0c2a2cb76c5546	rs	app
+app/src/services/requirements/providers.rs	11337	e7fff92275161ec51c5fe801d25966dc151938c9	rs	app
+app/src/services/requirements/wmi.rs	12695	609489f3ce1e91b83ca9d8d407978b8c5853084c	rs	app
+app/src/services/security.rs	15882	03cdae5eb06056e65cd80f7325950d5b15208f3d	rs	app
+app/src/services/session.rs	24163	5d905536cee83e15b5e679e07641ba15e8d04b4a	rs	app
+app/src/services/settings.rs	26845	ee3bf65af00f65be96bef4a7156162dda1cc3987	rs	app
+app/src/services/signed_in.rs	7550	1e4e9befcd06ef9b382294b1018c16c0ed1116b3	rs	app
+app/src/services/system.rs	39357	af16225183333ecfba2a72ef40b65d351112932f	rs	app
+app/src/services/test_support.rs	9139	c1abf1c679d57039941ebd5ef815667057d9bbb3	rs	app
+app/src/services/update_access.rs	29609	70085e210b0f02de7f140981ab75659dba9bc7f6	rs	app
+app/src/services/usb.rs	10200	a5ca43969d04f980af1b5e4d77d762a616f40933	rs	app
+app/src/services/windows_installation.rs	5224	870c8e1837da8db3a1cdad366fae6f648506cfc5	rs	app
+app/src/services/windows_iso.rs	6881	c49ee3bd0d9610e1c6c018de9f8a111c2f141542	rs	app
+app/src/services/windows_release.rs	23555	15f296d16cd5c4ee24a47619bfa503dbecbc5abe	rs	app
+app/src/shell.rs	36401	808d3c344e99c86c470f70a461bccf305ab5bddc	rs	app
+app/src/theme.rs	25110	3410baf6597ca144078a5308d2e5b906e489fcec	rs	app
+app/src/ui/button.rs	14581	c3b24bd17289e121fcb9ce63586512b6f1b57cd0	rs	app
+app/src/ui/card.rs	424	d711d25e8db057b1e48aa68501b6b80a89420ca8	rs	app
+app/src/ui/combo_box.rs	31234	9d22a74692abe893aec5543894aabc48d4cdea13	rs	app
+app/src/ui/completion_backdrop.rs	10330	6f3ba646e32e7bdf88161ce60162afc9eff34cc3	rs	app
+app/src/ui/content_dialog.rs	10985	071ea02e20a2f80006445d9f871d682ac6347d8d	rs	app
+app/src/ui/focus_reveal.rs	12615	6cd8ef013154eaccca145f5d16aa6d08f12fc2cc	rs	app
+app/src/ui/icons.rs	4131	3bcbe32a1a0dd92dbbd9ab64602af17ad5b8c4fa	rs	app
+app/src/ui/infobar.rs	7467	ba4ba043f095fc3023149d50bc16fa2a27f6de06	rs	app
+app/src/ui/markdown.rs	24504	7193a0d753b2ecaa19cc96029ba3d45b50b3941e	rs	app
+app/src/ui/mod.rs	16721	b2de09f2ba4cc374680ea772f54d4a8b9b2df931	rs	app
+app/src/ui/progress.rs	4824	2168bedab2701f7cca6ce2deb7b1695abe72101c	rs	app
+app/src/ui/scrollbar.rs	15767	712fd20301576086c0ff2ab55d57b79900152469	rs	app
+app/src/ui/selection.rs	16799	d412affbefe2b37f00db628d52648265b4979d9f	rs	app
+app/src/ui/status.rs	6144	27252590da9af56274cdd93ede35a569ee96d172	rs	app
+app/src/ui/text_input/element.rs	15660	796ad41e8bec55575d95df85c4a8dda23fe38a93	rs	app
+app/src/ui/text_input/ime.rs	9889	caf4048ac658ee60aeeae2fd833e693af8490e8e	rs	app
+app/src/ui/text_input/layout.rs	10951	5ad9a35736ffc9e95b8e7bf292f25f881e492ab6	rs	app
+app/src/ui/text_input/mod.rs	23004	dea1322787f3959b4b30c7c279652bbe13a6c88c	rs	app
+app/src/ui/text_mark.rs	5296	5d2869239b40f81333c203130542d87d13875c60	rs	app
+app/src/ui/titlebar.rs	8445	5ac84004f58ce74d64e56df72fd47946a80194da	rs	app
+app/src/ui/toggle_switch.rs	5449	2d12c8d2e9858b4d9c229fd9e351ba5a5d1d6308	rs	app
+app/src/ui/tooltip.rs	7480	6aed1a8a4d0268c0789a77870324b9117e6cc2c5	rs	app
+app/src/ui/typography.rs	12246	dfa766e980203d2da3119107ace784ecf6e3506b	rs	app
+app/tools/Build-Release.ps1	2395	066c2f4e769a12326d37ccc467d77ec51e0a552c	ps1	app
+app/tools/Capture-IsoVm.ps1	1849	b5cf474490f3df2fd7e0a8bfa4f3273009e1811b	ps1	app
+app/tools/Capture-Window.ps1	2205	437df403028fb0397487f7e4f6b162d08cbdd98b	ps1	app
+app/tools/Export-DependencyNotices.ps1	5837	7f80b35094cbbb524604ee43c6ea29f89ba1e154	ps1	app
+app/tools/Export-Icon.ps1	5092	c67b22b89f522c47cb0f51b3512a9e78338510db	ps1	app
+app/tools/Export-ShaderBytes.ps1	3529	9c6f48220322f86811b1e8b7df7358f59a0ac57c	ps1	app
+app/tools/Get-AccessibilityTree.ps1	4061	780b6f6c5c7633cd154357eb7cb5fb5cc39f124b	ps1	app
+app/tools/Measure-AppPerformance.ps1	5648	23644c5e3a8655bcd02c13ff8474ae2845c5a004	ps1	app
+app/tools/Review-Iso.ps1	5319	649c35d4b9c81dcd9f3bdf70a97bfaba0a907c6c	ps1	app
+app/tools/Run-IsoValidation.ps1	2785	a14ab7c325a0ba27a38100ad991e1390e59dcbfb	ps1	app
+app/tools/Test-CompletionShader.ps1	1515	eda0a59f725e29c6456ba39e6ff3826e33ce6702	ps1	app
+app/tools/Update-ReadmeScreenshots.ps1	5321	847a3842b3b43a4e36e0b24226f2a3428bf580f0	ps1	app
+app/tools/tests/DependencyNotices.Tests.ps1	3417	5259485e68fc623f113f57df71e6c0ef74cb911d	ps1	app
+app/tools/tests/ReviewTools.Tests.ps1	904	beab0b710ee7f8f15f4fa4a8f52ab566e2ce1f60	ps1	app
+app/vendor/accesskit_windows/.cargo_vcs_info.json	110	2c49e39fcff6ba6d265dc2868199c82aa7de9db0	json	app
+app/vendor/accesskit_windows/ATLAS-PATCH.md	1456	5e01603c406ab11b23f510a1a4a5b7e1b7df2561	md	app
+app/vendor/accesskit_windows/CHANGELOG.md	48403	5f8d79a5eec9240abf9b055b2d884e661af79f8b	md	app
+app/vendor/accesskit_windows/Cargo.lock	50030	8d24c9b1c2e06d83e05be2b0753ca2f8929d6c82	lock	app
+app/vendor/accesskit_windows/Cargo.toml	1973	af3df8048a087d751a3acb66ba9ec70201f40e15	toml	app
+app/vendor/accesskit_windows/Cargo.toml.orig	1204	1d6e8a036a1213e715669a92435b75c517faaed3	orig	app
+app/vendor/accesskit_windows/LICENSE-APACHE	9723	1b5ec8b78e237b5c3b3d812a7c0a6589d0f7161d		app
+app/vendor/accesskit_windows/LICENSE-MIT	1023	31aa79387f27e730e33d871925e152e35e428031		app
+app/vendor/accesskit_windows/README.md	172	d71712013e4ef18cff81393c1a1b128e6e8a5590	md	app
+app/vendor/accesskit_windows/src/adapter.rs	26726	38044d3c5962447df1467afe54023f9f1c6c529f	rs	app
+app/vendor/accesskit_windows/src/context.rs	3062	54cd3edfb84f4970a034dd60a70e879b15741fc0	rs	app
+app/vendor/accesskit_windows/src/filters.rs	356	e8614e8d184d4c9d51713e23a9e428461594bfd2	rs	app
+app/vendor/accesskit_windows/src/lib.rs	501	7aee09b3ef654ca5d8b1450a24f68cd400948bc6	rs	app
+app/vendor/accesskit_windows/src/node.rs	59164	1e3cc517ee4b48d869c168ac637e8f05a2af0c82	rs	app
+app/vendor/accesskit_windows/src/subclass.rs	6721	db2d2b6875bdda72d8fed6add59c08495ab1bac2	rs	app
+app/vendor/accesskit_windows/src/tests/mod.rs	11724	ff939e4876b5790aa74d274c15467843decc9a29	rs	app
+app/vendor/accesskit_windows/src/tests/simple.rs	6907	f72f0b3f950d78b72c84a070ba522d8d0e248e2d	rs	app
+app/vendor/accesskit_windows/src/tests/subclassed.rs	5483	ed485ee87017eecde56fc38f861164729d131adc	rs	app
+app/vendor/accesskit_windows/src/text.rs	22508	6b183826711ecc60fa4e73f381290dcef5b49161	rs	app
+app/vendor/accesskit_windows/src/util.rs	14687	45b1d4705e009a9ceda39026e348b4b8018f9ed2	rs	app
+app/vendor/accesskit_windows/src/window_handle.rs	753	0538d5bfc2d9a9a9e33c1880cb0feb45209e64c8	rs	app
+app/vendor/gpui-pre-windows/ATLAS-PATCH.md	4329	3e520b9f4af28a246f2e4d2cbd62bfe59e17cb51	md	app
+app/vendor/gpui-pre-windows/Cargo.toml	5490	affc6434d962bd301c23588b3c67c5ac9ea80df3	toml	app
+app/vendor/gpui-pre-windows/Cargo.toml.orig	2408	7533060dcf6a41db36af4af2312db775af1db387	orig	app
+app/vendor/gpui-pre-windows/LICENSE-APACHE	10768	461a0fe5ba20a096c281a2686da08fef79f534a3		app
+app/vendor/gpui-pre-windows/build.rs	9271	7dcc86c9627efb46fbfd0755740c97376d943f68	rs	app
+app/vendor/gpui-pre-windows/prebuilt/README.md	1086	c6e5c12a036cba1b93dd83c61a978d57ec9ed211	md	app
+app/vendor/gpui-pre-windows/prebuilt/inputs.sha256	175	b7e50031fc649d36a8bb97d5e39386b527e92790	sha256	app
+app/vendor/gpui-pre-windows/prebuilt/shaders_bytes.rs	443445	6c5395eab13cfa65eda782dec6a713e7892c3857	rs	app
+app/vendor/gpui-pre-windows/src/alpha_correction.hlsl	2010	5a34a4ebf28f5ea1a4f70581e10a23b5b12f01a9	hlsl	app
+app/vendor/gpui-pre-windows/src/clipboard.rs	13208	11eb2a8129bdd2aef5c9bf9ebfa4608d82f6c564	rs	app
+app/vendor/gpui-pre-windows/src/destination_list.rs	7044	d6967c01d2410fa5cfa6a5ed7b255a6a6872238f	rs	app
+app/vendor/gpui-pre-windows/src/dialog.rs	11442	16866cfc35a9236a835d0095b5ee063421a1273d	rs	app
+app/vendor/gpui-pre-windows/src/direct_manipulation.rs	12185	4ad4cc77b3bf21d906eebb5971db4af1de2097f8	rs	app
+app/vendor/gpui-pre-windows/src/direct_write.rs	75912	82ff963c1d7136af3d387f05169f9f3fcbcc0455	rs	app
+app/vendor/gpui-pre-windows/src/directx_atlas.rs	14420	622c1cb6040ae6817692fc9f4ffb89dcc43f142e	rs	app
+app/vendor/gpui-pre-windows/src/directx_devices.rs	6143	8e65e6e626aa9bca9bdf60d268d2309ec4b4c1e1	rs	app
+app/vendor/gpui-pre-windows/src/directx_renderer.rs	72988	8573fe4030997708a98ca8f1755bff434aef997f	rs	app
+app/vendor/gpui-pre-windows/src/dispatcher.rs	7052	55f18b50c0716d55c283b3b840ab2030e891454d	rs	app
+app/vendor/gpui-pre-windows/src/display.rs	7569	ea95303bb29685e08d633efcba2650ca9c98835c	rs	app
+app/vendor/gpui-pre-windows/src/events.rs	67367	d308bfa4e585840532566274602eda07f8c43009	rs	app
+app/vendor/gpui-pre-windows/src/gpui_windows.rs	952	e7a45a034dc235dab7bc49cad209f9cdef143802	rs	app
+app/vendor/gpui-pre-windows/src/keyboard.rs	11243	8164bc1564d48b4adcb23deb40e91ee28a00a656	rs	app
+app/vendor/gpui-pre-windows/src/platform.rs	72022	c032b067146c49be1a84f16e0ace5c35f4698d95	rs	app
+app/vendor/gpui-pre-windows/src/shaders.hlsl	56234	bc779e51fdb17f805997ca355dddc29c0324f168	hlsl	app
+app/vendor/gpui-pre-windows/src/system_notifications.rs	7614	b0075f0e39d781761f0bd19ce6210ab0cff12bba	rs	app
+app/vendor/gpui-pre-windows/src/system_settings.rs	2551	8cce544be1b910269ad42eb3e33a5a66cbef2056	rs	app
+app/vendor/gpui-pre-windows/src/util.rs	5638	b3badd84d104b123ab7e6cdb3129034641ead4f7	rs	app
+app/vendor/gpui-pre-windows/src/vsync.rs	4038	5121c41b61357815f4ccb3174e0df3ca2910b0fd	rs	app
+app/vendor/gpui-pre-windows/src/window.rs	62238	75a2897708d3bddc0de711cabbde5582d2a383b5	rs	app
+app/vendor/gpui-pre-windows/src/wrapper.rs	940	60bbc433cabc1c6b7c72c9912196ad58f4093da7	rs	app
+app/vendor/gpui-pre/ATLAS-PATCH.md	4700	f02303110ab576f4ff5779f49323c4aad98b2b30	md	app
+app/vendor/gpui-pre/Cargo.lock	124277	2a216bd09dadb0be043f1c32ec891c6f6a5ff602	lock	app
+app/vendor/gpui-pre/Cargo.toml	13164	1e58846991a49fd396991a70d15fbad0e3913088	toml	app
+app/vendor/gpui-pre/Cargo.toml.orig	7290	0c8d3719ed0bf1dab30088157340f61d5274506b	orig	app
+app/vendor/gpui-pre/LICENSE-APACHE	10768	461a0fe5ba20a096c281a2686da08fef79f534a3		app
+app/vendor/gpui-pre/README.md	5723	132e5ac1e9f1772cbb63c0f57287024e4a94adb0	md	app
+app/vendor/gpui-pre/benches/focus_cleanup.rs	4486	8d143e84cd0e4dda740c5ce68ddadf86cba6087b	rs	app
+app/vendor/gpui-pre/build.rs	2057	3fdbb0f06e6c1c2438418475c1c7081c763fb23b	rs	app
+app/vendor/gpui-pre/docs/contexts.md	2246	9295c775c759bda643766aeedfc57a29956170e1	md	app
+app/vendor/gpui-pre/docs/key_dispatch.md	2528	ae7d828a4a3597ab473294c46381f471b043b61d	md	app
+app/vendor/gpui-pre/examples/README.md	7238	395bf5e967cd23aa3d1db155fcb87c0b1d3414e3	md	app
+app/vendor/gpui-pre/examples/a11y.rs	10681	ff389f330ca596aa9da81eb1b39e28772a5a7f34	rs	app
+app/vendor/gpui-pre/examples/active_state_bug.rs	1404	f767ed27e456ec65858b72a4df89fab65e7fd1f3	rs	app
+app/vendor/gpui-pre/examples/anchor.rs	7854	b4b280b714a61cea2cd3f3a8ffd82a8f0000eb6b	rs	app
+app/vendor/gpui-pre/examples/animation.rs	18713	e055b7da4755334fba1ec0891d5a691dbbafc192	rs	app
+app/vendor/gpui-pre/examples/data_table.rs	17006	2bee47634db0073faa82106ff76a65a190a7f3d8	rs	app
+app/vendor/gpui-pre/examples/drag_drop.rs	4604	8f038ef3308fee9b097e7289665c9fa47cd6945b	rs	app
+app/vendor/gpui-pre/examples/example_support/fonts.rs	1540	39c3be19182cde85033f4f98af4998f0a5d0893c	rs	app
+app/vendor/gpui-pre/examples/focus_visible.rs	8808	c5b3d5dfec3a189d088a621baff55eb55a121b6c	rs	app
+app/vendor/gpui-pre/examples/gif_viewer.rs	1458	80b56aa7c5dbd5a8452bd7834d3d7d21c5c3df74	rs	app
+app/vendor/gpui-pre/examples/gradient.rs	10370	df1398fff58b637abf0c0b31934f6ad523d84a21	rs	app
+app/vendor/gpui-pre/examples/grid_layout.rs	3234	51f9b13e41fb7913c653d716da3e8ce05a96109d	rs	app
+app/vendor/gpui-pre/examples/hello_world.rs	3906	d18cb048726d6953edef9ea482d92bac05993d33	rs	app
+app/vendor/gpui-pre/examples/image/app-icon.png	168173	08b6d8afa0d1088e50f1e9697e01407c9c623f6d	png	app
+app/vendor/gpui-pre/examples/image/arrow_circle.svg	748	90e352bdea7a208356139bed8af5bb3c1301b5ce	svg	app
+app/vendor/gpui-pre/examples/image/black-cat-typing.gif	4471092	671a102d224c3c1b12f3c768f8532894433780a6	gif	app
+app/vendor/gpui-pre/examples/image/color.svg	746	a080681b0e6fe1dc9167bc9a9a7db94159dc31cc	svg	app
+app/vendor/gpui-pre/examples/image/exif-orientation-rotate-180.jpg	378	9c095652a1697a63ce5b6eff0526baa4b51bafaf	jpg	app
+app/vendor/gpui-pre/examples/image/image.rs	7222	f3a7a1dd62ad34b2d19c59bf2ff3fc228ca87767	rs	app
+app/vendor/gpui-pre/examples/image_gallery.rs	9973	d5929e190a4b38197eaf223bed8013b1e4e77d6b	rs	app
+app/vendor/gpui-pre/examples/image_loading.rs	8522	b6828915bdd0f325e6636621e6cd50a42c7d56a7	rs	app
+app/vendor/gpui-pre/examples/input.rs	29952	7b1a212b98fcee6063e21cccaefc7bb059651dc9	rs	app
+app/vendor/gpui-pre/examples/layer_shell.rs	3319	1437b05b5e91ab2db06b2f2ea4f36c8b35dd4739	rs	app
+app/vendor/gpui-pre/examples/list_example.rs	5945	542b7e320aa912ca276f83b949b78a6f0a995231	rs	app
+app/vendor/gpui-pre/examples/mouse_pressure.rs	2290	3470bf18693afa757c9bf1a6f75a55e9ecd99492	rs	app
+app/vendor/gpui-pre/examples/move_entity_between_windows.rs	5198	e0f16467a61ce7020baf150eabe5ae2be9239aa0	rs	app
+app/vendor/gpui-pre/examples/on_window_close_quit.rs	2815	d61e23e445b22c0990c563bd9d4db8fae465027d	rs	app
+app/vendor/gpui-pre/examples/opacity.rs	6617	c2af3424b63f38593b74430abe92b8229b392f6a	rs	app
+app/vendor/gpui-pre/examples/ownership_post.rs	1295	04a0b6fe370a62fcc918c0c86bca83a368cddf06	rs	app
+app/vendor/gpui-pre/examples/painting.rs	18867	63ec07d9aab19612d6bbf921f9304bd66a45e0aa	rs	app
+app/vendor/gpui-pre/examples/paths_bench.rs	3453	6f9319956045e0bca5b8de690dbb267eac02459b	rs	app
+app/vendor/gpui-pre/examples/pattern.rs	4370	7d2e98d16e24dc23dc307296a3b35c18e624d9e3	rs	app
+app/vendor/gpui-pre/examples/popover.rs	7132	7678a6a3ed865d9874b72cb99b473a115591d35c	rs	app
+app/vendor/gpui-pre/examples/scrollable.rs	2444	c81795618875aecf06e06043bd1709c48630b58f	rs	app
+app/vendor/gpui-pre/examples/set_menus.rs	3545	508a60e977b3069af1de92e02c464800330be6d6	rs	app
+app/vendor/gpui-pre/examples/shadow.rs	28153	2d8dc09456fa03e7983292ec2bc4cb3b90f00f36	rs	app
+app/vendor/gpui-pre/examples/svg/dragon.svg	20111	e2de1a0ece5252f27cca7f76d75d627e09ebe3a2	svg	app
+app/vendor/gpui-pre/examples/svg/svg.rs	2936	c5ac9b4e1b165aac7570f422601b55eb7f9f938b	rs	app
+app/vendor/gpui-pre/examples/svg_animation.rs	7699	db915065dbb77398747a2b3b302d098b9e5ef735	rs	app
+app/vendor/gpui-pre/examples/system_notifications.rs	5749	0deff83d241ca76c892ceff78edd0fbb16a62d34	rs	app
+app/vendor/gpui-pre/examples/tab_stop.rs	7349	cc7c34a9979ce4027578ec2c358f503d944ee26f	rs	app
+app/vendor/gpui-pre/examples/testing.rs	19719	13e6e86371cc4c9294b62c6ac819a2ab68711ff3	rs	app
+app/vendor/gpui-pre/examples/text.rs	13730	7fa2a157601277cb3c0d58de045f1d5a6f21ab2e	rs	app
+app/vendor/gpui-pre/examples/text_layout.rs	3683	07f560ab6ed163da4c613cb57311fc4c5784a15b	rs	app
+app/vendor/gpui-pre/examples/text_wrapper.rs	4866	51e58fc7e394faa1954d4f8837946ef797406804	rs	app
+app/vendor/gpui-pre/examples/toggle_headless.rs	10913	136e31f7e0185bb828ecb56309b185b1e0b26c7c	rs	app
+app/vendor/gpui-pre/examples/tree.rs	1873	891be4790a59ae258da3380d2ef54fba26979346	rs	app
+app/vendor/gpui-pre/examples/uniform_list.rs	2029	4a2c4788b192d802ee3d51714c250e7c5a82db76	rs	app
+app/vendor/gpui-pre/examples/view_example/example_editor.rs	17521	4655455f394c791a441ab0f0a2972d7a1db2e7e5	rs	app
+app/vendor/gpui-pre/examples/view_example/example_input.rs	3889	25d74013deb757bdb0c7fa760c5aa3172be34168	rs	app
+app/vendor/gpui-pre/examples/view_example/example_tests.rs	4424	a3edae8cda1f6d39d918fd5c7cdf371e497fd4d6	rs	app
+app/vendor/gpui-pre/examples/view_example/example_text_area.rs	3758	07640b93294677fe89e0d0b8a08ccb3442620523	rs	app
+app/vendor/gpui-pre/examples/view_example/view_example_main.rs	5859	d2e4991d535a500b40752e38b5d4cdb223bf25bc	rs	app
+app/vendor/gpui-pre/examples/window.rs	12003	51dbe7276d9f2e9b57621fcf2b839883929ca62c	rs	app
+app/vendor/gpui-pre/examples/window_movable.rs	3679	b5fb26030bd2492ce034280150d7d35994b383aa	rs	app
+app/vendor/gpui-pre/examples/window_positioning.rs	7946	8db12ce04a99ebb88e276cf0cfc40f178614fb8d	rs	app
+app/vendor/gpui-pre/examples/window_shadow.rs	11336	fba5e91c0ec9f3c8d3724ba55f42833aaa233a60	rs	app
+app/vendor/gpui-pre/resources/windows/gpui.manifest.xml	1394	d11e1a4b4d360c2f31bb59708134ea0dd3fd17a8	xml	app
+app/vendor/gpui-pre/resources/windows/gpui.rc	57	ab209572f885075617548efa3e072d4b44237d07	rc	app
+app/vendor/gpui-pre/src/_accessibility.rs	11011	af14b638cd086c3bf8e2be1888b152d67b8fbfc3	rs	app
+app/vendor/gpui-pre/src/_ownership_and_data_flow.rs	7413	68699cce7f595eca8172569ad51f10b3cabc27d2	rs	app
+app/vendor/gpui-pre/src/action.rs	16133	56965c52e756f80c38bd47a692fb87f254640d0c	rs	app
+app/vendor/gpui-pre/src/app.rs	148217	64a79c7942132b69d9f1d76bb5ecbbcbece9a51a	rs	app
+app/vendor/gpui-pre/src/app/async_context.rs	17718	24aeff467b744a04aa5e766745f3d5cfd335c4aa	rs	app
+app/vendor/gpui-pre/src/app/bench_context.rs	61401	5b433800d375cedded0db2f4bd3b46e45fe476c4	rs	app
+app/vendor/gpui-pre/src/app/context.rs	32009	aba73617e38c094b09fe21e5b9fce6f449b48bc3	rs	app
+app/vendor/gpui-pre/src/app/entity_map.rs	46261	93e5be0bfa34bca96e73a21005c7339f1396daaa	rs	app
+app/vendor/gpui-pre/src/app/headless_app_context.rs	9461	c7f7c913451ddb04201dc65064a1396413eb7908	rs	app
+app/vendor/gpui-pre/src/app/test_app.rs	20127	dada94848d2cb5a12c6020ebf5e8435fb713e121	rs	app
+app/vendor/gpui-pre/src/app/test_context.rs	52245	4e6bf835798e6af39aafe729d2d08e8a0f3fda80	rs	app
+app/vendor/gpui-pre/src/app/visual_test_context.rs	16108	23fedc4ec5b8e04dc077aeaa9ca6799a90a9dc36	rs	app
+app/vendor/gpui-pre/src/arena.rs	11567	ea5968f84e9cb08dd878e5e09195eb88f587b1ce	rs	app
+app/vendor/gpui-pre/src/asset_cache.rs	11806	4c7bee1207632edd94252c5dabbcc9d6f8a24c70	rs	app
+app/vendor/gpui-pre/src/assets.rs	3813	cb8b47ed0166ba1bf67842766cd50cdd30e8a6d2	rs	app
+app/vendor/gpui-pre/src/bench.rs	2823	b1e27b15108ec4bca89f70176e28b79c30854e07	rs	app
+app/vendor/gpui-pre/src/bounds_tree.rs	17681	a4a0ade54990fee47872c30da83b50ebc1d77b6c	rs	app
+app/vendor/gpui-pre/src/color.rs	32216	752695494fc7df335674f18415689f1cb9a55c92	rs	app
+app/vendor/gpui-pre/src/colors.rs	3339	18e7983f424d1a6b22dcf0e4c1d76c24e6a0d78d	rs	app
+app/vendor/gpui-pre/src/debug_overlay.rs	15300	0cca543ea5d4b0cf45d4509bbfe05c227f8b9255	rs	app
+app/vendor/gpui-pre/src/element.rs	36582	c9ec80acfa97f33def66f5361b22015871960aa3	rs	app
+app/vendor/gpui-pre/src/elements/anchored.rs	21228	63a07b03b76802f5fb7579a02fcabf064b2bd90c	rs	app
+app/vendor/gpui-pre/src/elements/animation.rs	35892	ddb0b19e93199e3ee4d46da22c6c15b0c5437090	rs	app
+app/vendor/gpui-pre/src/elements/canvas.rs	2601	8c06494f04b5eb9b5557775f6779448b5df26cdd	rs	app
+app/vendor/gpui-pre/src/elements/container_query.rs	3629	e4e1ed8b21e7953d9d1d01d5798c2179367ce6ed	rs	app
+app/vendor/gpui-pre/src/elements/deferred.rs	10782	f54056159f6e3d6aabcc4609026002d3f1a59d42	rs	app
+app/vendor/gpui-pre/src/elements/div.rs	235074	a3eae1f20629a4ea50d62fec7959d9bcbfcce5d5	rs	app
+app/vendor/gpui-pre/src/elements/image_cache.rs	10514	3d9d4ce6113ad88d4658f8eef770c2bc20937699	rs	app
+app/vendor/gpui-pre/src/elements/img.rs	32345	6cc5db89ab0e80be3440b9b1c3883fae563a245a	rs	app
+app/vendor/gpui-pre/src/elements/list.rs	146359	070d4b081eadd13fde1726792b01d557f1964653	rs	app
+app/vendor/gpui-pre/src/elements/mod.rs	434	8a2a1b70a7bf28464547009020efa9caff8f0cff	rs	app
+app/vendor/gpui-pre/src/elements/surface.rs	3709	043315f90d5da9534922ad5cb5e5a478a8f4b0c3	rs	app
+app/vendor/gpui-pre/src/elements/svg.rs	24938	8183abe4dd69c7edf6445d2850e81ceaa7235ff2	rs	app
+app/vendor/gpui-pre/src/elements/text.rs	46894	e6a9ec7dfc76dd761dd4fa9b85ed4ea3cf69e732	rs	app
+app/vendor/gpui-pre/src/elements/uniform_list.rs	36372	ad31cda493de9cbd6b7bc9a8bca60fa7288ac48e	rs	app
+app/vendor/gpui-pre/src/executor.rs	22556	18f45e7aac51710db5ed4a894454fdd6f3cc6a8c	rs	app
+app/vendor/gpui-pre/src/geometry.rs	124378	df59ce8c7808d4ce3d54816a2ceed9ca94f09559	rs	app
+app/vendor/gpui-pre/src/gestures.rs	95953	665da3dd0e51ba3edef60e1ec0e22f5645c4fafc	rs	app
+app/vendor/gpui-pre/src/global.rs	2542	a16934c129d70c3a7be5272dd8704a443b521f5b	rs	app
+app/vendor/gpui-pre/src/gpui.rs	10213	a102629722e144d5d95cadee49453394a6a83fc6	rs	app
+app/vendor/gpui-pre/src/hot_reload.rs	8807	e92c6254bbf7f84666d4d6d0d231a7e9e41075ce	rs	app
+app/vendor/gpui-pre/src/input.rs	20122	815ea9246e87f0fe66d575ccab3554ab746848a6	rs	app
+app/vendor/gpui-pre/src/inspector.rs	9580	d353690e319e923fc783298c06c93cc000fe0bf4	rs	app
+app/vendor/gpui-pre/src/interactive.rs	32794	cfb1410c78830fde3f501c303c72d3251a2ec0e9	rs	app
+app/vendor/gpui-pre/src/key_dispatch.rs	82227	764f31f7d4f7228b370125ab9dc300e405d7e28e	rs	app
+app/vendor/gpui-pre/src/keymap.rs	43532	a7a321161843eae92539070c773800c9824f709b	rs	app
+app/vendor/gpui-pre/src/keymap/binding.rs	5614	1ca888b67bc592a742e6ab684e319872c91de420	rs	app
+app/vendor/gpui-pre/src/keymap/context.rs	32637	a29de173abe9f4772df5af833e1e39687b7554aa	rs	app
+app/vendor/gpui-pre/src/path_builder.rs	18672	0e54d0bfd3d3afa9de69891eb55e3b118c4d67e0	rs	app
+app/vendor/gpui-pre/src/path_winding.rs	30375	5fe10dc197a24e57956ee0907115227922c11543	rs	app
+app/vendor/gpui-pre/src/platform.rs	143994	86520ab049857499e9be13d2b18e715d4ac83c24	rs	app
+app/vendor/gpui-pre/src/platform/app_menu.rs	11423	27c20c00badc50a965560073885f09a4e271ce5e	rs	app
+app/vendor/gpui-pre/src/platform/keyboard.rs	1225	10b8620258ecffd41e8018fc539c47812df0fe05	rs	app
+app/vendor/gpui-pre/src/platform/keystroke.rs	24712	b995508cc3f554e82bf3990708e248671b5c90aa	rs	app
+app/vendor/gpui-pre/src/platform/layer_shell.rs	2987	8be1b5fcdb46c98acb80e6970edbc5a856f180bb	rs	app
+app/vendor/gpui-pre/src/platform/platform_info.rs	1617	e71b787f7417e7c5d66c8185e46f224675b4b97e	rs	app
+app/vendor/gpui-pre/src/platform/popup.rs	5650	a1f8d7ea0d572f2cca45828a7da2e7613b8c7e5c	rs	app
+app/vendor/gpui-pre/src/platform/scap_screen_capture.rs	11934	797e19ba23f715c372d76fd349577dde16a66f6f	rs	app
+app/vendor/gpui-pre/src/platform/test.rs	275	a327d8fe942e1463ea26b019351277bcb040dda2	rs	app
+app/vendor/gpui-pre/src/platform/test/dispatcher.rs	4204	c48e491347485bf217bc724654b01b3ca539cdd4	rs	app
+app/vendor/gpui-pre/src/platform/test/display.rs	1034	0bdc04f64c4899ab15aa3ea8993c8ec49cf5bd0f	rs	app
+app/vendor/gpui-pre/src/platform/test/platform.rs	28937	04ebbe92caddc329e5f5251b02292d7e26b89102	rs	app
+app/vendor/gpui-pre/src/platform/test/window.rs	21158	ff1c4cd380577cbee648ec5ae7ccefca6d589314	rs	app
+app/vendor/gpui-pre/src/platform/threaded_dispatcher.rs	26946	b1fb4974df945e84a8e5fe83a0ade3967473520a	rs	app
+app/vendor/gpui-pre/src/platform/visual_test.rs	8335	6f958ea4afeb99fa3664bcea53ad7f03e042a74e	rs	app
+app/vendor/gpui-pre/src/platform_scheduler.rs	16772	a555a5a36a5fbaa5a463f9037172ea20316e4df4	rs	app
+app/vendor/gpui-pre/src/prelude.rs	489	b5185a25e8619886f9a2240da26e4d2b4cabd0ff	rs	app
+app/vendor/gpui-pre/src/profiler.rs	80263	18e639a31b45231402e3662187c32f102ed9e285	rs	app
+app/vendor/gpui-pre/src/profiler/actions.rs	6202	a4892f8ac223957bd93e612a30ddbfb580b839b8	rs	app
+app/vendor/gpui-pre/src/profiler/hang.rs	77937	16ef408783cbbf41e74da061670856f1303e1de2	rs	app
+app/vendor/gpui-pre/src/profiler/hang/monitor.rs	4464	c8cb491af197c8c149abb9eb46f5d8e8e1a773df	rs	app
+app/vendor/gpui-pre/src/profiler/journal.rs	134837	4c810f86b3248f44b937ec6f63b828f24a39d139	rs	app
+app/vendor/gpui-pre/src/queue.rs	16930	6848ce8673744b300e15c5e988104ed404bafe19	rs	app
+app/vendor/gpui-pre/src/randomized_element_tree.rs	77501	412aa063f59b238c1717025fba41ce8cdf748a17	rs	app
+app/vendor/gpui-pre/src/scene.rs	42882	b2104e5402a50562c3528ba735f8f72847f96e2d	rs	app
+app/vendor/gpui-pre/src/seeds.rs	2408	e90784d72188d715a73ff263cc07f39ea3690331	rs	app
+app/vendor/gpui-pre/src/shared_uri.rs	627	e257aaf08da0a5f4d500919e376d5a22e9ab5d7d	rs	app
+app/vendor/gpui-pre/src/spring.rs	27610	efc878061be7c6996993a629c9917034842fc420	rs	app
+app/vendor/gpui-pre/src/style.rs	54256	79cb45cf1ed1010d044aaa5bfaa40fdc1d037d8d	rs	app
+app/vendor/gpui-pre/src/styled.rs	32990	aa77a20a44750221ee06e7cabdb6972779bf9356	rs	app
+app/vendor/gpui-pre/src/subscription.rs	18083	6bd455e5f39876f6efaee9c9c8de6e016bba2d0e	rs	app
+app/vendor/gpui-pre/src/svg_renderer.rs	30926	ce0e2b076de085e93975f3c78edf6f6d80adef4d	rs	app
+app/vendor/gpui-pre/src/tab_stop.rs	16353	77427f3c32c0d6262481938078902fc5c042bac1	rs	app
+app/vendor/gpui-pre/src/taffy.rs	28698	7c12b5cb8c1dc06e38d03ccc367a67c64bb6bd0d	rs	app
+app/vendor/gpui-pre/src/test.rs	6111	c1c8e666aec46eb75f8e7fc22ce818230bb02b2f	rs	app
+app/vendor/gpui-pre/src/text_system.rs	48196	0b75b980e6e440682a78db3e8b8ef94d71189026	rs	app
+app/vendor/gpui-pre/src/text_system/complex_script_breaks.rs	2564	e89c9f9c8b36a9aa2e8ec1d162edeb175efa73f8	rs	app
+app/vendor/gpui-pre/src/text_system/font_fallbacks.rs	635	63dc89ba41ea9cf44bdffb7d81d3015d696f4413	rs	app
+app/vendor/gpui-pre/src/text_system/font_features.rs	5065	9ce82d76d3c3c0c126d6b6c74e851c7cc60fc926	rs	app
+app/vendor/gpui-pre/src/text_system/line.rs	70330	e0eb71f5918b93a8599b24da1b175ad485b36298	rs	app
+app/vendor/gpui-pre/src/text_system/line_layout.rs	37387	d13cba542999bdd03c31ada4327f3fe05d4b2365	rs	app
+app/vendor/gpui-pre/src/text_system/line_wrapper.rs	73109	fea2c7921ceb70786c8929ef43cd9854b2cb4eb0	rs	app
+app/vendor/gpui-pre/src/util.rs	8167	13ee752dadf00ac0f4f2e450bb908ba544550943	rs	app
+app/vendor/gpui-pre/src/view.rs	23399	733373aac182f14cbd4d3c119a59d2386f173e4d	rs	app
+app/vendor/gpui-pre/src/window.rs	429381	a8732930f18455012c7ee71d0affce1e5a08de4b	rs	app
+app/vendor/gpui-pre/src/window/a11y.rs	35579	4ab54efa8fe3c6954b020f30fc1d0668b618d3c4	rs	app
+app/vendor/gpui-pre/src/window/a11y/debug.rs	11527	ae98aa52837b11b7183601dcbf70d6503a14f598	rs	app
+app/vendor/gpui-pre/src/window/prompts.rs	6719	980c6f6812405a8fbf4f8c6e24388ab4f967a94c	rs	app
+app/vendor/gpui-pre/tests/action_macros.rs	1285	66ef6fba2c9b980e27150bb3bf8d9d07f35ab030	rs	app
+build.cmd	451	d7450af403f8df2f09d2fd89f7f742e46551f8b2	cmd	.
+build.sh	572	98603badb336bf7b0686d6a00678776a4e4e4abf	sh	.
+docs/README.md	2824	397ddea875c7a48e2b965a35f05c8c8a2c1fc49b	md	docs
+docs/architecture.md	30368	480eb19d6e5250389aab3b4aa2bb74563c332949	md	docs
+docs/building.md	10843	2eced9634a2113ecacf4196fa678eba48de009fb	md	docs
+docs/catalog/toggles.md	48992	838d2b26753001e35427038cba6072965a24d57f	md	docs
+docs/catalog/tweaks.md	40790	bd40f0a4c5b4248bad168aa9f7ea4c945de6d26b	md	docs
+docs/compatibility.md	5897	4b9c87b1ebbfd0356ea217fd18e3b3a37b16b756	md	docs
+docs/console-presentation.md	10388	f5991b18e5c4e2cbaa6f285f6376640a31437a31	md	docs
+docs/diagnostics.md	13399	f405d5d9eb40552a1a73ebe582567fc4149cca20	md	docs
+docs/front-door.md	14068	2c9913fe19bfae8bd44bca596a6fe88e36b5b6a8	md	docs
+docs/images/atlas-manager-get-ready-dark.png	31201	5f1c4b1a076596a99d7a830111249930e1e78c45	png	docs
+docs/images/atlas-manager-get-ready-light.png	46617	89c8fde0e784e8398c21ce84c7f9886c9d947bb2	png	docs
+docs/install-state.md	15800	7fb0566f30d0c0948562a4defd62597e5627d93b	md	docs
+docs/package-format.md	6227	53e287c0e30b2703d3a71c7321ee1593befe8c0d	md	docs
+docs/power-saving-policy.md	10093	4e5b834aee407c6c596ab2addd9d942f140ffefe	md	docs
+docs/preparation.md	18659	ce4e80cdc81060f893a07061b9419c576fff968b	md	docs
+docs/publication.md	5624	2a13bd1db6c7af98986ae18e1f02ee868fc49e29	md	docs
+docs/release-verification-matrix.md	5191	00800bec98f6eb8484db542eae33a6d5a9396ce4	md	docs
+docs/releasing.md	6148	f57758f6ce6429d4ecbe3663024d036ab7f086e8	md	docs
+docs/services-startup-policy.md	6965	d96e113ec1a8de78ba44b7b11b4696d05cfa75c4	md	docs
+docs/style.md	7142	3e8c715c0e6c8c8e1428df5fcc0ad94e5b9dbf33	md	docs
+docs/testing.md	17288	dee75d268cc70adb70be024ce8f25e00d672c5f7	md	docs
+docs/upgrading.md	11818	e948d4364410c0a74a754b558b11a5ad28263372	md	docs
+docs/windows-release-policy.md	7266	f5fe1a3fd7e8789cbacaada91fbc62cc325f1d38	md	docs
+docs/windows-transition.md	21880	2558c517224164354324a2606c8ff8fd276ac4c4	md	docs
+lychee.toml	1215	0ed23089c9d3acbc40473f2074d6f9dbac74afd3	toml	.
+package/Executables/AtlasDesktop/1. Software/Install Software.cmd	120	a771f2696c1a8b35760d49d05a12dfe55d821388	cmd	package
+package/Executables/AtlasDesktop/1. Software/Install or Remove Edge.cmd	115	cdd79b2a19535f9c7ea3dbf89fbc2940a6858e63	cmd	package
+package/Executables/AtlasDesktop/1. Software/Remove Python Store Prompt.cmd	128	4b72404afb7ebc7c0705d6025f391d8068a80cba	cmd	package
+package/Executables/AtlasDesktop/1. Software/Software Documentation.url	135	6956ca4ef6c746a308cdf0ce2dc7dddc293d881c	url	package
+package/Executables/AtlasDesktop/2. Drivers/Apple devices.url	135	fadf5c428175000236bc52d795301529afb96c60	url	package
+package/Executables/AtlasDesktop/2. Drivers/Bluetooth.url	149	b0671b650e39ccea6421a62187c61a07992d659f	url	package
+package/Executables/AtlasDesktop/2. Drivers/Driver Documentation (Recommended).url	73	5c4a8c227d0607b1abf1e81c7af6fc411c63ee21	url	package
+package/Executables/AtlasDesktop/2. Drivers/Drivers from Windows Update/Disable Drivers from Windows Update.reg	2470	9480bbfaf6c3c4deeb4ce0d1188329c132856304	reg	package
+package/Executables/AtlasDesktop/2. Drivers/Drivers from Windows Update/Enable Drivers from Windows Update.reg	2242	02cc629f4f3f24937bc3b192c1145b60ad4bf805	reg	package
+package/Executables/AtlasDesktop/2. Drivers/GPU Drivers/Display Driver Uninstaller (DDU).url	143	ebeea397f34cfbacbb2de5227b348b85a5c9fd30	url	package
+package/Executables/AtlasDesktop/2. Drivers/GPU Drivers/NVCleanInstall.url	147	30c2693ef9d8cb52e61c8a07eea107ff2a6da5ff	url	package
+package/Executables/AtlasDesktop/2. Drivers/Run Update Drivers.cmd	118	30e590cbff4be2c59688f0e27fcd1edd9ce90ef4	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/AI Features/Click To Do/Disable Click To Do (default).cmd	118	bb73e6fe69e87732c11c2aaddcaf38f613eb28fa	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/AI Features/Click To Do/Enable Click To Do.cmd	117	06164cc352ef56e0c5ac77fc27718f79f5cdb99a	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/AI Features/Microsoft Copilot/Disable Microsoft Copilot (default).cmd	116	d0579e4e1cb9bcc00d4df5351b8a6061736475bd	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/AI Features/Microsoft Copilot/Enable Microsoft Copilot.cmd	115	86aead40fb173deb5696c4b69881cae186b7ce9b	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/AI Features/Recall/Disable Recall Support (default).cmd	115	75337306af264b653d1f3cc49226eaa7bc3b36b7	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/AI Features/Recall/Enable Recall Support.cmd	114	63377508427a0400b262972a864f40bacdf89020	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Automatic Updates/Disable Automatic Updates (default).cmd	125	6e59d7a37c769824cee1a1bce7f4fb787f22b4e4	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Automatic Updates/Enable Automatic Updates.cmd	124	c0e0432198a09d55fc6faf6237f311a88bf4d4f0	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Background Apps/Disable Background Apps (default).cmd	123	f6e315822c132fdae3157e7ba4252f7d4e96e15d	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Background Apps/Enable Background Apps.cmd	122	398c6789892b6c1a7e7c03a1bbcc904104c8c6fe	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/CPU Idle/Desktop Context Menu/Add Idle Toggle in Desktop Context Menu.cmd	126	7825803ecaaa71d82dce593810c517ac82fed69e	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/CPU Idle/Desktop Context Menu/Remove Idle Toggle in Desktop Context Menu (default).cmd	127	22d0c037892eb42df6607afdbc49e2693420a284	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/CPU Idle/Disable Idle.cmd	116	b71377a05af1fa8e3896bc93018fe66f8d22d46c	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/CPU Idle/Enable Idle (default).cmd	115	c91b5143eb0b14a4ed8d57a51c1a3c8beaad351a	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Delivery Optimization/Disable Delivery Optimization (default).cmd	129	622fc26844b8cb1e99e39fcaafea9b2476dbe9d2	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Delivery Optimization/Enable Delivery Optimization.cmd	128	04a77f775667c73908c691588e278c36b9b2d574	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/FSO and Game Bar/Disable FSO and Game Bar Support.cmd	119	98447a6ca49e8d013571bf5795b957344da8c2c6	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/FSO and Game Bar/Enable FSO and Game Bar Support (default).cmd	118	e5b13e7fb8fc366ec14fcf163b22a110652742d9	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/File Sharing/Disable File Sharing (default).cmd	120	7b7e70b6bbb493a4f1e33e13539b8d433445a36d	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/File Sharing/Enable File Sharing.cmd	119	2d43b246636923033c86380b08fa565c88c95a45	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/File Sharing/Give Access To Menu/Disable Give Access To Menu (default).cmd	125	dbd8c04f975429bcdaa5c9c34eead67d4f159a59	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/File Sharing/Give Access To Menu/Enable Give Access To Menu.cmd	124	8db5e21aecced55f6c42ec4077e09ab353869baf	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/File Sharing/Network Navigation Pane/Disable Network Navigation Pane (default).cmd	130	72b9b795863fbc722f97f1c440676114e7f52f0f	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/File Sharing/Network Navigation Pane/Enable Network Navigation Pane.cmd	129	79bcdbbaf84d816e3d0efcba98a09c647d86a91f	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/General Configuration Documentation.url	139	ae91c7f0865f5fba710b3d45e84f3d0623c4ebaa	url	package
+package/Executables/AtlasDesktop/3. General Configuration/Hibernation/Disable Hibernation (default).cmd	120	e2838316dd455fef8562f9d086ebe1ab5cffa052	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Hibernation/Enable Hibernation.cmd	119	6f2772b7aadbf3e6653f862207a0e2290af942e4	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Location/Disable Location (default).cmd	117	c7d93814967ae4fcb096de25ce3f902900e232cf	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Location/Enable Location.cmd	116	6d4b8518b774b3dd7f462cae7a7cbbdbddc3668a	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Mobile Devices (Phone Link)/Disable Mobile Device Settings (default).cmd	118	9914996ba6f91adc54455175c962aeaf2f3bed16	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Mobile Devices (Phone Link)/Enable Mobile Device Settings.cmd	117	c368be760c84ed87ae9ab32227d05a29887637c2	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Pause Updates/Pause Windows Updates.cmd	120	ffd48dfd3dd19c2e3a508ff207f3ef195e32a6c9	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Pause Updates/Unpause Windows Updates.cmd	121	fb990c367180c2dd0dce76a7280b1543092aac44	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Power-saving/Default Power-saving (default).cmd	119	3a0c59a3ea5b853924b10a0d3eb751ed609e3dcd	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Power-saving/Disable Power-saving.cmd	120	adb0402caf2996f1a6f4c2b2c0dfd71f7247157e	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Search Indexing/Disable Search Indexing.cmd	117	f2e0081f672c137fd09c7e5bb934558c7270f7ea	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Search Indexing/Enable Search Indexing.cmd	116	e7c2cbab7c8b66175d29f2f79f0d2c88f3beac48	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Search Indexing/Minimal Search Indexing (default).cmd	117	3c57941c0faa1facdc4361b57a9eb5084a5d59c9	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Sleep Study/Disable Sleep Study (default).cmd	119	0d6d850cf6f08a495b607ad3986eec682be16cf2	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Sleep Study/Enable Sleep Study.cmd	118	f6859ed550510e379809b26d295f7c2f83c44b6a	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Sleep/Disable Sleep.cmd	114	2d96ee26e5338407701b830735f6c24381568626	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Sleep/Enable Sleep (default).cmd	113	8f56c2a8433dfaa667f179087dbfc9934ff9f619	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Store App Archiving/Disable Store App Archiving (default).cmd	126	df4f18b400109087408fd7da81c0c961fdb17b4f	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Store App Archiving/Enable Store App Archiving.cmd	125	16a616bfd631d832e0a067c3b6599da5ba50a71f	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/System Restore/Disable System Restore.cmd	122	74464bdd7d204d0c5e0ea14c384077e916c9874a	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/System Restore/Enable System Restore (default).cmd	121	2b6eb4e62161e2403a40e72eaf79cf21ff0acca5	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Timer Resolution/! Documentation.url	156	b5b6c5b4633de79a0b207995593a2fcc84c24bda	url	package
+package/Executables/AtlasDesktop/3. General Configuration/Timer Resolution/! MeasureSleep.exe	445952	a2edd62c2826caa71f9428c233289dda3da16da5	exe	package
+package/Executables/AtlasDesktop/3. General Configuration/Timer Resolution/Disable timer resolution (default).cmd	124	bca24f2105fe3d00349ff0e5b50071f33ff24420	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Timer Resolution/Enable timer resolution.cmd	123	6f10d1d9713834f5e42601331cad14bde3ece152	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Update Notifications/Disable Update Notifications.cmd	128	9f33d84fb7beb593d6ecde101267ff2844ce0ca9	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Update Notifications/Enable Update Notifications (default).cmd	127	8dac708fa532af0726f68bdaef10cbe8dc40ec73	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Web Search (includes Search Highlights)/Disable Web Search (default).cmd	118	71a6e7f7c3d9924e74a5bf0579b49b146481f169	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Web Search (includes Search Highlights)/Enable Web Search.cmd	117	100332dd6e165730ccb19e31b9602a2e8f471abe	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Widgets (News and Interests)/Disable Widgets (default).cmd	116	a2e11803f891e4f9dec646b89aa11f6e37d7985e	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Widgets (News and Interests)/Enable Widgets.cmd	115	c733beb7b6ac5482221e895981b6f85c679508f9	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Windows Spotlight/Disable Windows Spotlight (default).cmd	125	997b1afc025c5e4ed91eefb76c6d15dfd2ab8935	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Windows Spotlight/Dynamic Theme (Alternative).url	130	2d09c8bb3c5c9d52f3101112cac8c9f2e9e9287d	url	package
+package/Executables/AtlasDesktop/3. General Configuration/Windows Spotlight/Enable Windows Spotlight.cmd	124	f5136ec1be6828f65116bbaf4a8ca13b58e80afc	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Workplace/Disable Workplace.cmd	118	18f05843fca5f28693b0de9e00fea172a828201b	cmd	package
+package/Executables/AtlasDesktop/3. General Configuration/Workplace/Enable Workplace.cmd	117	305b8e6e92f5516d0f0aca780c78da4eed35ad66	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Extract/Add Extract.cmd	126	7bd177f1f617e6a6315c1d0610837f33b7db1de0	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Extract/Remove Extract (default).cmd	127	9d2f9314826e22235997deea59b78a35a072e517	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Run With Priority/Add Run With Priority In Context Menu.cmd	123	e6c5e618263b3001fa3da6e962c3d9ec548ca8fb	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Run With Priority/Remove Run With Priority In Context Menu (default).cmd	124	eb08d5a1e348dc85405b26f13de3ceb100a4e23c	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Send To/Debloat Send To Context Menu.cmd	126	d0c20c480a81ed6190bfe7df8f333efe3ec637ff	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Take Ownership/Add Take Ownership to Context Menu.cmd	121	46d513ed8be20531a5d1f86a57a845539957c383	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Take Ownership/Remove Take Ownership to Context Menu (default).cmd	122	6fd2af2838e41cf940bcbb958a562cf967523d85	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Terminals/Add Terminals (no Windows Terminal).cmd	142	898c04035cbc68f2d7812ee06bbda3a735fa8e33	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Terminals/Add Terminals.cmd	125	037c14f21db1f8f4b6db747e7e5327ddcd94460a	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Terminals/Remove Terminals Context Menu (default).cmd	128	5ee092256873b4ba5fe4d947e4d4687b3e381bc8	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Windows 11/New Context Menu.cmd	123	2b0b1fbeb629fe91022c818a754acaa42d74b222	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Context Menus/Windows 11/Old Context Menu (default).cmd	122	6f46dea3737af05de919c3929e68702ad2cf353d	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Edge Swipe/Allow Edge Swipe (default).cmd	117	8f247a2a8d56aca679e93e64e84476d83226fa6e	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Edge Swipe/Disallow Edge Swipe.cmd	118	31e9864092751f4cd6d1f9b4c387248c827904fb	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/App Icons on Thumbnails/Disable App Icons on Thumbnails.cmd	125	376010af9ba2b13358f93c94eb0af300a8e19a48	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/App Icons on Thumbnails/Enable App Icons on Thumbnails (default).cmd	124	30111375b09fb50215c168ff7176dcbbc96cec92	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Automatic Folder Discovery/Disable Automatic Folder Discovery (default).cmd	133	87f3fa655f2c938a73a35af72193209224816394	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Automatic Folder Discovery/Enable Automatic Folder Discovery.cmd	132	c5603268164003cf0df8169af228bd37d7985490	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Compact View/Disable Compact View.cmd	120	957b06e1072afe21074046f16b4258cd11ba401c	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Compact View/Enable Compact View (default).cmd	119	29720257f2be098f1d4c3efb170ec843edbbd2ee	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Gallery/Disable Gallery (default).cmd	116	ce2fdf7515d2033e4f7e174d4fae8f6187f02536	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Gallery/Enable Gallery.cmd	115	a7958c3dc1507f7093c02f88cc12af34c1ad8a60	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Home/Disable Home (default).cmd	113	07c815431fe8fd08599a9dcd816fc62b5a397fb5	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Home/Enable Home.cmd	112	7699e6422c26409b0228539fcc0893dc860ad73f	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Quick Access/Remove Quick Access.cmd	120	9006c02cec94a29cc18f31c61d5bb46cebbdf35d	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Quick Access/Show Quick Access (default).cmd	119	aa25117fb0170271d096257af91e9b5dea91c857	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Removable Drives in Sidebar/Disable Removable Drives in Sidebar (default).cmd	133	3c21f6f77e5bb4581684e4a1ea133c005fa9acd5	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/File Explorer Customization/Removable Drives in Sidebar/Enable Removable Drives in Sidebar.cmd	132	aab6a3d82b06988b8c7a02c7969806a7cca42e80	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Interface Tweaks Documentation.url	137	328e198c12057de80de67ba3e369ff1e00333bad	url	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Keyboard Languages/Disable Language Shortcuts.cmd	126	a6326593a675d1cea342e2a95504c91cb06bdb47	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Keyboard Languages/Enable Language Shortcuts.cmd	125	abf15b368e52459b9a4f7ed35495123ee08e7772	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Lock Screen/Hide Lock Screen.cmd	119	e67faaa7d3b057621c73d7eb2d69efeda07ebac9	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Lock Screen/Show Lock Screen (default).cmd	118	519f93570c2991bdca12b601a166b21e63270395	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Old Flyouts/Battery Flyout/Modern Battery Flyout (default).cmd	127	00b6745d331ebec8766105176d0daead7a4e82e2	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Old Flyouts/Battery Flyout/Old Battery Flyout.cmd	128	8c00b44f8a5faffda472a27f0d8ab83fc64b956c	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Old Flyouts/Date and Time Flyout/Modern Date and Time Flyout (default).cmd	122	ec33e10cc262f16df98c0f4121aa4b502f8ecca4	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Old Flyouts/Date and Time Flyout/Old Date and Time Flyout.cmd	123	a7893cc624643c100955c42e6dc136829caf098c	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Old Flyouts/Volume Flyout/Modern Volume Flyout (default).cmd	126	862816b2467147784135d03aa63080bba3015f39	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Old Flyouts/Volume Flyout/Old Volume Flyout.cmd	127	ebddc6f239358059ae5945121d074ad8a7f12aca	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Restart Explorer.cmd	120	3a03f7f6833cea10472d2c1f05dfe21cb55baf58	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Shortcut Icon/Classic.cmd	121	87a85dacd21278d850100a7d145790a83e79f46b	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Shortcut Icon/Default Windows (default).cmd	121	b3d772929de7f9932ada1d2382103ffcaf9c19ce	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Shortcut Icon/None (security risk).cmd	118	2106f0a750b33ca2a0c374b20469547455929992	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Shortcut Text/Disable Shortcut Text (default).cmd	121	f19a48f5d0ce5d0a614bf5b8c543cf842c4e16cf	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Shortcut Text/Restore Shortcut Text.cmd	120	2a126b1f17126175aad8b75f8e3dcd12beb5b3a9	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Snap Layouts/Disable Snap Layouts.cmd	120	955298d05c7c35bbf99b41085aa2ba1f8fa3c5fd	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Snap Layouts/Enable Snap Layouts (default).cmd	119	d565241d3af073fa2f9332c83fb22c9733455bf4	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Start Menu/Atlas Open-Shell Preset.xml	3023	13bfb5bf373572c02e01f6bf499e3b7248a67a34	xml	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Start Menu/ExplorerPatcher.url	127	8919191955db397340b349be333824460a94f488	url	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Start Menu/Install Open-Shell.cmd	3506	f3e74982da5ab8555367d4942ff9425b3d7c4340	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Start Menu/StartAllBack.url	114	7a4881366e78f65391cf4d531509cc875a4aea77	url	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Unlock Recent Items/Disable Recent Items (default).cmd	120	d99e0a149e28e8439ad7bd3c96abf39d2302337d	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Unlock Recent Items/Unlock Recent Items.cmd	119	3859434daf9bc48fa385063d9f3ae0ed3f2a55c1	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Verbose Status Messages/Disable Verbose Messages (default).cmd	124	0e7395a389157aad492b5e162aa7571041f32eac	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Verbose Status Messages/Enable Verbose Messages.cmd	123	cd728d8e78368355c083e88ca08e0e74c3f481d4	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Visual Effects (Animations)/Atlas Visual Effects (default).cmd	118	1106f2e35014c5349bf1d9404b5c7717fa1a1a07	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Visual Effects (Animations)/Default Windows Visual Effects.cmd	117	2a84b2cf00d59a713eedcfbda2c1499080c8ccc5	cmd	package
+package/Executables/AtlasDesktop/4. Interface Tweaks/Visual Effects (Animations)/Visual Effect Settings.lnk	1554	5f60f074a55fe8d6534c40eebce57432be492252	lnk	package
+package/Executables/AtlasDesktop/5. Windows Settings/Activation.url	46	7f3a06bb22c1411d726fcef642f4c6d6463d0fc3	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Colors.url	58	66f3911f28aeb0554f7eed6778f90017e36a01f3	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Date & Time.url	47	ac776d7b984520bf5908df345b38cde76ee22cb5	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Default Apps.url	47	d443bf479263d5107d2d94ee7a6918395872c505	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Default Graphics Settings (HAGS).url	128	2d1dec656d7bbb71282a65550b62ad33bd2c81c6	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Desktop Icons.lnk	1407	b7fc4ea1221bc9345067e84cf6247581e6be11b2	lnk	package
+package/Executables/AtlasDesktop/5. Windows Settings/Language.url	50	17b83a380d83614f776c03079dc042e8f1277dcf	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Privacy.url	43	6f9dff70b23c1f7954c6efed49442e30c5878912	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Region.lnk	1495	7d6bb574a43df0444cc248afe1865d8ce3784914	lnk	package
+package/Executables/AtlasDesktop/5. Windows Settings/Taskbar.url	43	2c6e6365eaa2c46af6abbf28d6a6d6a1645c7033	url	package
+package/Executables/AtlasDesktop/5. Windows Settings/Windows Settings Documentation.url	138	0421a172c62feebeb32ccd0da9299de5a7354484	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Appearance/Boot Logo.cmd	111	af280045b27f10fc98c6b753849c5798011b9eb0	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Appearance/New Boot Menu.cmd	114	a2991f4a23a4466d119967b09ed1a51ba53add0f	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Appearance/Spinning Animation.cmd	121	93e83da4d13651641a26725686995d37c34e98fc	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Behavior/Always Go to Advanced Boot Options.cmd	122	c6f78fbe7e292ab88eeb477092143a70c7c5646d	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Behavior/Automatic Repair.cmd	118	7ee7528082c043d080518a4ed6ef948b252b29e7	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Behavior/Editing Kernel Parameters on Startup.cmd	119	42d15bd09930fd5af9d7cab39b83feeee4bb0c79	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Behavior/Highest Mode.cmd	114	047995a635295b2f4119975e2e05011dfa7087ea	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/Explanations from Microsoft.url	97	d2522843b90e15fe2590e2223e87f91eae116a82	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Boot Configuration/View Current Values.cmd	123	0872d76f0a016bc0a3ba4960bfa010dece892696	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Driver Configuration/AutoGpuAffinity.url	71	6efb1660b4b57d368044a22dd1d9c572375628e3	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Driver Configuration/GoInterruptPolicy.url	65	6f9782bd5d2d12cca0198eb8c281963392f20396	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Driver Configuration/Interrupt Affinity Tool.url	93	b652314572035f7dd980e6e94099b0e533a3f94c	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Driver Configuration/MSI Utility V3.url	128	931f615c8ca085fd5ea6fc3a2cddc58a99728af8	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Microsoft Store/Disable Microsoft Store.cmd	123	e54e2563a2073a3bbef7fae052ed8a8e81148ecd	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Microsoft Store/Enable Microsoft Store (default).cmd	122	c9d218f98b83baefe23fc58aac9c4dc9b9f44300	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Must Read First (Documentation).url	78	8dffdbb09ef7a476b0ed795c9b49d6a475d360f8	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Process Explorer/Install Process Explorer.cmd	123	ec244ef5db377e7824a03c106fdb3ba1ec4a4f86	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Process Explorer/Uninstall Process Explorer.cmd	124	d2ba978af0bab93a6810643c6ba3193530f41005	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Bluetooth/Disable Bluetooth.cmd	118	ed0875a8d7f4c31603c1308df83b774ed39967c3	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Bluetooth/Enable Bluetooth (default).cmd	117	9f2269307e97297674efdfe87cc2248c57408007	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Lanman Workstation (SMB)/Disable Lanman Workstation.cmd	126	306f5f919bea845fbacff1594ae44d63c8629b45	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Lanman Workstation (SMB)/Enable Lanman Workstation (default).cmd	125	91cafdba0835acf077865b4d9537d69c0621512a	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/NVIDIA Display Container/Context Menu/Add Container Context Menu.cmd	141	6e63d7b6102773240ff16201c521d9a08f1af51f	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/NVIDIA Display Container/Context Menu/Remove Container Context Menu (default).cmd	142	3bb6ca5d60a0049dbeabff0f571163da3b31c963	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/NVIDIA Display Container/Disable NVIDIA Display Container LS.cmd	131	3a9e6a82e7bb2e548196bcd89b984128d3e9cd1d	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/NVIDIA Display Container/Enable NVIDIA Display Container LS (default).cmd	130	e3429b44c7e395d7b28e6d8d76e2ce100b4cfe16	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/NVIDIA Display Container/Must Read First.url	164	47e146b8cf09c9488efd9d437fe45263b86ec293	url	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Network Discovery/Disable Network Discovery Services.cmd	125	4dd6c778a91a6667e67b01d8ccbd2cd2a87c0636	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Network Discovery/Enable Network Discovery Services (default).cmd	124	b1b1093f4251ef672fb7f6b1c97363298bcfa6e1	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Printing/Disable Printing.cmd	117	7358a06f62f09af1a96ac9bc73496aef9f51b92b	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Printing/Enable Printing (default).cmd	116	d7d10f6753aa4bbcc54ea04c867e1a318868ec3e	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Superfetch/Disable SuperFetch.cmd	119	9e1a880c2b157056f0e88b7db2714feedecefe82	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Services/Superfetch/Enable SuperFetch (default).cmd	118	e1423466d6a433e4e97665ae8cfb08874b3751f2	cmd	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Toggle Windows Updates/README.md	1152	1cbb079f684a2d5164f77c730fd574793f66d53d	md	package
+package/Executables/AtlasDesktop/6. Advanced Configuration/Toggle Windows Updates/Toggle Windows Updates.cmd	123	d3bd7b9bb7b55357b835c70bf12d563b839c303a	cmd	package
+package/Executables/AtlasDesktop/7. Security/Core Isolation (VBS)/Core Isolation - Windows Security.url	116	6bcd83a9513d7be7bf578736379faf49e51fa4e1	url	package
+package/Executables/AtlasDesktop/7. Security/Core Isolation (VBS)/Current Configuration.cmd	114	d9796644354f8ab8252c3eb0c53ac3496f8dabc3	cmd	package
+package/Executables/AtlasDesktop/7. Security/Core Isolation (VBS)/Disable VBS.cmd	117	2c812c4d8f8b56cc2db5c20b610fd041bad70b78	cmd	package
+package/Executables/AtlasDesktop/7. Security/Core Isolation (VBS)/Enable VBS.cmd	116	d5a9b453a15edd9fc66d48bf5be4c7f132674950	cmd	package
+package/Executables/AtlasDesktop/7. Security/Defender/Hide App and Browser Control/Hide App and Browser Control (default).cmd	130	e94cb1a1ed5e0719646724aeafc3f671c264791c	cmd	package
+package/Executables/AtlasDesktop/7. Security/Defender/Hide App and Browser Control/Show App and Browser Control.cmd	129	a043a60262b57b67950093d43dd382e605f8b30c	cmd	package
+package/Executables/AtlasDesktop/7. Security/Defender/Security Health Tray/Add Security Tray to Startup.cmd	126	cec696063f9169e431e22f0c415f5d7307de101e	cmd	package
+package/Executables/AtlasDesktop/7. Security/Defender/Security Health Tray/Remove Security Tray from Startup (default).cmd	127	46fe2709514c64abd4083a9be68c11b8b5d0375e	cmd	package
+package/Executables/AtlasDesktop/7. Security/Defender/Toggle Defender.cmd	119	bcc12041f96302e3a71ecc669d148c10e2f5fd4a	cmd	package
+package/Executables/AtlasDesktop/7. Security/Mitigations/Disable All Mitigations.cmd	120	6873978fb5ce2847f798b733e8ae2a27f0ba4a1e	cmd	package
+package/Executables/AtlasDesktop/7. Security/Mitigations/Enable All Mitigations.cmd	119	645246427b738b239faf4310ae136032a1e63110	cmd	package
+package/Executables/AtlasDesktop/7. Security/Mitigations/Fault Tolerant Heap/Disable FTH (default).cmd	126	6bf477ac5aedc7df4384dfee6eff72ea90aaf883	cmd	package
+package/Executables/AtlasDesktop/7. Security/Mitigations/Fault Tolerant Heap/Enable FTH.cmd	125	cf0cafbaeca77a2e739674f12f53842832173b28	cmd	package
+package/Executables/AtlasDesktop/7. Security/Mitigations/Fault Tolerant Heap/Reset FTH entries.lnk	1465	0ba0a57f920f5291212bda2d1fbc20df27f04646	lnk	package
+package/Executables/AtlasDesktop/7. Security/Mitigations/Set Windows Default Mitigations.cmd	127	f9ff17c55d6350ab9c29424916b9a31140c65c7f	cmd	package
+package/Executables/AtlasDesktop/7. Security/Security Documentation.url	139	84eea90b735a49e02d33202f8b885f8bdeb09963	url	package
+package/Executables/AtlasDesktop/8. Additional Tools/Autoruns.url	150	41d3fa994fbbe81a5d0936d27c9401b880282ce2	url	package
+package/Executables/AtlasDesktop/8. Additional Tools/Everything Search.url	120	5afec8815695c35caab8e353561d6616eb697f14	url	package
+package/Executables/AtlasDesktop/8. Additional Tools/HWInfo.url	117	45c9139209a964390b3d4296bc478a2bb3b660b9	url	package
+package/Executables/AtlasDesktop/8. Additional Tools/HWMonitor.url	131	2d747fcdb9f41c8f4b0a4a1a2f9725ac5b7161ef	url	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Check Atlas Health.cmd	116	12218079e22dd577847118bc2e21f89b3c329779	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Fix Errors 2502 and 2503.cmd	125	7b1a12ba056909bcfa2d6e069156e9e2d39e931c	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Fix File Explorer Visual C++ Runtime Error.cmd	128	2e00f89470f6977ea1df5a1bf31712192b617517	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Fix MS Store Issues.cmd	121	38d51b8f1a815fa2625c356f105e56840ab14f81	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Network/Reset Network to Atlas Default.cmd	127	535f904b02cc1add010b2dce8162aecc84e761b7	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Network/Reset Network to Windows Default.cmd	128	791ea4056d4349bc707f5cd6d782d37c4d0658fa	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Repair Windows Components.cmd	128	b5003442099f92abe8e7390e101a590a04620ee5	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Reset this PC (read first).url	124	d6bb5398985d14188e40141a4aabf77a134f7ec3	url	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Safe Mode/Exit Safe Mode.cmd	114	2afa97ff78609cf62fa14e4bd09737864715e8ee	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Safe Mode/Safe Mode with Command Prompt.cmd	123	57d66555a01303d87268106e8ee5163d7f8d16e0	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Safe Mode/Safe Mode with Networking.cmd	120	c72db763734ebb8260efd24382e8b3cce12ac65f	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Safe Mode/Safe Mode.cmd	117	404b8f6ae187ee4e3f186277fb8c8bebc5a06df7	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Set services to defaults.cmd	974	40f88c4107e011b3d56353bdb6972671d7c8bfcd	cmd	package
+package/Executables/AtlasDesktop/9. Troubleshooting/Telemetry Components.cmd	124	9e2d121ce00649e30ee752574b910f59f3d52799	cmd	package
+package/Executables/AtlasDesktop/Atlas Discord.url	51	96484f4a0b5fbd4dc38dd7245dd6142190e1f2ef	url	package
+package/Executables/AtlasDesktop/Atlas Discussions.url	69	3110e253ec34a0811ad758f98434adac917b1dc1	url	package
+package/Executables/AtlasDesktop/Atlas Documentation.url	49	1883b9cfcca7a0625864349b78a8f5643a942813	url	package
+package/Executables/AtlasDesktop/Atlas GitHub.url	57	00a8c22cfe04b46155f1c81fbb1e7c78ceac9bae	url	package
+package/Executables/AtlasDesktop/Atlas Website.url	43	5aba0aa4ea55b9f9a5d6f9e48c40ffad3b158720	url	package
+package/Executables/AtlasDesktop/Install AtlasOS Toolbox.cmd	2275	59580e479ef4e582ae7baafedf6f9dd86e2f74a9	cmd	package
+package/Executables/AtlasModules/Acknowledgements/Atlas Utilities (Zusier).url	67	c58f9a88344ebf066de0362e2016d7dcdc4df324	url	package
+package/Executables/AtlasModules/Acknowledgements/Remove-MS-Edge GitHub(ShadowWhisperer).url	73	650029e34d3c27830eaf0d0c6afbd3b0e983396e	url	package
+package/Executables/AtlasModules/Acknowledgements/StoreFixer (TheyCreeper).url	126	3c9c25f50d89879dc6278fe00111a1c0b63ba7b6	url	package
+package/Executables/AtlasModules/Acknowledgements/Timer Resolution (valleyofdoom).url	132	497983d4ecb426d1fc0010217a0cfcbc1c130892	url	package
+package/Executables/AtlasModules/Acknowledgements/sxsc GitHub (echnobas).url	117	e22fa7bc0b6376a8fb71ae14c66776f78d356812	url	package
+package/Executables/AtlasModules/LICENSE	35149	f288702d2fa16d3cdf0035b15a9fcbc552cd88e7		package
+package/Executables/AtlasModules/Other/Blank.ico	15086	b8d6e7df5be792be46bc90682b3440eb93581064	ico	package
+package/Executables/AtlasModules/Other/Classic.ico	2734	8e368cbfe8b35046f398efc34538e70fd64ac358	ico	package
+package/Executables/AtlasModules/Other/Force Timer Resolution.xml	3590	791fa668cea438a87001b4241e455c9178c65493	xml	package
+package/Executables/AtlasModules/Other/NVIDIA.ico	51262	2afaa8d309cc81d208103caa5585b6f3bc5573d5	ico	package
+package/Executables/AtlasModules/Other/StartLayout.json	685	32b2ba3dfd40c88ae20d60bb86389754b83dd065	json	package
+package/Executables/AtlasModules/Other/atlas-folder.ico	64336	473e708048e65f5a58e067615397181e61a1ac57	ico	package
+package/Executables/AtlasModules/Other/user.png	130060	f4b5a368df8cad81853af0fd9b8ecff99302fa6d	png	package
+package/Executables/AtlasModules/Packages/Atlas-CbsHashes.psd1	1078	1476591058e0d0d511ef6322426a1eb037b28819	psd1	package
+package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35amd645.0.0.0.cab	43743	1eb8ed296fe14c78c79316eaf76205436a1cbf6f	cab	package
+package/Executables/AtlasModules/Packages/Z-Atlas-NoDefender-Package31bf3856ad364e35arm645.0.0.0.cab	52230	d33fb61e623ff21d46c7d23dacd1307a26364be4	cab	package
+package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35amd645.0.0.0.cab	27817	81c0cd1f60edd0588e532f530606bd2e5e5ebeec	cab	package
+package/Executables/AtlasModules/Packages/Z-Atlas-NoTelemetry-Package31bf3856ad364e35arm645.0.0.0.cab	29376	953bf75f0c8cbfdc609491bdcadf6e7dc60f304a	cab	package
+package/Executables/AtlasModules/README.md	6823	27373d0ad707258009e36b1261ba7e8a1faa0ff9	md	package
+package/Executables/AtlasModules/Scripts/Compatibility/Windows-Release.ps1	8784	c5ddcb752fa1be4f5513bf25e5bdbcf925664341	ps1	package
+package/Executables/AtlasModules/Scripts/Compatibility/windows-releases.json	6684	9afd0158441987c8f6c20187d8dee02d3cbc3a51	json	package
+package/Executables/AtlasModules/Scripts/Entry/Import-PowerPlanFile.ps1	2382	60664ef9dd5f78e80198a5c390dfbf29a82071ae	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Initialize-NewUser.ps1	23635	64a083d21bb1c5716a0fb44220b29b1cbcccdd21	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Initialize-PowerShellLauncherEnvironment.cmd	3343	eb8e7b4cb9f33255eb8d39a46a174927dd4b10bc	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Install-Atlas.ps1	51411	66796d94b851a02ad0417855cc6b95a575c8b2ca	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Install-AtlasPackage.ps1	6176	834fe13cc78367bebbcfef440a5b7f34bd7ac538	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Install-OpenShell.ps1	4567	e643e1c080976fdd9f5f9d3204e4cc5fd3bacc08	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Install-Toolbox.ps1	3077	d31d4398cb045afb2804f67dd30ccb6d1f5e3589	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasCbsRetry.cmd	1614	78c18b098fde5a5ce7ce4e14a24ce8b85eb209d0	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasInstall.ps1	18403	3046ffbcb2a1d0ebae3941d284bae7ff9f355d71	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasResetServices.ps1	6192	deff0d3b93eb4e1376ab07adeb34d2a12e328038	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasToggleLauncher.cmd	2958	b78e0f102ace4ca56be1f53c3fdffbdb35aa446e	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasTrustedInstallerBroker.ps1	7471	0fd5a364dacdca84a277a6e59c9c5cd657330043	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-AtlasUserUpgradeHidden.vbs	380	3dc6b01b1a34a6a79d5efc870e7167c20e0c85b3	vbs	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-InitializeNewUserHidden.vbs	839	cdc9ffd5e951aec1ef58a533d1b8a95bf6148548	vbs	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-OneDriveCleanupHidden.vbs	1026	b9f124d0bab30053b6c3c29ae2878eb5aeeec797	vbs	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-TakeOwnership.ps1	7799	0ad64f341ada797ac935f05f50efeda9539d8286	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Invoke-Toggle.ps1	6277	7a348cbcdc99ebbe9c8c0c38fd1aad351f865297	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Open-TerminalHere.ps1	8125	ac68d0b3e714d9ef3a9caeb6078aaa113ef7873f	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Publish-AtlasInstallUser.ps1	2958	4e5e3419f81ac0dba8dfead6a91f7c80aaa8ab3a	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Restore-AtlasServiceDefaults.ps1	4540	5cfc63f779f9706873ca709db123c2d1ed679723	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Set-IndexConfiguration.cmd	2816	0f2a624cf5c38b6bb1e63c5e93646e81bec1b7b3	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Set-IndexConfiguration.ps1	1569	b315625311b615ad9e026d3b5ddfd7e0280da1c3	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Set-SettingsPageVisibility.ps1	1092	19a3f16fcbb6029e5328fc31de578a7bd75fd30e	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Set-SettingsPageVisibilityLauncher.cmd	1490	79917fb1db6b18f766147dd49fe09ea5726b33b2	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Test-AtlasHealth.ps1	7180	b36c93e82a0fb44f73a36816a2baa688156a2939	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Test-EdgeState.cmd	2999	23c7e62aeefafa5c8bff25d059328019ec3a0416	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Test-TrustedWinget.ps1	1117	c5c116d98dcbf6b72e431f36208a2c986fad0a50	ps1	package
+package/Executables/AtlasModules/Scripts/Entry/Test-Winget.cmd	1790	f546dbe67b45682bc9f97f1bff07efb1e4ea0bca	cmd	package
+package/Executables/AtlasModules/Scripts/Entry/Update-AtlasUser.ps1	3947	39f2d985d3e03c631686fd01f50e5b641638e5ff	ps1	package
+package/Executables/AtlasModules/Scripts/Initialize-AtlasPowerShell.ps1	1856	29108af88dfba4afa9facd341ef2299ccbfbdcb1	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Compat/Remove-AtlasLegacyElevationArtifacts.ps1	22305	9c363f51a1492edc71005e3de7b8c13a1b1e6c54	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Install-Plan.ps1	7583	0637243b8aa6002abb519103802fc0a17dce5a4a	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Invoke-AtlasInstallSession.ps1	16879	405c0948cba87b9adb7b5a3b646adce2062073e2	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-AppxSupportPhase.ps1	3894	0a63e9ccb76ea71abcdf02abe4adf912e8d534e1	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-ChoicesPhase.ps1	11133	97d3561c217d9e3dc1c6a957f40065ab68f25180	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-ComponentsPhase.ps1	6449	5b914dbcb3ad2e970934f8c157ad5d029d39b93c	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-DefaultsPhase.ps1	1754	6530e3e845413057cbc221b9b03019cfdec7e03d	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-EnvironmentPhase.ps1	1677	19721d652477ce238c5a045cf7d4f8b945da5c37	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-FeaturesPhase.ps1	5605	00728f133226ba7037be2d4049f70ba64c98a4fc	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-PreInstallPhase.ps1	2484	305ab80421f9e1ee358c1d8aff673395d13cb57d	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-ServicesPhase.ps1	2389	80ae9fbb51dc086d48f8c8169c8065ec1286451b	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-ShellRefreshPhase.ps1	1646	c29ba98d0fb82eebd8f0d92852ded00ea0eb178b	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-SoftwarePhase.ps1	4502	3fdebcd25d61bd07aebaff973f1024e3fcb27726	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Phases/Invoke-TweaksPhase.ps1	7514	cb2516a56ac953f345fcb0dc8b87fbd22b9b0f17	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Choices.ps1	10386	fde2f667bd9d9c772bb4f6aa08e31015044ed3fd	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Complete-AtlasWindowsTransition.ps1	977	1593362a4ae1dd44faddf09c84974b7a6dabd1e0	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Copy-AtlasPackage.ps1	2720	3d9c95e53d7cd324c84eab78c8edde0f48bed6a1	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Default-UserHive.ps1	7674	3a4f6a5f7be85ecc94e828092c0b9689a5e0a016	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Get-AtlasUserFailureDetail.ps1	4245	550bd5c3e00f75a191c09910d35a2fa178f1e397	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Import-AtlasLegacyChoices.ps1	7742	9e18d133dc13c8469237e083bf447e6df69cbb85	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Initialize-AtlasPath.ps1	3045	4f4e5d2845715368bd6b1e937c9121139f368339	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasEdgeRemoval.ps1	3833	a28706eec68b495e7fb1a49b4fee90e0541c9e5b	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasInstallingUserPolicyRegistry.ps1	2621	1015232790eb612ddcceca5dbd117b30449f7b28	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasInstallingUserRegistry.ps1	2798	36a7e08c9277f87fa09fd4f1b6b469a321bc2da0	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasInstallingUserSetup.ps1	3034	f8ee04b82264881d081b6ee3aa876f47f550b8a1	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasPackageReplacement.ps1	9682	c7638802935455db9f0ac8169481ca67d9241547	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-AtlasProcessExplorerCleanup.ps1	860	3e497caa9e95d85f66849301f2e3dae5ad60e7ac	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Invoke-DiskCleanup.ps1	10436	0c9ccbba2650392f635261f74e16bb600a093de5	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/README.md	979	b474f142e4da2db1b8f126ce9d3b4ac4ea550829	md	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Remove-PreviousAtlasInstall.ps1	4255	2998090be4082f211a8584f147ddbeead4690b80	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Restore-AtlasRebaseState.ps1	1674	428da199f65fc206112c413b33e56994ed5b4014	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Set-AtlasDefaultUserHive.ps1	1711	364deb6aa378ed44453297b431eef05fe4b0a4bc	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Set-AtlasDefenderChoice.ps1	7599	01df9691811f1e3ac1ac74fd8262d3bc9c710505	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Set-AtlasUpgradeUsers.ps1	1275	4cf4ca16769b19440efed188f41bc5eb6940fa66	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Set-NotificationState.ps1	6153	e315b5aea87fbf43687be8d9c4ea2eee177365f7	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Set-OemInformation.ps1	1324	106a8b401305c3307585aac3c021597dcc0015cd	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Stop-AtlasFolderProcess.ps1	2667	35604d1e063416885daaac7f22f8319adc8bdbaa	ps1	package
+package/Executables/AtlasModules/Scripts/Install/Tasks/Stop-ProcessExplorerUpgrade.ps1	5251	1bc96cb40d5e7c0c7b749f1105f29e28c00a5929	ps1	package
+package/Executables/AtlasModules/Scripts/Install/iso-setup.json	31	1eea19a564fd0d32fb07426aa55f99f80ef9321e	json	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Atlas.Appx.psd1	835	ce76ee9118ca997b17e2f970516f8baa6bc83f4c	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Atlas.Appx.psm1	1319	a1fb0d78b275df6219924260a1e709465cd0b12a	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Cache.ps1	25693	3e1c110b0503c0f05f0f28fdd962cf488bf02079	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/GameBar.ps1	1695	a8b72952dbec8a73fdbd7bf03e56a548dbef7e2d	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/PhoneLink.ps1	704	9fce1739a6ce120aaf50db9962706888e7036e24	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Removal.ps1	44098	abc09167abd6fa88e249ca910884a8064a1c5485	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Snapshot.ps1	6715	1a43fdab869c91ce63cb7f321dcc4333b08e8977	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Atlas.Core.psd1	1948	899f829910e6de8538e6ea8ae15cf87fad665c0c	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Atlas.Core.psm1	1681	271910bfcfd7c0a96c6fe809175b0ef8d1162d4b	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Context.ps1	9677	34511eb4f9bc0e0385130533225c4e9f148a1a70	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Data.ps1	1762	dd390e4c40a7f96a15c5a3e8c140c8ef33dcc3cf	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Logging.ps1	10809	6e6d3514bef6cc6c89376e499f225de62231fc01	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Native.ps1	6989	18b04c9a17f7768c4d8f43c10e6588c734736984	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Privilege.ps1	8229	630e699367ebd8b7194db75962d4cd5bc055d045	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Process.ps1	7690	9af4b72d8a38b42662a4ef766d526e09f3858147	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/RunAsUser.ps1	6739	bb6e0ac2f4202b4303b1db3321ee5df88143ff9d	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/TrustedInstallerProcess.ps1	1927	895bdc213eae3f266ec1531f76d39788cc8a4f90	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Domain/Ui.ps1	14715	2eb4c6f40b19ccf3bfcec6550057dec27b959439	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Core/Native/Atlas.Native.cs	125796	87ec51fbf5693ae2fdfd884fd5eae736ae9c0ee3	cs	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Download/Atlas.Download.psd1	991	dcb11ffc0a7ed3c0d7d82b660e01658549cf4deb	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Download/Atlas.Download.psm1	35957	17a26abcb043da4aa15fd0176ff979381957be46	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Hardware/Atlas.Hardware.psd1	578	7254898c204ab47124827ea12aab190a530aaf64	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Hardware/Atlas.Hardware.psm1	925	096cded17ad04bce4e67f1cd0c3455a13e6eec57	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Hardware/Domain/Devices.ps1	13686	e1597b047831d7e6a3d0e2e129380d5303a39935	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Hardware/Domain/Power.ps1	14418	dd08c92f50d07dc157e5362b813a449396377d73	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.InstallState/Atlas.InstallState.psd1	1114	c50153ffa13eb3c23fa9998c4f599195e523d46f	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.InstallState/Atlas.InstallState.psm1	77052	f8f1cc1b0aaf55da1a226a5a42ee4497dfd90ab5	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Atlas.Network.psd1	684	98f873fa76148b57f6e11da06b50c398cfc85354	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Atlas.Network.psm1	1206	8fe5695ff76bf08b8961f44a91b805cfe73acc80	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Domain/Defaults.ps1	11195	1b39ccf975cf06ef1dfb6022d4128d4f54ec0c38	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Network/Domain/FileSharing.ps1	14016	48538a7c61b89c8c7be335930b33b780d54221a7	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Atlas.Privacy.psd1	694	718a178afcaa2cc2274e21a55f6013f8146a78d0	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Atlas.Privacy.psm1	1220	1671f505ae5428f4c4018f936dabc5589361efd8	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Location.ps1	4669	6b66b088f461c283c8a4bdbe2f8e90a430718778	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Privacy/Domain/Telemetry.ps1	7395	fac256f1591981cc7001c696ae627bc03f402907	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Atlas.Registry.psd1	1347	976f36cb7b3478d6e741c4bcfd7ac8704618e898	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Atlas.Registry.psm1	1434	3f53c73ac8d5b4c3fe2d5e42d86947bb58b9bde3	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/Entries.ps1	14060	27bca4d45dd34490f260a413d6a17143f1fcec9a	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/ExecutionPolicy.ps1	2594	84032484f168397ea67e868c7af372e484654e69	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/Keys.ps1	2007	71a2a1bd242d31fa7e47f71b3907bb9817d9f0b2	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/Paths.ps1	16500	1fc0b5139be6c869b5d1237c2703e7476cad92a4	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/RegFile.ps1	1591	258d5686fd64bc8ddde929c5714b0d5185a9171c	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/UserPaths.ps1	1504	d6118a8116822e74cbc7758a6fa0823018119b89	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/Values.ps1	8283	154831869c843263dc1813adde8a0c4740bc5a0f	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Registry/Domain/Verify.ps1	6741	546f5b51b6ae166ddf0d2ca2bef032d2bb1dfa2b	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Atlas.Search.psd1	711	b756111bc729d1619efb7f880f1bf36ebc112694	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Atlas.Search.psm1	1031	1905ab103b2a16e85167aa398f1a7010aedba844	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Domain/Index.ps1	12448	ab60702e6949d87213423aad489b660ca9882b7e	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Domain/MachineState.ps1	3815	50616bfb2f9a9c0dd8f7643ff26dadf8ab457d8a	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Search/Domain/Store.ps1	1450	ae7bdb4a9374a284e77b3f12c03a4c7f6bd726ff	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Security/Atlas.Security.psd1	892	a806c369065563b1b1f156ddd8aa56fc0e4a6fd3	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Security/Atlas.Security.psm1	1357	0ae609b60716a85c20fc3942b77485ba294b4fbb	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Security/Domain/Defender.ps1	12047	4a72c23d1cf05be2401704509876a792ff330ffe	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Security/Domain/Permissions.ps1	6056	4b93f3922cf3b1d99adc55f7761aa0181d91631c	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Security/Domain/Vbs.ps1	13365	9059fb637402d5b75a788763c2101f636926597a	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Services/Atlas.Services.psd1	711	a71af99dbe017d9fa613ceea577cddb62495aef7	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Services/Atlas.Services.psm1	1064	a8580687e3e1195229c488743971c90db5feb833	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Services/Domain/Backup.ps1	7602	a6fefd05b2c80c861e347802b9398002848bfc04	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Services/Domain/Entries.ps1	6120	5b777eb7fce1934ccd5b9d218f9b6180b980f0b0	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Services/Domain/Startup.ps1	5312	3cf1f6d2fd2408156dfd87cc49a9e8e4cf322be7	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Atlas.Shell.psd1	900	3c4ea0be9bb7509f2f3bf468775e664fbf0260f8	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Atlas.Shell.psm1	1445	474a0ddb8ad03c294027fecf9ebcd6850a7208f9	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/ContextMenu.ps1	4958	d25ad35b2b17113d775bb7a8eb53ed39f9695a47	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/FileAssociations.ps1	5840	92a7d1c5715b85a411652b9f45ec220a9e298e1f	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Home.ps1	2173	761ad322b6bfcfbcc06a0afe202025be0d73a590	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/SendTo.ps1	10249	51e004c70c0294325c7ff33110d615596ab8a8d8	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/SettingsPages.ps1	6334	7ba903f0ca87f9bdb0b4367e319771206c450028	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1	4349	80497a75bc6e16d8751d71da96a62425575fcdbe	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Taskbar.ps1	35452	bf04e3a3d65110cf17d6bfe6382a7e0b9f8762a7	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shortcuts/Atlas.Shortcuts.psd1	421	34936a2fb9f96291d6bed8db722a6b7bde228599	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Shortcuts/Atlas.Shortcuts.psm1	6721	44caf7871832d353bce09bd42a9ad85f0a017871	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Atlas.Software.psd1	756	438d344824673a047e7796b7f6c98e96454b1ac7	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Atlas.Software.psm1	1323	2352c7ea5d440d819827b975e9c0d1f2f91dbc22	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/CbsPackages.ps1	18780	3cbdec7b1532958adf62368a9f14cd22f991efeb	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/Installers.ps1	50776	2f071a22db5625cda475d018b9ce04bdb599c623	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/NanaZipStore.ps1	10866	efe8624f7ccbc733fcf7b6029e5b86ff2dd7fa26	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/OneDrive.ps1	4194	764e83b92fca1cdabe5fd94eadb7ec4b301ea008	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Software/Domain/SoftwarePicker.ps1	13998	511710891269701c1d1d9a499871e2d654ff864d	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.State/Atlas.State.psd1	714	d4985340fcc909134dc8846a2771eb3612acfb00	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.State/Atlas.State.psm1	19441	00b77534c1874d7a7ff467950b508e4478edb084	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.TasksProcs/Atlas.TasksProcs.psd1	828	1693e3bff8f152cb4656cda1a28def85d6b207fb	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.TasksProcs/Atlas.TasksProcs.psm1	1171	5a930d6dbca58878040c2cde3c9c486c73584525	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.TasksProcs/Domain/Processes.ps1	7994	86baf12d3e2f6f06bb65ce75d098fc4f1ceee9cb	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.TasksProcs/Domain/ScheduledTasks.ps1	12345	9f288c54536d7f1955639ac90b9dbff66fd10677	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Themes/Atlas.Themes.psd1	520	72a282ae88f4e762133e22c3fd21226117e15dfb	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Themes/Atlas.Themes.psm1	1027	eddaec59e6534d54f678e8291687fd624bad1890	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Themes/Domain/Lockscreen.ps1	2336	092e687ad21e3c1558ff2239c372f7df51bd6f88	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Themes/Domain/ThemeApplication.ps1	1774	fb62ba9ae263bf41dc626df40e98d57de43e02a3	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Themes/Domain/ThemeRegistry.ps1	932	2283f43b5e20b30a872c9e8b663bb879adf43ae9	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Atlas.Toggles.psd1	1490	1fbf97c166db32e778bd3f5d7fd754acd2c4f301	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Atlas.Toggles.psm1	1698	949d752a93a54a222530bfba19c39edfc4e79ddb	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/Definition.ps1	26864	ea23d7c4fadd9ae669b90e4a4fdf39eb56f25f6e	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/Engine.ps1	47919	ed92349423d80211e2bc9b9c78717255baa3d95b	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/Interaction.ps1	840	f776542949b98d4d26c29008f0a03ea7520a58db	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/LegacyState.ps1	8747	f4fd7293de515f3d8738a76aef84616159de7773	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/Native.ps1	4691	49e4350ec758b23c3f5f5641895e54e7147dfdb0	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/Reapply.ps1	14062	6d3111a50bf97db100f2fe5387277a2db716fd1c	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/State.ps1	12915	56f69803ee2b0845c5f88677e9de0e4cac7251b6	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Toggles/Domain/Verify.ps1	7400	14ca2395aee8f163c55761393b07897f5f9b8229	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Atlas.Tweaks.psd1	891	ac2c096a89da347a19a544d7fd9ae3acc6dbcf39	psd1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Atlas.Tweaks.psm1	1680	cb3ab283b63fb433ac61d8979a788237a1f14213	psm1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Domain/Applicability.ps1	3278	0d50e034b8a0ea821055de4918cb11e1a9b93f69	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Domain/Invoke.ps1	18447	f79b1f0e0e6b06a7ea1a0d0a695b14174bb00bf0	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Domain/Manifest.ps1	14264	1194626fde7a7175b36d96ccd060d4d1bee9cd47	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Domain/Schema.ps1	22484	88167e1eabf1299aaa29563301b85cee300b5538	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/Atlas.Tweaks/Domain/Verify.ps1	4708	4443f9b301e8d1b8c6c6c6768322f56cf147e5d0	ps1	package
+package/Executables/AtlasModules/Scripts/Modules/README.md	2255	110cd1fa8f24b460d3b4c5205aada801012ac468	md	package
+package/Executables/AtlasModules/Scripts/Operations/CbsRetry.ps1	21357	c01377fc4298b8daf2d84fe00f2aa733a2268a76	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Clear-AtlasUserAppxCache.ps1	2436	dcbf5aaaff27ce1a6912cda0a2c6708cfc8a5142	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/EdgeFileAssociations.psd1	318	4cade5e46fa138a579f0889242ac89a0e1f0dae8	psd1	package
+package/Executables/AtlasModules/Scripts/Operations/Initialize-AtlasLibreWolfUser.ps1	9010	0aadb21cf6b933fb81b7c92cacf8bade9ac0d1d5	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Install-OpenShellPackage.ps1	7585	37d1334db18d073005be0fd462e7ba15d65f3d41	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Install-OpenShellTheme.ps1	3501	44f9a9fcdb1a116c9edb6f1ca63edfe80546a1a6	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Invoke-AtlasPriorityLaunch.ps1	12532	41de57a4dcc299933e4095191a7001889f93c9ea	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Invoke-AtlasUserShellRefresh.ps1	6114	9ec721a3c51ce586c37c545cadbe637ff281f49d	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/New-AtlasShortcutSet.ps1	1482	355d529799d901cfe22b5f141bb46343adcfaa0c	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/OpenShell-ThemeTransaction.ps1	9099	aaabcc7812dbe74f32a238bf6c4ee24cd40c24d6	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/ProcessExplorer-Package.ps1	31205	00b07de66bc85d98fe470204610ffe7c21064a72	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Remove-Edge.ps1	42022	7b57133bc9ded75e7b2ee83e125e2061e00c8df5	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Remove-EdgeCurrentUserData.ps1	17617	e3780571815a5ccb379a9b6fcba582b271cfed62	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Remove-OneDriveCurrentUserData.ps1	17711	713f5bacb6e2ec9d59250b05505080b0ef6f20b4	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/SafeMode.ps1	7585	bda9af614a9d45226db0f4d35c87abb387a3a814	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Show-AtlasToast.ps1	3615	12f8823bdb906cea82ea81969965c81d06ab8a76	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Toolbox-Package.ps1	8179	8ceccbd5f63f85585d5e12a8f1f8a21846053725	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Update-ClientCbs.ps1	3880	a5d7f06653d8c4e91261cdce409406c120db33c4	ps1	package
+package/Executables/AtlasModules/Scripts/Operations/Update-Drivers.ps1	15712	0ed760a78b3025a25dcf62462a1d9adb023847f0	ps1	package
+package/Executables/AtlasModules/Scripts/Preparation/RegistryFile.ps1	3498	0b43aef5ac8ec0d682d34201892f769c400f56e9	ps1	package
+package/Executables/AtlasModules/Scripts/Preparation/Update-Windows.ps1	140825	bf89a5a3487c1008cc9bd06d0fc84c02e69ab7b3	ps1	package
+package/Executables/AtlasModules/Scripts/Preparation/WindowsTransition.ps1	92712	1f180fa39bccad63d6404e941399d682b8fc4813	ps1	package
+package/Executables/AtlasModules/Scripts/Registry/README.md	1090	c46638e1ebbb3f90d52957920a7c4580e3dbc52e	md	package
+package/Executables/AtlasModules/Scripts/Registry/SecurityHealthTray/disable.reg	258	f5169c7a2b1c84d9a02e96afa51e666b23fef993	reg	package
+package/Executables/AtlasModules/Scripts/Registry/SecurityHealthTray/enable.reg	830	6f40c4762566d8c8873a4e2f2ee9f61b088418e6	reg	package
+package/Executables/AtlasModules/Scripts/Registry/TakeOwnership/add.reg	5568	d9c098678497c3e9790847d0b54ff9930449927d	reg	package
+package/Executables/AtlasModules/Scripts/Registry/TakeOwnership/remove.reg	438	47fe37e5311917bd0d91df355b43f9bacec7c4a0	reg	package
+package/Executables/AtlasModules/Scripts/Registry/Terminals/disabled.reg	884	bf27792a16f0ae0a21e05bb57f50740d0cde87d4	reg	package
+package/Executables/AtlasModules/Scripts/Registry/Terminals/enabled.reg	29598	9e4fd0cd393852c906d3fafa8859092eca4f4cdc	reg	package
+package/Executables/AtlasModules/Scripts/Registry/Terminals/minimal.reg	21300	004e58d293a49e8eeaf5c92279a78af7cd2fdb33	reg	package
+package/Executables/AtlasModules/Scripts/RunAsTI.cmd	98	bf2b1bc1ca74e65ef3640f48e70e8e43bca9bf06	cmd	package
+package/Executables/AtlasModules/Scripts/Tweaks/README.md	16383	b5cd5c319318dc3cac294bf98c06e2adee7d325a	md	package
+package/Executables/AtlasModules/Scripts/Tweaks/debloat/config-content-delivery.psd1	4499	af12b5376439c51780442de482fb9c0cdea78893	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/debloat/config-storage-sense.psd1	2149	ba3074a729822341ce15d13d1dd8ffccb3ac8322	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/debloat/disable-reserved-storage.psd1	354	331aaa163594834ee9734083263a1b342381057e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/debloat/disable-scheduled-tasks.psd1	1143	67ba20b4e5ff574865aff698c299db4b8fab3541	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/debloat/hide-unused-security-pages.psd1	683	0e107f33b2c9b87795853179f360fe190d65d49b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/add-newUser-script.ps1	3961	bcd00d444e5c5e2d4e3f8c31a85e43dc2657da7b	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/add-newUser-script.psd1	1641	94e9be52907c537114f3aa1d1313574bffb5b0ca	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.ps1	350	804d14d47b2b1ec60dc1c77ce9b7179f672a421f	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/config-oem-information.psd1	807	5600900c422f64038d2463dc0bd2a5fd84c526d9	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/config-time.psd1	1339	6350f6e8458cef5615e5d5803bfd0106e1caa666	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/create-shortcuts.ps1	202	222c2ad9f05172cddb9d3fe305474391010a1ed3	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/create-shortcuts.psd1	157	d43e7d0f7c7386bae52efe3b729340af784fa11e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/delete-windows-specific-files.ps1	1097	818a1df8abb4d3d5d3df3f8725cf71f3686f04de	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/delete-windows-specific-files.psd1	499	da865482e5adf8e149f8e0e3a4875415ab0115f9	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/make-measuresleep-admin.ps1	630	fc7d54eef2fae734d0e266a58b860497d54ba3e9	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/make-measuresleep-admin.psd1	236	1ef89ce7bd05d20b53681e39d69a85f77bb67d17	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/rebuild-perf-counters.psd1	869	9030799dd1b8d1fd768dc50b5fda41324cb3940a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/misc/register-user-upgrade.psd1	458	1716027e7b1cfa44648134bb6afe821285237896	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/networking/atlas-network-settings.psd1	400	79f505624c820941316334f220c23127d7253fd7	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/networking/disable-llmnr.psd1	565	0e4ed4bc36cb3a96283f278bdbb8d5444e7e1d33	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/networking/shares/disable-smb-bandwidth-throttling.psd1	625	e810c1a506490044dfed0e1de7bcecbda4d8525f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/networking/shares/restrict-anonymous-access.psd1	435	9a93081e80ff0d662d798c6f2944ed24aa24ad8d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/networking/shares/restrict-anonymous-enumeration.psd1	375	9c33afad0425ad720887e901ed4f3998f8736c26	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/config-automatic-maintenance.psd1	536	7e9bbf529c8c1a96f7b5da3f926c996a26f7e769	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/config-mmcss.psd1	805	1fb875d4762798d288ca3a3a9a4ec612214a05e1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/disable-auto-folder-discovery.psd1	653	6ed3d30e30a97bd7aff361aee52d4cb2d5fdb92a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/disable-background-apps.psd1	964	569711822054514f606be32c284c3f632bfbc160	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/disable-fth.psd1	959	27ba29d6ba044d0d00b606a54fa132538aee62c0	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/disable-game-bar.psd1	1462	d6bac878f0a354157ef9422db7c4cc5e76b4e156	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/disable-sleep-study.psd1	895	7cd0d1d2583a943d1544e5a629be8d8082cf4542	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/respect-power-modes-search.psd1	390	6fee1ad983ccde8bc8e363400b9b73470188539c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/system/disable-service-host-split.ps1	1631	0454506cb38d1dfe0bb70eab752e1fd40fbc4fcb	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/system/disable-service-host-split.psd1	521	948ce54323876bedd23a61d9fae71031150ceadd	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/system/optimize-ntfs.psd1	1054	2079c03e273585d73bef024e1f8ca2da42586e3c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/performance/system/win32-priority-separation.psd1	603	4675828624934f7226aba26840f474228511234c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/advertising/disable-advertising-info.psd1	666	e576efa09aab50ce5194fc1075f82eb08041e193	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/advertising/disable-sync-provider-notifs.psd1	357	23faab7711b39e902dbe217ad00a8bb5b4ebe873	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/apply-privacy-toggle-defaults.psd1	399	11748a622f7386ed0b8bfcf471b47b913c59dcdd	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/apps/disable-notepad-ai.psd1	395	51e98b6b392d55d45124958adfa1b29f415fc93a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/apps/disable-nvidia-telemetry.psd1	290	c1c1df42c3be9f6771692c95246f948658a8fc27	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/apps/disable-office-telemetry.psd1	583	cfd32acbc762c7c79ed58b78198b00295b48a577	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/apps/disable-paint-ai.psd1	941	ae76868b5660155603d982bc905e54ca60ce3e78	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/cloud/disable-setting-sync.psd1	1745	5d362ffe70dca415e5ea07a70b1fda8331b05678	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/cloud/disable-suggest-ways-to-finish-setup.psd1	398	6d16e238bd7b8226a49a3deabf83d3f5fa0de25a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/cloud/disallow-clipboard-sync.psd1	471	0d51151478052d449f7830a4072663e866ee2c7b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/cloud/disallow-message-cloud-sync.psd1	287	a9eae548ac946626866bf80d31a69a1bc5246639	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/config-app-permissions.psd1	1201	da466ecf13cdb4bc8a60ec287af48eaf70b898bf	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/config-windows-media-player.psd1	741	4118b260b9871445fbbc7c05c97bd9cb03388c1b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-activity-feed.psd1	316	4ce979e157a4543da88bebd90f4976df6c9e66dd	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-app-launch-tracking.psd1	500	7f72766c9a872936449076082c9cd4280b64414a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-click-to-do.psd1	429	076c9d55f0c1e171a1e5ff5eebda30d8ba29ba49	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-device-monitoring.psd1	418	4f62761933969403fe6969102e54a633c302f47c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-find-my-device.psd1	550	7f43114919d1da6d2e20ffe27127ad11d02502b2	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-lockscreen-camera.psd1	273	c20ea3200e48c96432d95c69783b4a57b30b8e32	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-online-speech-recognition.psd1	474	df5d6c996d1a34c79e2bbdea3028decb825157ce	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-pca.psd1	1603	64a0a4fb63d0977bb805834ea606ee4e29aec514	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-perf-track.psd1	481	23fadf686b8d75c28044a48f81969d0ae136f445	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-privacy-experience.psd1	357	3f2b11f16e128f8c039ea1130d6e8517af76d886	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-recall-snap.psd1	407	4c0628c67aa6dcdc42757232f9e2f3858467ccca	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-rsop-logging.psd1	353	5b42b214018d52504dcac9e16ec01f71e2216c51	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-settings-agent.psd1	567	8d609e00e7482cfb282f5ab8d4740f7a93ced10f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-speech-auto-updates.psd1	300	9c3af922b0f74c4b94132fc75d1a45c09ce55d9d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-tailored-experiences.psd1	578	4a1f416924eb78c99532b9ed830507da2041870d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-user-tracking.psd1	350	9d26b1538e91d0c6b04db32c8f800884764077a8	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-web-lang-list-access.psd1	332	6d6249e055073b27fd9b444541c5c930e0b14269	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disable-win-error-reporting.psd1	457	4b7728e790c8f6b2ee40b61ee19978cd07d9feef	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disallow-ms-accounts.psd1	557	7853e70296be57c5b30ef60f2ebf3255474b9495	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/disallow-user-activity-upload.psd1	452	3d7fb73b1ff6d1f42f447c785195c185e7a1157f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1	2420	0c1421a4bfd4cbc778d18aab0aecd53d5b552b30	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-activation-telemetry.psd1	490	9e0d4be8553ffd338ec25a769a2622b64bdaf445	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-ceip.psd1	466	412318c76d9fbe56f89eddb3f8528108a1630fb6	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-diagnostic-tracing.psd1	336	f05bcad4f8af933e69cdf880427c54ff5b24085b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-dotnet-cli-telemetry.psd1	631	6f401e7ade9aa6eb8adaf532fecfc1d539e6eef1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-input-telemetry.psd1	1444	b5b4eddfaf9389619dc62c88ac26f93e35f876ec	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disable-phishing-protection.psd1	860	38eeb205080bc9da3dd2074675476afd21319542	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disallow-data-collection.ps1	253	a5b1f736aed0b3c011f8df244fa615487fcd7f50	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/privacy/telemetry/disallow-data-collection.psd1	903	a3420f4ffd44cc9aaddc0724f14138816b6c41d2	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/add-sharing-settings-shortcut.ps1	592	96ad3d0c65b3128979b146f57b94d7b39da53d5f	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/add-sharing-settings-shortcut.psd1	220	ac49248b91d4e09da70062d7ecd57f16f6e6492b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/atlas-theme-upgrade.psd1	621	ec5398f6c406a6dec1d578fb55a2d4d7608e447e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/atlas-theme.ps1	862	fe212c7d341f08245811b7991bf8162005acca51	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/atlas-theme.psd1	672	934da47d3b473aade3116620c1e54cba3e3a9f8c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/appearance/disallow-theme-changes.psd1	523	008f652fafa184f56739388429953eb6be2b5ed4	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/bcdedit-tweaks.psd1	512	192d0f3d308754d0a540842681210cb6e2d3ad60	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/best-wallpaper-quality.psd1	280	4cb94054098a0bd5fa8c7c1019cb1ae04cebfb84	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/config-start-menu.ps1	337	0a2779135af02bd80d78e91b5e26fce07f1809fe	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/config-start-menu.psd1	1967	52b9f9c908a2e3d0ba60ebb8ddbdc92a3329c790	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-auto-app-archival.psd1	275	c1ac08f339c2b18205ad9cd3d96dda2498bd4cfe	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-dynamic-lighting.psd1	306	d02d7178cd76016f26234043f8fe79c76fe7ffd7	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-mouse-accel.psd1	539	7004f442c41bcd67e3fc2bfadcb9589ae2a4c241	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-screen-capture-hotkey.psd1	343	bde97223af73df39b6e26984b9ffa46e8afd61f2	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-settings-tips.psd1	429	0f80e1b4b1b1a0af1f416d9e4819e690abd5add2	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-spell-checking.psd1	793	aa8c6fc38cf50f4f8741d667535d4eed1514ff46	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-store-auto-updates.psd1	345	ed9b826170e21977aeb7834076d702def8ebd58d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-tips.psd1	695	506102619c97e77c79f248c878e8ef0d13dd13d3	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-touch-keyboard-features.psd1	529	b94bac4eeb586f5680be07cb2f159a097c24484c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-touch-visual-feedback.psd1	386	e4c46da30deccfecaea99cf2d02a7c860737bb21	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-usb-issues-notifications.psd1	455	b808861f4826c88d1d6130bb3772792267d65808	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-win11-settings-banner.psd1	401	aecabfaeda3c238eaff76839200e4b1f4fb9d444	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-windows-feedback.psd1	602	039bf11660ed1cd54130166258091fc67d42dfd8	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/disable-windows-spotlight.psd1	2398	3d6f6a04e1b36a7e847794241922aa1d7ab94fd1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/do-not-reduce-sounds.psd1	291	a091c0c75a4b0aa4a8e7e2c082e330ffcb7f5d75	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-always-read-section.psd1	435	535d1d031e5a20d9eca6255ce4cbef014e4a8015	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-annoying-features-shortcuts.psd1	1428	cb84c0c951557894390619760b4def1f63514699	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-making-touch-easier.psd1	364	9b06cacbf4925454f7c4f006aee37c15cc51cad7	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/ease-of-access/disable-warning-sounds.psd1	642	a74d8efe872d8bcf8021e7aec73b1260c28f098e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/merge-as-administrator.ps1	11217	5ae6125b6524d4955a03819ee651892e95722f5c	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/merge-as-administrator.psd1	434	fbd7532ee4d1640746c9e802fc8f4c12073cb46b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-bat.psd1	387	c5539f84ed918b326e7e49b3e61b86ee5cf593e1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-ps1.psd1	616	805e6f3de79c017c87f6c44a28d949f2301fa274	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/add-context-menus/new-reg.psd1	382	292c1b4af9230697cbf312ec20b3cafabe3250e9	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/always-more-details-transfer.psd1	365	49902495d60d0af486ae77cd9c0a1f7771a8222f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/classic-search.psd1	897	f7353399fa483de1a148c1ac2d9bc4b17bd1588a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/debloat-send-to.ps1	493	97d7cb15feec38e562565d00f5e18a6acffac930	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/debloat-send-to.psd1	232	a9ad888e028a1dd83301ba403a6fa80d684e7e57	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-check-boxes.psd1	311	4a8c0005fc7581ecd0881d8ad6f1413090a760e8	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-folders-this-pc.psd1	3207	c757405f7a448a937b9d6529debadade34476ec1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-gallery.psd1	312	d2356ff60ecdf39ee6511c6488ad3f6553d79c81	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-home.psd1	842	71c122f7d7a0cf38cde8a0cc1530be18f09a8396	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-invalid-shortcuts-search.psd1	534	6d228863e2caab660427e797537978b87c825ba1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/disable-network-navigation-pane.psd1	413	7730967046b801fc5a527dc75af0bb6614535650	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/dont-show-office-files.psd1	298	bcf405ef8e873c1e7e355bbf3f2b8876f445f27b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/enable-long-paths.psd1	284	9b19c44f8757c442e42116fcbdd10d4b05b38467	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/full-context-on-more-than-15-items.psd1	354	525d74321089f9cbc6afba0850e24c7fbba89019	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/hide-frequently-used-items.psd1	1316	6b7c092fd5d9bc024b050857d799ff6ff6be91a9	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/import-power-plan.psd1	1142	03d9d6e22d1baa9d6b08685aa1ee388d680e1a43	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/minimize-mouse-hover-time.psd1	422	56a33cc7074d6d28ac64651b7fee4054f854b008	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/no-internet-open-with.psd1	354	8a4820715bff6831f2e9d2eded1137cdf16eaa0e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/open-to-this-pc.psd1	290	b35a58cbc4519d6f2c5da502afcea5028b5ac968	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/removable-drives-only-this-pc.psd1	585	6376c9238362900aa8b37be86de1e35e853db23e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/cast-to-device.psd1	334	d6a9ed5396bfed95302fe6cc3f7e85510b34ecc6	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/extract.psd1	270	f533aabc03cc24d9e26fe6006a3d9cc8a55f7cd8	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/include-in-library.psd1	274	ce8df5853009e7f4220e8f94d1cf9f5e8308a2b7	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/new-bitmap.psd1	232	58dd85d8c8fad7e4f57a43905c0ebf8218bd9847	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/new-rtf.psd1	244	dda5b1552b7cc710cd72093c68095b33b7d83506	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/paint-3D.psd1	1207	f82a512bd3e40794363b52f0657b92ec3719a20c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/printing-windows-11.psd1	1201	5fd1c46b64cb7a0fc1ec5fdbc52464bcf3456b1c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/printing.psd1	2879	316c5d0d4cabcea5e3c3748b07a1c0553cccbb9b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/share.psd1	419	2a5ecf82dc847a41ce1b03a63e09c63eb45d8790	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-context-menus/troubleshooting-compat.psd1	545	5b0c432f16c3e365a954b48445580e8369bb9729	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-previous-versions.psd1	1563	5590352645db33b66f655fab15c15e8e51da9b25	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/remove-shortcut-text.psd1	320	2b92fd13678892fbe42d51b94203e69f16509800	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/show-files.psd1	520	0fef7b8cbf778d016288d03b82bcc32e7b894d4f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/explorer/use-compact-mode.psd1	302	e299249538d54330f0a93bf887da5f4a8fae3125	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/hide-disabled-disconnected-sounds.psd1	467	9a09fdf8d076471a636cb27e8a9f4a4350297ed7	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/restore-start-folder-choices.ps1	2883	cdf251b0748b972edeca0bea8448a30e2caece9a	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/restore-start-folder-choices.psd1	270	490c946fcaa677e9f28d9623e8e0175202c09c8c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/security/disable-uac-secure-desktop.psd1	505	85e7d3cbdc5a5023116e8f206a7c10a034a9669d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.ps1	670	2b5c7c689da08bd464df252effd83348b4e494fc	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/set-hidden-settings-pages.psd1	420	90ae1e8d908aee4e8b16f6135c7349d08f1f00bf	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/set-keyboard-switching.ps1	956	744a3f2936c29e225419a899f2f4d1a5824d9d8f	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/set-keyboard-switching.psd1	233	6b3e41a8e5600b26b9650912c09776fd0a15ca3a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/alt-tab-open-windows.psd1	334	92e30dab2b52369c07351c89f657250c8036b587	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/config-autorun.psd1	1065	38181b4a0db637b7934731abdde8b5fe3be38a73	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-aero-shake.psd1	346	ec1374e5212f9e46040ebefe98a3ee30559f51d8	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-low-disk-warning.psd1	370	f7cacbfb9f208d90af4c5d969f92797fad7e7e6c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-menu-delay.psd1	271	708927a605f3e67d4c95ca7f697de0fd443eae52	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-nearby-sharing.psd1	778	ee6f4bf9026c6890781e2167269cacdcbd1b4ed3	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/disable-network-location-wizard.psd1	313	5939a708c2b4ac3994644efa8091e8c0571e0ea4	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/no-recommendations-start-menu.psd1	481	fa2f5810f0008ee1697d3356c13548dbbaf78d80	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/restore-old-context-menu.psd1	317	214a0704daac5b8b73e0ae4309713bef35c3edb4	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/set-unpinned-notification-items.psd1	860	fdd02ae7157a6ad6684c5b1b921baaed76593b14	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/shell/show-more-pins.psd1	284	17d00c4f208629061d19bb33ba6562f6896f0917	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/show-all-tasks-control-panel.psd1	1149	b114ef9d3ab594cba153c90652af2a2066dd8f02	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/decrease-shutdown-time.psd1	670	c5e45cef890b0158510ecf0c9a0cd73abcd7f1cb	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/disable-startup-delay.psd1	304	fe1fc9f3d90414abc843ee5cf65e673478ed10a5	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/enable-verbose-messages.psd1	423	91beae8a33e1e838a3745542cb65e38fc435e237	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/startup-shutdown/force-end-shutdown-apps.psd1	379	72950e9e989835ccbfc27533a6c55bcd949f1001	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/system/crash-control-qol.psd1	1143	7bec5ece527a87e7e312d4e8333fa5c6c45b8500	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/system/disable-wpbt.psd1	744	f5f009597bffa339eaccbd172f602458f482d82d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/config-pins.ps1	879	0d2ddd87e120163410dd66090e875ec92fbd6eca	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/config-pins.psd1	1597	d8b5e58c6a457bc000c442ef955f09aa208d8a7a	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-cloud-optimized-content.psd1	372	ec7ed4b90419b9cc090e193b7b3bdb426a280582	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-copilot.psd1	760	ae8240ad77462035496258246b14bbf9997fbaf5	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/disable-news-and-interests.psd1	658	5efbec565b7fb7ca554ab8e1e2f123a6d96be08c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/end-task.psd1	329	a9015e7a4f51fb4d98244d0fb0b01000da55fd67	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/hide-task-view.psd1	466	f18fc90e31ec386989e804f44321a91b99c2fae8	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/taskbar/set-to-left.psd1	285	96ceef6666f5d77d73df9f83439f95ec42112dc0	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/visual-effects.psd1	1727	dc6df33efd64ae8c598fac4d8d82e267b5719f75	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-reboot.psd1	938	869be3a153ab621cb8525fea4c04697286665bb5	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-updates-option.psd1	370	39f84b6099587d8f95006d3b66c510f8f4f43df2	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-auto-updates.psd1	1067	ac6fccb0aa5d9f560c075b6562a97644d03ff803	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-delivery-optimization.psd1	366	a0da0f640181347949e028540991357aab406681	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-feature-updates.ps1	851	3f6e989dccafa39f7abb6a195063088c611be9a7	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-feature-updates.psd1	701	0dea9fc75377ebdb4a408262f537d9bea5bad075	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-insider.psd1	1223	22a485cac29e33a5296faf5fcff37a96f92189d1	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-msrt-telemetry.psd1	670	0c7b6dec265b33f96cb91e21797e292791d0547d	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/qol/windows-update/disable-nagging.psd1	506	37de44901672a734ca5a2852506e7f8c193c3b5c	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/backup-services.ps1	257	a73d276ce7f7b1ffe7fc3ff6d0248c5d1369a743	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/backup-services.psd1	299	b9dd78191c52c244b3ab23e8bd0f0c4da502e471	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-core-isolation.ps1	665	6fbbaf573cf21d8c25cc5b586d9c5c9fbbfb6d49	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-core-isolation.psd1	391	766e9ac7b129853d1e915cbea1f16fc4a1939d1f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-mitigations.psd1	398	5916467aace47c9080b074567fdda3a71ebcfa2e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-pnp.ps1	2638	22d5e8482bc145f1a3523b53dd4da641363da87d	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/disable-pnp.psd1	313	aa8aabe13de185d745f3bba78ca15988b61ec30e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/set-file-associations.ps1	412	159e9765ab758931b49295604fefe5fd9f600340	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/set-file-associations.psd1	269	f914b954b3c112fc68b17895fde05112dd07a090	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/set-power-settings.ps1	1755	3075f0653b540406dc856956068e3ada6caadaa1	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/set-power-settings.psd1	551	63f4bd5d4c2cfbc8bb44322ccd82438906d7fe7f	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/set-profile-pictures.ps1	1197	5fc0c376863731a9621669507a8ddd69e576614a	ps1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/set-profile-pictures.psd1	203	ce855a5c7f3172257351589985080de099fb157e	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/scripts/update-client-cbs.psd1	888	5eb8ab41fca4b07567de945f79a694eb40e1bd4b	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/security/block-anonymous-enum-sam.psd1	441	15368d962a8f8959db506bfb75ffee3598862434	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/security/disable-automatic-restart-signon.psd1	493	11ec88c33d54a014ada7500a87aeec15b8392513	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/security/disable-remote-assistance.psd1	906	230f85f5e2abec2d2eb5565c67c5b270856dbab2	psd1	package
+package/Executables/AtlasModules/Scripts/Tweaks/tweaks.manifest.psd1	12649	37453418b9563314495a9c0367b48fc4680378a9	psd1	package
+package/Executables/AtlasModules/Sources/TimerResolution-source.zip	40974	22b340e1b33c8c8bb65c9e7d5dcba8b7a9725ff3	zip	package
+package/Executables/AtlasModules/Toggles/Advanced/MicrosoftStore.ps1	2722	402a6044f9041e0d93e96853169eb280ac2a0140	ps1	package
+package/Executables/AtlasModules/Toggles/Advanced/MicrosoftStore.psd1	1004	b1a46d2922e04f95e3bfca14be2772a6c9087884	psd1	package
+package/Executables/AtlasModules/Toggles/Advanced/ProcessExplorer.ps1	2359	282171e03e53dfc57272c830ed7fcd7e086d7ed7	ps1	package
+package/Executables/AtlasModules/Toggles/Advanced/ProcessExplorer.psd1	908	0f3b513bdf14ff3c87a30acf41df8bc89d9b05dc	psd1	package
+package/Executables/AtlasModules/Toggles/Advanced/ToggleWindowsUpdates.ps1	3746	af22399b950d4adc300337b5789ae6ecdc21dd27	ps1	package
+package/Executables/AtlasModules/Toggles/Advanced/ToggleWindowsUpdates.psd1	1234	bb98a3129f57380b1f34363dd716dbdb0125d8e2	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/AdvancedBootOptions.ps1	762	3adaa5a03581b64cfdeef03e9cd555a79140fa19	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/AdvancedBootOptions.psd1	957	b77c51a44a8e6cdc51dd67f05c14e52c83a0a8c2	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/AutomaticRepair.ps1	1038	1686ba7b46a4a60cfee8cb5a03254b34e3701b5d	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/AutomaticRepair.psd1	955	d4c75e5dc6c76b81f939f4adfb8ce359f41cb37e	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/BootLogo.ps1	920	24c13cacf7cfd75c71b2235ef41e6983a078750e	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/BootLogo.psd1	823	f6d713e53daee1f9c627273a6efdfbe8937bb891	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/HighestMode.ps1	833	4ba7ed2e90072d5b6d7ef04e609ee3958c27f8ec	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/HighestMode.psd1	832	a9fe189f9ff0ad3b9a2343da7c540e5cd1397d03	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/KernelParameters.ps1	741	b907fda2e6d9ca9a04f16852f576c67abd3b4388	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/KernelParameters.psd1	948	345175c06601592038dddc6e64c2961be4abb5ec	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/NewBootMenu.ps1	949	bab205cf13fda3775c955ee373f8da90a826f7ad	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/NewBootMenu.psd1	902	3cc492940ea9ca8ae4c64ae2f3c2a9a67c7cc1e5	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/SpinningAnimations.ps1	959	24ab2153e9ba685b09512ce6474070635aa27f66	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/SpinningAnimations.psd1	897	a0327939d70e1d9cf9fda6aacca1eabecabad976	psd1	package
+package/Executables/AtlasModules/Toggles/Boot/ViewCurrentValues.ps1	605	1a818802936a2f90d34f6e51ed8dff6c29b95fca	ps1	package
+package/Executables/AtlasModules/Toggles/Boot/ViewCurrentValues.psd1	571	91ae2375b64c7ca0201b2d04ba45bcb619de054a	psd1	package
+package/Executables/AtlasModules/Toggles/General/AppStoreArchiving.psd1	999	eb1eebc3cf18d995db3b1f2a6aa64a759a3258dc	psd1	package
+package/Executables/AtlasModules/Toggles/General/AutomaticUpdates.psd1	990	acd22dd842b7aacfed0cb5bad60991a53300305c	psd1	package
+package/Executables/AtlasModules/Toggles/General/BackgroundApps.psd1	1360	caa101f59d2665482fe0a5b0cbb5efcbfaa796d5	psd1	package
+package/Executables/AtlasModules/Toggles/General/ClickToDo.psd1	972	1b57f289b8d251b39b8f43a8f5a9f9170e1e2db4	psd1	package
+package/Executables/AtlasModules/Toggles/General/Copilot.ps1	3719	e6e543f7396df9e828a968369bda6f8851dc6dc0	ps1	package
+package/Executables/AtlasModules/Toggles/General/Copilot.psd1	1648	7a5a1ddc7689188d1ef6150419d9b6224dcd26ea	psd1	package
+package/Executables/AtlasModules/Toggles/General/CpuIdle.ps1	2376	8f63ee8b412fbd82883b82b58f954c02b4870f1b	ps1	package
+package/Executables/AtlasModules/Toggles/General/CpuIdle.psd1	1028	56d921d0c174107d6bbe3ee0899445ebdef268f8	psd1	package
+package/Executables/AtlasModules/Toggles/General/CpuIdleContextMenu.psd1	2839	dcfb541e6cffd04e4aa58f71f4d37ccac4c9e195	psd1	package
+package/Executables/AtlasModules/Toggles/General/DeliveryOptimisation.psd1	1037	8474e4047dd0c8102d2d5349c6bab30236e14da0	psd1	package
+package/Executables/AtlasModules/Toggles/General/FSOGameBar.ps1	947	30ed94eb2299958b02dfaa7cbb5ce5afcbf7b837	ps1	package
+package/Executables/AtlasModules/Toggles/General/FSOGameBar.psd1	5016	ea101af083351302f5d81679daa27f4401cad643	psd1	package
+package/Executables/AtlasModules/Toggles/General/FileSharing.ps1	1574	036f209a1ecd7b4b1766b4b5c97ff7da68cb3fce	ps1	package
+package/Executables/AtlasModules/Toggles/General/FileSharing.psd1	1010	23710c0ca89a726e1f445b60556df9a42b695df3	psd1	package
+package/Executables/AtlasModules/Toggles/General/GiveAccessToMenu.psd1	2362	b1fe5bb729979fea1fcde205c80de82e84ad3510	psd1	package
+package/Executables/AtlasModules/Toggles/General/Hibernation.ps1	1001	e921276820189e90cf3096e8b3d2d9f9a8517670	ps1	package
+package/Executables/AtlasModules/Toggles/General/Hibernation.psd1	1235	71ea0ce1125277ad8b62f2084c88dcabac6a9a01	psd1	package
+package/Executables/AtlasModules/Toggles/General/Indexing.ps1	2081	189dd8a06a098227c9cc8dc06834c0a257517cd5	ps1	package
+package/Executables/AtlasModules/Toggles/General/Indexing.psd1	1648	3ad0b0ddde277eed625372968d301eb0f9da077d	psd1	package
+package/Executables/AtlasModules/Toggles/General/Location.ps1	1789	7f7d857d287db751a651c831e3bee46b8fe4265e	ps1	package
+package/Executables/AtlasModules/Toggles/General/Location.psd1	1766	67d98b69b22443294f81e80126e9452d456a4f6e	psd1	package
+package/Executables/AtlasModules/Toggles/General/NetworkNavigationPane.psd1	1079	f8b9d901d9030b09eadbc34ebc67313c5589ba13	psd1	package
+package/Executables/AtlasModules/Toggles/General/PauseUpdates.psd1	4977	a1afff8cd81508272d89c4a234c279fa3b6adffd	psd1	package
+package/Executables/AtlasModules/Toggles/General/PhoneLink.ps1	2963	fa48727b438d8df4ae76add396b821a515db7428	ps1	package
+package/Executables/AtlasModules/Toggles/General/PhoneLink.psd1	3494	b666098939dbb5a52c80e5a71129b26cbb1419b7	psd1	package
+package/Executables/AtlasModules/Toggles/General/PowerSaving.ps1	2816	b510eb4225a7ff3c3ef56745426be201cb829bd7	ps1	package
+package/Executables/AtlasModules/Toggles/General/PowerSaving.psd1	884	36c51a2cb3ec205fb0ea4fb3f2da89000da7153f	psd1	package
+package/Executables/AtlasModules/Toggles/General/Recall.psd1	1457	58c532edb4fc2e2eea30a39bb619481e6605d674	psd1	package
+package/Executables/AtlasModules/Toggles/General/Sleep.ps1	3344	cafeb8c143cea373d2fe7739735c37df55d209bb	ps1	package
+package/Executables/AtlasModules/Toggles/General/Sleep.psd1	742	2916e62be5823ceae89d6dc52749b22a1593519c	psd1	package
+package/Executables/AtlasModules/Toggles/General/SleepStudy.ps1	1466	cf862c7a610039f13061658a7536b42911b9fd1a	ps1	package
+package/Executables/AtlasModules/Toggles/General/SleepStudy.psd1	1130	c274c8922939a0e21bde3567f68ca85bdbd12b4b	psd1	package
+package/Executables/AtlasModules/Toggles/General/SystemRestore.ps1	714	13215b0849e4fd0ef6f74e734fa88cbaab417a29	ps1	package
+package/Executables/AtlasModules/Toggles/General/SystemRestore.psd1	1159	10537f6323a8b79c02e0f42478918808524f0b0b	psd1	package
+package/Executables/AtlasModules/Toggles/General/TimerResolution.ps1	2190	fe2b220ebdb9118f4a310027088f3dd5637d9642	ps1	package
+package/Executables/AtlasModules/Toggles/General/TimerResolution.psd1	1401	f50ef523071be2eff8c975940b4a8ec5b9697320	psd1	package
+package/Executables/AtlasModules/Toggles/General/UpdateDrivers.ps1	858	201198c1e7fbe2572ed4f25fec4549ef6a09b65f	ps1	package
+package/Executables/AtlasModules/Toggles/General/UpdateDrivers.psd1	470	3fad70a844bd84f65257f91dd1a2ca470adf8cec	psd1	package
+package/Executables/AtlasModules/Toggles/General/UpdateNotifications.psd1	1883	dc2584623bf52bb6e116e10f5923c3057db34282	psd1	package
+package/Executables/AtlasModules/Toggles/General/WebSearch.ps1	3611	bc849851fb4805089499f3821d74c612c0acc222	ps1	package
+package/Executables/AtlasModules/Toggles/General/WebSearch.psd1	5472	b84c71b895c75fd1540b62059b8b33047089b2f9	psd1	package
+package/Executables/AtlasModules/Toggles/General/Widgets.ps1	5291	70e92caec17aa471f55884781968caa866d587f2	ps1	package
+package/Executables/AtlasModules/Toggles/General/Widgets.psd1	1873	a2de40ec3ca22a1860ab5c290d0a713a9c4fa4d4	psd1	package
+package/Executables/AtlasModules/Toggles/General/WindowsSpotlight.psd1	4700	dedff07135d38b379b6d3baf619d7de36a8e3be0	psd1	package
+package/Executables/AtlasModules/Toggles/General/Workplace.ps1	730	5b5e5df99da63b8774a09d745bfa3cd0e1549869	ps1	package
+package/Executables/AtlasModules/Toggles/General/Workplace.psd1	969	28cbe4265aab20a474291eaed642b98ca0caa748	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/Animation.psd1	3958	21cf26bd366ae34e6a55e3b8eb17a4ca3ad63340	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/AppIconThumbnail.psd1	1057	5b727687020f1e679a65e8a7c3d4a0c5ff238729	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/AutomaticFolderDiscovery.psd1	1363	d426820d89d7a7fc9dd0ccb188d7810502618e39	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/CompactView.psd1	1031	600d18e48c3dda5d85da67ace8058241524fbbc8	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ContextMenuTerminals.ps1	861	9b8d6357431e3d6a62624373abf4b5aa0e95118c	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/ContextMenuTerminals.psd1	1210	d86d29719ed67811cdf81fabc154e4acddc1a7fa	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/EdgeSwipe.psd1	907	4a79b58781aeb7b7f734855db6f9ea693c5fad5a	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ExtractContextMenu.psd1	2141	89bacb36cf729d9474aceef3423f3929629958db	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/Gallery.psd1	1025	6e6acfc40e5d5cc8b48901ff680e7a0081acc1d5	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/Home.psd1	1669	742d779504893f12622899c13fe5332c61c266dd	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/KeyboardShortcuts.psd1	1444	69945b417b5fbf348908ac1294397951b9343550	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/LockScreen.ps1	1088	7d9f43a83da620b8e472669461574c9700fe7cb1	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/LockScreen.psd1	1383	46921dfd1a6e8f2effbf0b7b05ba22f423d4f72c	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ModernBatteryFlyout.psd1	1006	f4c40ec9e9d8f03083c49d38fa4fb22ec5e10b72	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ModernDateTime.psd1	1064	12db2985399c28d6c8cfd214871b353111831c1e	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ModernVolumeFlyout.psd1	968	4a23fe709ffe83d8e6db4d4b4c5a94c6c2fa6281	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/OldContextMenu.psd1	1164	b9ace7b6d9e4cfce402301a8116bdc36b2cb7cb1	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/QuickAccess.psd1	993	3b3a837c5c86a258b79fb1aa8204ad64067a0701	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/RecentItems.ps1	1503	aa83fd060a0ce0e2ece3a899633e9c1494b4eb37	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/RecentItems.psd1	3775	26212970e58be6e9f99ae8c11f19c7e722fc0537	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/RemovableDrivesInSidebar.psd1	1645	0d0e61d7131bf05f94688630fe2d4d1dc491d1f5	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/RestartExplorer.ps1	437	cf39612938b48abafa4b629c41f61649f7387471	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/RestartExplorer.psd1	618	dca65980fe0f0cde398631568a617094ae177f72	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/RunWithPriority.ps1	2089	a5b0249c4fd1ab2a510730cd5239c9516b91b16a	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/RunWithPriority.psd1	951	f9974c1c56dcf9f1a0c37f250ea2d16b67d931af	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/SendToContextMenu.ps1	1698	9a0604916b106964b7774f8981796b52152ef0dc	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/SendToContextMenu.psd1	567	7a85db6c7f70fc24074259b20c36a956f8f97383	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ShortcutIcon.psd1	1427	7ef6ea42e77ca822196c65a4e166b8e6412a48eb	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/ShortcutText.psd1	1010	2c685b6347714b2c69273fe014329aef9169ac11	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/SnapLayouts.psd1	1267	486bbf8ffcd32bfcbd7603d6f02cbf253c876105	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/TakeOwnership.ps1	807	9f26f8d55c2267a6a9a837d0292fb83bd3a98bd5	ps1	package
+package/Executables/AtlasModules/Toggles/Interface/TakeOwnership.psd1	908	54ad097392952abf82e5bb7f69f759f17c8f0078	psd1	package
+package/Executables/AtlasModules/Toggles/Interface/VerboseMessages.psd1	986	a035ec51e141a4a4463e15e71afc4a94c8cdf943	psd1	package
+package/Executables/AtlasModules/Toggles/README.md	14224	92c937ea640438faed4c5face4532697c833dc26	md	package
+package/Executables/AtlasModules/Toggles/Security/ConfigVBS.ps1	767	76b244e98c5341ba33bb9e677e58196d44815698	ps1	package
+package/Executables/AtlasModules/Toggles/Security/ConfigVBS.psd1	545	1bfea77ce23821511e98d3252a146e16ea698bb7	psd1	package
+package/Executables/AtlasModules/Toggles/Security/FaultTolerantHeap.psd1	932	d18c931d7c7d1bfd477f5db80043d2f140a21913	psd1	package
+package/Executables/AtlasModules/Toggles/Security/HideAppBrowserControl.psd1	1109	3b3c633f252a46234fb6b7a19def3dc8f40a1a21	psd1	package
+package/Executables/AtlasModules/Toggles/Security/Mitigations.ps1	5470	febeffc7b77bfc466b7b5f413f377b718efd8aec	ps1	package
+package/Executables/AtlasModules/Toggles/Security/Mitigations.psd1	3282	e5fa6b2e3e6935e2c6b8ab55a6555bb9b4c91c49	psd1	package
+package/Executables/AtlasModules/Toggles/Security/SecurityHealthTray.ps1	550	0daadf6a574cd9287070ed1839fa085b51df36a3	ps1	package
+package/Executables/AtlasModules/Toggles/Security/SecurityHealthTray.psd1	912	d8a6b508c53ff82c8ffe2552da271e9130a36f08	psd1	package
+package/Executables/AtlasModules/Toggles/Security/ToggleDefender.ps1	2071	f2a6d1f91799cea7a6f574c2c2e9e21b38fc2f79	ps1	package
+package/Executables/AtlasModules/Toggles/Security/ToggleDefender.psd1	1139	3ef5364bcbcb2d3bdd05f731e87e5b711ee5f13d	psd1	package
+package/Executables/AtlasModules/Toggles/Security/VbsState.ps1	1114	4daddc5dbaee066d9c86dab2e3f2f8afee90a471	ps1	package
+package/Executables/AtlasModules/Toggles/Security/VbsState.psd1	925	1415dbaeb6063c2ba58e0a21dd2bc43a83ad01d2	psd1	package
+package/Executables/AtlasModules/Toggles/Services/Bluetooth.ps1	1584	dc294451c0a0765d392b13c118335bb616eab516	ps1	package
+package/Executables/AtlasModules/Toggles/Services/Bluetooth.psd1	4138	dcb6756f63546b077c5e9b7b6d1e56e5ee2aa725	psd1	package
+package/Executables/AtlasModules/Toggles/Services/LanmanWorkstation.ps1	1565	5086ce1633bf0811ddd02cfbacd3b7da40629e44	ps1	package
+package/Executables/AtlasModules/Toggles/Services/LanmanWorkstation.psd1	1896	52b9ed3cf5955731de2fd0e1c6f42f715efe9166	psd1	package
+package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainer.ps1	1868	feebd8f05bd6c5c4407100b98c954cd8b94d572b	ps1	package
+package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainer.psd1	1496	b2d2f310ca2a37b5ba6fc442f36b5194433e0a08	psd1	package
+package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainerContextMenu.ps1	2343	cdfde7ff7e37acc1daf016ae27343d92f42d119e	ps1	package
+package/Executables/AtlasModules/Toggles/Services/NVidiaDisplayContainerContextMenu.psd1	1350	f5b5009130aa2089055b96f9a9cf189525f8af19	psd1	package
+package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.ps1	879	ccdc33790869525848c276728a84118ddc152cda	ps1	package
+package/Executables/AtlasModules/Toggles/Services/NetworkDiscovery.psd1	1387	135dc09b2eaafc7773fe17a3f8ef5f07b642f62b	psd1	package
+package/Executables/AtlasModules/Toggles/Services/Printing.ps1	5783	2168b4aa1ad22ea54226e6246d0afe25cb283751	ps1	package
+package/Executables/AtlasModules/Toggles/Services/Printing.psd1	1160	3a6ed81c0096b5019e87ea29f59209d27f38e061	psd1	package
+package/Executables/AtlasModules/Toggles/Services/SuperFetch.ps1	2124	e8919e3d8f227dad7366ae6d5c87cc28458796ea	ps1	package
+package/Executables/AtlasModules/Toggles/Services/SuperFetch.psd1	1039	74df4e09554e8b4f55c67aa320586ad58373b306	psd1	package
+package/Executables/AtlasModules/Toggles/Software/InstallSoftware.ps1	507	2b6582c0d731607ef044680e7815a8eec212ef97	ps1	package
+package/Executables/AtlasModules/Toggles/Software/InstallSoftware.psd1	412	73c649cfd2da9893a6fef74884aed84bf7ff0a94	psd1	package
+package/Executables/AtlasModules/Toggles/Software/RemoveEdge.ps1	2599	980dbb8165e370d7fb64b59cdc2b3d12d114eb2d	ps1	package
+package/Executables/AtlasModules/Toggles/Software/RemoveEdge.psd1	486	d2c4eaed745d4349b0e137db508209377e118b03	psd1	package
+package/Executables/AtlasModules/Toggles/Software/RemovePythonStorePrompt.ps1	1463	4e6464a5dd7965cc75bcbe9b3fd5822568ec9f6c	ps1	package
+package/Executables/AtlasModules/Toggles/Software/RemovePythonStorePrompt.psd1	577	dabedc97bd8e8fef2b831e3d7e7c8c606b343e31	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/AtlasHealth.ps1	1305	72302d766445de03ac80619bd8930417ed39d901	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/AtlasHealth.psd1	517	27453eee0b3fd5543f16b54b3987276a7f64a911	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/DefaultAtlasNetwork.ps1	815	f6f8360c25118862b202567bfc6d93dc879b32ff	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/DefaultAtlasNetwork.psd1	1142	5c10ef179545cba6d6e6801eb3aec05241ad2bfc	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/FixErrors2502and2503.ps1	1038	fcc9f297b6012d8c4705595aa9c6c8cb9502ca76	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/FixErrors2502and2503.psd1	707	198318dbee848a1b8280423404bc00133af83e41	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/FixExplorerRuntimeError.psd1	1034	fcda2041d019c6e98a8662ac123ed068419c2f63	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/FixMSStoreIssues.ps1	696	f71fcc6a440d14c0f16632f3e74e5a1da74acd97	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/FixMSStoreIssues.psd1	480	0c7458d22011305253b8df85e24c3d982541b8a2	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/RepairWindowsComponents.ps1	1091	1581aaf665f7c3ff08d2d80a60a91631bfb4c06a	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/RepairWindowsComponents.psd1	813	5a9a6ec7963dac5c34f76e071a4b7167ba891873	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/SafeMode.ps1	449	e1b8bca1c1ccf96775b05d60d7a2b60bb38cfeca	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/SafeMode.psd1	1380	3a1111815b9cba7eed20566d6a06cc25a22f28e4	psd1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/TelemetryComponents.ps1	1341	f804beaa83d74d496ff9782137265e8c09575b17	ps1	package
+package/Executables/AtlasModules/Toggles/Troubleshooting/TelemetryComponents.psd1	1212	050b65be2e0757489a4912d5c1dbf9895b9c48db	psd1	package
+package/Executables/AtlasModules/Toggles/catalog.json	115595	253370a72129149a5e17df8587d33d9c84c0b9f4	json	package
+package/Executables/AtlasModules/Toolbox/Scripts/NVidia/DisableNVIDIADisplayContainerLS.cmd	131	3a9e6a82e7bb2e548196bcd89b984128d3e9cd1d	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/NVidia/EnableNVIDIADisplayContainerLS.cmd	130	e3429b44c7e395d7b28e6d8d76e2ce100b4cfe16	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/SecurityHealthTray/AddTray.reg	830	6f40c4762566d8c8873a4e2f2ee9f61b088418e6	reg	package
+package/Executables/AtlasModules/Toolbox/Scripts/SecurityHealthTray/RemoveTray.reg	258	f5169c7a2b1c84d9a02e96afa51e666b23fef993	reg	package
+package/Executables/AtlasModules/Toolbox/Scripts/SuperFetch/DisableSuperFetch.cmd	119	9e1a880c2b157056f0e88b7db2714feedecefe82	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/Troubleshooting/Fix Errors 2502 and 2503.cmd	125	7b1a12ba056909bcfa2d6e069156e9e2d39e931c	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/Troubleshooting/Repair Windows Components.cmd	128	b5003442099f92abe8e7390e101a590a04620ee5	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/Troubleshooting/Telemetry Components.cmd	124	9e2d121ce00649e30ee752574b910f59f3d52799	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/Troubleshooting/TroubleshootingNetwork/AtlasDefault.cmd	127	535f904b02cc1add010b2dce8162aecc84e761b7	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/Troubleshooting/TroubleshootingNetwork/WindowsDefault.cmd	128	791ea4056d4349bc707f5cd6d782d37c4d0658fa	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/toggleDefender.cmd	119	bcc12041f96302e3a71ecc669d148c10e2f5fd4a	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/vbsCurrentConfig.cmd	114	d9796644354f8ab8252c3eb0c53ac3496f8dabc3	cmd	package
+package/Executables/AtlasModules/Toolbox/Scripts/viewBootValues.cmd	123	0872d76f0a016bc0a3ba4960bfa010dece892696	cmd	package
+package/Executables/AtlasModules/Tools/SetTimerResolution.exe	430592	790b5b0556234ad14204c730280e2a079f805e30	exe	package
+package/Executables/AtlasModules/Tools/StoreFixer.exe	39424	de7365a4b2e9b92438f3c636549627c7056f4aa0	exe	package
+package/Executables/AtlasModules/Tools/ViVeTool-v0.3.3-ARM64CLR.zip	400661	d2f8452260f87fd78a16daec83178c8af0980bbb	zip	package
+package/Executables/AtlasModules/Tools/ViVeTool-v0.3.3.zip	400738	ebadf9e49402f57ab7357817c3c72fce18faaba6	zip	package
+package/Executables/AtlasModules/Tools/multichoice.exe	1334784	7d06a3858b475b4c69a5709e2b4d5921248d9d7b	exe	package
+package/Executables/AtlasModules/Wallpapers/atlas-solid.png	42785	e1d038ccfb391e0fafcba6b8c9b9094e556a2909	png	package
+package/Executables/AtlasModules/Wallpapers/atlas-v0.4.x-dark.png	609099	faf2e06fb99597954543414064556265ae630348	png	package
+package/Executables/AtlasModules/Wallpapers/atlas-v0.4.x-light.png	992218	0400a06952528663625fce0f608b9292f783df86	png	package
+package/Executables/AtlasModules/Wallpapers/atlas-v0.5.x-dark.png	10754502	5b7520125eae3a922f7af42e62a7c38c91726a7b	png	package
+package/Executables/AtlasModules/Wallpapers/atlas-v0.5.x-light.png	10470419	4437b601e82421c6e82e201b2ff8a435918dd1db	png	package
+package/Executables/AtlasModules/Wallpapers/atlas-v0.6.x-dark.png	4299264	d4da12a071bd341732f99f787ddb030b2226f236	png	package
+package/Executables/AtlasModules/Wallpapers/atlas-v0.6.x-light.png	4528445	98e91d98321582c32972c32ceaf8fe5081f952eb	png	package
+package/Executables/AtlasModules/Wallpapers/lockscreen_dark.png	4261747	9273df92c37a7d0ef45e615abb75b65551026783	png	package
+package/Executables/AtlasModules/Wallpapers/lockscreen_light.png	4514993	c3c1311edd6a4b9cc863c03df68c597c6dbab8c0	png	package
+package/Executables/Themes/atlas-solid.theme	1054	90626a4ed42a1c1be98459ba9b60065691fcabe6	theme	package
+package/Executables/Themes/atlas-v0.4.x-dark.theme	1062	a04f8a9ac4d7b6df3f158ff8f5ff0c62b9423132	theme	package
+package/Executables/Themes/atlas-v0.4.x-light.theme	1065	249a7594b8f30076070193c2548d8ab8533d5dce	theme	package
+package/Executables/Themes/atlas-v0.5.x-dark.theme	1133	7c719e1e45aa236357f7394f5812a5f578ab34f6	theme	package
+package/Executables/Themes/atlas-v0.5.x-light.theme	1141	9ec0823117d00dea409aa4ad3679349c2ba28501	theme	package
+package/Executables/Themes/atlas-v0.6.x-dark.theme	1136	81e008cd99d1044a5be7eab5c9048d2566aa9d9c	theme	package
+package/Executables/Themes/atlas-v0.6.x-light.theme	1143	98a6ef284ed788d2433e45a8364c982b89f5c764	theme	package
+package/Images/brave.png	6156	5aeb70792dd17e23f62a7535112db85537fe5458	png	package
+package/Images/chrome.png	6110	587734541a8f5dc0e563c6144bae4c7081d43552	png	package
+package/Images/firefox.png	11041	9321a12e0d5eed6c8ff49263d3ed1abfc3c21ed8	png	package
+package/Images/librewolf.png	5998	1c6872d4a58480ce839b011a1350a18d331bd51f	png	package
+package/atlas.json	5343	44f6f8e1c5ba306ac245e3761923b845c3cbfe82	json	package
+services/reports-mcp/.gitignore	9	b83d22266ac8aa2f8df2edef68082c789727841d		services
+services/reports-mcp/Cargo.lock	41167	0b52680e687d0aec6427f04848ab294349b54700	lock	services
+services/reports-mcp/Cargo.toml	635	43cdc812564bb28c5bfaf2b075917aba699da6a6	toml	services
+services/reports-mcp/README.md	4931	8b7686d3c17d3493a7b319da52ce97a187707985	md	services
+services/reports-mcp/src/api.rs	29779	e310dac842496512bdc3d63faad556a8f90aad43	rs	services
+services/reports-mcp/src/lib.rs	7190	f77acf56bed38a39439ff9004b96a286302226f3	rs	services
+services/reports-mcp/src/main.rs	2559	70f16406ddab9afed16e9749132b53f0cae80220	rs	services
+services/reports-mcp/tests/api.rs	18496	d4249db1df2ffab46c666c7dada621997f70049c	rs	services
+services/reports-mcp/tests/stdio.rs	10702	33310b3e0cf242670e0733d7e173c9e80d33c94a	rs	services
+services/reports/.dockerignore	52	38391da6224000327cc3540bf46517c4b92f40c5		services
+services/reports/.gitignore	19	6951a39b7bbc3f4cefb368b9c66daa67174d53a6		services
+services/reports/API.md	16801	14316ebbb781fae0be1339ddc55376ba3efeae5a	md	services
+services/reports/Cargo.lock	29193	9dcdfe77630ef69a50f9d33e1a110adfe557d600	lock	services
+services/reports/Cargo.toml	750	4d6557264abd55b1863e3039d5d1a96b417df255	toml	services
+services/reports/Dockerfile	441	78d4df24cd381cb19baa35d9ea7ce637b0d1f116		services
+services/reports/README.md	2538	cc7c1939fd3d86ddaa0493d2ba8be4831fa49612	md	services
+services/reports/deploy/.gitignore	27	09691a37674d3131e2fdbef450ce12070bdf7d4c		services
+services/reports/deploy/README.md	9722	3d5e8598cc8f5345bc387282c63583d4cf62ffd9	md	services
+services/reports/deploy/atlas-reports.container	749	8be2f67922ed71dae345495dd3f632e8a73b0f55	container	services
+services/reports/deploy/compose.yaml	729	c1936ba775cab00faec2244fe8cecaa164b30481	yaml	services
+services/reports/deploy/store.env.example	268	e5e80faafe0957be7a773463a0670ba3f3e7298f	example	services
+services/reports/rust-toolchain.toml	87	63202c6f2e9c53a98e1b9263dc37968266db5f5b	toml	services
+services/reports/src/agent.rs	13045	b0ac1d1dd6e8afbfea36e1ea39cef44b639454e1	rs	services
+services/reports/src/archive.rs	12096	fb9f8c7437bf34e598fc1dace3441347701471f2	rs	services
+services/reports/src/lib.rs	21261	d827990092e885e9e92c9ec15b07aa3800318b2a	rs	services
+services/reports/src/main.rs	3893	20b7423209b643435955c1fc3e6446fde09896a6	rs	services
+services/reports/src/routes.rs	28038	deaaf3a57d79d86942ed9f1b1eade7db2c739053	rs	services
+services/reports/tests/api.rs	64467	23de5bc7af7537edea7e7f5b0f3edd922f8fc0d1	rs	services
+tests/Atlas.AiFeatureToggles.Tests.ps1	16750	59ee64b3391cf38131080b7f9ce48290bb83a793	ps1	tests
+tests/Atlas.AppRecovery.Tests.ps1	14264	d57029ab97d83296377e72ed53bfaa11a9965152	ps1	tests
+tests/Atlas.Appx.Tests.ps1	86551	e48802dab71e5bf21234a826b2fc4c99163b30e7	ps1	tests
+tests/Atlas.Catalog.Tests.ps1	8913	62b91bad3a0e961bf34b27e770755c6344fbd09b	ps1	tests
+tests/Atlas.CbsRetryCommand.Tests.ps1	9198	8b6461ec26416edf871a297789e2521890a283e6	ps1	tests
+tests/Atlas.ChoicePreservation.Tests.ps1	8500	ea523ef69b7ee4bda8ca3c66e57888ef5bee3b5d	ps1	tests
+tests/Atlas.Choices.Tests.ps1	48182	d2454b14e7c0a476010af28ad90f7f43cea8b661	ps1	tests
+tests/Atlas.ComponentsCleanup.Tests.ps1	44873	1c1595200782284bb1cb1ecc981e6eebf142e15e	ps1	tests
+tests/Atlas.ConsolePresentation.Tests.ps1	16256	791b1016b77e1a324a6f416b05a35794c4566687	ps1	tests
+tests/Atlas.Contracts.Tests.ps1	15232	9e2e6878e017fbb61ad0bc37e7fdfc3769d69bf0	ps1	tests
+tests/Atlas.Core.Tests.ps1	28770	9c12749ca2393750c670fc5d12704ac969b3f070	ps1	tests
+tests/Atlas.DefenderChoice.Tests.ps1	12547	0ae47fc21f41433dc5700bfeb6815d4264b23db0	ps1	tests
+tests/Atlas.DesktopPolicy.Tests.ps1	7430	c6cd4a0aec3704918711fd40699912ce5613d8e2	ps1	tests
+tests/Atlas.DesktopSetup.Tests.ps1	4815	35ddd476204dbd9533b86c82caaa6005d7298183	ps1	tests
+tests/Atlas.DisableDevicesTweak.Tests.ps1	3709	1a75836aadd7392b0139684141b888737608c16e	ps1	tests
+tests/Atlas.DiskCleanup.Tests.ps1	4446	751e498466870bd738272b32c830ef24294e44dc	ps1	tests
+tests/Atlas.DriverPolicy.Tests.ps1	5643	c247596489e0595e693938b2a0e79b234351446f	ps1	tests
+tests/Atlas.DriverUpdateSecurity.Tests.ps1	5551	df2db67f1361260e033a759fd7d76726b9658212	ps1	tests
+tests/Atlas.ExecutionPolicy.Tests.ps1	8918	f61cd57b459cf7baf2a406f214e42ff551b38a94	ps1	tests
+tests/Atlas.ExplorerHome.Tests.ps1	1787	e3f496feaec1d352a97600c6aecb5c45a96e1f13	ps1	tests
+tests/Atlas.ExplorerRuntimeError.Tests.ps1	868	f441b165a9629c027a395f6d9e027246313edc5f	ps1	tests
+tests/Atlas.FeatureRestoration.Tests.ps1	8374	069137030b65db82e67d2d186faacfc87e0b8c22	ps1	tests
+tests/Atlas.FeatureUpdateTarget.Tests.ps1	5234	92d1391672cae7adffd9ca8bb2840a95399b49f3	ps1	tests
+tests/Atlas.Features.Tests.ps1	13668	b421b0f10f04ebc5f4ae3168a6cd57d4223b6a62	ps1	tests
+tests/Atlas.FrontDoor.Tests.ps1	102609	8d876eda25f3fdae187686d33f6bb7befd43cfcd	ps1	tests
+tests/Atlas.Hardware.Tests.ps1	38572	eb1af0b9836630f1c87c099a8968d130cad9f0b9	ps1	tests
+tests/Atlas.HealthChoiceOverrides.Tests.ps1	11080	4fd869feb25d7df3faefd4fca6b20f14d85ef981	ps1	tests
+tests/Atlas.HealthLauncher.Tests.ps1	2945	533c82a06357d2dbce54333ee4acd09e31b2172a	ps1	tests
+tests/Atlas.IdentifierValidation.Tests.ps1	5309	2c7817aed13da6f87aa12f1402e2df8fac355086	ps1	tests
+tests/Atlas.IndexingInteraction.Tests.ps1	6136	ef55fac9b2e4eac3dc5391a08c2620a9b9d8223f	ps1	tests
+tests/Atlas.InstallEvidence.Tests.ps1	5356	c69ba1016452ae451e298f766dc0bf4aeea7b5f3	ps1	tests
+tests/Atlas.InstallLogAccess.Tests.ps1	1991	3e0122141f9173437f11490dfa83b755f7eae641	ps1	tests
+tests/Atlas.InstallOrchestrator.Tests.ps1	27971	788c0157f9358b26e0c7608b044d636e32cd8583	ps1	tests
+tests/Atlas.InstallPlan.Tests.ps1	8930	adaef0ea953e95787a8848192cc6fdf5391ffddc	ps1	tests
+tests/Atlas.InstallPresentation.Tests.ps1	3755	49da8d3dd4dcc8c356c4f1e882bf460f7aebfca6	ps1	tests
+tests/Atlas.InstallReport.Tests.ps1	36819	d3362cc0ee248a1934408507c958a7fbf6d6cd6c	ps1	tests
+tests/Atlas.InstallState.Tests.ps1	67696	0e00cb8dc5e1f071aa26b148208c470c057f1760	ps1	tests
+tests/Atlas.InvokeToggleEntry.Tests.ps1	7594	d2de37096c163dbd8b060129e41f4931161cbda9	ps1	tests
+tests/Atlas.Iso.Tests.ps1	10873	e9a0290bc2338655986511e36dad8d7abd190ef9	ps1	tests
+tests/Atlas.IsoEditions.Tests.ps1	8848	f783a71827426070ecf0d2c4fa4147132a325730	ps1	tests
+tests/Atlas.IsoMastering.Tests.ps1	1819	78c78463afe8c5941fd07c7dfed1677ba48ea0e9	ps1	tests
+tests/Atlas.LabRun.Tests.ps1	5746	eda36386e4086f317a214b122fc186c038ee4b65	ps1	tests
+tests/Atlas.LegacyElevationMigration.Tests.ps1	15211	5470040bde33fd8c4d0a722631a4c38eda58f94c	ps1	tests
+tests/Atlas.LegacyToggleState.Tests.ps1	10230	454375de97ad921157f87b05fd71d0ddd001566c	ps1	tests
+tests/Atlas.LegacyUpgrade.Tests.ps1	12428	1dacdcaa4283ff53f509aef440fcb045ac10068d	ps1	tests
+tests/Atlas.LegacyUserSetupMarker.Tests.ps1	3831	76a71a155adfea30b772dbb9db4881f6316b0bb4	ps1	tests
+tests/Atlas.MachinePath.Tests.ps1	3088	14afa933e1a4b758ee24f067cf8496c622f49b95	ps1	tests
+tests/Atlas.MitigationsToggle.Tests.ps1	3099	1bd099ffc238bfe518bffc30ad1453442938211f	ps1	tests
+tests/Atlas.NanaZipStore.Tests.ps1	12235	e6fcddd88c1e466df3a4b5ec4dde388c1926ab45	ps1	tests
+tests/Atlas.Network.Tests.ps1	34420	a56837f6c5ea87cf813e13c075e796f8ccfe4088	ps1	tests
+tests/Atlas.NetworkDrivers.Tests.ps1	6130	49094d0a0e33c31f157c1c90b27e33efb802eb3c	ps1	tests
+tests/Atlas.NetworkNavigation.Tests.ps1	5051	ec311ee011c6bd02bd1ebef3fffab60498d7de2d	ps1	tests
+tests/Atlas.NotificationState.Tests.ps1	7414	5b0ffd2544362a42f3d539965081f8fab9b4ac6e	ps1	tests
+tests/Atlas.OpenShellTheme.Tests.ps1	5463	3db2d6acfddb806ab31fbaf66ebdfd5fb7ba3b18	ps1	tests
+tests/Atlas.PackageLayout.Tests.ps1	2538	d9b536eb28190865474e663701b2f3acf7a82db7	ps1	tests
+tests/Atlas.Phases.Tests.ps1	18058	40d0fd0d42007deb54a7b410b07cb0d21c6e5525	ps1	tests
+tests/Atlas.PhoneLink.Tests.ps1	2731	76f85d8a7901994f1ad7aca21bc3e7f5b3219dd8	ps1	tests
+tests/Atlas.PowerSavingPlanChoices.Tests.ps1	6380	325bd16683f715354faa6f484e251504d64e8dde	ps1	tests
+tests/Atlas.Preparation.Tests.ps1	109242	3f02c55fccb8f729d128e67b4fc514188bc67a27	ps1	tests
+tests/Atlas.PreparationModuleBoundary.Tests.ps1	3350	04e2ca40b8097f8f3c5f52b33f6713d7204dfb50	ps1	tests
+tests/Atlas.PrintingToggle.Tests.ps1	4259	a6d6ded84676e1667e8eeaed09746deab86f1857	ps1	tests
+tests/Atlas.Privacy.Tests.ps1	14973	47b1d2b9e1bb69e5223153aec29862d54dcb8f60	ps1	tests
+tests/Atlas.PrivacyToggleDefaults.Tests.ps1	1471	92733fce5f4ef753f7b6b145c9ce0ce5f6c703f5	ps1	tests
+tests/Atlas.PrivilegeBoundary.Tests.ps1	12925	51adafad7db9a9c69ec7ca87197063a0340e0b19	ps1	tests
+tests/Atlas.Process.Tests.ps1	7543	fe858af40ff424e20c787d4fdf7e4b5e08d827d6	ps1	tests
+tests/Atlas.ProcessExplorer.Tests.ps1	23917	ddca02f23c137a4287293bcef5ddcee238a1402e	ps1	tests
+tests/Atlas.Registry.Tests.ps1	31176	0cbb1e31ff5e8f7c12b089f5158f0d5a86244a6d	ps1	tests
+tests/Atlas.RegistryFiles.Tests.ps1	7827	43a14c6bfaf3d8b2dc28fbae2d2f2b702bf46a4c	ps1	tests
+tests/Atlas.RegistryMasks.Tests.ps1	4001	1840e35034849f44a7f854e066edd0c30eea6fb0	ps1	tests
+tests/Atlas.RemoveEdgeIntegrity.Tests.ps1	14190	24fa7c96321f590e750b734076cfe3881665f41b	ps1	tests
+tests/Atlas.ResetServices.Tests.ps1	8888	cdd80cafa9a84dc915b1276e93c255441023805d	ps1	tests
+tests/Atlas.RunAsUserBinding.Tests.ps1	6848	ca04fee20b50418c660f05b80e3483f1eea0b66e	ps1	tests
+tests/Atlas.RunWithPriority.Tests.ps1	12981	e383f60c44c959077b234c3d7662806ee6bbe99a	ps1	tests
+tests/Atlas.SafeMode.Tests.ps1	22541	16655dbc60096f24405879339f2ed4715f2c8a45	ps1	tests
+tests/Atlas.Search.Tests.ps1	26825	03d7e126519afa3a6caeebc621c98404887c0e44	ps1	tests
+tests/Atlas.SearchPrivacy.Tests.ps1	6886	ed906bca83e11bfd0da94b25f4489aa6a8985d81	ps1	tests
+tests/Atlas.Security.Tests.ps1	52514	1c1a49264f20dd9e32a78d8f7f4cc5a5eea88c17	ps1	tests
+tests/Atlas.SendToToggle.Tests.ps1	5128	42dc4f7481e834653cfa9ddbebab8dd20d30738d	ps1	tests
+tests/Atlas.ServiceDefaultsReset.Tests.ps1	2823	1f61b0a2239eb3113cd7d2a5d62bb03086bdaf1d	ps1	tests
+tests/Atlas.Services.Tests.ps1	20940	bd626c919c62f09436d0d20a7a087dbab9a9da79	ps1	tests
+tests/Atlas.SetupSafety.Tests.ps1	10756	4a974dd983cc60c74f1d332b5766b7e0e3099be2	ps1	tests
+tests/Atlas.Shell.Tests.ps1	40415	126bf45b8a674568655938f5a04d9a183439dc89	ps1	tests
+tests/Atlas.ShellConfiguration.Tests.ps1	35357	6af50457657fcb349da7d0b1f1d26854a377da36	ps1	tests
+tests/Atlas.ShellContextMenu.Tests.ps1	19317	d84f1ebfa234cb2b5910b4c67348ef1805c28040	ps1	tests
+tests/Atlas.Shortcuts.Tests.ps1	5677	6286b8bba2e57a581bd0291ad764b46c4483869e	ps1	tests
+tests/Atlas.Software.Tests.ps1	56644	d7e37648ab071734eefa183e76a18e53adb6faf3	ps1	tests
+tests/Atlas.StartPinnedFolders.Tests.ps1	6028	74ead4578455213df5c8622c130c9c54b500df7b	ps1	tests
+tests/Atlas.State.Tests.ps1	25011	6ca0e56dc57ac817658eab27765c2a6e07933750	ps1	tests
+tests/Atlas.TasksProcs.Tests.ps1	22663	664fbbc8dd31df2737c833385d21baca69496feb	ps1	tests
+tests/Atlas.Themes.Tests.ps1	2995	7a76fb482d7e6cccb5947fe309175d33d396997c	ps1	tests
+tests/Atlas.TimerProvenance.Tests.ps1	2375	89b81871a1a07012d8d152a5245fa6159edb91c4	ps1	tests
+tests/Atlas.ToggleLauncherGenerator.Tests.ps1	3091	239ca1851a3569a04ca48908431f36024c4bf7d8	ps1	tests
+tests/Atlas.ToggleNative.Tests.ps1	5459	74db5325c0f88facaae0be25378fbce73e79cf05	ps1	tests
+tests/Atlas.Toggles.Tests.ps1	103221	dcbba54ba60ba642087430936e64e748803e8caa	ps1	tests
+tests/Atlas.Toolbox.Tests.ps1	19122	1488ca220633529e10187a14d027b90e86f1a035	ps1	tests
+tests/Atlas.ToolboxLaunchers.Tests.ps1	2849	437beff2f9b046286aa694b28b30bb4d27791d20	ps1	tests
+tests/Atlas.TrustedInstallerBroker.Tests.ps1	11712	321285c97edbb0b4dbb052d856189d9d398146d0	ps1	tests
+tests/Atlas.TweakManifest.Tests.ps1	8932	6b77e472240296fc81d531d5ae20eb2a3fd469c2	ps1	tests
+tests/Atlas.Tweaks.Tests.ps1	49871	45ac2d2959cc7393b2a044e5dd50deaef38f6c74	ps1	tests
+tests/Atlas.UpdateAtlasUser.Tests.ps1	18590	215ddcca8c472bc64574ed62b90fa6aed1874069	ps1	tests
+tests/Atlas.UpgradeCompatibility.Tests.ps1	1600	90e1ca9c774dce763523dffd96018e229fd4c598	ps1	tests
+tests/Atlas.UpgradeRemoval.Tests.ps1	16905	43b00a350ffd43a6c1025dcf4b276c92700651f4	ps1	tests
+tests/Atlas.UpgradeSafety.Tests.ps1	26300	34c5a6305ec4040a081e3d2449242938d36ae2f0	ps1	tests
+tests/Atlas.Usb.Tests.ps1	31767	c7b01f1a6ef771eefeb84aa378594d7392d01188	ps1	tests
+tests/Atlas.Verify.Tests.ps1	19046	5a326a91be679af97acf339d2f5411a387c15c41	ps1	tests
+tests/Atlas.WindowsRelease.Tests.ps1	16145	ee7b8f9f05600238fb685992c1f2f35645713f46	ps1	tests
+tests/Atlas.WindowsTransition.Tests.ps1	155402	1ea0af82e2c75aee714ab821dc958e462c055cf8	ps1	tests
+tests/AtlasBuild.Tests.ps1	55162	c605125752eb97bd0ac8f4a3aaf6753ebf147534	ps1	tests
+tests/AtlasTestHost.ps1	1693	0827260366c6ade699349185d999fc6c9c8b546d	ps1	tests
+tests/README.md	3422	ba0dcab0c414c076fd9ae2f6fb7520835ab6b5c8	md	tests
+tests/fixtures/front-door/windows-security.json	5966	a5aaf39707dfc37a07b26f4ea7aa70827ac29f5a	json	tests
+tests/fixtures/windows-transition/atlas050-updates-off-paused-delayed.json	1686	6ac5ac446d73b1b0192192bfb7529509c94a99ed	json	tests
+tests/fixtures/windows-transition/cbs-appinv-baseline.txt	2461	600928338cbaf790b57f7291da784cb277bb8add	txt	tests
+tests/fixtures/windows-transition/core-isolation.json	1749	2fe395d23876884345d9f1e1a908c401481de107	json	tests
+tests/fixtures/windows-transition/items.json	4867	07d3cf2bd80f9e837438ddbbd74145ee3669fcc8	json	tests
+tests/fixtures/windows-transition/journal-access.json	2223	414f63e8c8cf432852f53d85f178a328e397bb0b	json	tests
+tests/fixtures/windows-transition/journal-rebuilt.json	3859	f93c460da09152bd5f3013bb90dccafb57069625	json	tests
+tests/fixtures/windows-transition/journal-transition.json	2765	65a4f4354b1a76a4e193abdbc03a6fab1f7df2d8	json	tests
+tests/fixtures/windows-transition/last-result.json	495	4ace4d0a8da456737da730126d80512c1e8f7498	json	tests
+tests/fixtures/windows-transition/legacy-automatic-updates.json	2434	9cd155e52fddbb0547c3484b09c95e07bac6f0c1	json	tests
+tests/fixtures/windows-transition/merged-options.json	19849	feabc6ea17333dd287c3d1a4d9c21dfd0faca4d3	json	tests
+tests/fixtures/windows-transition/observed-options.json	6163	e14c160d2b21a8184f5c3f1220cde19f829c1140	json	tests
+tests/fixtures/windows-transition/power-saving-records.json	1026	6b22bdb0862e716586da06ae9720f1a5d301cb05	json	tests
+tests/fixtures/windows-transition/toolbox-records.json	7408	8d0de81c674df151e84861e9273128f658ad1bd5	json	tests
+tools/build/AtlasBuild/AtlasBuild.psd1	837	737bea94af66d50c8985fe0516f887b5755fbbb0	psd1	tools
+tools/build/AtlasBuild/AtlasBuild.psm1	53531	db6c67df71c797af7785b0d0a365080be7192384	psm1	tools
+tools/build/Build-Package.ps1	4652	cf9f4609969368b81d36ca2c9db9ffffd2387210	ps1	tools
+tools/build/Set-AtlasVersion.ps1	5478	29e35fd9ab5ef19775dc02aec7921cb39d9bc55d	ps1	tools
+tools/build/Test-Package.ps1	12594	1b2ecd71e83f030fb541cc7f9e95955dd733035d	ps1	tools
+tools/dev/Compare-SystemState.ps1	8909	3e94a1a84811468701e9f663ba670e7be38c4e84	ps1	tools
+tools/dev/Export-AtlasCatalog.ps1	30766	4d46f92c3daa8df6018065690fc200e2ccb72a45	ps1	tools
+tools/dev/Get-AtlasInstallReport.ps1	89105	345dbac28002b8512be3e1f24b1c49875741954b	ps1	tools
+tools/dev/Install-DevProfile.ps1	2582	2923de93f4710cf544b8178ef5b02617b85e7611	ps1	tools
+tools/dev/New-ToggleLaunchers.ps1	14176	806b30d1a22c913b203517d1f1f2908ce7d43ca5	ps1	tools
+tools/dev/README.md	2331	d8600dd3bdef9858e5467a9c056ba75459d5bcf0	md	tools
+tools/dev/Show-AtlasConsoleDemo.ps1	7346	679bc9a720a86b19379408918c2968aad69f6f39	ps1	tools
+tools/dev/Start-AtlasPcaTrace.ps1	3605	e76f2a04a53f782e3aea0a7e659806e8d166d8ef	ps1	tools
+tools/dev/Update-WindowsReleaseCatalog.ps1	3321	e654ec5873a56d88505c28eff7e617b2c52614ee	ps1	tools
+tools/lab/Invoke-AtlasLabRun.ps1	33110	ee93ee87a186a087ff2679d53fc8c7ae77a20b8a	ps1	tools
+tools/native/Build-AtlasNative.ps1	6747	d3eb529d4ba4a7b16f134e7e48236921662c9cc7	ps1	tools
+tools/release/Add-BundledToolbox.ps1	2528	253dd9c0d1bfd45d8eb66ff61422c27879d35519	ps1	tools
+tools/release/README-RC.txt	3245	291d6b0872ad5b87dd790956f21f3fc1ccfaab7c	txt	tools
+tools/release/README.md	3383	f785d77924cc6f61b7d9d1f4acb8a56762aacec2	md	tools
+tools/release/build-rc.sh	8725	d3c6e22c5a1086dfef3e56e14b4d71be1825d1c7	sh	tools
+tools/release/setup-linux.sh	1374	6e8286f2ab96b38e0b780027cb82e0c972debc0b	sh	tools
+tools/sxsc/Atlas-Defender-Remover-Arm.yaml	15345	043df6bfbbc105a45b96f66733fd98c05ac52697	yaml	tools
+tools/sxsc/Atlas-Defender-Remover.yaml	13130	f09919778d7a6c995e0d00df40a4d1cd590c206c	yaml	tools
+tools/sxsc/Atlas-NoTelemetry-Arm.yaml	8376	1f047b1c9bcf46cab087671a945fa37a943671ab	yaml	tools
+tools/sxsc/Atlas-NoTelemetry.yaml	7948	4ad51d7744c839eea6963e5475ef8ffb4cf3d2de	yaml	tools
+tools/sxsc/README.md	3178	19edbfc98891605ee3313d707be2778982fe33cc	md	tools
+tools/timer/.gitattributes	103	36b0853d2183af233d32d6877e1459c95079bde9		tools
+tools/timer/Build-TimerTools.ps1	4304	1e02ae503e535c768612627d8af952d1768593d6	ps1	tools
+tools/timer/MeasureSleep.patch	983	ff8c68360ddcbe1ca18540dd821f99426da003d5	patch	tools
+tools/timer/README.md	4832	6179a57012fa085dda9da5f63ffaedabfaad379b	md	tools
+tools/timer/SetTimerResolution.patch	433	87f196ce8a10f03576378c8bda3e84d7c793416e	patch	tools
+tools/timer/accepted-build.json	3205	be410daf3312922a41e6e0221d903db87218211e	json	tools
+tools/timer/inputs.json	1294	f57cd50837406e754114b03d7886e783409ff9b8	json	tools

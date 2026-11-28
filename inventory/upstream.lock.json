@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "generated_by": "tools/ledger_extract/fetch_upstream.py",
+  "notes": "SHAs fijados (verificados con git ls-remote el 2026-11-23). Un cambio de SHA es un ADR.",
+  "sources": [
+    {
+      "name": "winutil",
+      "repo": "ChrisTitusTech/winutil",
+      "url": "https://github.com/ChrisTitusTech/winutil.git",
+      "sha": "70c23c80641d7370532af2f619b2842658600842",
+      "license": "MIT",
+      "license_file": "LICENSE",
+      "license_sha256": "469b54dadfa5c0d0002291e452fcaa32165356d3459e1dee040404db5439fb1c",
+      "commit_date": "2026-11-18",
+      "commit_subject": "fix(tweaks): update classic context menu registry workaround (#5253)"
+    },
+    {
+      "name": "atlas",
+      "repo": "Atlas-OS/Atlas",
+      "url": "https://github.com/Atlas-OS/Atlas.git",
+      "sha": "ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f",
+      "license": "GPL-3.0",
+      "license_file": "LICENSE",
+      "license_sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "commit_date": "2026-11-23",
+      "commit_subject": "fix(iso): defer driver updates until Atlas setup"
+    }
+  ]
+}

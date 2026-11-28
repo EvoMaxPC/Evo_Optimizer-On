@@ -1,0 +1,1699 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "schemaVersion": 1,
+    "provenance": "Paso 8, seccion 2. Fuentes: winutil@70c23c80641d7370532af2f619b2842658600842, atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f; ledger inventory/ledger/*.tsv",
+    "generatedBy": "paso 8 (oleada 1)"
+  },
+  "capabilities": [
+    {
+      "id": "debloat.appx.consumer",
+      "name": "Quitar las aplicaciones de consumo preinstaladas",
+      "description": "Elimina para todos los usuarios los paquetes AppX de consumo y ocio que Windows instala de fábrica (Bing News/Weather, Zune Music/Video, Solitaire, Get Started, Office Hub, Quick Assist, Clipchamp, Spotify, Disney+, Mixed Reality Portal, Dev Home) y sus paquetes provisionados, para que no vuelvan con una cuenta nueva. Es irreversible: no hay copia de los paquetes y la restauración sólo cubre el punto de restauración previo.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Removal.ps1 (Get-AtlasAppxRemovalDefinition: Microsoft.BingNews*, Microsoft.BingWeather*, Microsoft.ZuneMusic*, Microsoft.ZuneVideo*, Microsoft.MicrosoftSolitaireCollection*, Microsoft.Getstarted*, Microsoft.MicrosoftOfficeHub*, MicrosoftCorporationII.QuickAssist*, Clipchamp.Clipchamp*, SpotifyAB.SpotifyMusic*, Disney.37853FC22B2CE*, Microsoft.MixedReality.Portal*, Microsoft.Windows.DevHome*) + winutil@70c23c80641d7370532af2f619b2842658600842:config/appx.json (mismas familias como entradas WPFAppx*). Reversibilidad (ADR-0003): Irreversible — el motor no puede reinstalar los paquetes quitados; solo el usuario desde la Store",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Quitar los paquetes AppX (registrados y provisionados)",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$f=@('Microsoft.BingNews','Microsoft.BingWeather','Microsoft.ZuneMusic','Microsoft.ZuneVideo','Microsoft.MicrosoftSolitaireCollection','Microsoft.Getstarted','Microsoft.MicrosoftOfficeHub','MicrosoftCorporationII.QuickAssist','Clipchamp.Clipchamp','SpotifyAB.SpotifyMusic','Disney.37853FC22B2CE','Microsoft.MixedReality.Portal','Microsoft.Windows.DevHome');foreach($n in $f){Get-AppxPackage -AllUsers -Name $n | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue;Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like $n | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue}"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.cortana.remove",
+      "name": "Quitar Cortana",
+      "description": "Elimina el paquete Microsoft.549981C3F5F10 (Cortana). Atlas lo quita aceptando que falten los ficheros de provisión; EVO replica ese comportamiento para no fallar en builds donde el paquete ya no existe. Irreversible.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Modules/Atlas.Appx/Domain/Removal.ps1 (Microsoft.549981C3F5F10*, AllowMissingProvisioningFiles = $true). WinUtil no la trata en el pin: no hay tweak ni entrada AppX de Cortana en winutil@70c23c8. Reversibilidad (ADR-0003): Irreversible — elimina paquete y provision; no hay copia local",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Quitar los paquetes AppX (registrados y provisionados)",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$f=@('Microsoft.549981C3F5F10');foreach($n in $f){Get-AppxPackage -AllUsers -Name $n | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue;Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like $n | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue}"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.onedrive.uninstall",
+      "name": "Desinstalar OneDrive",
+      "description": "Ejecuta OneDriveSetup.exe /uninstall y borra los restos en Program Files y en %LOCALAPPDATA%. WinUtil protege la carpeta de datos del usuario con icacls antes de desinstalar para no borrar sus ficheros; EVO no borra la carpeta de datos del usuario: sólo el binario y sus restos de programa. Irreversible.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksRemoveOneDrive (InvokeScript: OneDriveSetup.exe /uninstall, icacls /deny sobre $Env:OneDrive para proteger datos) + inventory/ledger/inventory-reconciliation.tsv linea 40 (OneDrive). ledger_refs: winutil:catalog-entry:onedrive. Reversibilidad (ADR-0003): Irreversible — el desinstalador no deja copia del binario y el motor no tiene la operacion inversa",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Desinstalar OneDrive con su desinstalador oficial",
+          "fileName": "cmd.exe",
+          "arguments": [
+            "/c",
+            "%SystemRoot%\\System32\\OneDriveSetup.exe",
+            "/uninstall"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.edge.policies",
+      "name": "Debloat de Microsoft Edge por políticas",
+      "description": "Aplica las 17 políticas de máquina de WinUtil WPFTweaksEdgeDebloat: sin recomendaciones, sin asistente de compras, sin Microsoft Rewards, sin widgets web, sin personalización ni telemetría de diagnóstico (DiagnosticData=0), con No rastrear activado. No desinstala Edge ni toca perfiles de usuario. Reversible: cada valor queda en el diario de deshacer.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksEdgeDebloat (17 valores bajo HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge*) + inventory/ledger/winutil-tweak-ops.tsv (filas winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0..16) + inventory/ledger/inventory-reconciliation.tsv lineas 8, 19, 20, 41, 54 (Edge) y 83 (Edge Telemetry). ledger_refs: winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0 | winutil:tweak:WPFTweaksEdgeDebloat. Reversibilidad (ADR-0003): Reversible — 17 valores de politica; el diario restaura cada previo",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Política de Edge ShowRecommendationsEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "ShowRecommendationsEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Política de Edge HideFirstRunExperience=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "HideFirstRunExperience",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Política de Edge UserFeedbackAllowed=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "UserFeedbackAllowed",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 4,
+          "description": "Política de Edge ConfigureDoNotTrack=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "ConfigureDoNotTrack",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 5,
+          "description": "Política de Edge AlternateErrorPagesEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "AlternateErrorPagesEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 6,
+          "description": "Política de Edge EdgeCollectionsEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "EdgeCollectionsEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 7,
+          "description": "Política de Edge EdgeShoppingAssistantEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "EdgeShoppingAssistantEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 8,
+          "description": "Política de Edge MicrosoftEdgeInsiderPromotionEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "MicrosoftEdgeInsiderPromotionEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 9,
+          "description": "Política de Edge ShowMicrosoftRewards=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "ShowMicrosoftRewards",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 10,
+          "description": "Política de Edge WebWidgetAllowed=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "WebWidgetAllowed",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 11,
+          "description": "Política de Edge DiagnosticData=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "DiagnosticData",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 12,
+          "description": "Política de Edge EdgeAssetDeliveryServiceEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "EdgeAssetDeliveryServiceEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 13,
+          "description": "Política de Edge WalletDonationEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "WalletDonationEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 14,
+          "description": "Política de Edge DefaultBrowserSettingsCampaignEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "DefaultBrowserSettingsCampaignEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 15,
+          "description": "Política de Edge CreateDesktopShortcutDefault=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\EdgeUpdate",
+          "valueName": "CreateDesktopShortcutDefault",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 16,
+          "description": "Política de Edge PersonalizationReportingEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge",
+          "valueName": "PersonalizationReportingEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 17,
+          "description": "Bloquear la extension de compras: ExtensionInstallBlocklist\\1 = ofefcgjbeghpigppfmkologfjadafddi",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Edge\\ExtensionInstallBlocklist",
+          "valueName": "1",
+          "operation": "Set",
+          "valueType": "String",
+          "value": "ofefcgjbeghpigppfmkologfjadafddi"
+        }
+      ]
+    },
+    {
+      "id": "debloat.start.websearch",
+      "name": "Quitar la búsqueda web del menú Inicio",
+      "description": "Aplica las 10 claves de Atlas privacy/search-settings (sin búsqueda en la nube ni historial, sin resultados web con DisableSearchBoxSuggestions=1, sin sugerencias dinámicas, búsqueda como icono) MÁS BingSearchEnabled=0, que en el pin de WinUtil es el estado APAGADO de WPFToggleBingSearch (Toggle: Value=1 = casilla encendida, OriginalValue=0 = apagada; Invoke-WinUtilTweaks.ps1:34-46 y Get-WinUtilToggleStatus.ps1:44). Se copia el estado apagado, no el encendido: el encendido deja la búsqueda web activa. Reversible con el diario.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Tweaks/privacy/search-settings.psd1 (10 valores) + inventory/ledger/atlas-tweak-ops.tsv (10 ops de privacy/search-settings) + inventory/ledger/inventory-reconciliation.tsv linea 118 (Configure Windows Search Privacy). Nota: la linea 118 del inventario se mapea a WPFToggleBingSearch:registry:0 y a WPFTweaksTelemetry:registry:1. EVO cubre la linea con la politica de Atlas; el valor BingSearchEnabled del pin (apply=1) NO se copia porque activa la busqueda web, al contrario de lo que anuncia su etiqueta (desviacion 4); el otro mapped_id lo cubre privacy.diagnostic.data.level. ledger_refs: winutil:tweak-op:WPFToggleBingSearch:registry:0 | winutil:tweak:WPFToggleBingSearch. Paso 8c: se añade BingSearchEnabled=0 desde el estado APAGADO del Toggle winutil:tweak:WPFToggleBingSearch (config/tweaks.json:1759-1770; Value=1 encendido, OriginalValue=0 apagado). Es una desviación de significado de interruptor declarada en catalog/exceptions/value-deviations.json. Reversibilidad (ADR-0003): Reversible — 10 valores de busqueda; el diario restaura cada previo",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "IsAADCloudSearchEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+          "valueName": "IsAADCloudSearchEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "IsDeviceSearchHistoryEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+          "valueName": "IsDeviceSearchHistoryEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "IsMSACloudSearchEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings",
+          "valueName": "IsMSACloudSearchEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 4,
+          "description": "AllowCloudSearch=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+          "valueName": "AllowCloudSearch",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 5,
+          "description": "ConnectedSearchUseWeb=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+          "valueName": "ConnectedSearchUseWeb",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 6,
+          "description": "AllowSearchToUseLocation=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+          "valueName": "AllowSearchToUseLocation",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 7,
+          "description": "EnableDynamicContentInWSB=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search",
+          "valueName": "EnableDynamicContentInWSB",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 8,
+          "description": "DisableSearchBoxSuggestions=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+          "valueName": "DisableSearchBoxSuggestions",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 9,
+          "description": "SearchboxTaskbarMode=1",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search",
+          "valueName": "SearchboxTaskbarMode",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 10,
+          "description": "SearchboxTaskbarModeCache=1",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search",
+          "valueName": "SearchboxTaskbarModeCache",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 11,
+          "description": "BingSearchEnabled=0 (estado APAGADO de WPFToggleBingSearch)",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Search",
+          "valueName": "BingSearchEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "debloat.windows.ai.recall",
+      "name": "Desactivar Recall y las funciones de IA de Windows",
+      "description": "Desactiva el análisis de datos de IA (Recall) con DisableAIDataAnalysis=1 y AllowRecallEnablement=0, el agente de IA de Configuración, Click To Do, las funciones de IA del Bloc de notas y oculta la página de componentes de IA. Todo son políticas: se deshace con el diario. Alcance: las políticas WindowsAI sólo existen desde 24H2 (build 26100); en 23H2 no hay nada que desactivar, por eso no se declara 22631. El rango exacto de Click To Do y del agente de Configuración NO ESTÁ VERIFICADO en el pin (no hay guardas de build en sus .psd1): se declaran 26100/26200 por la política que las contiene, no por evidencia propia.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/privacy/disable-recall-snap.psd1 (2 valores), privacy/disable-settings-agent.psd1 (1), privacy/disable-click-to-do.psd1 (2, uno de ellos delete en HKCU), Toggles/General/Recall.psd1:14-16 (comentario del pin: '0 = Recall cannot be enabled ... (24H2 26100.3915+)') + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (SettingsPageVisibility=hide:aicomponents, WindowsNotepad\\DisableAIFeatures=1). Rango: 24H2+ por la política WindowsAI; el rango de ClickToDo y SettingsAgent es NO VERIFICADO (sin MinBuild/MaxBuild ni guardas en el pin), de ahí State=Specified. Separada de debloat.copilot.remove en el paso 8c: aquí no se quita ningún paquete, sólo se configuran políticas, así que es Reversible (ADR-0003). ledger_refs: atlas:tweak:privacy/disable-recall-snap | atlas:tweak:privacy/disable-settings-agent | atlas:tweak:privacy/disable-click-to-do | winutil:tweak:WPFTweaksWindowsAI",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Desactivar el análisis de datos de IA (Recall)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+          "valueName": "DisableAIDataAnalysis",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Impedir que Recall se active",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+          "valueName": "AllowRecallEnablement",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Desactivar el agente de IA de Configuración",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+          "valueName": "DisableSettingsAgent",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 4,
+          "description": "Desactivar Click To Do",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+          "valueName": "DisableClickToDo",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 5,
+          "description": "Desactivar las funciones de IA del Bloc de notas",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\WindowsNotepad",
+          "valueName": "DisableAIFeatures",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "debloat.copilot.remove",
+      "name": "Quitar Microsoft Copilot",
+      "description": "Aplica la política RemoveMicrosoftCopilotApp=1, quita el paquete Copilot de todos los usuarios y oculta su botón de la barra de tareas. Quitar el paquete es irreversible (ni el diario ni un punto de restauración lo devuelven: habría que reinstalarlo desde la Store), por eso la capacidad entera se declara Irreversible. Alcance medido: la política RemoveMicrosoftCopilotApp sólo la honran Enterprise y Education y Atlas la documenta como 25H2+ (qol/taskbar/disable-copilot.psd1:6); en builds < 26100 Copilot es un botón de la barra de tareas y el equivalente de Atlas es ShowCopilotButton=0 (Toggles/General/Copilot.ps1:48-52). Se declaran 22631/26100/26200 porque el paso cubierto por cada acción cambia con la build; el detalle por acción es NO VERIFICADO en el pin.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/qol/taskbar/disable-copilot.psd1:6 (comentario del pin: 'RemoveMicrosoftCopilotApp (25H2+) additionally uninstalls the Copilot app where supported; only Enterprise and Education honour it') + Tweaks/qol/taskbar/disable-copilot.psd1:9 (RemoveMicrosoftCopilotApp=1) + Toggles/General/Copilot.psd1:13-14 (estado Disable: RemoveMicrosoftCopilotApp=1 en HKLM y ShowCopilotButton=0 en HKCU) + Toggles/General/Copilot.ps1:42 (Enable borra la politica) + Toggles/General/Copilot.ps1:52 ('$legacyTaskbarAvailable = ($Toggle.WindowsBuild -lt 26100 ...)': el boton de la barra de tareas solo existe por debajo de 26100) + Toggles/General/Copilot.ps1:18 y :59 (paquete Microsoft.Copilot*; Copilot.ps1:71 lo reinstala desde la Store con el id 9NHT9RB2F4HD) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksWindowsAI (InvokeScript con Get-AppxPackage -AllUsers *Copilot* y Remove-AppxPackage). Builds: el pin NO declara un numero de build para la politica mas alla de 25H2+ (que en este pin es 26200, app/src/services/windows_release.rs:48); 26100 aparece en el pin como la build a partir de la cual NO hay boton de barra de tareas y 22631 solo como build de ejemplo en pruebas (tests/Atlas.AiFeatureToggles.Tests.ps1:127,161). Rango por accion: politica RemoveMicrosoftCopilotApp = 26200 (25H2+) segun el pin; paquete y ShowCopilotButton = NO VERIFICADO por build. RANGO NO VERIFICADO: se declaran 22631/26100/26200 porque el paso cubierto por cada accion cambia con la build, no porque el pin fije esos tres limites. Reversibilidad (ADR-0003): Irreversible, quitar el paquete de todos los usuarios no lo devuelve el diario. ledger_refs: atlas:toggle:Copilot | winutil:tweak:WPFTweaksWindowsAI",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Quitar la app Copilot (política de paquete)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+          "valueName": "RemoveMicrosoftCopilotApp",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "command",
+          "order": 2,
+          "description": "Quitar el paquete Copilot de todos los usuarios",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "Get-AppxPackage -AllUsers *Copilot* | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue"
+          ],
+          "ignoreExitCode": true
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Ocultar el botón de Copilot en la barra de tareas",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+          "valueName": "ShowCopilotButton",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "debloat.content.delivery",
+      "name": "Desactivar el contenido sugerido y las apps promocionadas",
+      "description": "Aplica los 19 valores de Atlas debloat/config-content-delivery (Content Delivery Manager: sin apps sugeridas, sin sugerencias en Inicio, en Configuración ni en la pantalla de bloqueo) y la política de máquina de WinUtil DisableWindowsConsumerFeatures=1. Atlas deja a propósito las claves Subscriptions y SuggestedApps para poder revertir; EVO hace lo mismo. Reversible.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Tweaks/debloat/config-content-delivery.psd1 (19 valores) + winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksConsumerFeatures (HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent\\DisableWindowsConsumerFeatures=1) + inventory/ledger/atlas-tweak-ops.tsv (19 ops de debloat/config-content-delivery). Reversibilidad (ADR-0003): Reversible — 20 valores de ContentDeliveryManager; el diario restaura cada previo",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "ContentDeliveryManager\\ContentDeliveryAllowed=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "ContentDeliveryAllowed",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "ContentDeliveryManager\\FeatureManagementEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "FeatureManagementEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "ContentDeliveryManager\\SubscribedContentEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContentEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 4,
+          "description": "ContentDeliveryManager\\RemediationRequired=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "RemediationRequired",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 5,
+          "description": "ContentDeliveryManager\\OemPreInstalledAppsEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "OemPreInstalledAppsEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 6,
+          "description": "ContentDeliveryManager\\PreInstalledAppsEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "PreInstalledAppsEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 7,
+          "description": "ContentDeliveryManager\\PreInstalledAppsEverEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "PreInstalledAppsEverEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 8,
+          "description": "ContentDeliveryManager\\SilentInstalledAppsEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SilentInstalledAppsEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 9,
+          "description": "ContentDeliveryManager\\SubscribedContent-310093Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-310093Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 10,
+          "description": "ContentDeliveryManager\\SubscribedContent-338393Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-338393Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 11,
+          "description": "ContentDeliveryManager\\SubscribedContent-353694Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-353694Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 12,
+          "description": "ContentDeliveryManager\\SubscribedContent-353696Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-353696Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 13,
+          "description": "ContentDeliveryManager\\SystemPaneSuggestionsEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SystemPaneSuggestionsEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 14,
+          "description": "ContentDeliveryManager\\SubscribedContent-338387Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-338387Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 15,
+          "description": "ContentDeliveryManager\\RotatingLockScreenOverlayEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "RotatingLockScreenOverlayEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 16,
+          "description": "ContentDeliveryManager\\SubscribedContent-338388Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-338388Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 17,
+          "description": "ContentDeliveryManager\\SubscribedContent-338389Enabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SubscribedContent-338389Enabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 18,
+          "description": "ContentDeliveryManager\\SoftLandingEnabled=0",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager",
+          "valueName": "SoftLandingEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 19,
+          "description": "Desactivar las notificaciones de sugerencias de Configuración",
+          "hive": "CurrentUser",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SystemSettings\\AccountNotifications",
+          "valueName": "EnableAccountNotifications",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 20,
+          "description": "Desactivar las características de consumo (política de máquina)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent",
+          "valueName": "DisableWindowsConsumerFeatures",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "debloat.telemetry.appx",
+      "name": "Quitar las aplicaciones de telemetría y comentarios",
+      "description": "Elimina para todos los usuarios el Centro de opiniones (Feedback Hub) y Obtener ayuda, las dos apps que sirven de canal de envío de datos y comentarios a Microsoft. Irreversible; se reinstalan desde la Store si el usuario las quiere.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/appx.json (WPFAppxMicrosoft_WindowsFeedbackHub -> Microsoft.WindowsFeedbackHub, WPFAppxMicrosoft_GetHelp -> Microsoft.GetHelp) + atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:Atlas.Appx/Domain/Removal.ps1 (Microsoft.WindowsFeedbackHub*, Microsoft.GetHelp*). Reversibilidad (ADR-0003): Irreversible — dos paquetes AppX eliminados; solo vuelven desde la Store",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Quitar los paquetes AppX (registrados y provisionados)",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$f=@('Microsoft.WindowsFeedbackHub','Microsoft.GetHelp');foreach($n in $f){Get-AppxPackage -AllUsers -Name $n | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue;Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like $n | Remove-AppxProvisionedPackage -Online -ErrorAction SilentlyContinue}"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.edge.remove",
+      "name": "Desinstalar Microsoft Edge",
+      "description": "Ejecuta el desinstalador de Edge que WinUtil descubre bajo 'Program Files (x86)\\Microsoft\\Edge\\Application\\*\\Installer\\setup.exe' y, si no lo encuentra, quita el paquete AppX. El pin solo lo expresa como script: CommandAction y State=Specified. Atlas NO desinstala Edge: solo lo debloquea por politicas (debloat.edge.policies).",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksRemoveEdge (InvokeScript sobre '$Env:ProgramFiles (x86)\\Microsoft\\Edge\\Application'; UndoScript 'winget install Microsoft.Edge --source winget') + inventory/ledger/winutil-tweak-ops.tsv (winutil:tweak:WPFTweaksRemoveEdge, script:0/script:1) + inventory/ledger/inventory-reconciliation.tsv lineas 1:8, 1:19, 1:20 y 2:41. No estructurado: State=Specified. Reversibilidad (ADR-0003): Irreversible — borra el binario; la vuelta atras es reinstalar con winget, no una operacion del motor. ledger_refs: winutil:tweak-op:WPFTweaksEdgeDebloat:registry:0 | winutil:tweak:WPFTweaksRemoveEdge",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Desinstalar Edge con su desinstalador (o su AppX si no hay setup.exe)",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$d=Join-Path ${env:ProgramFiles(x86)} 'Microsoft\\Edge\\Application';$s=Get-ChildItem $d -Recurse -Filter setup.exe -ErrorAction SilentlyContinue | Select-Object -First 1;if($s){& $s.FullName --uninstall --force-uninstall --system-level}else{Get-AppxPackage -AllUsers *MicrosoftEdge* | Remove-AppxPackage -AllUsers}"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.widgets.disable",
+      "name": "Desactivar Widgets (Noticias e intereses)",
+      "description": "Aplica las tres politicas del toggle Widgets de Atlas en su estado Disable (AllowNewsAndInterests=0, DisableWidgetsOnLockScreen=1, DisableWidgetsBoard=1) y reinicia Explorer. Atlas las aplica via GPO local porque Windows puede rechazar la escritura directa incluso con token de TrustedInstaller; EVO escribe el valor final, sin pasar por gpedit.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Toggles/General/Widgets.psd1 (estado Disable: 3 valores bajo HKLM\\SOFTWARE\\Policies\\Microsoft\\Dsh) + inventory/ledger/atlas-toggles.tsv (atlas:toggle:Widgets) + inventory/ledger/inventory-reconciliation.tsv linea 2:38. Reversibilidad (ADR-0003): Reversible — valores de politica; el diario restaura cada previo. ledger_refs: atlas:toggle:Widgets",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "AllowNewsAndInterests=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+          "valueName": "AllowNewsAndInterests",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Impide los widgets en la pantalla de bloqueo",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+          "valueName": "DisableWidgetsOnLockScreen",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Impide el panel de widgets",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Dsh",
+          "valueName": "DisableWidgetsBoard",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "command",
+          "order": 4,
+          "description": "Reiniciar Explorer",
+          "fileName": "taskkill.exe",
+          "arguments": [
+            "/f",
+            "/im",
+            "explorer.exe"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.explorer.home-gallery",
+      "name": "Quitar Inicio y Galeria del Explorador",
+      "description": "Desancla los dos nodos del panel de navegacion (CLSID de Inicio y de Galeria) con System.IsPinnedToNameSpaceTree=0 y deja el Explorador abriendo 'Este equipo' (LaunchTo=1), que es lo que aplica WinUtil WPFTweaksRemoveHomeAndGallery.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksRemoveHomeAndGallery (CLSID de Inicio y de Galeria, Explorer\\Advanced\\LaunchTo y los dos CLSID) + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:44. Reversibilidad (ADR-0003): Reversible — valores de politica; el diario restaura cada previo. ledger_refs: winutil:tweak:WPFTweaksRemoveHomeAndGallery",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "Desanclar Inicio del panel de navegacion",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}",
+          "valueName": "System.IsPinnedToNameSpaceTree",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Desanclar Galeria del panel de navegacion",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
+          "valueName": "System.IsPinnedToNameSpaceTree",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "Abrir el Explorador en 'Este equipo'",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+          "valueName": "LaunchTo",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "debloat.start.recommendations",
+      "name": "Quitar las recomendaciones del menu Inicio",
+      "description": "Aplica HideRecommendedSection=0 en las dos rutas de directiva del pin y quita la marca de entorno educativo. Aviso de semantica: con HideRecommendedSection=0 la seccion de recomendaciones queda VISIBLE; el valor viene del pin tal cual (OriginalValue 1) y la auditoria de valores lo marca equals-apply. EVO no invierte la etiqueta de upstream sin confirmacion del titular.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFToggleStartMenuRecommendations (PolicyManager\\current\\device\\Start HideRecommendedSection=0, ...\\device\\Education IsEducationEnvironment=0, Policies\\...\\Explorer HideRecommendedSection=0; InvokeScript 'Invoke-WinUtilExplorerUpdate -action restart') + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:45. Reversibilidad (ADR-0003): Reversible — valores de politica; el diario restaura cada previo. ledger_refs: winutil:tweak:WPFToggleStartMenuRecommendations",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "HideRecommendedSection=0 en PolicyManager (valor del pin)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Start",
+          "valueName": "HideRecommendedSection",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "Quitar la marca de entorno educativo",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\PolicyManager\\current\\device\\Education",
+          "valueName": "IsEducationEnvironment",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "HideRecommendedSection=0 en la directiva del Explorador",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer",
+          "valueName": "HideRecommendedSection",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "command",
+          "order": 4,
+          "description": "Reiniciar Explorer",
+          "fileName": "taskkill.exe",
+          "arguments": [
+            "/f",
+            "/im",
+            "explorer.exe"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.store.search",
+      "name": "Quitar las busquedas recomendadas de la Store",
+      "description": "WinUtil deniega a Todos (S-1-1-0) la escritura sobre store.db de la Store, con lo que la app no puede escribir sus busquedas recomendadas. Es una ACL sobre un fichero de usuario, no un valor de registro: CommandAction y State=Specified.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDisableStoreSearch (InvokeScript 'icacls \"$Env:LocalAppData\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db\" /deny *S-1-1-0:F'; UndoScript con /grant) + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:46. No estructurado: State=Specified. Reversibilidad (ADR-0003): Reversible — su UndoScript devuelve el permiso con icacls /grant. ledger_refs: winutil:tweak:WPFTweaksDisableStoreSearch",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Denegar la escritura de store.db a Todos",
+          "fileName": "icacls.exe",
+          "arguments": [
+            "%LocalAppData%\\Packages\\Microsoft.WindowsStore_8wekyb3d8bbwe\\LocalState\\store.db",
+            "/deny",
+            "*S-1-1-0:F"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.explorer.auto-folder-discovery",
+      "name": "Desactivar el descubrimiento automatico de carpetas",
+      "description": "WinUtil borra la base de vistas del Explorador (claves Bags y BagMRU) para que no aplique tipos de carpeta descubiertos automaticamente. Borrar esas claves pierde las vistas guardadas por el usuario y no hay copia: destructivo. El pin solo lo expresa como script.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksDisableExplorerAutoDiscovery (InvokeScript sobre 'HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags' y '...\\Shell\\BagMRU') + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:47. No estructurado: State=Specified. Reversibilidad (ADR-0003): Irreversible — borra las vistas de carpeta guardadas del usuario. ledger_refs: winutil:tweak:WPFTweaksDisableExplorerAutoDiscovery",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Borrar las bases Bags y BagMRU del Explorador",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$b='HKCU:\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell';foreach($k in @('Bags','BagMRU')){if(Test-Path \"$b\\$k\"){Remove-Item \"$b\\$k\" -Recurse -Force}}"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.devices.companion-apps",
+      "name": "Impedir las apps de acompanamiento de dispositivos",
+      "description": "Fija PreventDeviceMetadataFromNetwork=1: Windows deja de descargar los metadatos que disparan la instalacion de apps de fabricante al conectar un dispositivo.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksPreventDeviceMetadataFromNetwork (HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata\\PreventDeviceMetadataFromNetwork=1) + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:49. Reversibilidad (ADR-0003): Reversible — valores de politica; el diario restaura cada previo. ledger_refs: winutil:tweak:WPFTweaksPreventDeviceMetadataFromNetwork",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "PreventDeviceMetadataFromNetwork=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata",
+          "valueName": "PreventDeviceMetadataFromNetwork",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "debloat.drivers.razer",
+      "name": "Bloquear la autoinstalacion del software de Razer",
+      "description": "Pone SearchOrderConfig=0 y DisableCoInstallers=1 para que Windows no busque ni ejecute co-instaladores de fabricante, y vacia la carpeta de instaladores de Razer si existe. El vaciado de carpeta no tiene inversa.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksRazerBlock (DriverSearching\\SearchOrderConfig=0, Device Installer\\DisableCoInstallers=1, InvokeScript sobre \"$Env:SystemRoot\\Installer\\Razer\") + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:50. No estructurado en la parte de ficheros: State=Specified. Reversibilidad (ADR-0003): Irreversible — el vaciado de la carpeta de instaladores no se puede deshacer. ledger_refs: winutil:tweak:WPFTweaksRazerBlock",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "SearchOrderConfig=0 (sin busqueda de drivers)",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+          "valueName": "SearchOrderConfig",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "DisableCoInstallers=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Device Installer",
+          "valueName": "DisableCoInstallers",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "command",
+          "order": 3,
+          "description": "Vaciar la carpeta de instaladores de Razer",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$p=Join-Path $env:SystemRoot 'Installer\\Razer';if(Test-Path $p){Remove-Item \"$p\\*\" -Recurse -Force -ErrorAction SilentlyContinue}"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.drivers.logitech",
+      "name": "Bloquear el Logitech Download Assistant",
+      "description": "Mata logi_download_assistant y vacia 'LogiDownloadAssistant' en Program Files, recreando la carpeta con una ACL que niega la escritura a Todos (S-1-1-0), como hace WinUtil. El pin solo lo expresa como script.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksLogiBlock (Stop-Process logi_download_assistant; icacls sobre \"$ProgramFiles64\\LogiDownloadAssistant\" con /deny *S-1-1-0) + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:51. No estructurado: State=Specified. Reversibilidad (ADR-0003): Irreversible — vacia la carpeta; su UndoScript solo retira la ACL. ledger_refs: winutil:tweak:WPFTweaksLogiBlock",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Detener y vaciar Logitech Download Assistant con denegacion de escritura",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "Stop-Process -Name logi_download_assistant -Force -ErrorAction SilentlyContinue;$pf=if($env:ProgramW6432){$env:ProgramW6432}else{$env:ProgramFiles};$p=Join-Path $pf 'LogiDownloadAssistant';if(Test-Path $p){Remove-Item \"$p\\*\" -Recurse -Force -ErrorAction SilentlyContinue}else{New-Item -Path $p -ItemType Directory -Force | Out-Null};icacls $p /deny *S-1-1-0:(OI)(CI)(W)"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.network.adobe-blocklist",
+      "name": "Anadir la lista de bloqueo de Adobe al fichero hosts",
+      "description": "Descarga la lista de hosts de Adobe del repositorio de terceros que usa WinUtil, la anexa al fichero hosts del sistema y vacia la cache DNS. Escribe un fichero del sistema fuera del registro: CommandAction. Su deshacer (recortar por la marca '#New Ver') no es exacto, asi que no se promete restauracion. Cubre las lineas 2:52 y 3:86 del inventario.",
+      "sectionId": 2,
+      "risk": "High",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "None",
+      "reversibility": "Irreversible",
+      "confirmation": "SummaryAndRestorePoint",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksBlockAdobeNet (InvokeScript: Invoke-RestMethod 'https://github.com/Ruddernation-Designs/Adobe-URL-Block-List/raw/refs/heads/master/hosts' + Add-Content a $Env:SystemRoot\\System32\\drivers\\etc\\hosts + ipconfig /flushdns; UndoScript recorta '#New Ver') + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv lineas 2:52 y 3:86. No estructurado y no determinista (depende de una descarga): State=Specified. Reversibilidad (ADR-0003): Irreversible — el deshacer recorta por marca de texto, no es exacto. ledger_refs: winutil:tweak:WPFTweaksBlockAdobeNet",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Anexar la lista de bloqueo de Adobe al fichero hosts",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "$h=Invoke-RestMethod -Uri 'https://github.com/Ruddernation-Designs/Adobe-URL-Block-List/raw/refs/heads/master/hosts';Add-Content -Path (Join-Path $env:SystemRoot 'System32\\drivers\\etc\\hosts') -Value $h;ipconfig /flushdns | Out-Null"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "privacy.browser.brave-debloat",
+      "name": "Debloat de Brave por politicas",
+      "description": "Aplica las 12 politicas de Brave de WinUtil WPFTweaksBraveDebloat: sin Rewards, Wallet, VPN, AI Chat, News, Talk, Tor ni P3A, sin telemetria de metricas y con el ping de estadisticas apagado. Cubre la linea de debloat (2:53) y la de telemetria (3:84).",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFTweaksBraveDebloat (12 valores bajo HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave) + inventory/ledger/winutil-tweak-ops.tsv (winutil:tweak:WPFTweaksBraveDebloat) + inventory/ledger/inventory-reconciliation.tsv lineas 2:53 y 3:84. Reversibilidad (ADR-0003): Reversible — valores de politica; el diario restaura cada previo. ledger_refs: winutil:tweak-op:WPFTweaksBraveDebloat:registry:0 | winutil:tweak:WPFTweaksBraveDebloat",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "BraveRewardsDisabled=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveRewardsDisabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 2,
+          "description": "BraveWalletDisabled=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveWalletDisabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 3,
+          "description": "BraveVPNDisabled=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveVPNDisabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 4,
+          "description": "BraveAIChatEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveAIChatEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 5,
+          "description": "BraveStatsPingEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveStatsPingEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 6,
+          "description": "BraveNewsDisabled=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveNewsDisabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 7,
+          "description": "BraveTalkDisabled=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveTalkDisabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 8,
+          "description": "TorDisabled=1",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "TorDisabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "1"
+        },
+        {
+          "type": "registry",
+          "order": 9,
+          "description": "BraveP3AEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "BraveP3AEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 10,
+          "description": "UrlKeyedAnonymizedDataCollectionEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "UrlKeyedAnonymizedDataCollectionEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 11,
+          "description": "SafeBrowsingExtendedReportingEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "SafeBrowsingExtendedReportingEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        },
+        {
+          "type": "registry",
+          "order": 12,
+          "description": "MetricsReportingEnabled=0",
+          "hive": "LocalMachine",
+          "keyPath": "SOFTWARE\\Policies\\BraveSoftware\\Brave",
+          "valueName": "MetricsReportingEnabled",
+          "operation": "Set",
+          "valueType": "DWord",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "debloat.start.layout",
+      "name": "Aplicar el diseno de menu Inicio de Atlas",
+      "description": "El efecto de la linea 2:74 es la funcion Set-AtlasStartLayout del modulo Atlas.Shell, que importa una plantilla de diseno de Inicio. El ledger no la expresa como valores de registro ni como fichero estructurado (atlas-effects.tsv la marca unresolved): la accion es la llamada al modulo y la capacidad queda Specified, sin inventar valores.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Specified",
+      "variants": [
+        "Evo",
+        "Atlas"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "atlas@ec3c4058ad0ebd5289a4d07f2af5d6c86e8d455f:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1 (Set-AtlasStartLayout) + inventory/ledger/atlas-effects.tsv (atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout#0) + inventory/ledger/inventory-reconciliation.tsv linea 2:74. No estructurado: State=Specified. Reversibilidad (ADR-0003): Reversible — Atlas registra el diseno previo y lo reaplica al deshacer. ledger_refs: atlas:effect:package/Executables/AtlasModules/Scripts/Modules/Atlas.Shell/Domain/Start.ps1::Set-AtlasStartLayout",
+      "actions": [
+        {
+          "type": "command",
+          "order": 1,
+          "description": "Aplicar el diseno de Inicio de Atlas",
+          "fileName": "powershell.exe",
+          "arguments": [
+            "-NoProfile",
+            "-NonInteractive",
+            "-Command",
+            "Import-Module (Join-Path $env:ProgramFiles 'AtlasModules\\Atlas.Shell\\Atlas.Shell.psd1') -Force;Set-AtlasStartLayout"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    },
+    {
+      "id": "debloat.settings.home",
+      "name": "Ocultar la pagina de Inicio de Configuracion",
+      "description": "Fija SettingsPageVisibility='hide:home' en la directiva del Explorador, que es el valor que aplica WinUtil WPFToggleHideSettingsHome (OriginalValue 'show:home'), y reinicia Explorer.",
+      "sectionId": 2,
+      "risk": "Low",
+      "securityImpact": "Neutral",
+      "privilege": "Admin",
+      "restore": "SessionUndo",
+      "reversibility": "Reversible",
+      "confirmation": "SimpleClick",
+      "state": "Implemented",
+      "variants": [
+        "Evo",
+        "WinUtil"
+      ],
+      "conflictsWith": [],
+      "dependsOn": [],
+      "supportedBuilds": [
+        19045,
+        22631,
+        26100,
+        26200
+      ],
+      "provenance": "winutil@70c23c80641d7370532af2f619b2842658600842:config/tweaks.json#WPFToggleHideSettingsHome (HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\SettingsPageVisibility='hide:home', OriginalValue 'show:home', InvokeScript 'Invoke-WinUtilExplorerUpdate -action restart') + inventory/ledger/winutil-tweak-ops.tsv + inventory/ledger/inventory-reconciliation.tsv linea 2:75. Reversibilidad (ADR-0003): Reversible — valores de politica; el diario restaura cada previo. ledger_refs: winutil:tweak-op:WPFToggleHideSettingsHome:registry:0 | winutil:tweak:WPFToggleHideSettingsHome",
+      "actions": [
+        {
+          "type": "registry",
+          "order": 1,
+          "description": "SettingsPageVisibility=hide:home",
+          "hive": "CurrentUser",
+          "keyPath": "Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+          "valueName": "SettingsPageVisibility",
+          "operation": "Set",
+          "valueType": "String",
+          "value": "hide:home"
+        },
+        {
+          "type": "command",
+          "order": 2,
+          "description": "Reiniciar Explorer",
+          "fileName": "taskkill.exe",
+          "arguments": [
+            "/f",
+            "/im",
+            "explorer.exe"
+          ],
+          "ignoreExitCode": true
+        }
+      ]
+    }
+  ]
+}
