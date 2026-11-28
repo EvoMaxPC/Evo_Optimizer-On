@@ -279,8 +279,8 @@ _______ test_el_plan_de_oleadas_es_reproducible_y_cubre_las_17_secciones _______
     def test_el_plan_de_oleadas_es_reproducible_y_cubre_las_17_secciones() -> None:
 >       assert bwp.main(["--check"]) == 0
 E       AssertionError: assert 1 == 0
-E        +  where 1 = <function main at 0x7d1f7f1b0300>(['--check'])
-E        +    where <function main at 0x7d1f7f1b0300> = bwp.main
+E        +  where 1 = <function main at 0x7fe39ee74300>(['--check'])
+E        +    where <function main at 0x7fe39ee74300> = bwp.main
 
 tests/test_paso8c.py:190: AssertionError
 ----------------------------- Captured stderr call -----------------------------
@@ -498,8 +498,8 @@ assert 0 >= 1
 FAILED tests/test_paso8b.py::test_implemented_solo_si_el_motor_la_ejecuta_y_la_fuente_esta_verificada - assert 106 == 101
  +  where 106 = len({'explorer.app-icon-thumbnails.hide': {'id': 'explorer.app-icon-thumbnails.hide', 'name': 'Quitar el icono de la aplic...lo contrario: escribe una cadena vacía en esos mismos valores, que es lo que los bloquea.", 'sectionId': 10, ...}, ...})
 FAILED tests/test_paso8c.py::test_el_plan_de_oleadas_es_reproducible_y_cubre_las_17_secciones - AssertionError: assert 1 == 0
- +  where 1 = <function main at 0x7d1f7f1b0300>(['--check'])
- +    where <function main at 0x7d1f7f1b0300> = bwp.main
+ +  where 1 = <function main at 0x7fe39ee74300>(['--check'])
+ +    where <function main at 0x7fe39ee74300> = bwp.main
 FAILED tests/test_paso8c.py::test_la_cobertura_1_3_sigue_siendo_26_de_26 - assert 104 == (((((3 + 17) + 6) + 13) + 31) + 29)
 FAILED tests/test_paso9.py::test_el_verificador_cubre_las_29_lineas_mapped_de_la_seccion_10 - AssertionError: assert ['1', '2', '3...9', '10', ...] == ['1', '2', '3...4', '9', '10']
   
@@ -523,5 +523,5 @@ FAILED tests/test_paso9.py::test_el_informe_de_rangos_es_reproducible_y_dice_lo_
   
 assert 1 == 0
  +  where 1 = CompletedProcess(args=['/usr/bin/python3', '/home/runner/work/Evo_Optimizer-On/Evo_Optimizer-On/tools/ledger_extract/b...ort.py', '--check'], returncode=1, stdout='', stderr='rangos-build.md NO reproducible: el fichero del disco difiere\n').returncode
-14 failed, 559 passed, 2 warnings in 18.20s
+14 failed, 559 passed, 2 warnings in 16.90s
 pytest_exit=1
