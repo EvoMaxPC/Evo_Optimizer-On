@@ -65,7 +65,17 @@ Siga este orden:
 
 ---
 
-## 6. Qué NO está disponible todavía
+## 6. Cómo probar el botón "Deshacer" (ETAPA 6-H)
+
+Después de aplicar una capacidad, el botón **Deshacer** revierte los cambios de la sesión:
+
+- **Si hay cambios para deshacer:** muestra `"Se deshizo: N cambio(s) de <id_de_capacidad>"` en el área de resultados y los valores del registro vuelven al estado anterior.
+- **Si no se aplicó nada:** muestra `"No hay nada para deshacer"`.
+- **Nunca** debe mostrar `"DryRun"` en el deshacer real (eso solo aparece en Simular).
+
+**Prueba recomendada:** aplica una capacidad Safe (por ejemplo, una que modifique un valor del registro), luego haz clic en Deshacer y verifica que el área de resultados diga "Se deshizo" y que el cambio se haya revertido.
+
+## 7. Qué NO está disponible todavía
 
 Estas funcionalidades existen en el diseño pero **no están habilitadas** en esta versión preliminar:
 
