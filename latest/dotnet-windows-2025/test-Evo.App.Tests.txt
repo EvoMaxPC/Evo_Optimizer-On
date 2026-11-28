@@ -1,36 +1,36 @@
-Build started 11/28/2026 12:37:08 PM.
+Build started 11/28/2026 12:44:19 PM.
 Test run for D:\a\Evo_Optimizer-On\Evo_Optimizer-On\tests\Evo.App.Tests\bin\Release\net10.0-windows\Evo.App.Tests.dll (.NETCoreApp,Version=v10.0)
 A total of 1 test files matched the specified pattern.
 [xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.15)
-[xUnit.net 00:00:00.12]   Discovering: Evo.App.Tests
-[xUnit.net 00:00:00.20]   Discovered:  Evo.App.Tests
-[xUnit.net 00:00:00.21]   Starting:    Evo.App.Tests
-  Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: X86, esperado: "x86") [7 ms]
+[xUnit.net 00:00:00.08]   Discovering: Evo.App.Tests
+[xUnit.net 00:00:00.14]   Discovered:  Evo.App.Tests
+[xUnit.net 00:00:00.14]   Starting:    Evo.App.Tests
+  Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: X86, esperado: "x86") [5 ms]
   Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: Arm, esperado: "desconocido-Arm") [1 ms]
   Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: X64, esperado: "x64") [< 1 ms]
   Passed Evo.App.Tests.ArchitectureMappingTests.MapArchitecture_DevuelveStringsDelCatalogo_O_NoCompatible(arch: Arm64, esperado: "arm64") [< 1 ms]
-  Passed Evo.App.Tests.Tests.TrustedInstaller_No_Disponible [46 ms]
-  Passed Evo.App.Tests.UndoTests.DeshacerSinAplicar_Dice_NoHayNada [52 ms]
-  Passed Evo.App.Tests.ArchitectureMappingTests.EntornoReal_Arquitectura_NoVacia_Y_DeclaradaEnCatalogo [74 ms]
-  Passed Evo.App.Tests.Tests.Simular_DryRun_No_Muta_Fake [45 ms]
-  Passed Evo.App.Tests.Tests.Build_Conocido_Cliente_Compatible [5 ms]
-  Passed Evo.App.Tests.Tests.Specified_No_Ejecutable [4 ms]
-  Passed Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [1 ms]
-  Passed Evo.App.Tests.Tests.Critical_Bloqueada [4 ms]
-  Passed Evo.App.Tests.UndoTests.DeshacerPorCapacidad_A_No_Afecta_A_B [54 ms]
+  Passed Evo.App.Tests.UndoTests.DeshacerSinAplicar_Dice_NoHayNada [23 ms]
+  Passed Evo.App.Tests.Tests.TrustedInstaller_No_Disponible [24 ms]
+  Passed Evo.App.Tests.Tests.Simular_DryRun_No_Muta_Fake [23 ms]
+  Passed Evo.App.Tests.ArchitectureMappingTests.EntornoReal_Arquitectura_NoVacia_Y_DeclaradaEnCatalogo [40 ms]
+  Passed Evo.App.Tests.Tests.Build_Conocido_Cliente_Compatible [3 ms]
+  Passed Evo.App.Tests.Tests.Specified_No_Ejecutable [2 ms]
+  Passed Evo.App.Tests.Tests.RestorePoint_Bloqueada_SinServicio [< 1 ms]
+  Passed Evo.App.Tests.Tests.Critical_Bloqueada [2 ms]
+  Passed Evo.App.Tests.UndoTests.DeshacerPorCapacidad_A_No_Afecta_A_B [36 ms]
   Passed Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado [< 1 ms]
   Passed Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada [< 1 ms]
-  Passed Evo.App.Tests.UndoTests.DespuesDeAplicar_SegundoAplicarFalla_DeshacerReviertePrimera [1 ms]
+  Passed Evo.App.Tests.UndoTests.DespuesDeAplicar_SegundoAplicarFalla_DeshacerReviertePrimera [< 1 ms]
   Passed Evo.App.Tests.UndoTests.AplicarADosVeces_DeshacerUnaVez_VuelveAlEstadoOriginal [< 1 ms]
   Passed Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original [< 1 ms]
   Passed Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_RestauraValorPrevio [< 1 ms]
-  Passed Evo.App.Tests.Tests.Confirmacion_No_Impide_Mutar_Fake [11 ms]
+  Passed Evo.App.Tests.Tests.Confirmacion_No_Impide_Mutar_Fake [6 ms]
   Passed Evo.App.Tests.Tests.Diecisiete_Secciones_Titulos_Exactos [< 1 ms]
-  Passed Evo.App.Tests.Tests.Privilege_Admin_NoAdmin_Muestra_Aviso [1 ms]
-  Passed Evo.App.Tests.Tests.Build_Desconocido_NoAplicaNada [2 ms]
+  Passed Evo.App.Tests.Tests.Privilege_Admin_NoAdmin_Muestra_Aviso [< 1 ms]
+  Passed Evo.App.Tests.Tests.Build_Desconocido_NoAplicaNada [1 ms]
   Passed Evo.App.Tests.Tests.Restauracion_Pendiente_No_Llama_Al_Motor [< 1 ms]
-  Passed Evo.App.Tests.Tests.Tarea_O_Comando_No_Disponible_Todavia [2 ms]
-[xUnit.net 00:00:00.42]   Finished:    Evo.App.Tests
+[xUnit.net 00:00:00.26]   Finished:    Evo.App.Tests
+  Passed Evo.App.Tests.Tests.Tarea_O_Comando_No_Disponible_Todavia [1 ms]
   Passed Evo.App.Tests.Tests.Windows_NoCompatible_NoAplicaNada [< 1 ms]
   Passed Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original [< 1 ms]
   Passed Evo.App.Tests.Tests.Seccion_Sin_Capacidades_Muestra_Sin_Capacidades_Todavia [< 1 ms]
@@ -39,10 +39,10 @@ Results File: D:\a\Evo_Optimizer-On\Evo_Optimizer-On\ci-out\test-results\Evo.App
 Test Run Successful.
 Total tests: 28
      Passed: 28
- Total time: 1.0125 Seconds
+ Total time: 0.6123 Seconds
 
 Build succeeded.
     0 Warning(s)
     0 Error(s)
 
-Time Elapsed 00:00:02.18
+Time Elapsed 00:00:01.57
