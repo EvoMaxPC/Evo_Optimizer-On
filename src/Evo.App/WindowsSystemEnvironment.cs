@@ -1,5 +1,9 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using Evo.Core.System;
+
+[assembly: InternalsVisibleTo("Evo.App.Tests")]
 
 namespace Evo.App;
 
@@ -10,7 +14,7 @@ public sealed class WindowsSystemEnvironment : ISystemEnvironment
     public int UBR => ReadInt("UBR", 0);
     public string EditionID => ReadString("EditionID") ?? string.Empty;
     public string InstallationType => ReadString("InstallationType") ?? string.Empty;
-    public string Architecture => ReadString("ProcessorArchitecture") ?? string.Empty;
+    public string Architecture => MapArchitecture(RuntimeInformation.OSArchitecture);
 
     public bool IsAdmin => IsAdministrator();
     public bool IsElevated => IsElevatedProcess();
@@ -71,4 +75,19 @@ public sealed class WindowsSystemEnvironment : ISystemEnvironment
             return false;
         }
     }
+
+    /// <summary>
+    /// Mapea la arquitectura del SO (<see cref="RuntimeInformation.OSArchitecture"/>) a los
+    /// strings exactos que declara <c>catalog/windows-releases.json</c>
+    /// (<c>x64</c>, <c>arm64</c>). Es pura y estática para poder testearla sin Windows.
+    /// Las arquitecturas no declaradas (x86, Arm, desconocidas) devuelven un valor que el
+    /// detector trata como NO compatible: nunca se inventa compatibilidad.
+    /// </summary>
+    internal static string MapArchitecture(Architecture architecture) => architecture switch
+    {
+        Architecture.X64 => "x64",
+        Architecture.Arm64 => "arm64",
+        Architecture.X86 => "x86",
+        var other => $"desconocido-{other}",
+    };
 }

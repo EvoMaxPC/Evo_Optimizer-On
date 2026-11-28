@@ -15,8 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Evo.Core\Evo.Core.csproj" />
+    <ProjectReference Include="..\..\src\Evo.Detection\Evo.Detection.csproj" />
     <ProjectReference Include="..\..\src\Evo.Engine\Evo.Engine.csproj" />
     <ProjectReference Include="..\..\src\Evo.Testing\Evo.Testing.csproj" />
+    <ProjectReference Include="..\..\src\Evo.App\Evo.App.csproj" />
     <ProjectReference Include="..\..\src\Evo.Windows\Evo.Windows.csproj" />
   </ItemGroup>
 

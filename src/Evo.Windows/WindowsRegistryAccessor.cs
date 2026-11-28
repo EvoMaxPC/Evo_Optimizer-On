@@ -143,10 +143,15 @@ public sealed class WindowsRegistryAccessor : IRegistryAccessor, IRegistryTreeRe
         {
             return key.GetValueKind(valueName);
         }
-        catch
+        catch (ArgumentException)
         {
+            // El valor no existe: se trata como desconocido (comportamiento actual).
             return RegistryValueKind.Unknown;
         }
+
+        // UnauthorizedAccessException / SecurityException (fallo de permisos)
+        // se propagan: el motor las atrapa en EngineCoordinator y las convierte
+        // en fallo (fail-closed), sin mutar nada. No se traga silenciosamente.
     }
 
     private static RegistryKey? OpenRead(RegistryHive hive, string keyPath) =>
