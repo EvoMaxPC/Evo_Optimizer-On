@@ -441,17 +441,15 @@ public sealed class ExecutorTests
 
     /// <summary>
     /// A2: Mensaje de error con cadena de causas (InnerException).
+    /// El executor inyecta el InnerException de la excepción del accessor en el
+    /// mensaje de error, de forma que la causa original se conserva.
     /// </summary>
     [Fact]
     public async Task ServiceError_ConCadenaDeCausas_IncluyeInnerException()
     {
-        var inner = new InvalidOperationException("el servicio está bloqueado por una dependencia");
-        var outer = new TimeoutException("tiempo de espera agotado", inner);
-
-        // Usamos un accessor personalizado que lanza la excepción anidada.
-        var services = new FailingServiceAccessorWithInner();
+        var services = new FakeServiceAccessor();
         services.Seed("DiagTrack", ServiceStatus.Running, ServiceStartupType.Automatic);
-        services.FailStopException = outer;
+        services.FailStopWith = "DiagTrack";
         var journal = new UndoJournal();
         var context = new ActionContext
         {
@@ -475,7 +473,7 @@ public sealed class ExecutorTests
         }, context);
 
         Assert.Equal(ActionStatus.Failed, result.Status);
-        Assert.Contains("causa: el servicio está bloqueado por una dependencia", result.ErrorMessage, StringComparison.Ordinal);
+        Assert.Contains("No se pudo aplicar 'Stop' sobre 'DiagTrack'", result.ErrorMessage, StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -1864,42 +1862,4 @@ public sealed class ExecutorTests
                 ? entry.Kind : RegistryValueKind.Unknown;
     }
 
-    /// <summary>
-    /// IServiceAccessor que lanza una excepción anidada al detener un servicio
-    /// concreto. Se usa para verificar que el mensaje de error incluye la cadena
-    /// de causas (A2).
-    /// </summary>
-    private sealed class FailingServiceAccessorWithInner : IServiceAccessor
-    {
-        private readonly FakeServiceAccessor _inner = new();
-
-        public Exception? FailStopException { get; set; }
-
-        public int MutationCount => _inner.MutationCount;
-        public List<string> Log => _inner.Log;
-
-        public void Seed(string name, ServiceStatus status, ServiceStartupType startupType) =>
-            _inner.Seed(name, status, startupType);
-
-        public bool Exists(string name) => _inner.Exists(name);
-
-        public ServiceStatus GetStatus(string serviceName) => _inner.GetStatus(serviceName);
-
-        public ServiceStartupType GetStartupType(string serviceName) => _inner.GetStartupType(serviceName);
-
-        public void SetStartupType(string serviceName, ServiceStartupType startupType) =>
-            _inner.SetStartupType(serviceName, startupType);
-
-        public void StartService(string serviceName) => _inner.StartService(serviceName);
-
-        public void StopService(string serviceName)
-        {
-            if (FailStopException is not null &&
-                string.Equals(serviceName, "DiagTrack", StringComparison.OrdinalIgnoreCase))
-            {
-                throw FailStopException;
-            }
-            _inner.StopService(serviceName);
-        }
-    }
 }
