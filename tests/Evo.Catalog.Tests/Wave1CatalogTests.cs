@@ -97,9 +97,10 @@ public sealed class Wave1CatalogTests
 
         // Las 39 de las secciones 1-3 siguen ahí; las oleadas 2 y 3 añaden las
         // secciones 10 y 9, que este test no enumera (tienen sus propios tests).
+        // La sección 4 (servicios) tampoco se enumera aquí.
         var wave1 = Section1.Concat(Section2).Concat(Section3).ToList();
         Assert.Equal(wave1.OrderBy(i => i, StringComparer.Ordinal),
-            catalog.Definitions.Where(d => d.SectionId is not 10 and not 9)
+            catalog.Definitions.Where(d => d.SectionId is not 10 and not 9 and not 4)
                 .Select(d => d.Id).OrderBy(i => i, StringComparer.Ordinal));
         // Paso 12: 29 -> 30 en la seccion 10 (`explorer.home.restore`) y
         // 18 -> 19 en la 9 (`system.network.location-wizard.disable`).

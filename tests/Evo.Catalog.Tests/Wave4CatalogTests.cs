@@ -335,7 +335,11 @@ public sealed class Wave4CatalogTests
         {
             Assert.Contains(definition.State,
                 new[] { CapabilityState.Implemented, CapabilityState.Specified });
-            Assert.NotEmpty(definition.Actions);
+            // R1: una capacidad Implemented siempre expresa al menos una acción.
+            // Una capacidad Specified puede quedar sin acciones cuando el pin
+            // solo declara efectos no expresables por el motor (MachineAction).
+            if (definition.State == CapabilityState.Implemented)
+                Assert.NotEmpty(definition.Actions);
             Assert.NotNull(definition.Reversibility);
             Assert.False(string.IsNullOrWhiteSpace(definition.Provenance));
             Assert.Empty(CapabilityRules.Validate(definition.ToContract()));

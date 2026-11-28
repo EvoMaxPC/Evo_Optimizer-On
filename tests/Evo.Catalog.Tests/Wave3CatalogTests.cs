@@ -38,11 +38,11 @@ public sealed class Wave3CatalogTests
         "system.search-indexing.disable",
         "system.services.manual-profile",
         "system.settings-page-visibility.hide",
-        "system.tray.battery-percentage",
         "system.sleep.s0-network-keep",
         "system.sleep.s3-enable",
         "system.time.ntp-servers",
         "system.time.utc-rtc",
+        "system.tray.battery-percentage",
     ];
 
     /// <summary>Las builds que declara <c>catalog/windows-releases.json</c>.</summary>
