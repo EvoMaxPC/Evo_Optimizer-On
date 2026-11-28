@@ -1,7 +1,7 @@
-Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original (Evo.App.Tests): Assert.Contains() Failure: Sub-string not found
-String:    "[DryRun] cap.iii\r\n  Acciones: 1 | Éxito: "···
+Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado (Evo.App.Tests): Assert.Contains() Failure: Sub-string not found
+String:    "[Execute] cap.i\r\n  Acciones: 1 | Éxito: 1"···
 Not found: "Se deshizo"
-   at Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original() in /_/tests/Evo.App.Tests/UndoTests.cs:line 157
+   at Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado() in /_/tests/Evo.App.Tests/UndoTests.cs:line 111
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
@@ -9,6 +9,13 @@ Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada (Evo.App.Test
 String:    "[Execute] cap.v\r\n  Acciones: 1 | Éxito: 1"···
 Not found: "Se deshizo"
    at Evo.App.Tests.UndoTests.DosClicsEnDeshacer_ElSegundo_DiceNoHayNada() in /_/tests/Evo.App.Tests/UndoTests.cs:line 192
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original (Evo.App.Tests): Assert.Contains() Failure: Sub-string not found
+String:    "[DryRun] cap.iii\r\n  Acciones: 1 | Éxito: "···
+Not found: "Se deshizo"
+   at Evo.App.Tests.UndoTests.Simular_Despues_Aplicar_Y_Deshacer_Vuelve_Al_Estado_Original() in /_/tests/Evo.App.Tests/UndoTests.cs:line 157
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
@@ -23,13 +30,6 @@ Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original (Evo.App.Tes
 String:    "[Execute] cap.undo\r\n  Acciones: 1 | Éxito"···
 Not found: "Se deshizo"
    at Evo.App.Tests.Tests.AplicarYDeshacer_Fake_Vuelve_Al_Estado_Original() in /_/tests/Evo.App.Tests/Tests.cs:line 284
-   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
-   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
-
-Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado (Evo.App.Tests): Assert.Contains() Failure: Sub-string not found
-String:    "[Execute] cap.i\r\n  Acciones: 1 | Éxito: 1"···
-Not found: "Se deshizo"
-   at Evo.App.Tests.UndoTests.DespuesDeAplicar_Deshacer_EliminaValorCreado() in /_/tests/Evo.App.Tests/UndoTests.cs:line 111
    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
