@@ -37,7 +37,8 @@ public class UndoTests
         };
 
     /// <summary>Capacidad Safe con una acción de registro que escribe un DWord.</summary>
-    private static CapabilityDefinition SafeCapability(string id, string valueName, object value) =>
+    private static CapabilityDefinition SafeCapability(
+        string id, string valueName, object value, string? keyPath = null) =>
         new()
         {
             Id = id,
@@ -59,7 +60,7 @@ public class UndoTests
                     Order = 1,
                     Description = $"Set {id}",
                     Hive = RegistryHiveKind.CurrentUser,
-                    KeyPath = TestKey,
+                    KeyPath = keyPath ?? TestKey,
                     ValueName = valueName,
                     Operation = RegistryOperation.Set,
                     ValueType = RegistryValueType.DWord,
@@ -106,7 +107,7 @@ public class UndoTests
         Assert.True(applied.HasResults);
         Assert.Equal(42, LeeDWord(registry, "ValorI"));
 
-        var undone = vm.Undo();
+        var undone = vm.Undo(cap.Id);
         Assert.True(undone.HasResults);
         Assert.Contains("Se deshizo", undone.ResultsText);
         Assert.DoesNotContain("DryRun", undone.ResultsText);
@@ -127,7 +128,7 @@ public class UndoTests
         var applied = vm.Apply(cap);
         Assert.Equal(42, LeeDWord(registry, "ValorII"));
 
-        var undone = vm.Undo();
+        var undone = vm.Undo(cap.Id);
         Assert.True(undone.HasResults);
         Assert.Contains("Se deshizo", undone.ResultsText);
         Assert.Equal(99, LeeDWord(registry, "ValorII"));
@@ -152,7 +153,7 @@ public class UndoTests
         Assert.Equal(42, LeeDWord(registry, "ValorIII"));
 
         // Deshacer revierte.
-        var undone = vm.Undo();
+        var undone = vm.Undo(cap.Id);
         Assert.True(undone.HasResults);
         Assert.Contains("Se deshizo", undone.ResultsText);
         Assert.Null(LeeDWord(registry, "ValorIII"));
@@ -168,7 +169,7 @@ public class UndoTests
 
         var cap = CapacidadDe(vm, "cap.iv");
 
-        var undone = vm.Undo();
+        var undone = vm.Undo(cap.Id);
         Assert.True(undone.HasResults);
         Assert.Contains("No hay nada para deshacer", undone.ResultsText);
         Assert.DoesNotContain("DryRun", undone.ResultsText);
@@ -188,13 +189,82 @@ public class UndoTests
         var applied = vm.Apply(cap);
         Assert.Equal(42, LeeDWord(registry, "ValorV"));
 
-        var primero = vm.Undo();
+        var primero = vm.Undo(cap.Id);
         Assert.Contains("Se deshizo", primero.ResultsText);
         Assert.Null(LeeDWord(registry, "ValorV"));
 
-        var segundo = vm.Undo();
+        var segundo = vm.Undo(cap.Id);
         Assert.Contains("No hay nada para deshacer", segundo.ResultsText);
         Assert.Null(LeeDWord(registry, "ValorV"));
+    }
+
+    /// <summary>(1) Deshacer por capacidad: aplicar A y B (claves distintas),
+    /// deshacer A revierte SOLO A; B queda aplicada. Luego deshacer B revierte B.</summary>
+    [Fact]
+    public void DeshacerPorCapacidad_A_No_Afecta_A_B()
+    {
+        var registry = new FakeRegistryAccessor();
+        var caps = new List<CapabilityDefinition>
+        {
+            SafeCapability("cap.a", "ValorA", 42, @"Software\Evo\A"),
+            SafeCapability("cap.b", "ValorB", 77, @"Software\Evo\B"),
+        };
+        var vm = CreateVmConRegistro(caps, registry);
+
+        var capA = CapacidadDe(vm, "cap.a");
+        var capB = CapacidadDe(vm, "cap.b");
+
+        var appliedA = vm.Apply(capA);
+        Assert.True(appliedA.HasResults);
+        Assert.Equal(42, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\A", "ValorA"));
+
+        var appliedB = vm.Apply(capB);
+        Assert.True(appliedB.HasResults);
+        Assert.Equal(77, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\B", "ValorB"));
+
+        // Deshacer A: revierte solo A, B queda aplicada.
+        var undoneA = vm.Undo(capA.Id);
+        Assert.True(undoneA.HasResults);
+        Assert.Contains("Se deshizo: 1 cambio(s) de cap.a", undoneA.ResultsText);
+        Assert.DoesNotContain("DryRun", undoneA.ResultsText);
+        Assert.Null(registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\A", "ValorA"));
+        Assert.Equal(77, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\B", "ValorB"));
+
+        // Luego deshacer B: revierte B.
+        var undoneB = vm.Undo(capB.Id);
+        Assert.True(undoneB.HasResults);
+        Assert.Contains("Se deshizo: 1 cambio(s) de cap.b", undoneB.ResultsText);
+        Assert.Null(registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\B", "ValorB"));
+    }
+
+    /// <summary>(3) Aplicar A dos veces seguidas y deshacer una vez: el journal de
+    /// A tiene dos entradas; RollbackAsync las revierte LIFO, dejando el estado
+    /// original de antes de la primera aplicación.</summary>
+    [Fact]
+    public void AplicarADosVeces_DeshacerUnaVez_VuelveAlEstadoOriginal()
+    {
+        var registry = new FakeRegistryAccessor();
+        var caps = new List<CapabilityDefinition> { SafeCapability("cap.aux", "ValorAux", 42, @"Software\Evo\Aux") };
+        var vm = CreateVmConRegistro(caps, registry);
+
+        var cap = CapacidadDe(vm, "cap.aux");
+
+        // Primera aplicación.
+        vm.Apply(cap);
+        Assert.Equal(42, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\Aux", "ValorAux"));
+
+        // Segunda aplicación (mismo valor, nueva entrada del journal).
+        vm.Apply(cap);
+        Assert.Equal(42, (int?)registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\Aux", "ValorAux"));
+
+        // Un solo deshacer revierte AMBAS entradas del journal de A.
+        var undone = vm.Undo(cap.Id);
+        Assert.True(undone.HasResults);
+        Assert.Contains("Se deshizo: 2 cambio(s) de cap.aux", undone.ResultsText);
+        Assert.Null(registry.GetValue(RegistryHive.CurrentUser, @"Software\Evo\Aux", "ValorAux"));
+
+        // Diario de A vacío tras el deshacer.
+        Assert.True(vm.Undo(cap.Id).ResultsText.Contains("No hay nada para deshacer"));
     }
 
     #endregion

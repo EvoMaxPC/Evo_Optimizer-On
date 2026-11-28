@@ -111,7 +111,7 @@ public sealed class UndoRealRegistryTest : IDisposable
         Assert.True(applied.HasResults);
         Assert.Equal(42, (int?)registry.GetValue(RegistryHive.CurrentUser, _keyPath, "ValorReal"));
 
-        var undone = vm.Undo();
+        var undone = vm.Undo(cap.Id);
         Assert.True(undone.HasResults);
         Assert.Contains("Se deshizo", undone.ResultsText);
         Assert.DoesNotContain("DryRun", undone.ResultsText);

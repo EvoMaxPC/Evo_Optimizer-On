@@ -279,7 +279,7 @@ public class Tests
         Assert.Equal(1, (int?)registry.GetValue(RegistryHive.CurrentUser, keyPath, "cap.undo"));
 
         // Deshacer revierte de verdad el valor aplicado.
-        var undone = vm.Undo();
+        var undone = vm.Undo(cap.Id);
         Assert.True(undone.HasResults);
         Assert.Contains("Se deshizo", undone.ResultsText);
         Assert.Null(registry.GetValue(RegistryHive.CurrentUser, keyPath, "cap.undo"));

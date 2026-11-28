@@ -1,5 +1,6 @@
 using Evo.Core.Actions;
 using Evo.Core.Enums;
+using Evo.Core.Restore;
 using Evo.Core.System;
 using Evo.Engine;
 using Evo.Engine.Execution;
@@ -22,6 +23,19 @@ public sealed class UndoUsesContextJournalTests
         Description = $"set {name}",
         Hive = RegistryHiveKind.LocalMachine,
         KeyPath = KeyPath,
+        ValueName = name,
+        Operation = RegistryOperation.Set,
+        ValueType = RegistryValueType.DWord,
+        Value = value,
+    };
+
+    private static RegistryAction SetDword(
+        int order, string name, string value, RegistryHiveKind hive, string keyPath) => new()
+    {
+        Order = order,
+        Description = $"set {name}",
+        Hive = hive,
+        KeyPath = keyPath,
         ValueName = name,
         Operation = RegistryOperation.Set,
         ValueType = RegistryValueType.DWord,
@@ -61,5 +75,83 @@ public sealed class UndoUsesContextJournalTests
         var entry = Assert.IsType<Undo.RegistryUndoEntry>(viewModelJournal.Entries[0]);
         Assert.Equal("1", entry.PreviousState);
         Assert.Equal(1, entry.PreviousValue);
+    }
+
+    /// <summary>Punto B: el rollback automático del motor (cuando una acción
+    /// falla) deshace SOLO las entradas del journal de la capacidad que falló.
+    /// Con un journal por capacidad (ETAPA 6-I), otra capacidad que ya se
+    /// aplicó con éxito sigue intacta.</summary>
+    [Fact]
+    public async Task RollbackAutomatico_No_Afecta_Otra_Capacidad()
+    {
+        var harness = TestHarness.Create();
+        var keyA = @"SOFTWARE\Evo\A";
+        var keyB = @"SOFTWARE\Evo\B";
+        harness.Registry.Seed(RegistryHive.LocalMachine, keyA, "ValorA", 1);
+        harness.Registry.Seed(RegistryHive.LocalMachine, keyB, "ValorB", 1);
+
+        // Diarios SEPARADOS por capacidad (ETAPA 6-I).
+        var ctxA = new ActionContext
+        {
+            Registry = harness.Registry,
+            Services = harness.Services,
+            Tasks = harness.Tasks,
+            Processes = harness.Processes,
+            Commands = harness.Commands,
+            Mode = ExecutionMode.Execute,
+            Journal = new UndoJournal(),
+            CapabilityId = "cap.a",
+        };
+        var ctxB = new ActionContext
+        {
+            Registry = harness.Registry,
+            Services = harness.Services,
+            Tasks = harness.Tasks,
+            Processes = harness.Processes,
+            Commands = harness.Commands,
+            Mode = ExecutionMode.Execute,
+            Journal = new UndoJournal(),
+            CapabilityId = "cap.b",
+        };
+
+        // Capacidad A: Set DWord (éxito).
+        var accionesA = new CapabilityAction[]
+        {
+            SetDword(1, "ValorA", "99", RegistryHiveKind.LocalMachine, keyA),
+        };
+        var contractA = TestHarness.Contract(
+            accionesA, id: "cap.a", restore: RestoreLevel.SessionUndo);
+        var summaryA = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contractA, accionesA), ExecutionMode.Execute, ctxA);
+        Assert.Equal(1, summaryA.Succeeded);
+        Assert.Equal(99, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyA, "ValorA"));
+        Assert.NotEmpty(ctxA.Journal.Entries);
+
+        // Capacidad B: Set DWord + comando que falla → rollback automático de B.
+        harness.Commands.Throw("explode.exe --now");
+        var accionesB = new CapabilityAction[]
+        {
+            SetDword(1, "ValorB", "42", RegistryHiveKind.LocalMachine, keyB),
+            new CommandAction
+            {
+                Order = 2,
+                Description = "comando que falla",
+                FileName = "explode.exe",
+                Arguments = ["--now"],
+            },
+        };
+        var contractB = TestHarness.Contract(
+            accionesB, id: "cap.b", restore: RestoreLevel.SessionUndo);
+        var summaryB = await harness.Coordinator.ExecuteAsync(
+            TestHarness.Plan(contractB, accionesB), ExecutionMode.Execute, ctxB);
+        Assert.Equal(1, summaryB.Succeeded); // la primera acción aplicó
+        Assert.Equal(1, summaryB.Failed);  // la segunda falló → rollback automático
+
+        // A SIGUE aplicada: su diario (J_A) no fue tocado por el rollback de B.
+        Assert.Equal(99, (int?)harness.Registry.GetValue(RegistryHive.LocalMachine, keyA, "ValorA"));
+        Assert.NotEmpty(ctxA.Journal.Entries); // J_A intacto
+
+        // B fue revertida por el rollback automático (su Set DWord se deshizo).
+        Assert.Null(harness.Registry.GetValue(RegistryHive.LocalMachine, keyB, "ValorB"));
     }
 }

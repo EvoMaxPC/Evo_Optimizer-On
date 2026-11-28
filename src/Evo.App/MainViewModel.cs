@@ -33,7 +33,9 @@ public sealed class MainViewModel
     private readonly IRegistryAccessor? _registry;
     private readonly IReadOnlyDictionary<ActionKind, IActionExecutor> _executors;
     private readonly IReadOnlyDictionary<string, CapabilityContract> _catalog;
-    private readonly UndoJournal _journal = new();
+    /// <summary>Un diario por capacidad (indexado por Id), para que el deshacer
+    /// de una fila revierta SOLO lo aplicado de esa capacidad.</summary>
+    private readonly Dictionary<string, UndoJournal> _journals = new(StringComparer.Ordinal);
     private readonly Dictionary<string, CapabilityDefinition> _byCapabilityId = new(StringComparer.Ordinal);
 
     private MainViewModel(
@@ -303,18 +305,17 @@ public sealed class MainViewModel
         return this;
     }
 
-    /// <summary>Deshace el diario acumulado de la sesión (aplicaciones previas).</summary>
-    public MainViewModel Undo()
+    /// <summary>Deshace lo aplicado de una sola capacidad (su fila). Revierte
+    /// SOLO las entradas de su propio diario, no las de otras capacidades.</summary>
+    public MainViewModel Undo(string capabilityId)
     {
         if (!IsWindowsCompatible) return this;
 
-        if (_journal.IsEmpty)
+        if (!_journals.TryGetValue(capabilityId, out var journal) || journal.IsEmpty)
         {
             AppendResult("No hay nada para deshacer");
             return this;
         }
-
-        var capIds = _journal.Entries.Select(e => e.CapabilityId).Distinct().ToList();
 
         var context = new UndoContext(
             _registry ?? new WindowsRegistryAccessor(),
@@ -324,12 +325,11 @@ public sealed class MainViewModel
             _commands,
             dryRun: false);
 
-        var report = _journal.RollbackAsync(context).GetAwaiter().GetResult();
+        var report = journal.RollbackAsync(context).GetAwaiter().GetResult();
 
         if (report.Restored.Count > 0)
         {
-            var capIdText = capIds.Count == 1 ? capIds[0] : string.Join(", ", capIds);
-            AppendResult($"Se deshizo: {report.Restored.Count} cambio(s) de {capIdText}");
+            AppendResult($"Se deshizo: {report.Restored.Count} cambio(s) de {capabilityId}");
         }
         else if (report.Failed.Count > 0)
         {
@@ -341,6 +341,18 @@ public sealed class MainViewModel
         }
 
         return this;
+    }
+
+    /// <summary>Obtiene (o crea si no existe) el diario de la capacidad dada.</summary>
+    private UndoJournal JournalFor(string capabilityId)
+    {
+        if (!_journals.TryGetValue(capabilityId, out var journal))
+        {
+            journal = new UndoJournal();
+            _journals[capabilityId] = journal;
+        }
+
+        return journal;
     }
 
     private void ExecuteCapability(CapabilityViewModel capability, ExecutionMode mode)
@@ -376,6 +388,9 @@ public sealed class MainViewModel
             restorePoints: _restorePoints,
             confirmations: _confirmations);
 
+        // Cada capacidad usa su propio diario (ETAPA 6-I: deshacer por fila).
+        var journal = JournalFor(capability.Id);
+
         var context = new ActionContext
         {
             Registry = _registry ?? new WindowsRegistryAccessor(),
@@ -384,7 +399,7 @@ public sealed class MainViewModel
             Processes = new WindowsProcessAccessor(),
             Commands = _commands,
             Mode = mode,
-            Journal = _journal,
+            Journal = journal,
             CapabilityId = capability.Id,
         };
 
