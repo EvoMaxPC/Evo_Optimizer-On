@@ -1,0 +1,41 @@
+{
+  "capacidades_con_toggle": 26,
+  "contrarios": [
+    "explorer.home.hide",
+    "explorer.home.restore",
+    "explorer.removable-drives.sidebar"
+  ],
+  "ok": [
+    "debloat.copilot.remove",
+    "debloat.widgets.disable",
+    "services.atlas.lanmanworkstation",
+    "services.atlas.networkdiscovery",
+    "services.atlas.nvidiadisplaycontainer",
+    "services.atlas.printing",
+    "services.atlas.superfetch"
+  ],
+  "pendientes": [
+    "explorer.app-icon-thumbnails.hide",
+    "explorer.compact-view.enable",
+    "explorer.extract-context-menu.add",
+    "explorer.gallery.hide",
+    "explorer.quick-access.hide",
+    "explorer.recent-items.disable",
+    "explorer.shortcut-icon.classic",
+    "services.atlas.bluetooth",
+    "system.hibernation.hide",
+    "system.keyboard-shortcuts.disable",
+    "system.location.consent-deny",
+    "system.mitigations.disable",
+    "ui.context-menu.classic",
+    "ui.snap-layouts.disable",
+    "ui.verbose-messages.enable",
+    "ui.visual-effects.minimal"
+  ],
+  "totales": {
+    "CONTRARIO": 3,
+    "OK": 7,
+    "PENDIENTE": 16
+  },
+  "veredicto": "CONTRARIOS_DETECTADOS"
+}

@@ -1,0 +1,56 @@
+capacidades que salen de un toggle : 26
+  OK (sin contrarias no reproducidas) : 7
+  PENDIENTE (contrarias no declaradas): 16
+  CONTRARIO (opuesto estructural)     : 3
+
+Criterio de clasificacion (escrito):
+  * OK       : el estado aplicado del toggle reproduce todas las operaciones
+               del pin; no queda ninguna operacion contraria sin declarar.
+  * PENDIENTE: hay operaciones del pin en el estado CONTRARIO que el estado
+               aplicado no reproduce (claves/valores que se dejan atras).
+               Requieren revision: o se declaran o se justifican por escrito.
+  * CONTRARIO: el estado aplicado es el opuesto estructural de otro estado
+               del mismo toggle (AddKey frente a DeleteKey, o Set frente a
+               DeleteKey) sobre la misma clave. Aplicar ambos estados anularia
+               el efecto del uno; es un conflicto de diseño, no un hueco.
+
+Filas CONTRARIO (opuesto estructural), detalle:
+  - explorer.home.hide (estado_aplicado=Disable):
+      AddKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}; Delete HKCU:Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} System.IsPinnedToNameSpaceTree=; Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced LaunchTo=0
+  - explorer.home.restore (estado_aplicado=Enable):
+      DeleteKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}; Set HKCU:Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} System.IsPinnedToNameSpaceTree=0; Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced LaunchTo=1
+  - explorer.removable-drives.sidebar (estado_aplicado=Enable):
+      DeleteKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}; DeleteKey HKLM:SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}
+
+  explorer.home.hide  y  explorer.home.restore son estados simetricos del
+  mismo toggle (Toggles/Interface/Home.psd1). `hide`=Disable quita el icono
+  de Inicio del escritorio (DeleteKey del NameSpace {f874310e-...});
+  `restore`=Enable lo vuelve a poner (AddKey del mismo NameSpace). AddKey y
+  DeleteKey sobre la misma clave son opuestos estructurales: no pueden
+  declararse los dos como efecto del estado aplicado sin anularse. Por eso
+  ambos se clasifican CONTRARIO y se documentan en R1/CONTRARIO.
+
+  explorer.removable-drives.sidebar (estado=Enable) borra las claves
+  DelegateFolders\{F5FB2C77-...} (quita las unidades extraibles de la barra
+  lateral). El estado contrario del toggle (Disable) las anadiria (AddKey):
+  AddKey frente a DeleteKey sobre la misma clave, opuesto estructural.
+
+  PENDIENTE    explorer.app-icon-thumbnails.hide        estado=Disable no_reproducidas=[Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced ShowTypeOverlay=1]
+  PENDIENTE    explorer.compact-view.enable             estado=Enable no_reproducidas=[Set HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced UseCompactMode=0]
+  PENDIENTE    explorer.extract-context-menu.add        estado=Enable no_reproducidas=[Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked {BD472F60-27FA-11cf-B8B4-444553540000}=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked {D12E3394-DE4B-4777-93E9-DF0AC88F8584}=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked {EE07CEF5-3441-4CFB-870A-4002C724783A}=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked {b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af}=]
+  PENDIENTE    explorer.gallery.hide                    estado=Disable no_reproducidas=[Set HKCU:Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c} System.IsPinnedToNameSpaceTree=1]
+  CONTRARIO    explorer.home.hide                       estado=Disable no_reproducidas=[AddKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}; Delete HKCU:Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} System.IsPinnedToNameSpaceTree=; Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced LaunchTo=0]
+  CONTRARIO    explorer.home.restore                    estado=Enable no_reproducidas=[DeleteKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}; Set HKCU:Software\Classes\CLSID\{f874310e-b6b7-47dc-bc84-b9e6b38f5903} System.IsPinnedToNameSpaceTree=0; Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced LaunchTo=1]
+  PENDIENTE    explorer.quick-access.hide               estado=Disable no_reproducidas=[Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer HubMode=]
+  PENDIENTE    explorer.recent-items.disable            estado=Disable no_reproducidas=[Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer ClearRecentDocsOnExit=; Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer NoInstrumentation=; Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer NoRecentDocsHistory=; Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer NoStartMenuMFUprogramsList=; Delete HKLM:SOFTWARE\Policies\Microsoft\Windows\Explorer HideRecentlyAddedApps=; Delete HKLM:SOFTWARE\Policies\Microsoft\Windows\Explorer NoRemoteDestinations=; Delete HKLM:SOFTWARE\Policies\Microsoft\Windows\Explorer ShowOrHideMostUsedApps=]
+  CONTRARIO    explorer.removable-drives.sidebar        estado=Enable no_reproducidas=[DeleteKey HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}; DeleteKey HKLM:SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\DelegateFolders\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}]
+  PENDIENTE    explorer.shortcut-icon.classic           estado=Classic no_reproducidas=[Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons 29=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Icons 29=%SystemRoot%\AtlasModules\Other\Blank.ico,0]
+  PENDIENTE    services.atlas.bluetooth                 estado=Disable no_reproducidas=[Set HKLM:SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth value=2]
+  PENDIENTE    system.hibernation.hide                  estado=Disable no_reproducidas=[Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings ShowHibernateOption=1]
+  PENDIENTE    system.keyboard-shortcuts.disable        estado=Disable no_reproducidas=[Set HKCU:Keyboard Layout\Toggle Hotkey=1; Set HKCU:Keyboard Layout\Toggle Language Hotkey=1; Set HKCU:Keyboard Layout\Toggle Layout Hotkey=2]
+  PENDIENTE    system.location.consent-deny             estado=Disable no_reproducidas=[Delete HKCU:Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location ShowGlobalPrompts=; Set HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location Value=Allow]
+  PENDIENTE    system.mitigations.disable               estado=Disable no_reproducidas=[Delete HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization MinVmVersionForCpuBasedMitigations=; Delete HKLM:SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management FeatureSettingsOverride=; Delete HKLM:SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management FeatureSettingsOverrideMask=; Delete HKLM:SYSTEM\CurrentControlSet\Control\Session Manager\kernel DisableExceptionChainValidation=; Delete HKLM:SYSTEM\CurrentControlSet\Control\Session Manager\kernel MitigationAuditOptions=; Delete HKLM:SYSTEM\CurrentControlSet\Control\Session Manager\kernel MitigationOptions=; Set HKLM:SYSTEM\CurrentControlSet\Control\Session Manager ProtectionMode=1]
+  PENDIENTE    ui.context-menu.classic                  estado=Enable no_reproducidas=[DeleteKey HKCU:Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}]
+  PENDIENTE    ui.snap-layouts.disable                  estado=Disable no_reproducidas=[Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced EnableSnapAssistFlyout=1; Set HKCU:Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced EnableSnapBar=1]
+  PENDIENTE    ui.verbose-messages.enable               estado=Enable no_reproducidas=[Delete HKLM:SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System verbosestatus=]
+  PENDIENTE    ui.visual-effects.minimal                estado=Disable no_reproducidas=[Set HKCU:Control Panel\Desktop UserPreferencesMask=@(0x9E, 0x1E, 0x07, 0x80, 0x12, 0x00, 0x00, 0x00); Set HKCU:Control Panel\Desktop\WindowMetrics MinAnimate=1; Set HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced TaskbarAnimations=1; Set HKCU:SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects VisualFXSetting=0; Set HKCU:SOFTWARE\Microsoft\Windows\DWM AlwaysHibernateThumbnails=1; Set HKCU:SOFTWARE\Microsoft\Windows\DWM EnableAeroPeek=1]
